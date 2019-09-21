@@ -1,6 +1,10 @@
 /*
 *	Author: JeongHak Kim	junghak.kim@digipen.edu
+*	
+*	File_name: main.cpp
+*	
 *	GAM200 Engine Prototype
+*	
 *	2019/07/04
 */
 
@@ -9,8 +13,8 @@
  *	Same graphics engine but different game with GAM200 in CS200
  */
 
-
 #include <glfw3.h>
+#include "OpenGL_Window.h"
 
 int main()
 {
@@ -19,31 +23,23 @@ int main()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-	if (!glfwInit())
-	{
-		glfwTerminate();
-		return -1;		//return false
-	}
+	glWindow glWindow;
 
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Prototype", nullptr, nullptr);
-	
-	if (!window)
-	{
-		glfwTerminate();
-		return -1;		//return false
-	}
-
-	glfwSwapInterval(1);
+	glWindow.CanCreateWindow(800, 600, "Prototype");
 
 	isRunning = true;
 
 	while (isRunning)
 	{
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glWindow.SwapBuffers();
+		glWindow.PollEvents();
+		if (glfwGetKey(glWindow.window, GLFW_KEY_ESCAPE) == GLFW_RELEASE)
 		{
 			isRunning = false;
+		}
+		else if (glfwGetKey(glWindow.window, GLFW_KEY_V) == GLFW_PRESS)
+		{
+			glWindow.TurnOnVSync(!glWindow.IsVSyncOn());
 		}
 	}
 }

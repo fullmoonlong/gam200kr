@@ -159,5 +159,5 @@ namespace CS230
 		return vector2(cValue * v.x - sValue * v.y,
 			           sValue * v.x + cValue * v.y);
 	}
-}
 
+}

@@ -170,5 +170,6 @@ namespace CS230
 	matrix3 MATRIX3::build_translation(const vector2 & translation) noexcept
 	{
 		return build_translation(translation.x, translation.y);
-	}	
+	}
+
 }
