@@ -3,7 +3,7 @@
 *	
 *	File_name: main.cpp
 *	
-*	GAM200 Engine Prototype
+*	main loop
 *	
 *	2019/07/04
 */
@@ -33,13 +33,17 @@ int main()
 	{
 		glWindow.SwapBuffers();
 		glWindow.PollEvents();
-		if (glfwGetKey(glWindow.window, GLFW_KEY_ESCAPE) == GLFW_RELEASE)
+		if (glfwGetKey(glWindow.window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		{
 			isRunning = false;
 		}
 		else if (glfwGetKey(glWindow.window, GLFW_KEY_V) == GLFW_PRESS)
 		{
-			glWindow.TurnOnVSync(!glWindow.IsVSyncOn());
+			glWindow.ToggleOnVSync(!glWindow.IsVSyncOn());
+		}
+		else if (glfwGetKey(glWindow.window, GLFW_KEY_F) == GLFW_PRESS)
+		{
+			glWindow.ToggleFullScreen(glWindow.window);
 		}
 	}
 }

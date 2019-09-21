@@ -6,6 +6,8 @@
 *	Implementing of openGL window functions
 *	
 *	2019/09/21
+*	
+*	DoYoung Implemented fullscreen functions
 */
 
 #include "OpenGL_Window.h"
@@ -32,7 +34,7 @@ bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcep
 		return false;
 	}
 
-	TurnOnVSync(true);
+	ToggleOnVSync(true);
 
 	return true;
 }
@@ -42,7 +44,7 @@ bool glWindow::IsVSyncOn() noexcept
 	return isVSyncOn;
 }
 
-void glWindow::TurnOnVSync(bool status) noexcept
+void glWindow::ToggleOnVSync(bool status) noexcept
 {
 	isVSyncOn = status;
 	glfwSwapInterval(isVSyncOn);
@@ -56,4 +58,28 @@ void glWindow::SwapBuffers() noexcept
 void glWindow::PollEvents() noexcept
 {
 	glfwPollEvents();
+}
+
+bool glWindow::IsFullScreen() noexcept
+{
+	return isFullScreen;
+}
+
+void glWindow::ToggleFullScreen(GLFWwindow* selectedWindow) noexcept
+{
+	if (!IsFullScreen())
+	{
+		glfwGetWindowPos(selectedWindow, &windowPos[0], &windowPos[1]);
+		glfwGetWindowSize(selectedWindow, &windowSize[0], &windowSize[1]);
+
+		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+		glfwSetWindowMonitor(selectedWindow, monitor, 0, 0, mode->width, mode->height, 0);
+		isFullScreen = true;
+	}
+	else
+	{
+		glfwSetWindowMonitor(selectedWindow, nullptr, windowPos[0], windowPos[1], windowSize[0], windowSize[1], 0);
+		isFullScreen = false;
+	}
 }
