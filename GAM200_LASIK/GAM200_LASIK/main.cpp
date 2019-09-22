@@ -1,5 +1,6 @@
 /*
 *	Author: JeongHak Kim	junghak.kim@digipen.edu
+			Doyeong Yi doyoung.lee@digipen.edu
 *	
 *	File_name: main.cpp
 *	
@@ -15,35 +16,12 @@
 
 #include <glfw3.h>
 #include "OpenGL_Window.h"
+#include "Application.h"
 
 int main()
 {
-	bool isRunning = false;
+	Application application;
+	application.Run();
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
-	glWindow glWindow;
-
-	glWindow.CanCreateWindow(800, 600, "Prototype");
-
-	isRunning = true;
-
-	while (isRunning)
-	{
-		glWindow.SwapBuffers();
-		glWindow.PollEvents();
-		if (glfwGetKey(glWindow.window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-		{
-			isRunning = false;
-		}
-		else if (glfwGetKey(glWindow.window, GLFW_KEY_V) == GLFW_PRESS)
-		{
-			glWindow.ToggleOnVSync(!glWindow.IsVSyncOn());
-		}
-		else if (glfwGetKey(glWindow.window, GLFW_KEY_F) == GLFW_PRESS)
-		{
-			glWindow.ToggleFullScreen(glWindow.window);
-		}
-	}
+	return 0;
 }

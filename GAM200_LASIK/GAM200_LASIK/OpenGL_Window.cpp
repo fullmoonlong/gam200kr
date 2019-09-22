@@ -23,9 +23,6 @@ bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcep
 		return false;
 	} 
 
-	GLFWmonitor* monitor = nullptr;
-	GLFWwindow* shareWindow = nullptr;
-
 	window = glfwCreateWindow(width, height, title, monitor, shareWindow);
 
 	if (!window)
@@ -72,7 +69,7 @@ void glWindow::ToggleFullScreen(GLFWwindow* selectedWindow) noexcept
 		glfwGetWindowPos(selectedWindow, &windowPos[0], &windowPos[1]);
 		glfwGetWindowSize(selectedWindow, &windowSize[0], &windowSize[1]);
 
-		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+		monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 		glfwSetWindowMonitor(selectedWindow, monitor, 0, 0, mode->width, mode->height, 0);
 		isFullScreen = true;

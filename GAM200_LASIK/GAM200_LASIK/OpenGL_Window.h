@@ -17,6 +17,8 @@ class glWindow
 {
 public:
 	GLFWwindow* window;
+	GLFWmonitor* monitor = nullptr;
+	GLFWwindow* shareWindow = nullptr; //move from cpp file -> since to game statemanet
 
 	bool CanCreateWindow(int width, int height, const char* title) noexcept;
 	bool IsVSyncOn() noexcept;
@@ -29,7 +31,8 @@ public:
 private:
 	bool isVSyncOn = true;
 	bool isFullScreen = false;
+	bool isRunning = false; //move from cpp file -> since to game statemanet
 	int windowPos[2] = { 0,0 };
 	int windowSize[2] = { 0,0 };
-
+	
 };
