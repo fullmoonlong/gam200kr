@@ -9,7 +9,7 @@
 
 #pragma once
 
-namespace MathLibrary
+namespace Math
 {
 	template <typename T>
 	class vec2
@@ -38,29 +38,29 @@ namespace MathLibrary
 	template <typename T>
 	vec2<T> operator-(const vec2<T>& v) noexcept;
 	template <typename T>
-	vec2 operator+(const vec2& v1, const vec2& v2) noexcept;
-
-	vec2 operator-(const vec2& v1, const vec2& v2) noexcept;
-
-	vec2 operator*(const vec2& v, float scale) noexcept;
-
-	vec2 operator*(float scale, const vec2& v) noexcept;
-
-	vec2 operator/(const vec2& v, float divisor) noexcept;
-
-	bool operator==(const vec2& v1, const vec2& v2) noexcept;
-
-	bool operator!=(const vec2& v1, const vec2& v2) noexcept;
-
-	float dot_product(vec2 v1, vec2 v2) noexcept;
-
-	float magnitude_squared(vec2 v) noexcept;
-
-	float magnitude(vec2 v) noexcept;
-
-	float distance_between(vec2 v1, vec2 v2) noexcept;
-
-	float angle_between(vec2 v1, vec2 v2) noexcept;
-
-	vec2 rotate_by(float angle_in_radians, vec2 v) noexcept;
+	vec2<T> operator+(const vec2<T>& v1, const vec2<T>& v2) noexcept;
+	template <typename T>
+	vec2<T> operator-(const vec2<T>& v1, const vec2<T>& v2) noexcept;
+	template <typename T>
+	vec2<T> operator*(const vec2<T>& v, T scale) noexcept;
+	template <typename T>
+	vec2<T> operator*(T scale, const vec2<T>& v) noexcept;
+	template <typename T>
+	vec2<T> operator/(const vec2<T>& v, T divisor) noexcept;
+	template <typename T>
+	bool operator==(const vec2<T>& v1, const vec2<T>& v2) noexcept;
+	template <typename T>
+	bool operator!=(const vec2<T>& v1, const vec2<T>& v2) noexcept;
+	template <typename T>
+	T dot_product(vec2<T> v1, vec2<T> v2) noexcept;
+	template <typename T>
+	T magnitude_squared(vec2<T> v) noexcept;
+	template <typename T>
+	T magnitude(vec2<T> v) noexcept;
+	template <typename T>
+	T distance_between(vec2<T> v1, vec2<T> v2) noexcept;
+	template <typename T>
+	T angle_between(vec2<T> v1, vec2<T> v2) noexcept;
+	template <typename T>
+	vec2<T> rotate_by(T angle_in_radians, vec2<T> v) noexcept;
 }

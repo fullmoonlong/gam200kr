@@ -11,7 +11,7 @@
 #include <cassert>	// assert
 #include "vec3.h"
 
-namespace MathLibrary
+namespace Math
 {
 	void operator+=(vec3& v, const vec3& adding_vector) noexcept
 	{

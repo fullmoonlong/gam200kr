@@ -10,7 +10,7 @@
 #include "mat3.h"
 #include <complex>	// cos, sin
 
-namespace MathLibrary
+namespace Math
 {
 	mat3 build_translation(float translate_x, float translate_y) noexcept
 	{

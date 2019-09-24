@@ -9,7 +9,7 @@
 
 #pragma once
 
-namespace MathLibrary
+namespace Math
 {
 	class vec3
 	{

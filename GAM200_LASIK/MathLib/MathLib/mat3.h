@@ -10,7 +10,7 @@
 #pragma once
 #include "vec3.h"
 
-namespace MathLibrary
+namespace Math
 {
 	class mat3
 	{
