@@ -14,11 +14,11 @@
  *	Same graphics engine but different game with GAM200 in CS200
  */
 
+#include <Windows.h>
 #include <glfw3.h>
-#include "OpenGL_Window.h"
 #include "Application.h"
 
-int main()
+int WINAPI wWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, PWSTR /*pCmdLine*/, int /*nCmdShow*/)
 {
 	Application application;
 	application.Run();
