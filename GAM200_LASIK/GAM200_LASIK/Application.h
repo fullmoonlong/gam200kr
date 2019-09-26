@@ -8,21 +8,19 @@
 #pragma once
 #include <glfw3.h>
 #include "OpenGL_Window.h"
+#include "System.h"
+#include "Engine.h"
 
-enum class GameState { PLAY, EXIT }; //enum for gamestate
-
-class Application
+class Application : public System
 {
 public:
 	Application();
 	~Application();
-	void Initialize();
-	void Update();
-	void Shutdown();
-	void Run(); //for game run
+	void Initialize(void) override;
+	void Update() override;
+
 private:
 	glWindow glWindow;
-	GameState gameState; //gamestate
 	int screenWidth = 800;
 	int screenHeight = 600;
 };
