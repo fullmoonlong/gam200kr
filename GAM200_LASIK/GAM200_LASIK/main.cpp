@@ -15,7 +15,6 @@
  */
 
 #include <Windows.h>
-#include <glfw3.h>
 #include "Engine.h"
 
 int WINAPI wWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, PWSTR /*pCmdLine*/, int /*nCmdShow*/)

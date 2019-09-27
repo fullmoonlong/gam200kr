@@ -1,6 +1,4 @@
 #pragma once
-#include "Application.h"
-#include "Object.h"
 #include <string>
 
 typedef unsigned int ObjectID;

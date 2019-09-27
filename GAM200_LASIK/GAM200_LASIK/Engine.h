@@ -4,7 +4,7 @@
 *	2019/09/25
 */
 #pragma once
-#include<vector>
+#include <vector>
 
 enum class GameState { PLAY, EXIT }; //enum for gamestate
 class System;

@@ -4,11 +4,10 @@
 *	2019/09/26
 */
 #pragma once
-#include "System.h"
-#include "Object.h"
 #include <map>
 #include <vector>
-
+#include "System.h"
+#include "Object.h"
 
 class ObjectFactory : public System {
 public:

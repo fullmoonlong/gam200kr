@@ -6,10 +6,9 @@
  */
 
 #pragma once
-#include <glfw3.h>
 #include "OpenGL_Window.h"
 #include "System.h"
-#include "Engine.h"
+#include "Shader.h"
 
 class Application : public System
 {
@@ -20,6 +19,7 @@ public:
 	void Update() override;
 
 private:
+	Shader shader;
 	glWindow glWindow;
 	int screenWidth = 800;
 	int screenHeight = 600;

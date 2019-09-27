@@ -10,8 +10,9 @@
 *	DoYoung Implemented fullscreen functions
 */
 
-#include <glew.h>
+#include <GL\glew.h>
 #include "OpenGL_Window.h"
+#include <iostream>
 
 bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcept
 {
@@ -32,24 +33,16 @@ bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcep
 		return false;
 	}
 
+	glfwMakeContextCurrent(window);
+
 	ToggleOnVSync(true);
 
-
-	// TODO: SHADER NEEDED
-	//// Draw Triangle
-
-	//float vertices[] = {
-	//	-0.5f, -0.5f, 0.0f,
-	//	0.5f, -0.5f, 0.0f,
-	//	0.0f,  0.5f, 0.0f
-	//};  
-
-	//unsigned int VBO;
-	//glGenBuffers(1, &VBO);
-	//glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	//// Finish Drawing
+	GLenum err = glewInit();
+	if (err != GLEW_OK)
+	{
+		std::cerr << glewGetErrorString(err);
+		return false;
+	}
 
 	return true;
 }
