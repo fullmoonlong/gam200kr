@@ -1,0 +1,10 @@
+﻿  Application.cpp
+  main.cpp
+  OpenGL_Window.cpp
+  Shader.cpp
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+glew32s.lib(glew.obj) : error LNK2001: unresolved external symbol __imp__glGetIntegerv@8
+glew32s.lib(glew.obj) : error LNK2001: unresolved external symbol __imp__glGetString@4
+glew32s.lib(glew.obj) : error LNK2001: unresolved external symbol __imp__wglGetCurrentDC@0
+glew32s.lib(glew.obj) : error LNK2001: unresolved external symbol __imp__wglGetProcAddress@4
+D:\GAM200\gam200kr\GAM200_LASIK\Release\Rescue.exe : fatal error LNK1120: 4 unresolved externals
