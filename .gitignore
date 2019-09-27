@@ -1,44 +1,16 @@
 
-GAM200_LASIK/external/glew/lib/Release/Win32/
+GAM200_LASIK/MathLibrary/
 
-GAM200_LASIK/.vs/GAM200_LASIK/v15/
+GAM200_LASIK/.vs/
 
 GAM200_LASIK/Debug/
 
+GAM200_LASIK/Release/
+
+GAM200_LASIK/x64/
+
 GAM200_LASIK/GAM200_LASIK/Debug/
 
-*.user
+GAM200_LASIK/GAM200_LASIK/Release/
 
-GAM200_LASIK/GAM200_LASIK/x64/Debug/
-
-GAM200_LASIK/x64/Debug/
-
-GAM200_LASIK/MathLib/.vs/MathLib/v16/
-
-GAM200_LASIK/MathLib/.vs/MathLib/v15/
-
-GAM200_LASIK/external/math_lib/lib/Win32/Debug/
-
-GAM200_LASIK/external/math_lib/lib/Win32/Release/
-
-GAM200_LASIK/external/math_lib/lib/x64/Release/
-
-GAM200_LASIK/MathLibrary/MathLib/.vs/MathLib/v15/
-
-GAM200_LASIK/external/math_lib/lib/x64/Debug/
-
-GAM200_LASIK/external/math_lib/lib_backup/Win32/Debug/
-
-GAM200_LASIK/external/math_lib/lib_backup/Win32/Release/
-
-GAM200_LASIK/external/math_lib/lib_backup/x64/Release/
-
-GAM200_LASIK/MathLibrary/MathLib/Debug/
-
-GAM200_LASIK/MathLib/MathLib/x64/Debug/
-
-GAM200_LASIK/MathLibrary/MathLib/Release/
-
-GAM200_LASIK/MathLibrary/MathLib/x64/Debug/
-
-GAM200_LASIK/MathLibrary/MathLib/x64/Release/
+GAM200_LASIK/GAM200_LASIK/x64/
