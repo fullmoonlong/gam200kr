@@ -14,21 +14,21 @@
  *	Same graphics engine but different game with GAM200 in CS200
  */
 
-#include <Windows.h>
+//#include <Windows.h>
 #include "Engine.h"
 
-int WINAPI wWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, PWSTR /*pCmdLine*/, int /*nCmdShow*/)
-{
-	Engine* ENGINE = new Engine();
-	ENGINE->Run();
-
-	return 0;
-}
-
-//int main()
+//int WINAPI wWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, PWSTR /*pCmdLine*/, int /*nCmdShow*/)
 //{
-//		Engine* ENGINE = new Engine();
-//		ENGINE->Run();
+//	Engine* ENGINE = new Engine();
+//	ENGINE->Run();
 //
-//		return 0;
+//	return 0;
 //}
+
+int main()
+{
+		Engine* ENGINE = new Engine();
+		ENGINE->Run();
+
+		return 0;
+}

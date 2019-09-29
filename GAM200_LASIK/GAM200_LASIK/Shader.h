@@ -5,10 +5,10 @@ class Shader
 {
 public:
 	Shader() noexcept = default;
-	Shader(const std::string& vertex_shader_source_code, const std::string& fragment_shader_source_code) noexcept;
+	Shader(const std::string& vertex_source, const std::string& fragment_source) noexcept;
 	bool LoadShader(const std::string& vertex_source, const std::string& fragment_source) noexcept;
 	unsigned GetHandleToShader();
-	unsigned int VBO, VAO;
+	unsigned int VBO = 0, VAO = 0;
 private:
 	unsigned handleToShader = 0;
 };
