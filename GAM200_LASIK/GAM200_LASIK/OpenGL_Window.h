@@ -25,6 +25,7 @@ public:
 	void PollEvents() noexcept;
 	bool IsFullScreen() noexcept;
 	void ToggleFullScreen(GLFWwindow* selectedWindow) noexcept;
+	void SetWindowTitle(const char* title) const noexcept;
 
 private:
 	bool isVSyncOn = true;

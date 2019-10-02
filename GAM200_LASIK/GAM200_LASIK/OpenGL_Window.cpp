@@ -19,6 +19,38 @@ void frame_buffer_size_callback(GLFWwindow*, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+void resize_callback()
+{
+	
+}
+
+void window_close_callback()
+{
+	
+}
+
+void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int /*mods*/)
+{
+	if (action == GLFW_PRESS)
+	{
+		switch (key)
+		{
+		case GLFW_KEY_ESCAPE:
+			break;
+		case GLFW_KEY_F:
+			break;
+			//TODO: some key board cases
+		default:
+			break;
+		}
+	}
+}
+
+void mouse_input_callback()
+{
+	
+}
+
 bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcept
 {
 
@@ -30,7 +62,6 @@ bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcep
 		glfwTerminate();
 		return false;
 	}
-
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_RED_BITS, 8);
@@ -51,7 +82,8 @@ bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcep
 	ToggleOnVSync(true);
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, frame_buffer_size_callback);
-
+	glfwSetKeyCallback(window, key_callback);
+	
 	ToggleOnVSync(true);
 
 	GLenum err = glewInit();
@@ -107,4 +139,9 @@ void glWindow::ToggleFullScreen(GLFWwindow* selectedWindow) noexcept
 		glfwSetWindowMonitor(selectedWindow, nullptr, windowPos[0], windowPos[1], windowSize[0], windowSize[1], 0);
 		isFullScreen = false;
 	}
+}
+
+void glWindow::SetWindowTitle(const char* title) const noexcept
+{
+	glfwSetWindowTitle(window, title);
 }

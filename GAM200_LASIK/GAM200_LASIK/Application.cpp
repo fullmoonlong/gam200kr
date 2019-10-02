@@ -17,7 +17,7 @@
 const std::filesystem::path vertex_path = "../assets/test.vert";
 const std::filesystem::path fragment_path = "../assets/test.frag";
 
-std::string get_file_contents(const std::filesystem::path& path)
+std::string ReadSourceFrom(const std::filesystem::path& path)
 {
 	std::ifstream in(path, std::ios::in | std::ios::binary);
 	if (in)
@@ -47,8 +47,8 @@ Application::~Application()
 void Application::Initialize()
 {
 	glWindow.CanCreateWindow(800, 600, "Prototype"); //initialize window
-	const std::string vertex_source = get_file_contents(vertex_path);
-	const std::string fragment_source = get_file_contents(fragment_path);
+	const std::string vertex_source = ReadSourceFrom(vertex_path);
+	const std::string fragment_source = ReadSourceFrom(fragment_path);
 	shader.LoadShader(vertex_source, fragment_source);
 
 	float vertices[] = {
