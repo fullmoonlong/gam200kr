@@ -6,6 +6,7 @@
 #include "Engine.h"
 #include "Application.h"
 #include "ObjectFactory.h"
+#include "StateManager.h"
 
 Engine* gameEngine = nullptr;
 
@@ -17,13 +18,16 @@ Engine::Engine()
 
 Engine::~Engine()
 {
-	gameEngine = nullptr;
+	//ENGINE = nullptr;
+	DestroyAllsystems();
+	delete gameEngine;
 }
 
 void Engine::Initialize()
 {
 	AddSystem(new Application());
 	AddSystem(new ObjectFactory());
+	AddSystem(new StateManager());
 	for (auto sys : systems)
 	{
 		sys->Initialize();
@@ -56,6 +60,7 @@ void Engine::AddSystem(System * system)
 {
 	systems.push_back(system);
 }
+
 
 void Engine::DestroyAllsystems()
 {

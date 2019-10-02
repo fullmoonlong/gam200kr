@@ -5,11 +5,13 @@
 */
 #include "ObjectFactory.h"
 #include "Object.h"
+#include <iostream>
 
 extern ObjectFactory* objectFactory = nullptr;
 
 ObjectFactory::ObjectFactory()
 {
+	std::cout << "ObjectFactory Add Sucessful" << std::endl;
 	objectFactory = this;
 	lastObjectID = 0;
 }

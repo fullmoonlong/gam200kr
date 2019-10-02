@@ -9,6 +9,7 @@
 #include "Object.h"
 #include "Engine.h"
 #include "Application.h"
+#include "StateManager.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -36,6 +37,7 @@ Object* test;
 
 Application::Application()
 {
+	std::cout << "Application Add Sucessful" << std::endl;
 }
 
 Application::~Application()
