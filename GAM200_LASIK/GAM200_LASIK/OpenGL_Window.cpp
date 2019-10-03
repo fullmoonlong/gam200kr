@@ -12,7 +12,10 @@
 
 #include <GL\glew.h>
 #include "OpenGL_Window.h"
+#include "EventHandler.h"
 #include <iostream>
+
+EventHandler* eventHandler;
 
 void frame_buffer_size_callback(GLFWwindow*, int width, int height)
 {
@@ -33,16 +36,28 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 {
 	if (action == GLFW_PRESS)
 	{
-		switch (key)
-		{
-		case GLFW_KEY_ESCAPE:
-			break;
-		case GLFW_KEY_F:
-			break;
-			//TODO: some key board cases
-		default:
-			break;
-		}
+		
+		//switch (key)
+		//{
+		//case GLFW_KEY_ESCAPE:
+		//	
+		//	break;
+		//case GLFW_KEY_F:
+		//	break;
+		//	//TODO: some key board cases
+		//default:
+		//	break;
+		//}
+	}
+	if (action == GLFW_RELEASE)
+	{
+		//switch (key)
+		//{
+		//case GLFW_KEY_ESCAPE:
+		//	break;
+		//case GLFW_KEY_F:
+		//	break;
+		//}
 	}
 }
 
@@ -79,12 +94,12 @@ bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcep
 		return false;
 	}
 
-	ToggleOnVSync(true);
+	ToggleVSync(true);
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, frame_buffer_size_callback);
 	glfwSetKeyCallback(window, key_callback);
 	
-	ToggleOnVSync(true);
+	ToggleVSync(true);
 
 	GLenum err = glewInit();
 	if (err != GLEW_OK)
@@ -101,7 +116,7 @@ bool glWindow::IsVSyncOn() noexcept
 	return isVSyncOn;
 }
 
-void glWindow::ToggleOnVSync(bool status) noexcept
+void glWindow::ToggleVSync(bool status) noexcept
 {
 	isVSyncOn = status;
 	glfwSwapInterval(isVSyncOn);
@@ -122,21 +137,21 @@ bool glWindow::IsFullScreen() noexcept
 	return isFullScreen;
 }
 
-void glWindow::ToggleFullScreen(GLFWwindow* selectedWindow) noexcept
+void glWindow::ToggleFullScreen() noexcept
 {
 	if (!IsFullScreen())
 	{
-		glfwGetWindowPos(selectedWindow, &windowPos[0], &windowPos[1]);
-		glfwGetWindowSize(selectedWindow, &windowSize[0], &windowSize[1]);
+		glfwGetWindowPos(window, &windowPos[0], &windowPos[1]);
+		glfwGetWindowSize(window, &windowSize[0], &windowSize[1]);
 
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-		glfwSetWindowMonitor(selectedWindow, monitor, 0, 0, mode->width, mode->height, 0);
+		glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, 0);
 		isFullScreen = true;
 	}
 	else
 	{
-		glfwSetWindowMonitor(selectedWindow, nullptr, windowPos[0], windowPos[1], windowSize[0], windowSize[1], 0);
+		glfwSetWindowMonitor(window, nullptr, windowPos[0], windowPos[1], windowSize[0], windowSize[1], 0);
 		isFullScreen = false;
 	}
 }

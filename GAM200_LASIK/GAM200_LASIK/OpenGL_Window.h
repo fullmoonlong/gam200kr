@@ -1,9 +1,9 @@
 /*
 *	Author: JeongHak Kim	junghak.kim@digipen.edu
 *	
-*	File_name: OpenGL_Window.cpp
+*	File_name: OpenGL_Window.h
 *	
-*	Header for related to window.
+*	Header for window
 *	
 *	2019/09/21
 *	
@@ -20,11 +20,11 @@ public:
 
 	bool CanCreateWindow(int width, int height, const char* title) noexcept;
 	bool IsVSyncOn() noexcept;
-	void ToggleOnVSync(bool status) noexcept;
+	void ToggleVSync(bool status) noexcept;
 	void SwapBuffers() noexcept;
 	void PollEvents() noexcept;
 	bool IsFullScreen() noexcept;
-	void ToggleFullScreen(GLFWwindow* selectedWindow) noexcept;
+	void ToggleFullScreen() noexcept;
 	void SetWindowTitle(const char* title) const noexcept;
 
 private:

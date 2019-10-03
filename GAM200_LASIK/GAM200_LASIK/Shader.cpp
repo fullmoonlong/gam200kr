@@ -1,3 +1,13 @@
+/*
+*	Author: JeongHak Kim	junghak.kim@digipen.edu
+*	
+*	File_name: Shader.cpp
+*	
+*	Implementing shader
+*	
+*	2019/09/25
+*/
+
 #include <GL\glew.h>
 #include "Shader.h"
 #include <iostream>

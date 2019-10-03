@@ -1,3 +1,13 @@
+/*
+*	Author: JeongHak Kim	junghak.kim@digipen.edu
+*	
+*	File_name: Shader.h
+*	
+*	Implementing shader
+*	
+*	2019/09/25
+*/
+
 #pragma once
 #include <string>
 

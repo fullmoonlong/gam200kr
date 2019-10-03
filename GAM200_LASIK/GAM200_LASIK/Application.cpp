@@ -67,9 +67,9 @@ void Application::Initialize()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0); 
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	glBindVertexArray(0); 
+	glBindVertexArray(0);
 
 
 	test = new Object();
@@ -94,18 +94,35 @@ void Application::Update()
 	//test->SetXpos(static_cast<int>(1));
 	//test->SetYpos(static_cast<int>(1));
 
-	if (glfwGetKey(glWindow.window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	if (glfwGetKey(glWindow.window, GLFW_KEY_ESCAPE) == GLFW_RELEASE)
 	{
 		gameEngine->Shutdown();
 	}
-	else if (glfwGetKey(glWindow.window, GLFW_KEY_V) == GLFW_PRESS)
+	else if (glfwGetKey(glWindow.window, GLFW_KEY_V) == GLFW_RELEASE)
 	{
-		glWindow.ToggleOnVSync(!glWindow.IsVSyncOn());
+		glWindow.ToggleVSync(!glWindow.IsVSyncOn());
 	}
-	else if (glfwGetKey(glWindow.window, GLFW_KEY_F) == GLFW_PRESS)
+	else if (glfwGetKey(glWindow.window, GLFW_KEY_F) == GLFW_RELEASE)
 	{
-		glWindow.ToggleFullScreen(glWindow.window);
+		glWindow.ToggleFullScreen();
 	}
 }
 
-
+void Application::HandleKeyTriggered(KeyboardButtons button)
+{
+	if (isTriggered == true)
+	{
+		switch (button)
+		{
+		case KeyboardButtons::Escape:
+			break;
+		case KeyboardButtons::F:
+			glWindow.ToggleFullScreen();
+			break;
+		case KeyboardButtons::V:
+			glWindow.ToggleVSync(true);
+			break;
+		}
+	}
+	isTriggered = false;
+}
