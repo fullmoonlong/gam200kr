@@ -8,6 +8,7 @@
 *	2019/09/25
 */
 
+#include "Mesh.h"
 #include <GL\glew.h>
 #include "Shader.h"
 #include <iostream>
@@ -78,7 +79,12 @@ bool Shader::LoadShader(const std::string& vertex_source, const std::string& fra
 	return true;
 }
 
-unsigned Shader::GetHandleToShader()
+void Shader::InitializeWithMesh(const Mesh& mesh) noexcept
+{
+	size_t pointsCount = mesh.GetPointsCount();
+}
+
+unsigned Shader::GetHandleToShader() const noexcept
 {
 	return handleToShader;
 }

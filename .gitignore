@@ -1,5 +1,11 @@
 
-GAM200_LASIK/MathLibrary/
+GAM200_LASIK/Math/Debug/
+
+GAM200_LASIK/Math/Release/
+
+GAM200_LASIK/Math/x64/
+
+GAM200_LASIK/Math/.vs/
 
 GAM200_LASIK/.vs/
 

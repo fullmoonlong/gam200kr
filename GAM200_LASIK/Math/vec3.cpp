@@ -9,12 +9,12 @@
 
 #include <limits>	// absolute, epsilon
 #include <cassert>	// assert
-#include "vec3.h"
+#include "vec3.hpp"
 
 namespace Math
 {
 	template <typename T>
-	void operator+=(vec3<T>& v, const vec3<T>& adding_vector) noexcept
+	constexpr void operator+=(vec3<T>& v, const vec3<T>& adding_vector) noexcept
 	{
 		v.x += adding_vector.x;
 		v.y += adding_vector.y;
@@ -22,7 +22,7 @@ namespace Math
 	}
 
 	template <typename T>
-	void operator-=(vec3<T>& v, const vec3<T>& subtracting_vector) noexcept
+	constexpr void operator-=(vec3<T>& v, const vec3<T>& subtracting_vector) noexcept
 	{
 		v.x -= subtracting_vector.x;
 		v.y -= subtracting_vector.y;
@@ -30,7 +30,7 @@ namespace Math
 	}
 
 	template <typename T>
-	void operator*=(vec3<T>& v, T scale) noexcept
+	constexpr void operator*=(vec3<T>& v, T scale) noexcept
 	{
 		v.x *= scale;
 		v.y *= scale;
@@ -38,7 +38,7 @@ namespace Math
 	}
 
 	template <typename T>
-	void operator/=(vec3<T>& v, T divisor) noexcept
+	constexpr void operator/=(vec3<T>& v, T divisor) noexcept
 	{
 		assert(divisor != 0.f);
 		v.x /= divisor;
@@ -47,44 +47,44 @@ namespace Math
 	}
 
 	template <typename T>
-	vec3<T> operator-(const vec3<T>& v) noexcept
+	constexpr vec3<T> operator-(const vec3<T>& v) noexcept
 	{
 		return vec3<T>{ -v.x, -v.y, -v.z };
 	}
 
 	template <typename T>
-	vec3<T> operator+(const vec3<T>& v1, const vec3<T>& v2) noexcept
+	constexpr vec3<T> operator+(const vec3<T>& v1, const vec3<T>& v2) noexcept
 	{
 		return vec3<T>{ v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
 	}
 
 	template <typename T>
-	vec3<T> operator-(const vec3<T>& v1, const vec3<T>& v2) noexcept
+	constexpr vec3<T> operator-(const vec3<T>& v1, const vec3<T>& v2) noexcept
 	{
 		return vec3<T>{ v1.x - v2.x, v1.y - v2.y, v1.z - v2.z };
 	}
 
 	template <typename T>
-	vec3<T> operator*(const vec3<T>& v, T scale) noexcept
+	constexpr vec3<T> operator*(const vec3<T>& v, T scale) noexcept
 	{
 		return vec3<T>{ v.x * scale, v.y * scale, v.z * scale };
 	}
 
 	template <typename T>
-	vec3<T> operator*(T scale, const vec3<T>& v) noexcept
+	constexpr vec3<T> operator*(T scale, const vec3<T>& v) noexcept
 	{
 		return v * scale;
 	}
 
 	template <typename T>
-	vec3<T> operator/(const vec3<T>& v, T divisor) noexcept
+	constexpr vec3<T> operator/(const vec3<T>& v, T divisor) noexcept
 	{
 		assert(divisor != 0.f);
 		return vec3<T>{ v.x / divisor, v.y / divisor, v.z / divisor };
 	}
 
 	template <typename T>
-	bool operator==(const vec3<T>& v1, const vec3<T>& v2) noexcept
+	constexpr bool operator==(const vec3<T>& v1, const vec3<T>& v2) noexcept
 	{
 		if (abs(v1.x - v2.x) <= std::numeric_limits<T>::epsilon() && abs(v1.y - v2.y) <= std::numeric_limits<T>::epsilon() && abs(v1.z - v2.z) <= std::numeric_limits<T>::epsilon())
 		{
@@ -94,7 +94,7 @@ namespace Math
 	}
 
 	template <typename T>
-	bool operator!=(const vec3<T>& v1, const vec3<T>& v2) noexcept
+	constexpr bool operator!=(const vec3<T>& v1, const vec3<T>& v2) noexcept
 	{
 		if (v1 == v2)
 		{
@@ -104,37 +104,37 @@ namespace Math
 	}
 
 	template <typename T>
-	T dot_product(vec3<T>& v1, vec3<T>& v2) noexcept
+	constexpr T dot_product(vec3<T>& v1, vec3<T>& v2) noexcept
 	{
 		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
 	}
 
 	template <typename T>
-	vec3<T> cross_product(vec3<T>& v1, vec3<T>& v2) noexcept
+	constexpr vec3<T> cross_product(vec3<T>& v1, vec3<T>& v2) noexcept
 	{
 		return vec3<T>{ v1.y * v2.z - v1.z * v2.y, v1.z * v2.x - v1.x * v2.z, v1.x * v2.y - v1.y * v2.x };
 	}
 
 	template <typename T>
-	T magnitude_squared(vec3<T> v) noexcept
+	constexpr T magnitude_squared(vec3<T> v) noexcept
 	{
 		return dot_product(v, v);
 	}
 
 	template <typename T>
-	T magnitude(vec3<T> v) noexcept
+	constexpr T magnitude(vec3<T> v) noexcept
 	{
 		return sqrt(magnitude_squared(v));
 	}
 
 	template <typename T>
-	T distance_between(vec3<T> v1, vec3<T> v2) noexcept
+	constexpr T distance_between(vec3<T> v1, vec3<T> v2) noexcept
 	{
 		return sqrt(magnitude_squared(v1 - v2));
 	}
 
 	template <typename T>
-	T angle_between(vec3<T>& v1, vec3<T>& v2) noexcept
+	constexpr T angle_between(vec3<T>& v1, vec3<T>& v2) noexcept
 	{
 		assert(magnitude(v1) != 0.f && magnitude(v2) != 0.f);
 		return acos(dot_product(v1, v2) / (magnitude(v1) * magnitude(v2)));

@@ -13,12 +13,14 @@
 #pragma once
 #include <glfw3.h>
 
+class EventHandler;
+
 class glWindow
 {
 public:
 	GLFWwindow* window;
 
-	bool CanCreateWindow(int width, int height, const char* title) noexcept;
+	bool CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept;
 	bool IsVSyncOn() noexcept;
 	void ToggleVSync(bool status) noexcept;
 	void SwapBuffers() noexcept;

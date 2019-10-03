@@ -1,7 +1,7 @@
 /*
 *	Author: JeongHak Kim	junghak.kim@digipen.edu
 *	
-*	File_name: Shader.h
+*	File_name: Shader.hpp
 *	
 *	Header of event handler
 *	
@@ -28,19 +28,18 @@ public:
 	virtual void HandleKeyPress(KeyboardButtons button) = 0;
 	virtual void HandleKeyRelease(KeyboardButtons button) = 0;
 	virtual void HandleKeyTriggered(KeyboardButtons button) = 0;
-	virtual void HandleResizeEvent(const int& width, const int& height) = 0;
+	//virtual void HandleResizeEvent(const int& width, const int& height) = 0;
 	virtual void HandleWindowClose() = 0;
-	bool isTriggered = false;
 
 };
 
-class SimpleEventHandler : EventHandler
+class SimpleEventHandler : public EventHandler
 {
 public:
 	void HandleKeyPress(KeyboardButtons) override {}
 	void HandleKeyRelease(KeyboardButtons) override {}
 	void HandleKeyTriggered(KeyboardButtons) override {}
-	void HandleResizeEvent(const int& /*width*/, const int& /*height*/) override {}
+	//void HandleResizeEvent(const int& /*width*/, const int& /*height*/) override {}
 	void HandleWindowClose() override {}
-
+	
 };

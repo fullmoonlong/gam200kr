@@ -12,45 +12,58 @@
 
 #include <GL\glew.h>
 #include "OpenGL_Window.h"
-#include "EventHandler.h"
 #include <iostream>
+#include "EventHandler.hpp"
 
 EventHandler* eventHandler;
+bool isTriggered = false;
 
 void frame_buffer_size_callback(GLFWwindow*, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
 
-void resize_callback()
-{
-	
-}
+//void resize_callback()
+//{
+//	eventHandler->HandleResizeEvent();
+//}
 
 void window_close_callback()
 {
-	
+	eventHandler->HandleWindowClose();
 }
 
 void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int /*mods*/)
 {
-	if (action == GLFW_PRESS)
+	if (isTriggered == true && action == GLFW_PRESS)
 	{
-		
-		//switch (key)
-		//{
-		//case GLFW_KEY_ESCAPE:
-		//	
-		//	break;
+		isTriggered = true;
+		switch (key)
+		{
+		case GLFW_KEY_ESCAPE:
+			eventHandler->HandleKeyPress(KeyboardButtons::Escape);
+			break;
 		//case GLFW_KEY_F:
 		//	break;
 		//	//TODO: some key board cases
-		//default:
-		//	break;
-		//}
+		default:
+			break;
+		}
+	}
+	else // Triggered
+	{
+		switch (key)
+		{
+		case GLFW_KEY_ESCAPE:
+			eventHandler->HandleKeyTriggered(KeyboardButtons::Escape);
+			break;
+		default:
+			break;
+		}
 	}
 	if (action == GLFW_RELEASE)
 	{
+		isTriggered = false;
 		//switch (key)
 		//{
 		//case GLFW_KEY_ESCAPE:
@@ -61,14 +74,14 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 	}
 }
 
-void mouse_input_callback()
-{
-	
-}
+//void mouse_input_callback()
+//{
+//	
+//}
 
-bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcept
+bool glWindow::CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept
 {
-
+	eventHandler = event_handler;
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	
@@ -97,6 +110,7 @@ bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcep
 	ToggleVSync(true);
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, frame_buffer_size_callback);
+	//glfwSetWindowCloseCallback(window, window_close_callback);
 	glfwSetKeyCallback(window, key_callback);
 	
 	ToggleVSync(true);

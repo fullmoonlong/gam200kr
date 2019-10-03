@@ -7,24 +7,26 @@
 
 #pragma once
 #include "OpenGL_Window.h"
-#include "System.h"
 #include "Shader.h"
-#include "EventHandler.h"
+#include "EventHandler.hpp"
 
-class Application : public EventHandler
+class Application : public SimpleEventHandler
 {
 public:
 	Application();
 	~Application();
-	void Initialize(void);
+	void Initialize();
 	void Update();
-	
-	void HandleKeyTriggered(KeyboardButtons button) override;
+	void ShutDown();
 
+	void HandleKeyPress(KeyboardButtons button) override;
+	void HandleKeyTriggered(KeyboardButtons button) override;
+	void HandleKeyRelease(KeyboardButtons button) override;
+	
+	bool isRunning = false;
+	
 private:
+	
 	Shader shader;
 	glWindow glWindow;
-	int screenWidth = 800;
-	int screenHeight = 600;
-	bool isTriggered = false;
 };

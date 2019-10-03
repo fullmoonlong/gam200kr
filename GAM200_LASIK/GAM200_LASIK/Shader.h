@@ -11,13 +11,16 @@
 #pragma once
 #include <string>
 
-class Shader
+class Mesh;
+
+class [[nodiscard]] Shader
 {
 public:
 	Shader() noexcept = default;
 	Shader(const std::string& vertex_source, const std::string& fragment_source) noexcept;
 	bool LoadShader(const std::string& vertex_source, const std::string& fragment_source) noexcept;
-	unsigned GetHandleToShader();
+	void InitializeWithMesh(const Mesh& mesh) noexcept;
+	unsigned GetHandleToShader() const noexcept;
 	unsigned int VBO = 0, VAO = 0;
 private:
 	unsigned handleToShader = 0;

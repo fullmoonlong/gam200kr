@@ -6,10 +6,7 @@
 */
 
 #include <GL/glew.h>
-#include "Object.h"
-#include "Engine.h"
 #include "Application.h"
-#include "StateManager.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -33,20 +30,20 @@ std::string ReadSourceFrom(const std::filesystem::path& path)
 	return {};
 }
 
-Object* test;
-
 Application::Application()
 {
-	std::cout << "Application Add Sucessful" << std::endl;
+	Initialize();
+	isRunning = true;
 }
 
 Application::~Application()
 {
+	
 }
 
 void Application::Initialize()
 {
-	glWindow.CanCreateWindow(800, 600, "Prototype"); //initialize window
+	glWindow.CanCreateWindow(800, 600, this,"Prototype"); //initialize window
 	const std::string vertex_source = ReadSourceFrom(vertex_path);
 	const std::string fragment_source = ReadSourceFrom(fragment_path);
 	shader.LoadShader(vertex_source, fragment_source);
@@ -71,8 +68,6 @@ void Application::Initialize()
 
 	glBindVertexArray(0);
 
-
-	test = new Object();
 }
 
 void Application::Update()
@@ -94,35 +89,43 @@ void Application::Update()
 	//test->SetXpos(static_cast<int>(1));
 	//test->SetYpos(static_cast<int>(1));
 
-	if (glfwGetKey(glWindow.window, GLFW_KEY_ESCAPE) == GLFW_RELEASE)
+	
+}
+
+void Application::ShutDown()
+{
+	isRunning = false;
+	glfwSetWindowShouldClose(glWindow.window, GLFW_TRUE);
+}
+
+void Application::HandleKeyPress(KeyboardButtons button)
+{
+	switch (button)
 	{
-		gameEngine->Shutdown();
-	}
-	else if (glfwGetKey(glWindow.window, GLFW_KEY_V) == GLFW_RELEASE)
-	{
-		glWindow.ToggleVSync(!glWindow.IsVSyncOn());
-	}
-	else if (glfwGetKey(glWindow.window, GLFW_KEY_F) == GLFW_RELEASE)
-	{
-		glWindow.ToggleFullScreen();
+	case KeyboardButtons::Escape:
+		std::cout << "ESC pressing" << std::endl;
+		break;
+	default:
+		break;
 	}
 }
 
 void Application::HandleKeyTriggered(KeyboardButtons button)
 {
-	if (isTriggered == true)
+	switch (button)
 	{
-		switch (button)
-		{
-		case KeyboardButtons::Escape:
-			break;
-		case KeyboardButtons::F:
-			glWindow.ToggleFullScreen();
-			break;
-		case KeyboardButtons::V:
-			glWindow.ToggleVSync(true);
-			break;
-		}
+	case KeyboardButtons::Escape:
+		std::cout << "ESC triggered" << std::endl;
+		break;
+	case KeyboardButtons::F:
+		glWindow.ToggleFullScreen();
+		break;
+	case KeyboardButtons::V:
+		glWindow.ToggleVSync(true);
+		break;
 	}
-	isTriggered = false;
+}
+
+void Application::HandleKeyRelease(KeyboardButtons /*button*/)
+{
 }
