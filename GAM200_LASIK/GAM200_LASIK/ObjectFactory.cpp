@@ -11,7 +11,7 @@ extern ObjectFactory* objectFactory = nullptr;
 
 ObjectFactory::ObjectFactory()
 {
-	std::cout << "ObjectFactory Add Sucessful" << std::endl;
+	std::cout << "ObjectFactory Add Successful" << std::endl;
 	objectFactory = this;
 	lastObjectID = 0;
 }

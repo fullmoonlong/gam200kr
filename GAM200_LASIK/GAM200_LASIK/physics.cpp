@@ -1,6 +1,6 @@
 #include "Physics.h" 
 #include "Application.h" 
-#include<SFML/Graphics.hpp>
+//#include<SFML/Graphics.hpp>
 
 Physics_object::Physics_object()
 {
@@ -18,7 +18,7 @@ void Physics_object::Initialize(const MathLibrary::vec2 & xPosition, float mass)
 	m_xPosition = xPosition;
 }
 
-void Physics_object::Update(float dt)
+void Physics_object::Update(float /*dt*/)
 {
 
 }

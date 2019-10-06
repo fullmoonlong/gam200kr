@@ -169,6 +169,9 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="OpenGL_Window.cpp" />
+    <ClCompile Include="physics.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="StateManager.cpp" />
   </ItemGroup>
@@ -182,6 +185,9 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="OpenGL_Window.h" />
+    <ClInclude Include="physics.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Shader.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="System.h" />

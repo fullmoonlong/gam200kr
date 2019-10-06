@@ -5,7 +5,6 @@
 
 
 struct AABB {
-
 	MathLibrary::vec2 min;
 	MathLibrary::vec2 max;
 };
@@ -43,10 +42,12 @@ protected:
 	MathLibrary::vec2 m_xDisplacement;
 };
 
-class GravityOb :public Physics_object {
-
-};
-
-class Static_physisOb : Physics_object {
-
-};
+//class GravityOb :public Physics_object
+//{
+//
+//};
+//
+//class Static_physisOb : Physics_object
+//{
+//
+//};
