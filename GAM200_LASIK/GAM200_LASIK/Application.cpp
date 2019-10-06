@@ -37,7 +37,7 @@ Object* test;
 
 Application::Application()
 {
-	std::cout << "Application Add Sucessful" << std::endl;
+	std::cout << "Application Add Successful" << std::endl;
 }
 
 Application::~Application()

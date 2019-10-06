@@ -2,6 +2,13 @@
 #include <string>
 
 typedef unsigned int ObjectID;
+
+struct position
+{
+	float x, y;
+	position(float x_, float y_) : x(x_), y(y_) {}
+};
+
 class Object {
 public:
 	friend class ObjectFactory;
@@ -18,14 +25,13 @@ public:
 	std::string GetName() const{return objectName;}
 	void SetName(const std::string& name){objectName = name;}
 
-	int GetXpos() { return xpos; };
-	int GetYpos() { return ypos; };
-	int SetXpos(int x) { return xpos = x; };
-	int SetYpos(int y) { return ypos = y; };
+	float GetXposition() { return xpos; };
+	float GetYposition() { return ypos; };
+	position SetPosition(float x, float y) { xpos = x; ypos = y; return position(xpos, ypos); }
 
-	ObjectID objectID;
 private:
+	ObjectID objectID;
 	std::string objectName = "";
-	int xpos;
-	int ypos;
+	float xpos;
+	float ypos;
 };

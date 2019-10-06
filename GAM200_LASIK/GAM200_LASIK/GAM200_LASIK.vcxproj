@@ -23,7 +23,7 @@
     <ProjectGuid>{4E4BC61A-CA1C-4D83-B4EB-114A4B30E491}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GAM200LASIK</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <ProjectName>Rescue</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -162,7 +162,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Component.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="LevelTest1.cpp" />
     <ClCompile Include="LevelTest2.cpp" />

@@ -1,6 +1,6 @@
 #pragma once
 #include "LevelSystem.h"
-#include "Object.h"
+#include "ObjectFactory.h"
 class LevelTest1 : public LevelSystem
 {
 public:
@@ -9,4 +9,6 @@ public:
 	void Initialize() override;
 	void Update() override;
 	void Shutdown() override;
+private:
+	Object * test;
 };

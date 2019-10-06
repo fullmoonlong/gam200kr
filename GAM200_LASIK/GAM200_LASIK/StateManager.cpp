@@ -8,7 +8,7 @@ StateManager* STATEMANAGER = nullptr;
 StateManager::StateManager()
 {
 	STATEMANAGER = this;
-	std::cout << "StateManager Add Sucessful" << std::endl;
+	std::cout << "StateManager Add Successful" << std::endl;
 }
 
 StateManager::~StateManager()
