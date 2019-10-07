@@ -20,8 +20,8 @@ public:
 	void ShutDown();
 
 	void HandleKeyPress(KeyboardButtons button) override;
-	void HandleKeyTriggered(KeyboardButtons button) override;
 	void HandleKeyRelease(KeyboardButtons button) override;
+	void HandleResizeEvent(const int& width, const int& height) override;
 	
 	bool isRunning = false;
 	

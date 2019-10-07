@@ -8,10 +8,11 @@
 *	2019/09/25
 */
 
-#include "Mesh.h"
 #include <GL\glew.h>
-#include "Shader.h"
 #include <iostream>
+#include <vec2.hpp>
+#include "Shader.h"
+#include "Mesh.h"
 
 Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) noexcept
 {
@@ -79,12 +80,110 @@ bool Shader::LoadShader(const std::string& vertex_source, const std::string& fra
 	return true;
 }
 
-void Shader::InitializeWithMesh(const Mesh& mesh) noexcept
+void Shader::InitializeWithMesh(const Mesh& mesh, const ShaderDescription& shader_layout) noexcept
 {
-	size_t pointsCount = mesh.GetPointsCount();
+	VAO = 0;
+	VBO = 0;
+	switch (mesh.GetShapePattern())
+	{
+	case ShapePattern::Triangle:
+		pattern = GL_TRIANGLES;
+		break;
+	case ShapePattern::TriangleFan:
+		pattern = GL_TRIANGLE_FAN;
+		break;
+	case ShapePattern::TriangleStrip:
+		pattern = GL_TRIANGLE_STRIP;
+		break;
+	default:
+		break;
+	}
+	layout = shader_layout;
+	verticesCount = (int)mesh.GetPointsCount();
+	bufferVertexCapacity = static_cast<int>(verticesCount * layout.GetPointsNum());
+	
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glBindVertexArray(VAO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, bufferVertexCapacity, NULL, GL_STATIC_DRAW);
+
+
+	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+	//glEnableVertexAttribArray(0);
+
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	//glBindVertexArray(0);
+	layout.EnableAttributes();
+	WriteMeshDataToVertexBuffer(mesh);
+	
 }
 
 unsigned Shader::GetHandleToShader() const noexcept
 {
 	return handleToShader;
+}
+
+void Shader::SendUniformVariable(const char* variable_name, const int& variable) const noexcept
+{
+	const int location = glGetUniformLocation(handleToShader, variable_name);
+	glUniform1i(location, variable);
+}
+
+void Shader::SendUniformVariable(const char* variable_name, const float& variable) const noexcept
+{
+	const int location = glGetUniformLocation(handleToShader, variable_name);
+	glUniform1f(location, variable);
+}
+
+void Shader::SendUniformVariable(const char* variable_name, const Math::mat3<float>& matrix) const noexcept
+{
+	const int location = glGetUniformLocation(handleToShader, variable_name);
+	float matrix3[] = {
+		matrix.elements[0][0], matrix.elements[0][1], matrix.elements[0][2],
+		matrix.elements[1][0], matrix.elements[1][1], matrix.elements[1][2],
+		matrix.elements[2][0], matrix.elements[2][1], matrix.elements[2][2]
+	};
+	glUniformMatrix3fv(location, 1, false, matrix3);
+	//const int location = glGetUniform
+}
+
+void Shader::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
+{
+	char* buffer = reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+	(glBindBuffer(GL_ARRAY_BUFFER, VBO));
+	unsigned offset = 0;
+	for (int i = 0; i < static_cast<int>(verticesCount); i++)
+	{
+		Math::vec2<float> point = mesh.GetPoint(i);
+		Color color;
+		Math::vec2<float> texture;
+		//Math::vec2<float> texture = mesh.GetTextureCoordinate(i);
+		for (ShaderDescription::Type element : layout.GetTypes())
+		{
+			switch (element)
+			{
+			case ShaderDescription::Point:
+				point = mesh.GetPoint(i);
+				memcpy(buffer + offset, &point, sizeof(point));
+				offset += sizeof(Math::vec2<float>);
+				break;
+			case ShaderDescription::Color:
+				color = mesh.GetColor(i);
+				memcpy(buffer + offset, &color, sizeof(color));
+				offset += sizeof(Color);
+				break;
+			case ShaderDescription::TextCoordinate:
+				texture = mesh.GetTextureCoordinate(i);
+				memcpy(buffer + offset, &texture, sizeof(texture));
+				offset += sizeof(Math::vec2<float>);
+				break;
+			}
+		}
+	}
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 }

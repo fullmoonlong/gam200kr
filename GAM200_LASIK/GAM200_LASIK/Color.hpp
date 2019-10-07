@@ -4,6 +4,8 @@
 class Color
 {
 public:
+	Color()
+		: r(0.0f), g(0.0f), b(0.0f), a(0.0f) {}
 	Color(float same_intensity, float alpha = 1.0f)
 	{
 		const float new_color = std::clamp(same_intensity, 0.0f, 1.0f);

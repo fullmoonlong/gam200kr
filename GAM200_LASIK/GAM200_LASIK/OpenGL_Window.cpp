@@ -16,17 +16,18 @@
 #include "EventHandler.hpp"
 
 EventHandler* eventHandler;
-bool isTriggered = false;
+//bool isTriggered = false;
+//int oldState = GLFW_RELEASE;
 
 void frame_buffer_size_callback(GLFWwindow*, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
 
-//void resize_callback()
-//{
-//	eventHandler->HandleResizeEvent();
-//}
+void resize_callback(GLFWwindow*, int width, int height)
+{
+	eventHandler->HandleResizeEvent(width, height);
+}
 
 void window_close_callback()
 {
@@ -35,43 +36,27 @@ void window_close_callback()
 
 void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int /*mods*/)
 {
-	if (isTriggered == true && action == GLFW_PRESS)
+	if (action == GLFW_PRESS)
 	{
-		isTriggered = true;
 		switch (key)
 		{
 		case GLFW_KEY_ESCAPE:
 			eventHandler->HandleKeyPress(KeyboardButtons::Escape);
 			break;
-		//case GLFW_KEY_F:
-		//	break;
-		//	//TODO: some key board cases
-		default:
+		case GLFW_KEY_F:
+			eventHandler->HandleKeyPress(KeyboardButtons::F);
 			break;
-		}
-	}
-	else // Triggered
-	{
-		switch (key)
-		{
-		case GLFW_KEY_ESCAPE:
-			eventHandler->HandleKeyTriggered(KeyboardButtons::Escape);
+		case GLFW_KEY_V:
+			eventHandler->HandleKeyPress(KeyboardButtons::V);
+			break;
+		case GLFW_KEY_G:
+			eventHandler->HandleKeyPress(KeyboardButtons::G);
 			break;
 		default:
 			break;
 		}
 	}
-	if (action == GLFW_RELEASE)
-	{
-		isTriggered = false;
-		//switch (key)
-		//{
-		//case GLFW_KEY_ESCAPE:
-		//	break;
-		//case GLFW_KEY_F:
-		//	break;
-		//}
-	}
+	
 }
 
 //void mouse_input_callback()
@@ -107,9 +92,13 @@ bool glWindow::CanCreateWindow(int width, int height, EventHandler* event_handle
 		return false;
 	}
 
+	windowSize[0] = width;
+	windowSize[1] = height;
+
 	ToggleVSync(true);
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, frame_buffer_size_callback);
+	glfwSetWindowSizeCallback(window, resize_callback);
 	//glfwSetWindowCloseCallback(window, window_close_callback);
 	glfwSetKeyCallback(window, key_callback);
 	
@@ -173,4 +162,24 @@ void glWindow::ToggleFullScreen() noexcept
 void glWindow::SetWindowTitle(const char* title) const noexcept
 {
 	glfwSetWindowTitle(window, title);
+}
+
+int glWindow::GetWindowWidth() const noexcept
+{
+	return windowSize[0];
+}
+
+int glWindow::GetWindowHeight() const noexcept
+{
+	return windowSize[1];
+}
+
+void glWindow::SetWindowWidth(int new_width) noexcept
+{
+	windowPos[0] = new_width;
+}
+
+void glWindow::SetWindowHeight(int new_height) noexcept
+{
+	windowPos[1] = new_height;
 }

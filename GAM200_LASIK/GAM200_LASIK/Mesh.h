@@ -10,12 +10,8 @@
 
 #pragma once
 #include <vector>
-
-namespace MathLibrary {
-	class vec2;
-}
-
-class Color;
+#include "Color.hpp"
+#include <vec2.hpp>
 
 enum class ShapePattern
 {
@@ -24,17 +20,16 @@ enum class ShapePattern
 	TriangleFan
 };
 
-
 class [[nodiscard]] Mesh
 {
 public:
-	void AddPoint(MathLibrary::vec2 point) noexcept;
+	void AddPoint(Math::vec2<float> point) noexcept;
 	void AddColor(Color color) noexcept;
-	void AddTextureCoordinate(MathLibrary::vec2 textureCoordinate) noexcept;
+	void AddTextureCoordinate(Math::vec2<float> textureCoordinate) noexcept;
 
-	MathLibrary::vec2 GetPoint(int index) const noexcept;
+	Math::vec2<float> GetPoint(int index) const noexcept;
 	Color GetColor(int index) const noexcept;
-	MathLibrary::vec2 GetTextCoor(int index) const noexcept;
+	Math::vec2<float> GetTextureCoordinate(int index) const noexcept;
 
 	void SetShapePattern(ShapePattern new_pattern) noexcept;
 	ShapePattern GetShapePattern() const noexcept;
@@ -42,16 +37,16 @@ public:
 	size_t GetPointsCount() const noexcept;
 
 private:
-	std::vector<MathLibrary::vec2> points;
+	std::vector<Math::vec2<float>> points;
 	std::vector<Color> colors;
-	std::vector<MathLibrary::vec2> textureCoordinates;
+	std::vector<Math::vec2<float>> textureCoordinates;
 	ShapePattern pattern = ShapePattern::Triangle;
 	
 };
 
 namespace MESH
 {
-	//void draw_ellipse(int rx, int ry, int pointsNum, MathLibrary::vec3 color);
+	Mesh draw_ellipse(float rx, float ry, int pointsNum, Color color);
 	//void draw_rectangle(int width, int height, MathLibrary::vec3 color);
 	//void draw_line(MathLibrary::vec2, MathLibrary::vec2, MathLibrary::vec3 color);
 }

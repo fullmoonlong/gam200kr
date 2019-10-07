@@ -15,7 +15,7 @@
 
 class EventHandler;
 
-class glWindow
+class [[nodiscard]]glWindow
 {
 public:
 	GLFWwindow* window;
@@ -28,7 +28,12 @@ public:
 	bool IsFullScreen() noexcept;
 	void ToggleFullScreen() noexcept;
 	void SetWindowTitle(const char* title) const noexcept;
+	int GetWindowWidth() const noexcept;
+	int GetWindowHeight() const noexcept;
 
+	void SetWindowWidth(int new_width) noexcept;
+	void SetWindowHeight(int new_height) noexcept;
+	
 private:
 	bool isVSyncOn = true;
 	bool isFullScreen = false;
