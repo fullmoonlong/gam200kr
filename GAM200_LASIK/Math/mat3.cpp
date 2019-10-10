@@ -33,23 +33,24 @@ namespace Math
 	constexpr mat3<T> build_translation(T translate_x, T translate_y) noexcept
 	{
 		return mat3<T>{ 1, 0, 0,
-					0, 1, 0,
-					translate_x, translate_y, 1 };
+			0, 1, 0,
+			translate_x, translate_y, 1 };
 	}
 
 	template <typename T>
 	constexpr mat3<T> build_rotation(float angle_in_radians) noexcept
 	{
 		return mat3<T>{ cos(angle_in_radians), sin(angle_in_radians), 0,
-					-sin(angle_in_radians), cos(angle_in_radians), 0,
-					0, 0, 1 };
+			-sin(angle_in_radians), cos(angle_in_radians), 0,
+			0, 0, 1 };
 	}
 
 	template <typename T>
 	constexpr mat3<T> build_scaling(T scale) noexcept
 	{
 		return mat3<T>{ scale, 0, 0,
-					0, scale, 0,
-					0, 0 ,1 };
+			0, scale, 0,
+			0, 0, 1 };
 	}
+	
 }

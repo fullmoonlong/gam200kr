@@ -147,7 +147,6 @@ void Shader::SendUniformVariable(const char* variable_name, const Math::mat3<flo
 		matrix.elements[2][0], matrix.elements[2][1], matrix.elements[2][2]
 	};
 	glUniformMatrix3fv(location, 1, false, matrix3);
-	//const int location = glGetUniform
 }
 
 void Shader::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
@@ -155,12 +154,13 @@ void Shader::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
 	char* buffer = reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 	(glBindBuffer(GL_ARRAY_BUFFER, VBO));
 	unsigned offset = 0;
+	
+	Math::vec2<float> point;
+	Color color;
+	Math::vec2<float> texture;
+	
 	for (int i = 0; i < static_cast<int>(verticesCount); i++)
 	{
-		Math::vec2<float> point = mesh.GetPoint(i);
-		Color color;
-		Math::vec2<float> texture;
-		//Math::vec2<float> texture = mesh.GetTextureCoordinate(i);
 		for (ShaderDescription::Type element : layout.GetTypes())
 		{
 			switch (element)

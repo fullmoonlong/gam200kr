@@ -55,6 +55,7 @@ namespace Math
 			vec3<T> column0, column1, column2;
 		};
 		constexpr T operator() (int column, int row) const noexcept;
+		
 		constexpr T& operator() (int column, int row) noexcept;
 	};
 
@@ -64,8 +65,19 @@ namespace Math
 	//void operator*=(mat3<T>& m1, const mat3<T>& m2) noexcept;
 	template <typename T>
 	constexpr mat3<T> build_translation(T translate_x, T translate_y) noexcept;
+	
 	template <typename T>
 	constexpr mat3<T> build_rotation(float angle_in_radians) noexcept;
+	
 	template <typename T>
 	constexpr mat3<T> build_scaling(T scale) noexcept;
+
+	template <typename T>
+	constexpr mat3<T> build_scaling(T scale_x, T scale_y) noexcept
+	{
+		return mat3<T>{scale_x, 0, 0,
+			0, scale_y, 0,
+			0, 0, 1};
+	}
+	
 }

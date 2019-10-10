@@ -101,8 +101,6 @@ bool glWindow::CanCreateWindow(int width, int height, EventHandler* event_handle
 	glfwSetWindowSizeCallback(window, resize_callback);
 	//glfwSetWindowCloseCallback(window, window_close_callback);
 	glfwSetKeyCallback(window, key_callback);
-	
-	ToggleVSync(true);
 
 	GLenum err = glewInit();
 	if (err != GLEW_OK)
@@ -176,10 +174,10 @@ int glWindow::GetWindowHeight() const noexcept
 
 void glWindow::SetWindowWidth(int new_width) noexcept
 {
-	windowPos[0] = new_width;
+	windowSize[0] = new_width;
 }
 
 void glWindow::SetWindowHeight(int new_height) noexcept
 {
-	windowPos[1] = new_height;
+	windowSize[1] = new_height;
 }

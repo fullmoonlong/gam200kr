@@ -29,38 +29,55 @@ namespace Math
 
 	template <typename T>
 	constexpr void operator+=(vec2<T>& v, const vec2<T>& adding_vector) noexcept;
+	
 	template <typename T>
 	constexpr void operator-=(vec2<T>& v, const vec2<T>& subtracting_vector) noexcept;
+	
 	template <typename T>
 	constexpr void operator*=(vec2<T>& v, T scale) noexcept;
+	
 	template <typename T>
 	constexpr void operator/=(vec2<T>& v, T divisor) noexcept;
+	
 	template <typename T>
 	constexpr vec2<T> operator-(const vec2<T>& v) noexcept;
+	
 	template <typename T>
 	constexpr vec2<T> operator+(const vec2<T>& v1, const vec2<T>& v2) noexcept;
+	
 	template <typename T>
 	constexpr vec2<T> operator-(const vec2<T>& v1, const vec2<T>& v2) noexcept;
+	
 	template <typename T>
 	constexpr vec2<T> operator*(const vec2<T>& v, T scale) noexcept;
+	
 	template <typename T>
 	constexpr vec2<T> operator*(T scale, const vec2<T>& v) noexcept;
+	
 	template <typename T>
 	constexpr vec2<T> operator/(const vec2<T>& v, T divisor) noexcept;
+	
 	template <typename T>
 	constexpr bool operator==(const vec2<T>& v1, const vec2<T>& v2) noexcept;
+	
 	template <typename T>
 	constexpr bool operator!=(const vec2<T>& v1, const vec2<T>& v2) noexcept;
+	
 	template <typename T>
 	constexpr T dot_product(vec2<T> v1, vec2<T> v2) noexcept;
+	
 	template <typename T>
 	constexpr T magnitude_squared(vec2<T> v) noexcept;
+	
 	template <typename T>
 	constexpr T magnitude(vec2<T> v) noexcept;
+	
 	template <typename T>
 	constexpr T distance_between(vec2<T> v1, vec2<T> v2) noexcept;
+	
 	template <typename T>
 	constexpr T angle_between(vec2<T> v1, vec2<T> v2) noexcept;
+	
 	template <typename T>
 	constexpr vec2<T> rotate_by(float angle_in_radians, vec2<T> v) noexcept;
 }

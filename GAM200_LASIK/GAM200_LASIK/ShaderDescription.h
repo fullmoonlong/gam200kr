@@ -39,8 +39,8 @@ public:
 	void EnableAttributes() const noexcept;
 	
 private:
-	unsigned pointsNum = 0;
-	std::vector<Type> types{};
+	unsigned vertexSize = 0;
 	std::vector<TypeDescription> typeDescription{};
+	std::vector<Type> types{};
 	
 };

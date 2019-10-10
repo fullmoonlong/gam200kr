@@ -37,7 +37,7 @@ void ShaderDescription::AddType(Type type) noexcept
 	}
 	types.push_back(type);
 	typeDescription.push_back(description);
-	pointsNum += description.sizeInBytes;
+	vertexSize += description.sizeInBytes;
 }
 
 const std::vector<ShaderDescription::Type>& ShaderDescription::GetTypes() const noexcept
@@ -55,7 +55,7 @@ ShaderDescription::ShaderDescription(std::initializer_list<Type> fields) noexcep
 
 unsigned ShaderDescription::GetPointsNum() const noexcept
 {
-	return pointsNum;
+	return vertexSize;
 }
 
 void ShaderDescription::EnableAttributes() const noexcept
@@ -66,7 +66,7 @@ void ShaderDescription::EnableAttributes() const noexcept
 	{
 		TypeDescription description = typeDescription[i];
 		glEnableVertexAttribArray(i);
-		glVertexAttribPointer(i, description.elementsNumber, description.elementsType, description.shouldNormalize, pointsNum, (GLvoid*)offset);
+		glVertexAttribPointer(i, description.elementsNumber, description.elementsType, description.shouldNormalize, vertexSize, (GLvoid*)offset);
 		offset += description.sizeInBytes;
 	}
 }

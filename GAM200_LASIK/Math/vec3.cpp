@@ -139,4 +139,12 @@ namespace Math
 		assert(magnitude(v1) != 0.f && magnitude(v2) != 0.f);
 		return acos(dot_product(v1, v2) / (magnitude(v1) * magnitude(v2)));
 	}
+
+	template <typename T>
+	constexpr T normalize(vec3<T>& v) noexcept
+	{
+		T magnitude = magnitude(v);
+		assert(magnitude != (T)0);
+		return v / magnitude;
+	}
 }

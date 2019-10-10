@@ -1,9 +1,10 @@
 /*
 *	Author: JeongHak Kim	junghak.kim@digipen.edu
-			Doyeong Yi doyoung.lee@digipen.edu
-*	GAM200 Engine Prototype
+*			Doyeong Yi doyoung.lee@digipen.edu
+*	Application
 *	2019/07/04
 */
+
 
 #include <GL/glew.h>
 #include "Application.h"
@@ -52,25 +53,10 @@ void Application::Initialize()
 
 	const Color circleColor{ 1.0f, 0.0f, 0.0f, 1.0f };
 	
-	circle = MESH::draw_ellipse(0.5f, 0.5f, 30, circleColor);
+	circle = MESH::draw_ellipse(30.5f, 30.5f, 30, circleColor);
 
 	ShaderDescription circleLayout = { ShaderDescription::Type::Point };
 	shader.InitializeWithMesh(circle, circleLayout);
-
-	
-	//glGenVertexArrays(1, &shader.VAO);
-	//glGenBuffers(1, &shader.VBO);
-	//glBindVertexArray(shader.VAO);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, shader.VBO);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-	//glEnableVertexAttribArray(0);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	//glBindVertexArray(0);
 
 }
 
@@ -79,19 +65,11 @@ void Application::Update()
 	glWindow.SwapBuffers();
 	glWindow.PollEvents();
 
-	//shader.SendUniformVariable("width", (float)glWindow.GetWindowWidth());
-	//shader.SendUniformVariable("height", (float)glWindow.GetWindowHeight());
+	int width = glWindow.GetWindowWidth();
+	int height = glWindow.GetWindowHeight();
 
-	float width = (float)glWindow.GetWindowWidth();
-	float height = (float)glWindow.GetWindowHeight();
+	Math::mat3<float> ndc = Math::build_scaling<float>(2.0f / (float)width, 2.0f / (float)height);
 
-	Math::mat3<float> ndc(
-		2.0f / width, 0.0f, 0.0f,
-		0.0f, 2.0f / height, 0.0f,
-		0.0f, 0.0f, 1.0f);
-
-	shader.SendUniformVariable("NDC", ndc);
-	
 	//start drawing
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -99,12 +77,14 @@ void Application::Update()
 	glBindVertexArray(shader.VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, shader.VBO);
-	
+	glUseProgram(shader.GetHandleToShader());	// Using shader ******* important *******
+	shader.SendUniformVariable("NDC", ndc);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei)circle.GetPointsCount());
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glBindVertexArray(0);
+	
 	//finish drawing
 
 	

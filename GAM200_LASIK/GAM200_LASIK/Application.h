@@ -1,9 +1,10 @@
 /*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
-			Doyeong Yi doyoung.lee@digipen.edu
- *	GAM200 Engine Prototype
- *	2019/07/04
- */
+*	Author: JeongHak Kim	junghak.kim@digipen.edu
+*			Doyeong Yi doyoung.lee@digipen.edu
+*	Application
+*	2019/07/04
+*/
+
 
 #pragma once
 #include "OpenGL_Window.h"
