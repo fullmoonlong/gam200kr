@@ -1,23 +1,23 @@
 /*
 *	Author: JeongHak Kim	junghak.kim@digipen.edu
-			Doyeong Yi doyoung.lee@digipen.edu
-*	GAM200 Engine Prototype
+*			Doyeong Yi doyoung.lee@digipen.edu
+*	Application
 *	2019/07/04
 */
 
+
 #include <GL/glew.h>
-#include "Object.h"
-#include "Engine.h"
 #include "Application.h"
-#include "StateManager.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include "Mesh.h"
 
 const std::filesystem::path vertex_path = "../assets/test.vert";
 const std::filesystem::path fragment_path = "../assets/test.frag";
 
-std::string get_file_contents(const std::filesystem::path& path)
+Mesh circle;
+std::string ReadSourceFrom(const std::filesystem::path& path)
 {
 	std::ifstream in(path, std::ios::in | std::ios::binary);
 	if (in)
@@ -33,79 +33,98 @@ std::string get_file_contents(const std::filesystem::path& path)
 	return {};
 }
 
-Object* test;
-
 Application::Application()
 {
-	std::cout << "Application Add Successful" << std::endl;
+	Initialize();
+	isRunning = true;
 }
 
 Application::~Application()
 {
+	
 }
 
 void Application::Initialize()
 {
-	glWindow.CanCreateWindow(800, 600, "Prototype"); //initialize window
-	const std::string vertex_source = get_file_contents(vertex_path);
-	const std::string fragment_source = get_file_contents(fragment_path);
+	glWindow.CanCreateWindow(800, 600, this,"Prototype"); //initialize window
+	const std::string vertex_source = ReadSourceFrom(vertex_path);
+	const std::string fragment_source = ReadSourceFrom(fragment_path);
 	shader.LoadShader(vertex_source, fragment_source);
 
-	float vertices[] = {
-		-0.5f, -0.5f, 0.0f, // left
-		0.5f, -0.5f, 0.0f, // right
-		0.0f,  0.5f, 0.0f  // top
-	}; 
+	const Color circleColor{ 1.0f, 0.0f, 0.0f, 1.0f };
+	
+	circle = MESH::draw_ellipse(30.5f, 30.5f, 30, circleColor);
 
-	glGenVertexArrays(1, &shader.VAO);
-	glGenBuffers(1, &shader.VBO);
-	glBindVertexArray(shader.VAO);
+	ShaderDescription circleLayout = { ShaderDescription::Type::Point };
+	shader.InitializeWithMesh(circle, circleLayout);
 
-	glBindBuffer(GL_ARRAY_BUFFER, shader.VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-	glEnableVertexAttribArray(0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, 0); 
-
-	glBindVertexArray(0); 
-
-
-	test = new Object();
 }
 
 void Application::Update()
 {
 	glWindow.SwapBuffers();
 	glWindow.PollEvents();
-	
+
+	int width = glWindow.GetWindowWidth();
+	int height = glWindow.GetWindowHeight();
+
+	Math::mat3<float> ndc = Math::build_scaling<float>(2.0f / (float)width, 2.0f / (float)height);
+
 	//start drawing
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-	glUseProgram(shader.GetHandleToShader());
 	glBindVertexArray(shader.VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
 
+	glBindBuffer(GL_ARRAY_BUFFER, shader.VBO);
+	glUseProgram(shader.GetHandleToShader());	// Using shader ******* important *******
+	shader.SendUniformVariable("NDC", ndc);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei)circle.GetPointsCount());
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindVertexArray(0);
+	
 	//finish drawing
 
-	//std::cout << test->GetXpos() << " " << test->GetYpos() << std::endl;
-	//test->SetXpos(static_cast<int>(1));
-	//test->SetYpos(static_cast<int>(1));
+	
+}
 
-	if (glfwGetKey(glWindow.window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+void Application::ShutDown()
+{
+	isRunning = false;
+	glfwSetWindowShouldClose(glWindow.window, GLFW_TRUE);
+}
+
+void Application::HandleKeyPress(KeyboardButtons button)
+{
+	switch (button)
 	{
-		gameEngine->Shutdown();
-	}
-	else if (glfwGetKey(glWindow.window, GLFW_KEY_V) == GLFW_PRESS)
-	{
-		glWindow.ToggleOnVSync(!glWindow.IsVSyncOn());
-	}
-	else if (glfwGetKey(glWindow.window, GLFW_KEY_F) == GLFW_PRESS)
-	{
-		glWindow.ToggleFullScreen(glWindow.window);
+	case KeyboardButtons::Escape:
+		this->ShutDown();
+		break;
+	case KeyboardButtons::F:
+		glWindow.ToggleFullScreen();
+		break;
+	case KeyboardButtons::V:
+		glWindow.ToggleVSync(true);
+		break;
+	case KeyboardButtons::G:
+		std::cout << "G pressed" << std::endl;
+	default:
+		break;
 	}
 }
 
+void Application::HandleKeyRelease(KeyboardButtons /*button*/)
+{
+	
+}
+
+void Application::HandleResizeEvent(const int& width, const int& height)
+{
+	glWindow.SetWindowWidth(width);
+	glWindow.SetWindowHeight(height);
+	glfwSetWindowSize(glWindow.window, width, height);
+}
 

@@ -13,15 +13,60 @@
 #include <GL\glew.h>
 #include "OpenGL_Window.h"
 #include <iostream>
+#include "EventHandler.hpp"
+
+EventHandler* eventHandler;
+//bool isTriggered = false;
+//int oldState = GLFW_RELEASE;
 
 void frame_buffer_size_callback(GLFWwindow*, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
 
-bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcept
+void resize_callback(GLFWwindow*, int width, int height)
 {
+	eventHandler->HandleResizeEvent(width, height);
+}
 
+void window_close_callback()
+{
+	eventHandler->HandleWindowClose();
+}
+
+void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int /*mods*/)
+{
+	if (action == GLFW_PRESS)
+	{
+		switch (key)
+		{
+		case GLFW_KEY_ESCAPE:
+			eventHandler->HandleKeyPress(KeyboardButtons::Escape);
+			break;
+		case GLFW_KEY_F:
+			eventHandler->HandleKeyPress(KeyboardButtons::F);
+			break;
+		case GLFW_KEY_V:
+			eventHandler->HandleKeyPress(KeyboardButtons::V);
+			break;
+		case GLFW_KEY_G:
+			eventHandler->HandleKeyPress(KeyboardButtons::G);
+			break;
+		default:
+			break;
+		}
+	}
+	
+}
+
+//void mouse_input_callback()
+//{
+//	
+//}
+
+bool glWindow::CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept
+{
+	eventHandler = event_handler;
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	
@@ -30,7 +75,6 @@ bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcep
 		glfwTerminate();
 		return false;
 	}
-
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_RED_BITS, 8);
@@ -48,11 +92,15 @@ bool glWindow::CanCreateWindow(int width, int height, const char* title) noexcep
 		return false;
 	}
 
-	ToggleOnVSync(true);
+	windowSize[0] = width;
+	windowSize[1] = height;
+
+	ToggleVSync(true);
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, frame_buffer_size_callback);
-
-	ToggleOnVSync(true);
+	glfwSetWindowSizeCallback(window, resize_callback);
+	//glfwSetWindowCloseCallback(window, window_close_callback);
+	glfwSetKeyCallback(window, key_callback);
 
 	GLenum err = glewInit();
 	if (err != GLEW_OK)
@@ -69,7 +117,7 @@ bool glWindow::IsVSyncOn() noexcept
 	return isVSyncOn;
 }
 
-void glWindow::ToggleOnVSync(bool status) noexcept
+void glWindow::ToggleVSync(bool status) noexcept
 {
 	isVSyncOn = status;
 	glfwSwapInterval(isVSyncOn);
@@ -90,21 +138,46 @@ bool glWindow::IsFullScreen() noexcept
 	return isFullScreen;
 }
 
-void glWindow::ToggleFullScreen(GLFWwindow* selectedWindow) noexcept
+void glWindow::ToggleFullScreen() noexcept
 {
 	if (!IsFullScreen())
 	{
-		glfwGetWindowPos(selectedWindow, &windowPos[0], &windowPos[1]);
-		glfwGetWindowSize(selectedWindow, &windowSize[0], &windowSize[1]);
+		glfwGetWindowPos(window, &windowPos[0], &windowPos[1]);
+		glfwGetWindowSize(window, &windowSize[0], &windowSize[1]);
 
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-		glfwSetWindowMonitor(selectedWindow, monitor, 0, 0, mode->width, mode->height, 0);
+		glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, 0);
 		isFullScreen = true;
 	}
 	else
 	{
-		glfwSetWindowMonitor(selectedWindow, nullptr, windowPos[0], windowPos[1], windowSize[0], windowSize[1], 0);
+		glfwSetWindowMonitor(window, nullptr, windowPos[0], windowPos[1], windowSize[0], windowSize[1], 0);
 		isFullScreen = false;
 	}
+}
+
+void glWindow::SetWindowTitle(const char* title) const noexcept
+{
+	glfwSetWindowTitle(window, title);
+}
+
+int glWindow::GetWindowWidth() const noexcept
+{
+	return windowSize[0];
+}
+
+int glWindow::GetWindowHeight() const noexcept
+{
+	return windowSize[1];
+}
+
+void glWindow::SetWindowWidth(int new_width) noexcept
+{
+	windowSize[0] = new_width;
+}
+
+void glWindow::SetWindowHeight(int new_height) noexcept
+{
+	windowSize[1] = new_height;
 }

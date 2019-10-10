@@ -15,7 +15,7 @@
  */
 
 //#include <Windows.h>
-#include "Engine.h"
+#include "Application.h"
 
 //int WINAPI wWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, PWSTR /*pCmdLine*/, int /*nCmdShow*/)
 //{
@@ -27,8 +27,12 @@
 
 int main()
 {
-		Engine* ENGINE = new Engine();
-		ENGINE->Run();
+	Application app;
 
-		return 0;
+	while (app.isRunning)
+	{
+		app.Update();
+	}
+	
+	return 0;
 }

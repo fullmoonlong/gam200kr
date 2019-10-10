@@ -26,13 +26,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mat3.h">
+    <ClInclude Include="vec2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vec2.h">
+    <ClInclude Include="mat3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vec3.h">
+    <ClInclude Include="vec3.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
