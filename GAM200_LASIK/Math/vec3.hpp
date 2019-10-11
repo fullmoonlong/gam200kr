@@ -81,5 +81,5 @@ namespace Math
 	constexpr T angle_between(vec3<T>& v1, vec3<T>& v2) noexcept;
 	
 	template <typename T>
-	constexpr T normalize(vec3<T>& v) noexcept;
+	constexpr vec3<T> normalize(vec3<T>& v) noexcept;
 }

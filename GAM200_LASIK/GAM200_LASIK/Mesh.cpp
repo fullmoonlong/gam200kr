@@ -67,7 +67,7 @@ Mesh MESH::draw_ellipse(float rx, float ry, int pointsNum, Color color)
 
 	for (int i = 0; i <= pointsNum; i++)
 	{
-		circle.AddPoint({ rx * cos((float)i * angle), ry * sin((float)i * angle) });
+		circle.AddPoint({ rx * (float)cos((float)i * angle), ry * (float)sin((float)i * angle) });
 		circle.AddColor(color);
 	}
 

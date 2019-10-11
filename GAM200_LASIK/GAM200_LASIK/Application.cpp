@@ -55,7 +55,7 @@ void Application::Initialize()
 	
 	circle = MESH::draw_ellipse(30.5f, 30.5f, 30, circleColor);
 
-	ShaderDescription circleLayout = { ShaderDescription::Type::Point };
+	ShaderDescription circleLayout = { ShaderDescription::Type::Point, ShaderDescription::Type::Color };
 	shader.InitializeWithMesh(circle, circleLayout);
 
 }

@@ -137,4 +137,12 @@ namespace Math
 		float sin_value = sin(angle_in_radians);
 		return vec2<T>{ cos_value * v.x - sin_value * v.y, sin_value * v.x + cos_value * v.y };
 	}
+
+	template <typename T>
+	constexpr vec2<T> normalize(vec2<T>& v) noexcept
+	{
+		T magnitude = magnitude(v);
+		assert(magnitude != (T)0);
+		return v / magnitude;
+	}
 }

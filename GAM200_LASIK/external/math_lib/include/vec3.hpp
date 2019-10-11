@@ -28,38 +28,58 @@ namespace Math
 
 	template <typename T>
 	constexpr void operator+=(vec3<T>& v, const vec3<T>& adding_vector) noexcept;
+	
 	template <typename T>
 	constexpr void operator-=(vec3<T>& v, const vec3<T>& subtracting_vector) noexcept;
+	
 	template <typename T>
 	constexpr void operator*=(vec3<T>& v, T scale) noexcept;
+	
 	template <typename T>
 	constexpr void operator/=(vec3<T>& v, T divisor) noexcept;
+	
 	template <typename T>
 	constexpr vec3<T> operator-(const vec3<T>& v) noexcept;	// change sign
+	
 	template <typename T>
 	constexpr vec3<T> operator+(const vec3<T>& v1, const vec3<T>& v2) noexcept;
+	
 	template <typename T>
 	constexpr vec3<T> operator-(const vec3<T>& v1, const vec3<T>& v2) noexcept;
+	
 	template <typename T>
 	constexpr vec3<T> operator*(const vec3<T>& v, T scale) noexcept;
+	
 	template <typename T>
 	constexpr vec3<T> operator*(T scale, const vec3<T>& v) noexcept;
+	
 	template <typename T>
 	constexpr vec3<T> operator/(const vec3<T>& v, T divisor) noexcept;
+	
 	template <typename T>
 	constexpr bool operator==(const vec3<T>& v1, const vec3<T>& v2) noexcept;
+	
 	template <typename T>
 	constexpr bool operator!=(const vec3<T>& v1, const vec3<T>& v2) noexcept;
+	
 	template <typename T>
 	constexpr T dot_product(vec3<T>& v1, vec3<T>& v2) noexcept;
+	
 	template <typename T>
 	constexpr vec3<T> cross_product(vec3<T>& v1, vec3<T>& v2) noexcept;
+	
 	template <typename T>
 	constexpr T magnitude_squared(vec3<T> v) noexcept;
+	
 	template <typename T>
 	constexpr T magnitude(vec3<T> v) noexcept;
+	
 	template <typename T>
 	constexpr T distance_between(vec3<T> v1, vec3<T> v2) noexcept;
+	
 	template <typename T>
 	constexpr T angle_between(vec3<T>& v1, vec3<T>& v2) noexcept;
+	
+	template <typename T>
+	constexpr vec3<T> normalize(vec3<T>& v) noexcept;
 }

@@ -11,15 +11,16 @@
 
 #include "Image.hpp"
 #include <cassert>
+#define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
 void Image::ResizePixelSize(int image_width, int image_height) noexcept
 {
 	assert(image_width > 0 || image_height > 0);
 	width = image_width;
-	height = image_height;
+	height = image_height; 
 
-	pixels.resize((width + 1) * (height + 1));
+	pixels.resize((width + 1) * (height + 1));	// To avoid warning
 }
 
 bool Image::LoadFrom(std::filesystem::path& source) noexcept

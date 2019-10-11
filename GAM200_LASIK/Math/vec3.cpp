@@ -141,7 +141,7 @@ namespace Math
 	}
 
 	template <typename T>
-	constexpr T normalize(vec3<T>& v) noexcept
+	constexpr vec3<T> normalize(vec3<T>& v) noexcept
 	{
 		T magnitude = magnitude(v);
 		assert(magnitude != (T)0);
