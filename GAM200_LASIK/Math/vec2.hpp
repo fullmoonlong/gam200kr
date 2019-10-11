@@ -83,4 +83,7 @@ namespace Math
 
 	template <typename T>
 	constexpr vec2<T> rotate_by(float angle_in_radians, vec2<T> v) noexcept;
+
+	template <typename T>
+	constexpr vec2<T> normalize(vec2<T>& v) noexcept;
 }
