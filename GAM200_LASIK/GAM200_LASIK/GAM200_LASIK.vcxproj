@@ -164,6 +164,7 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="LevelTest1.cpp" />
     <ClCompile Include="LevelTest2.cpp" />
@@ -175,15 +176,19 @@
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderDescription.cpp" />
+    <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\Desktop\GAM200_LASIK\LevelSystem.h" />
     <ClInclude Include="Angle.hpp" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Color4f.hpp" />
     <ClInclude Include="Color4uc.hpp" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentTest.h" />
+    <ClInclude Include="ComponentType.h" />
     <ClInclude Include="EventHandler.hpp" />
     <ClInclude Include="Image.hpp" />
     <ClInclude Include="LevelTest1.h" />
@@ -195,6 +200,8 @@
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderDescription.h" />
+    <ClInclude Include="StateManager.h" />
+    <ClInclude Include="System.h" />
     <ClInclude Include="Texture.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

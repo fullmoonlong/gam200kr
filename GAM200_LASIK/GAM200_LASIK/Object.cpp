@@ -22,7 +22,7 @@ Object::~Object()
 
 void Object::Initialize()
 {
-	std::cout << "COOL!" << std::endl;
+	std::cout << "Object Initialize" << std::endl;
 	for (auto components : this->mComponetList)
 	{
 		components->Initialize();
@@ -31,7 +31,7 @@ void Object::Initialize()
 
 void Object::Update()
 {
-	std::cout << "YEAH!" << std::endl;
+	std::cout << "Object Update" << std::endl;
 	for (auto components : this->mComponetList)
 	{
 		components->Update();

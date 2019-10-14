@@ -16,6 +16,8 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="ComponentTest.cpp" />
+    <ClCompile Include="StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Angle.hpp" />
@@ -36,5 +38,10 @@
     <ClInclude Include="Color4f.hpp" />
     <ClInclude Include="Color4uc.hpp" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="ComponentTest.h" />
+    <ClInclude Include="ComponentType.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\GAM200_LASIK\LevelSystem.h" />
+    <ClInclude Include="StateManager.h" />
+    <ClInclude Include="System.h" />
   </ItemGroup>
 </Project>

@@ -8,13 +8,5 @@ uniform sampler2D ourTexture;
 
 void main()
 {
-<<<<<<< HEAD
-<<<<<<< mergemaster
     FragColor = texture(ourTexture, TexCoord);
-=======
-	gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
->>>>>>> Fixed Math_lib error
-=======
-	gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
->>>>>>> master
 }

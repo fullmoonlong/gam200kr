@@ -20,9 +20,9 @@ class Physics_object {
 
 	Physics_object();
 	
-	void Initialize(const Math::vec2<float> position, float fMass);
+	void Initialize(Math::vec2<float> position);
 
-	void integrate();
+	void Integrate();
 
 	Math::vec2<float> AddForce(Math::vec2<float> position);
 

@@ -1,6 +1,6 @@
-#include "physics.h" 
+#include "Physics.h" 
 #include "Application.h" 
-#include<SFML/Graphics.hpp>
+//#include<SFML/Graphics.hpp>
 
 
 Physics_object::Physics_object()
@@ -12,9 +12,10 @@ Physics_object::Physics_object()
 }
 
 
-void Physics_object::Initialize(const Math::vec2<float> position)
+void Physics_object::Initialize(Math::vec2<float> new_position)
 {
-	
+	new_position.x = 0.f;
+	new_position.y = 0.f;
 }
 
 void Physics_object::SetVelocity(float x_velocity, float y_velocity) {
@@ -22,15 +23,12 @@ void Physics_object::SetVelocity(float x_velocity, float y_velocity) {
 	m_velocity.y = y_velocity;
 }
 
-void Physics_object::SetGravity(float gravityAcc = -9.8f)
+void Physics_object::SetGravity(float gravityAcc)
 {
-	/*SetVelocity(0, gravityAcc);*/
-		//key pressed됐을때 밑으로가게하는거 판정하기
-
-	
+	gravityAcc;
 }
 
-void Physics_object::integrate()
+void Physics_object::Integrate()
 {
 	if (m_inverseMass <= 0.0f) return;
 
@@ -40,9 +38,9 @@ void Physics_object::integrate()
 
 }
 
-Math::vec2<float> Physics_object::AddForce(Math::vec2<float> position)
+Math::vec2<float> Physics_object::AddForce(Math::vec2<float> v)
 {
-	position.x += m_velocity.x;
-	position.y += m_velocity.y;
+	v.x += m_velocity.x;
+	v.y += m_velocity.y;
 	return position;
 }
