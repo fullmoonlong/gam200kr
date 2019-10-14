@@ -1,4 +1,5 @@
 #include "LevelTest1.h"
+#include "ComponentTest.h"
 #include <iostream>
 
 LevelTest1::LevelTest1()
@@ -21,12 +22,15 @@ void LevelTest1::Initialize()
 	{
 		std::cout << "test object created" << std::endl;
 		std::cout << test->GetXposition() << ", "<< test->GetYposition() << std::endl;
+		test->AddComponent<TestComponent>();
 	}
+	test->Initialize();
 }
 
 void LevelTest1::Update()
 {
-
+	test->Update();
+	std::cout << test->GetXposition() << ", " << test->GetYposition() << std::endl;
 }
 
 void LevelTest1::Shutdown()

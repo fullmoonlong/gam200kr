@@ -4,6 +4,7 @@
 *	2019/09/25
 */
 #include "Object.h"
+#include <iostream>
 
 Object::Object()
 {
@@ -12,16 +13,27 @@ Object::Object()
 
 Object::~Object()
 {
+	for (auto componentList : mComponetList)
+	{
+		delete componentList;
+	}
+	mComponetList.clear();
 }
 
 void Object::Initialize()
 {
+	std::cout << "COOL!" << std::endl;
+	for (auto components : this->mComponetList)
+	{
+		components->Initialize();
+	}
 }
 
 void Object::Update()
 {
+	std::cout << "YEAH!" << std::endl;
+	for (auto components : this->mComponetList)
+	{
+		components->Update();
+	}
 }
-
-//void Object::Render()
-//{
-//}
