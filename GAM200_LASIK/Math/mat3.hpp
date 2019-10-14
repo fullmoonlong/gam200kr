@@ -18,41 +18,45 @@ namespace Math
 	public:
 		constexpr mat3() noexcept
 		{
-			column0.x = 0;
-			column0.y = 0;
-			column0.z = 0;
+			column[0].x = 0;
+			column[0].y = 0;
+			column[0].z = 0;
 
-			column1.x = 0;
-			column1.y = 0;
-			column1.z = 0;
+			column[1].x = 0;
+			column[1].y = 0;
+			column[1].z = 0;
 
-			column2.x = 0;
-			column2.y = 0;
-			column2.z = 0;
+			column[2].x = 0;
+			column[2].y = 0;
+			column[2].z = 0;
 		}
 		constexpr mat3(vec3<T> column0, vec3<T> column1, vec3<T> column2)	noexcept
-			: column0(column0), column1(column1), column2(column2) {}
+		{
+			column[0] = column0;
+			column[1] = column1;
+			column[2] = column2;
+		}
 		constexpr mat3(T column0_row0, T column0_row1, T column0_row2,
 			T column1_row0, T column1_row1, T column1_row2,
 			T column2_row0, T column2_row1, T column2_row2)	noexcept
 		{
-			column0.x = column0_row0;
-			column0.y = column0_row1;
-			column0.z = column0_row2;
+			column[0].x = column0_row0;
+			column[0].y = column0_row1;
+			column[0].z = column0_row2;
 
-			column1.x = column1_row0;
-			column1.y = column1_row1;
-			column1.z = column1_row2;
+			column[1].x = column1_row0;
+			column[1].y = column1_row1;
+			column[1].z = column1_row2;
 
-			column2.x = column2_row0;
-			column2.y = column2_row1;
-			column2.z = column2_row2;
+			column[2].x = column2_row0;
+			column[2].y = column2_row1;
+			column[2].z = column2_row2;
 		}
 
 		union
 		{
 			T elements[3][3];
-			vec3<T> column0, column1, column2;
+			vec3<T> column[3];
 		};
 		constexpr T operator() (int column, int row) const noexcept;
 		

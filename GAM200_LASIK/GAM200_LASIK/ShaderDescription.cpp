@@ -30,10 +30,10 @@ void ShaderDescription::AddType(Type type) noexcept
 	}
 	if (type == Color)
 	{
-		description.elementsType = GL_UNSIGNED_BYTE;
+		description.elementsType = GL_FLOAT;
 		description.elementsNumber = 4;
 		description.sizeInBytes = description.elementsNumber * sizeof(float);
-		description.shouldNormalize = true;
+		description.shouldNormalize = false;
 	}
 	types.push_back(type);
 	typeDescription.push_back(description);
@@ -53,14 +53,14 @@ ShaderDescription::ShaderDescription(std::initializer_list<Type> fields) noexcep
 	}
 }
 
-unsigned ShaderDescription::GetPointsNum() const noexcept
+unsigned ShaderDescription::GetVertexSize() const noexcept
 {
 	return vertexSize;
 }
 
 void ShaderDescription::EnableAttributes() const noexcept
 {
-	const int index = static_cast<int>(typeDescription.size());
+	const int index = (int)(typeDescription.size());
 	uintptr_t offset = 0;
 	for (int i = 0; i < index; i++)
 	{

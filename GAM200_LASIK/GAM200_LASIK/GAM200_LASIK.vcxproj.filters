@@ -15,12 +15,12 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderDescription.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Color.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Angle.hpp" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.hpp" />
-    <ClInclude Include="Color.hpp" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="EventHandler.hpp" />
     <ClInclude Include="Image.hpp" />
@@ -34,5 +34,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderDescription.h" />
     <ClInclude Include="Texture.hpp" />
+    <ClInclude Include="Color4f.hpp" />
+    <ClInclude Include="Color4uc.hpp" />
   </ItemGroup>
 </Project>

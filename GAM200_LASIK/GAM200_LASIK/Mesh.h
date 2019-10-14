@@ -10,7 +10,7 @@
 
 #pragma once
 #include <vector>
-#include "Color.hpp"
+#include "Color4f.hpp"
 #include <vec2.hpp>
 
 enum class ShapePattern
@@ -24,11 +24,11 @@ class [[nodiscard]] Mesh
 {
 public:
 	void AddPoint(Math::vec2<float> point) noexcept;
-	void AddColor(Color color) noexcept;
+	void AddColor(Color4f color) noexcept;
 	void AddTextureCoordinate(Math::vec2<float> textureCoordinate) noexcept;
 
 	Math::vec2<float> GetPoint(int index) const noexcept;
-	Color GetColor(int index) const noexcept;
+	Color4f GetColor(int index) const noexcept;
 	Math::vec2<float> GetTextureCoordinate(int index) const noexcept;
 
 	void SetShapePattern(ShapePattern new_pattern) noexcept;
@@ -38,7 +38,7 @@ public:
 
 private:
 	std::vector<Math::vec2<float>> points;
-	std::vector<Color> colors;
+	std::vector<Color4f> colors;
 	std::vector<Math::vec2<float>> textureCoordinates;
 	ShapePattern pattern = ShapePattern::Triangle;
 	
@@ -46,7 +46,7 @@ private:
 
 namespace MESH
 {
-	Mesh draw_ellipse(float rx, float ry, int pointsNum, Color color);
-	//void draw_rectangle(int width, int height, MathLibrary::vec3 color);
+	Mesh draw_ellipse(float rx, float ry, int pointsNum, Color4f color);
+	Mesh draw_rectangle(float width, float height, Color4f color);
 	//void draw_line(MathLibrary::vec2, MathLibrary::vec2, MathLibrary::vec3 color);
 }

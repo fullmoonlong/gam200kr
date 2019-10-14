@@ -34,7 +34,7 @@ public:
 
 	ShaderDescription(std::initializer_list<Type> fields) noexcept;
 
-	unsigned GetPointsNum() const noexcept;
+	unsigned GetVertexSize() const noexcept;
 
 	void EnableAttributes() const noexcept;
 	

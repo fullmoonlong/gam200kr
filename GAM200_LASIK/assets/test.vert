@@ -1,13 +1,17 @@
-#version 330
-in vec2 position;
-in vec4 color;
-out vec4 outColor;
-uniform mat3 NDC;
+#version 330 core
+layout (location = 0) in vec2 aPos;
+layout (location = 1) in vec3 aColor;
+layout (location = 2) in vec2 aTexCoord;
+
+out vec3 ourColor;
+out vec2 TexCoord;
+
+uniform mat3 ndc;
 
 void main()
 {
-    vec3 p = vec3(position, 1.0);
-    vec3 ndc_version = NDC * p;
-    gl_Position = vec4(ndc_version.xy, 0.0, 1.0);
-    outColor = color;
+    vec3 ndc_position = ndc * vec3(aPos, 1.0);
+    gl_Position = vec4(ndc_position, 1.0);
+    ourColor = aColor;
+    TexCoord = aTexCoord;
 }

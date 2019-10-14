@@ -17,7 +17,7 @@
 Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) noexcept
 {
 	VAO = 0;
-	VBO = 0;
+	VBO[0] = 0;
 	LoadShader(vertex_source, fragment_source);
 }
 
@@ -77,13 +77,14 @@ bool Shader::LoadShader(const std::string& vertex_source, const std::string& fra
 		glDeleteProgram(handleToShader);
 	}
 	handleToShader = program;
+	
 	return true;
 }
 
 void Shader::InitializeWithMesh(const Mesh& mesh, const ShaderDescription& shader_layout) noexcept
 {
 	VAO = 0;
-	VBO = 0;
+	VBO[0] = 0;
 	switch (mesh.GetShapePattern())
 	{
 	case ShapePattern::Triangle:
@@ -100,22 +101,21 @@ void Shader::InitializeWithMesh(const Mesh& mesh, const ShaderDescription& shade
 	}
 	layout = shader_layout;
 	verticesCount = (int)mesh.GetPointsCount();
-	bufferVertexCapacity = static_cast<int>(verticesCount * layout.GetPointsNum());
+	bufferVertexCapacity = static_cast<int>(verticesCount * layout.GetVertexSize());
 	
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &VBO[0]);
 	glBindVertexArray(VAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
 	glBufferData(GL_ARRAY_BUFFER, bufferVertexCapacity, NULL, GL_STATIC_DRAW);
 
-
-	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-	//glEnableVertexAttribArray(0);
-
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	//glBindVertexArray(0);
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR)
+	{
+		std::cout << "Error: " << err << std::endl;
+	}
+	
 	layout.EnableAttributes();
 	WriteMeshDataToVertexBuffer(mesh);
 	
@@ -152,11 +152,11 @@ void Shader::SendUniformVariable(const char* variable_name, const Math::mat3<flo
 void Shader::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
 {
 	char* buffer = reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
-	(glBindBuffer(GL_ARRAY_BUFFER, VBO));
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
 	unsigned offset = 0;
 	
 	Math::vec2<float> point;
-	Color color;
+	Color4f color;
 	Math::vec2<float> texture;
 	
 	for (int i = 0; i < static_cast<int>(verticesCount); i++)
@@ -165,17 +165,17 @@ void Shader::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
 		{
 			switch (element)
 			{
-			case ShaderDescription::Point:
+			case ShaderDescription::Type::Point:
 				point = mesh.GetPoint(i);
 				memcpy(buffer + offset, &point, sizeof(point));
 				offset += sizeof(Math::vec2<float>);
 				break;
-			case ShaderDescription::Color:
+			case ShaderDescription::Type::Color:
 				color = mesh.GetColor(i);
 				memcpy(buffer + offset, &color, sizeof(color));
-				offset += sizeof(Color);
+				offset += sizeof(Color4f);
 				break;
-			case ShaderDescription::TextCoordinate:
+			case ShaderDescription::Type::TextCoordinate:
 				texture = mesh.GetTextureCoordinate(i);
 				memcpy(buffer + offset, &texture, sizeof(texture));
 				offset += sizeof(Math::vec2<float>);

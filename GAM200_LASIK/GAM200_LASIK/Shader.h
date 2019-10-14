@@ -26,10 +26,10 @@ public:
 
 	void SendUniformVariable(const char* variable_name, const int& variable) const noexcept;
 	void SendUniformVariable(const char* variable_name, const float& variable) const noexcept;
-	void SendUniformVariable(const char* variable_name, const Math::mat3<float>& variable) const noexcept;
+	void SendUniformVariable(const char* variable_name, const Math::mat3<float>& matrix) const noexcept;
 	
-	unsigned int VBO = 0;
-	unsigned int VAO = 0;
+	unsigned int VBO[2];
+	unsigned int VAO{};
 private:
 	void WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept;
 
