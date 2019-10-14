@@ -1,53 +1,50 @@
 #pragma once 
 #include "Application.h" 
-#include "vec2.h" 
-
+#include "Object.h"
+#include "../math_lib/include/vec2.hpp"
+#include "../math_lib/include/vec3.hpp"
+#include<assert.h>
 
 
 struct AABB {
-	MathLibrary::vec2 min;
-	MathLibrary::vec2 max;
+	Math::vec2<float> min;
+	Math::vec2<float> max;
 };
 
 struct Circle {
 	float radius;
-	MathLibrary::vec2 position;
+	Math::vec2<float> position;
 };
 
 class Physics_object {
+
 	Physics_object();
-	Physics_object(const MathLibrary::vec2& xPosition, float mass, float width, float height);
-	~Physics_object();
+	
+	void Initialize(const Math::vec2<float> position, float fMass);
 
-	void Initialize(const MathLibrary::vec2& xPosition, float mass);
-	void Update(float dt);
+	void integrate();
 
-	void Acceleration(const MathLibrary::vec2& F, float dt);
-	bool Unmove() const { return (m_mass < 0.0001f); }
+	Math::vec2<float> AddForce(Math::vec2<float> position);
 
-	float& GetMass() { return m_mass; }
-	float& GetInverseMass() { return m_inverseMass; }
+	void SetVelocity(float x_velocity , float y_velocity);
 
-	float GetMass()        const { return m_mass; }
-	float GetInverseMass() const { return m_inverseMass; }
-
-	const MathLibrary::vec2& GetPosition() const { return m_xPosition; }
-	const MathLibrary::vec2& GetDisplacement() const { return m_xDisplacement; }
+	void SetGravity(float gravityAcc = -9.8f);
 
 protected:
+	Math::vec2<float> position;
+	Math::vec2<float> m_velocity;
+	float acceleration;
+
+	float m_damping;
 	float m_inverseMass;
 	float m_mass;
 
-	MathLibrary::vec2 m_xPosition;
-	MathLibrary::vec2 m_xDisplacement;
 };
 
-//class GravityOb :public Physics_object
-//{
-//
-//};
-//
-//class Static_physisOb : Physics_object
-//{
-//
-//};
+class GravityOb :public Physics_object {
+
+};
+
+class Static_physisOb : Physics_object {
+
+};

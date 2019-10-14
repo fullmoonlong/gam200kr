@@ -1,41 +1,48 @@
-#include "Physics.h" 
+#include "physics.h" 
 #include "Application.h" 
-//#include<SFML/Graphics.hpp>
+#include<SFML/Graphics.hpp>
+
 
 Physics_object::Physics_object()
 {
-
+	position.x = 0;
+	position.y = 0;
+	m_velocity = 0;
+	acceleration = 0;
 }
 
-Physics_object::~Physics_object()
+
+void Physics_object::Initialize(const Math::vec2<float> position)
 {
-
+	
 }
 
-void Physics_object::Initialize(const MathLibrary::vec2 & xPosition, float mass)
+void Physics_object::SetVelocity(float x_velocity, float y_velocity) {
+	m_velocity.x = x_velocity;
+	m_velocity.y = y_velocity;
+}
+
+void Physics_object::SetGravity(float gravityAcc = -9.8f)
 {
-	m_mass = mass;
-	m_xPosition = xPosition;
+	/*SetVelocity(0, gravityAcc);*/
+		//key pressed됐을때 밑으로가게하는거 판정하기
+
+	
 }
 
-void Physics_object::Update(float /*dt*/)
+void Physics_object::integrate()
 {
+	if (m_inverseMass <= 0.0f) return;
+
+	AddForce(m_velocity);
+
+	Math::vec3 resultingAcc = acceleration;
 
 }
 
-void Physics_object::Acceleration(const MathLibrary::vec2 & f, float dt)
+Math::vec2<float> Physics_object::AddForce(Math::vec2<float> position)
 {
-	if (Unmove()) return;
-
-	m_xDisplacement += f * (m_inverseMass * dt * dt);
+	position.x += m_velocity.x;
+	position.y += m_velocity.y;
+	return position;
 }
-
-//void Physics_object::BoxCollision() 
-//{ 
-// 
-//} 
-// 
-//void Physics_object::CircleCollision() 
-//{ 
-// 
-//}

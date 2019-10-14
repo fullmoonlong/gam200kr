@@ -11,11 +11,11 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="OpenGL_Window.cpp" />
-    <ClCompile Include="physics.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderDescription.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Color.cpp" />
+    <ClCompile Include="Physics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Angle.hpp" />
@@ -30,11 +30,11 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="OpenGL_Window.h" />
-    <ClInclude Include="physics.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderDescription.h" />
     <ClInclude Include="Texture.hpp" />
     <ClInclude Include="Color4f.hpp" />
     <ClInclude Include="Color4uc.hpp" />
+    <ClInclude Include="Physics.h" />
   </ItemGroup>
 </Project>
