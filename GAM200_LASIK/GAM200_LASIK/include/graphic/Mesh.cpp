@@ -8,8 +8,8 @@
 *	2019/10/02
 */
 
-#include "Mesh.h"
-#include "Angle.hpp"
+#include <graphic/Mesh.h>
+#include <math/Angle.hpp>
 
 void Mesh::AddPoint(Math::vec2<float> point) noexcept
 {

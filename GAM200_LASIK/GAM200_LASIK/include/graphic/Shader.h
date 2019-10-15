@@ -10,8 +10,8 @@
 
 #pragma once
 #include <string>
-#include "ShaderDescription.h"
-#include <mat3.hpp>
+#include <math/mat3.hpp>
+#include <graphic/ShaderDescription.h>
 
 class Mesh;
 
@@ -26,7 +26,7 @@ public:
 
 	void SendUniformVariable(const char* variable_name, const int& variable) const noexcept;
 	void SendUniformVariable(const char* variable_name, const float& variable) const noexcept;
-	void SendUniformVariable(const char* variable_name, const Math::mat3<float>& matrix) const noexcept;
+	void SendUniformVariable(const char* variable_name, const mat3<float>& matrix) const noexcept;
 	
 	unsigned int VBO[2];
 	unsigned int VAO{};

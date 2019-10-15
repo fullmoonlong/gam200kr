@@ -11,13 +11,11 @@
 */
 
 #include <GL\glew.h>
-#include "OpenGL_Window.h"
+#include <graphic/OpenGL_Window.h>
+#include <graphic/EventHandler.hpp>
 #include <iostream>
-#include "EventHandler.hpp"
 
 EventHandler* eventHandler;
-//bool isTriggered = false;
-//int oldState = GLFW_RELEASE;
 
 void frame_buffer_size_callback(GLFWwindow*, int width, int height)
 {

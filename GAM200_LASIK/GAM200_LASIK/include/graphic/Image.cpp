@@ -8,8 +8,7 @@
 *	2019/10/07
 */
 
-
-#include "Image.hpp"
+#include <graphic/Image.hpp>
 #include <cassert>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -26,6 +25,7 @@ void Image::ResizePixelSize(int image_width, int image_height) noexcept
 bool Image::LoadFrom(const std::filesystem::path& source) noexcept
 {
 	int channel;
+	stbi_set_flip_vertically_on_load(true);
 	unsigned char* image = stbi_load(source.generic_string().c_str(), &width, &height, &channel, 4);
 
 	if (image != nullptr)
@@ -33,7 +33,6 @@ bool Image::LoadFrom(const std::filesystem::path& source) noexcept
 		for (int i = 0; i < width * height; i++)
 		{
 			Color4uc color(image[i * 4], image[i * 4 + 1], image[i * 4 + 2], image[i * 4 + 3]);
-			Color4f color4f = to4f(color);
 			pixels.push_back(color);
 		}
 		return true;

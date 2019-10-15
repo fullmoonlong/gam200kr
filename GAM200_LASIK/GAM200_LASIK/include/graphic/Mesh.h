@@ -10,8 +10,8 @@
 
 #pragma once
 #include <vector>
-#include "Color4f.hpp"
 #include <vec2.hpp>
+#include <graphic/Color4f.hpp>
 
 enum class ShapePattern
 {
@@ -49,4 +49,4 @@ namespace MESH
 	Mesh draw_ellipse(float rx, float ry, int pointsNum, Color4f color);
 	Mesh draw_rectangle(float width, float height, Color4f color);
 	//void draw_line(MathLibrary::vec2, MathLibrary::vec2, MathLibrary::vec3 color);
-}
+};

@@ -9,10 +9,10 @@
 */
 
 #include <GL\glew.h>
-#include <iostream>
 #include <vec2.hpp>
-#include "Shader.h"
-#include "Mesh.h"
+#include <graphic/Shader.h>
+#include <graphic/Mesh.h>
+#include <iostream>
 
 Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) noexcept
 {
@@ -138,7 +138,7 @@ void Shader::SendUniformVariable(const char* variable_name, const float& variabl
 	glUniform1f(location, variable);
 }
 
-void Shader::SendUniformVariable(const char* variable_name, const Math::mat3<float>& matrix) const noexcept
+void Shader::SendUniformVariable(const char* variable_name, const mat3<float>& matrix) const noexcept
 {
 	const int location = glGetUniformLocation(handleToShader, variable_name);
 	float matrix3[] = {

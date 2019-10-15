@@ -7,11 +7,13 @@
 
 
 #pragma once
-#include "OpenGL_Window.h"
-#include "Shader.h"
-#include "EventHandler.hpp"
-#include "Texture.hpp"
-#include "Mesh.h"
+#include <chrono>
+#include <graphic/OpenGL_Window.h>
+#include <graphic/Shader.h>
+#include <graphic/EventHandler.hpp>
+#include <graphic/Texture.hpp>
+#include <graphic/Mesh.h>
+
 
 class Application : public SimpleEventHandler
 {
@@ -29,6 +31,9 @@ public:
 	bool isRunning = false;
 	
 private:
+	float timePassed = 0;
+	int frameCount = 0;
+	std::chrono::duration<float> deltaTime;
 	Mesh rectangle;
 	Texture texture;
 	Shader shader;

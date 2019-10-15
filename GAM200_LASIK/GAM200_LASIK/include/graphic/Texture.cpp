@@ -8,10 +8,9 @@
 *	2019/10/07
 */
 
-
-#include "Image.hpp"
-#include "Texture.hpp"
 #include <GL/glew.h>
+#include <graphic/Image.hpp>
+#include <graphic/Texture.hpp>
 
 
 bool Texture::LoadTextureFrom(const Image& image) noexcept

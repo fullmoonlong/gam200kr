@@ -11,7 +11,7 @@
 #pragma once
 #include <complex>	// cos, sin
 #include <cassert>	// assert
-#include "vec3.hpp"
+#include <math/vec3.hpp>
 
 
 template <typename T>
@@ -32,7 +32,7 @@ public:
 		column[2].y = 0;
 		column[2].z = 0;
 	}
-	constexpr mat3(vec3<T> column0, vec3<T> column1, vec3<T> column2)	noexcept
+	constexpr mat3(vec3<T> column0, vec3<T> column1, vec3<T> column2) noexcept
 	{
 		column[0] = column0;
 		column[1] = column1;

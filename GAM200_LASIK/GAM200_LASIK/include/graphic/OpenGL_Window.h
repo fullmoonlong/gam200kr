@@ -35,7 +35,7 @@ public:
 	void SetWindowHeight(int new_height) noexcept;
 	
 private:
-	bool isVSyncOn = true;
+	bool isVSyncOn = false;
 	bool isFullScreen = false;
 	int windowPos[2] = { 0,0 };
 	int windowSize[2] = { 0,0 };

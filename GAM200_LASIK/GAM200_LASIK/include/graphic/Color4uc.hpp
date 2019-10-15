@@ -1,3 +1,13 @@
+/*
+*	Author: JeongHak Kim	junghak.kim@digipen.edu
+*	
+*	File_name: Mesh.cpp
+*	
+*	Implement Mesh class
+*	
+*	2019/10/13
+*/
+
 #pragma once
 
 class [[nodiscard]]Color4uc

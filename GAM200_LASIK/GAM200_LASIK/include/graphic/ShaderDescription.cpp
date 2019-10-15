@@ -8,8 +8,8 @@
 *	2019/10/04
 */
 
-#include "ShaderDescription.h"
 #include <GL/glew.h>
+#include <graphic/ShaderDescription.h>
 
 void ShaderDescription::AddType(Type type) noexcept
 {

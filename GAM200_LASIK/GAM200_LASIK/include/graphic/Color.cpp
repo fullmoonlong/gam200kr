@@ -1,6 +1,15 @@
+/*
+*	Author: JeongHak Kim	junghak.kim@digipen.edu
+*	
+*	File_name: Mesh.cpp
+*	
+*	Implement Mesh class
+*	
+*	2019/10/13
+*/
 
-#include "Color4f.hpp"
-#include "Color4uc.hpp"
+#include <graphic/Color4f.hpp>
+#include <graphic/Color4uc.hpp>
 
 Color4f to4f(Color4uc eight_bit_color)
 {
