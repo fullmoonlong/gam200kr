@@ -52,17 +52,63 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 		case GLFW_KEY_G:
 			eventHandler->HandleKeyPress(KeyboardButtons::G);
 			break;
+		case GLFW_KEY_W:
+			eventHandler->HandleKeyPress(KeyboardButtons::W);
+			break;
+		case GLFW_KEY_A:
+			eventHandler->HandleKeyPress(KeyboardButtons::A);
+			break;
+		case GLFW_KEY_S:
+			eventHandler->HandleKeyPress(KeyboardButtons::S);
+			break;
+		case GLFW_KEY_D:
+			eventHandler->HandleKeyPress(KeyboardButtons::D);
+			break;
+		case GLFW_KEY_Z:
+			eventHandler->HandleKeyPress(KeyboardButtons::Z);
+			break;
+		case GLFW_KEY_X:
+			eventHandler->HandleKeyPress(KeyboardButtons::X);
+			break;
 		default:
 			break;
 		}
 	}
-	
+	else if (action == GLFW_RELEASE)
+	{
+		switch (key)
+		{
+		case GLFW_KEY_W:
+			eventHandler->HandleKeyRelease(KeyboardButtons::W);
+			break;
+		case GLFW_KEY_A:
+			eventHandler->HandleKeyRelease(KeyboardButtons::A);
+			break;
+		case GLFW_KEY_S:
+			eventHandler->HandleKeyRelease(KeyboardButtons::S);
+			break;
+		case GLFW_KEY_D:
+			eventHandler->HandleKeyRelease(KeyboardButtons::D);
+			break;
+		case GLFW_KEY_Z:
+			eventHandler->HandleKeyRelease(KeyboardButtons::Z);
+			break;
+		case GLFW_KEY_X:
+			eventHandler->HandleKeyRelease(KeyboardButtons::X);
+			break;
+		}
+	}
 }
 
 //void mouse_input_callback()
 //{
 //	
 //}
+
+void scroll_callback(GLFWwindow*, double, double y_offset)
+{
+	eventHandler->HandleScrollEvent(float(y_offset));
+}
 
 bool glWindow::CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept
 {
@@ -101,6 +147,7 @@ bool glWindow::CanCreateWindow(int width, int height, EventHandler* event_handle
 	glfwSetWindowSizeCallback(window, resize_callback);
 	//glfwSetWindowCloseCallback(window, window_close_callback);
 	glfwSetKeyCallback(window, key_callback);
+	glfwSetScrollCallback(window, scroll_callback);
 
 	GLenum err = glewInit();
 	if (err != GLEW_OK)

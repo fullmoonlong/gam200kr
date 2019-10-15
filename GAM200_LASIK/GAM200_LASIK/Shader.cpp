@@ -149,6 +149,12 @@ void Shader::SendUniformVariable(const char* variable_name, const Math::mat3<flo
 	glUniformMatrix3fv(location, 1, false, matrix3);
 }
 
+void Shader::SendUniformVariable(const char* variable_name, const glm::mat3 mat3) const noexcept
+{
+	const int location = glGetUniformLocation(handleToShader, variable_name);
+	glUniformMatrix3fv(location, 1, false, &mat3[0][0]);
+}
+
 void Shader::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
 {
 	char* buffer = reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));

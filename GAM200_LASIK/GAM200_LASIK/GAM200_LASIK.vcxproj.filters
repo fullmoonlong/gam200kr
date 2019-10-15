@@ -15,9 +15,10 @@
     <ClCompile Include="ShaderDescription.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="CameraView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Angle.hpp" />
@@ -37,11 +38,12 @@
     <ClInclude Include="Texture.hpp" />
     <ClInclude Include="Color4f.hpp" />
     <ClInclude Include="Color4uc.hpp" />
-    <ClInclude Include="Physics.h" />
     <ClInclude Include="ComponentTest.h" />
     <ClInclude Include="ComponentType.h" />
     <ClInclude Include="..\..\..\..\..\Desktop\GAM200_LASIK\LevelSystem.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="System.h" />
+    <ClInclude Include="Transform.hpp" />
+    <ClInclude Include="CameraView.hpp" />
   </ItemGroup>
 </Project>

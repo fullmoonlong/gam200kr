@@ -15,7 +15,13 @@ enum class KeyboardButtons
 	Escape,
 	F,
 	V,
-	G
+	G,
+	W,
+	A,
+	S,
+	D,
+	Z,
+	X
 };
 
 enum class MouseButtons
@@ -29,6 +35,7 @@ public:
 	virtual void HandleKeyPress(KeyboardButtons button) = 0;
 	virtual void HandleKeyRelease(KeyboardButtons button) = 0;
 	virtual void HandleResizeEvent(const int& width, const int& height) = 0;
+	virtual void HandleScrollEvent(float scroll_amount) = 0;
 	virtual void HandleWindowClose() = 0;
 
 };
@@ -39,6 +46,7 @@ public:
 	void HandleKeyPress(KeyboardButtons) override {}
 	void HandleKeyRelease(KeyboardButtons) override {}
 	void HandleResizeEvent(const int& /*width*/, const int& /*height*/) override {}
+	void HandleScrollEvent(float /*scroll_amount*/) = 0;
 	void HandleWindowClose() override {}
 	
 };

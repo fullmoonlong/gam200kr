@@ -10,32 +10,39 @@
 
 
 #pragma once
-#include <vec2.hpp>
-#include <mat3.hpp>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
 
 class [[nodiscard]]Camera
 {
 public:
-	Camera(Math::vec2<float> camera_center, Math::vec2<float> camera_up) noexcept;
+	constexpr Camera() noexcept = default;
+	Camera(glm::vec2 camera_center, glm::vec2 camera_up) noexcept;
 
-	Math::vec2<float> GetCenter() const noexcept { return center; }
-	void    SetCenter(Math::vec2<float> camera_center) noexcept { center = camera_center; }
-	Math::vec2<float> GetUp() const noexcept { return up; }
-	Math::vec2<float> GetRight() const noexcept { return right; }
+	glm::vec2 GetCenter() const noexcept { return center; }
+	void    SetCenter(glm::vec2 camera_center) noexcept { center = camera_center; }
+	glm::vec2 GetUp() const noexcept { return up; }
+	glm::vec2 GetRight() const noexcept { return right; }
 
-	void ResetUp(Math::vec2<float> camera_up = {0, 1}) noexcept;
+	void ResetUp(glm::vec2 camera_up = {0, 1}) noexcept;
 
 	void MoveUp(float distance) noexcept;
 	void MoveRight(float distance) noexcept;
 	void Rotate(float angle_radians) noexcept;
 
-	Math::mat3<float> CameraToWorld() const noexcept;
-	Math::mat3<float> WorldToCamera() const noexcept;
+	glm::mat3 CameraToWorld() const noexcept;
+	glm::mat3 WorldToCamera() const noexcept;
 	
+	glm::vec2 rotate_by(float angle_in_radians, glm::vec2 v) noexcept
+	{
+		float cos_value = cos(angle_in_radians);
+		float sin_value = sin(angle_in_radians);
+		return glm::vec2{ cos_value* v.x - sin_value * v.y, sin_value* v.x + cos_value * v.y };
+	}
+
 private:
-	Math::vec2<float> center;
-	Math::vec2<float> up;
-	Math::vec2<float> right;
-	
+	glm::vec2 center{};
+	glm::vec2 up{0.f , 1.f};
+	glm::vec2 right{1.f, 0.f};
 };
 

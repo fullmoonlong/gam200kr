@@ -23,7 +23,7 @@
     <ProjectGuid>{4E4BC61A-CA1C-4D83-B4EB-114A4B30E491}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>GAM200LASIK</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <ProjectName>Rescue</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -43,7 +43,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -108,7 +108,7 @@
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)external\glfw3\include;$(SolutionDir)external\glew\include;$(SolutionDir)external\math_lib\include;$(SolutionDir)external\stbi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\glfw3\include;$(SolutionDir)external\glew\include;$(SolutionDir)external\math_lib\include;$(SolutionDir)external\glm;$(SolutionDir)external\stbi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraView.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="Image.cpp" />
@@ -173,17 +174,18 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="OpenGL_Window.cpp" />
-    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderDescription.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\Desktop\GAM200_LASIK\LevelSystem.h" />
     <ClInclude Include="Angle.hpp" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.hpp" />
+    <ClInclude Include="CameraView.hpp" />
     <ClInclude Include="Color4f.hpp" />
     <ClInclude Include="Color4uc.hpp" />
     <ClInclude Include="Component.h" />
@@ -197,12 +199,12 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="OpenGL_Window.h" />
-    <ClInclude Include="Physics.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderDescription.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Texture.hpp" />
+    <ClInclude Include="Transform.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

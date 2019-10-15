@@ -15,7 +15,7 @@ LevelTest1::~LevelTest1()
 void LevelTest1::Initialize()
 {
 	std::cout << "Load LevelTest1 Successful" << std::endl;
-	test = objectFactory->CreateEmptyObject();
+	/*test = objectFactory->CreateEmptyObject();
 	test->SetPosition(0.f, 0.f);
 
 	if (test != nullptr)
@@ -24,13 +24,14 @@ void LevelTest1::Initialize()
 		std::cout << test->GetXposition() << ", "<< test->GetYposition() << std::endl;
 		test->AddComponent<TestComponent>();
 	}
-	test->Initialize();
+	test->Initialize();*/
 }
 
 void LevelTest1::Update()
 {
-	test->Update();
-	std::cout << test->GetXposition() << ", " << test->GetYposition() << std::endl;
+	//test->Update();
+	//std::cout << test->GetXposition() << ", " << test->GetYposition() << std::endl;
+	//std::cout << "Update" << std::endl;
 }
 
 void LevelTest1::Shutdown()

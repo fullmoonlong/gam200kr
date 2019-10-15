@@ -12,6 +12,11 @@
 #include "EventHandler.hpp"
 #include "Texture.hpp"
 #include "Mesh.h"
+#include "StateManager.h"
+#include "Camera.hpp"
+#include "CameraView.hpp"
+#include "Transform.hpp"
+#include "glm.hpp"
 
 class Application : public SimpleEventHandler
 {
@@ -25,7 +30,8 @@ public:
 	void HandleKeyPress(KeyboardButtons button) override;
 	void HandleKeyRelease(KeyboardButtons button) override;
 	void HandleResizeEvent(const int& width, const int& height) override;
-	
+	void HandleScrollEvent(float scroll_amount) override;
+
 	bool isRunning = false;
 	
 private:
@@ -33,4 +39,14 @@ private:
 	Texture texture;
 	Shader shader;
 	glWindow glWindow;
+	StateManager level;
+	Camera camera;
+	CameraView view;
+	Transform transform;
+
+	//float cameraSpeed{ 80.0f };
+	float depth = 1.0f;
+	float zoom = 1.0f;
+	float cameraAngle = 0.0f;
+	glm::vec2 pressDirection{ 0.f, 0.f };
 };
