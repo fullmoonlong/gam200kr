@@ -21,4 +21,4 @@ public:
 
 	std::vector<LevelSystem*> levels;
 };
-//extern StateManager* STATEMANAGER;
+extern StateManager* STATEMANAGER;

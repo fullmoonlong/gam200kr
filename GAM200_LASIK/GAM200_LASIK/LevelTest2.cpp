@@ -18,7 +18,6 @@ void LevelTest2::Initialize()
 
 void LevelTest2::Update()
 {
-	std::cout << "update2" << std::endl;
 }
 
 void LevelTest2::Shutdown()

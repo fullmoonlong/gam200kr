@@ -109,7 +109,7 @@
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)external\glfw3\include;$(SolutionDir)external\glew\include;$(SolutionDir)external\math_lib\include;$(SolutionDir)external\glm;$(SolutionDir)external\stbi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\glfw3\include;$(SolutionDir)external\glew\include;$(SolutionDir)external\math_lib\include;$(SolutionDir)external\glm;$(SolutionDir)external\stbi;$(SolutionDir)GAM200_LASIK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -163,12 +163,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CameraView.cpp" />
-    <ClCompile Include="Color.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
-    <ClCompile Include="Image.cpp" />
-    <ClCompile Include="ComponentTest.cpp" />
+    <ClCompile Include="include\graphic\Camera.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="include\graphic\CameraView.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="include\graphic\Color.cpp" />
     <ClCompile Include="include\graphic\Image.cpp" />
     <ClCompile Include="include\graphic\Mesh.cpp" />
@@ -176,37 +177,31 @@
     <ClCompile Include="include\graphic\Shader.cpp" />
     <ClCompile Include="include\graphic\ShaderDescription.cpp" />
     <ClCompile Include="include\graphic\Texture.cpp" />
+    <ClCompile Include="include\graphic\Transform.cpp" />
     <ClCompile Include="LevelTest1.cpp" />
     <ClCompile Include="LevelTest2.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
-    <ClCompile Include="OpenGL_Window.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShaderDescription.cpp" />
-    <ClCompile Include="StateManager.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="physics.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Desktop\GAM200_LASIK\LevelSystem.h" />
-    <ClInclude Include="Angle.hpp" />
     <ClCompile Include="StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\Desktop\GAM200_LASIK\LevelSystem.h" />
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Camera.hpp" />
-    <ClInclude Include="CameraView.hpp" />
-    <ClInclude Include="Color4f.hpp" />
-    <ClInclude Include="Color4uc.hpp" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTest.h" />
     <ClInclude Include="ComponentType.h" />
-    <ClInclude Include="EventHandler.hpp" />
-    <ClInclude Include="Image.hpp" />
-    <ClInclude Include="ComponentTest.h" />
-    <ClInclude Include="ComponentType.h" />
+    <ClInclude Include="include\graphic\Camera.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="include\graphic\CameraView.hpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="include\graphic\Color4f.hpp" />
     <ClInclude Include="include\graphic\Color4uc.hpp" />
     <ClInclude Include="include\graphic\EventHandler.hpp" />
@@ -216,6 +211,7 @@
     <ClInclude Include="include\graphic\Shader.h" />
     <ClInclude Include="include\graphic\ShaderDescription.h" />
     <ClInclude Include="include\graphic\Texture.hpp" />
+    <ClInclude Include="include\graphic\Transform.hpp" />
     <ClInclude Include="include\math\Angle.hpp" />
     <ClInclude Include="include\math\mat3.hpp" />
     <ClInclude Include="include\math\vec2.hpp" />
@@ -224,13 +220,11 @@
     <ClInclude Include="LevelTest2.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectFactory.h" />
-    <ClInclude Include="OpenGL_Window.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShaderDescription.h" />
+    <ClInclude Include="physics.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="System.h" />
-    <ClInclude Include="Texture.hpp" />
-    <ClInclude Include="Transform.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

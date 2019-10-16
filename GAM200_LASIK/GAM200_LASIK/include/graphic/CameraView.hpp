@@ -1,7 +1,7 @@
 #pragma once
 #include <glm.hpp>
 
-enum class FrameOfReference
+enum FrameOfReference
 {
 	RightHanded_OriginCenter,
 	RightHanded_OriginBottomLeft,

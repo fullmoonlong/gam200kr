@@ -42,19 +42,19 @@ Application::Application()
 
 Application::~Application()
 {
-
+	
 }
 
 unsigned int VAO;
 unsigned int VBO[2];
 
 float vertices[] = {
-	// positions		// colors			// texCoords
-	-200.f, -200.f,		1.0f, 0.0f, 0.0f,	0.0f, 0.0f,
-	200.f, -200.f,		0.0f, 1.0f, 0.0f,	1.0f, 0.0f,
-	200.f,  200.f,		0.0f, 0.0f, 1.0f,	1.0f, 1.0f,
-	-200.f, 200.f,		0.7f, 0.7f, 0.7f,	0.0f, 1.0f
-}; 
+	// positions		// colors
+	-50.f, -50.f,		1.0f, 0.0f, 0.0f,
+	50.f, -50.f,		0.0f, 1.0f, 0.0f,
+	50.f,  50.f,		0.0f, 0.0f, 1.0f,
+	-50.f, 50.f,		0.7f, 0.7f, 0.7f
+};
 
 //float texCoord[] = {
 //	0.0f, 0.0f,
@@ -72,7 +72,7 @@ float texCoord[] = {
 
 void Application::Initialize()
 {
-	glWindow.CanCreateWindow(800, 600, this, "Prototype"); //initialize window
+	glWindow.CanCreateWindow(800, 600, this,"Prototype"); //initialize window
 	const std::string vertex_source = ReadSourceFrom(vertex_path);
 	const std::string fragment_source = ReadSourceFrom(fragment_path);
 	shader.LoadShader(vertex_source, fragment_source);
@@ -118,8 +118,6 @@ void Application::Update()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-
-
 	glUseProgram(shader.GetHandleToShader());
 
 
@@ -134,16 +132,49 @@ void Application::Update()
 	//glBindTexture(GL_TEXTURE_2D, texture.GetTexturehandle());
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-	level.Update();
+	
+	auto currentTime = std::chrono::system_clock::now();
+	deltaTime = std::chrono::duration<float>(currentTime - start);
 
+	float time = deltaTime.count();
+
+	std::cout << time << std::endl;
+
+
+	frameCount++;
+
+	static int spriteIndex = 0;
+
+	if (frameCount % 8 == 0)
+	{
+		spriteIndex++;
+		texCoord[0] = (spriteIndex - 1) * (0.125f);
+		texCoord[2] = spriteIndex * (0.125f);
+		texCoord[4] = texCoord[2];
+		texCoord[6] = texCoord[0];
+		
+		if (spriteIndex == 8)
+		{
+			spriteIndex = 0;
+		}
+	}
+
+	timePassed += time;
+	if (timePassed >= 1.0f)
+	{
+		std::cout << frameCount << std::endl;
+
+		frameCount = 0;
+		timePassed = 0;
+	}
 	//camera
 	camera.MoveRight(pressDirection.x);
 	camera.MoveUp(pressDirection.y);
 	camera.Rotate(cameraAngle);
+
 	transform.SetTranslation(pressDirection);
-
-
 	transform.SetRotation(cameraAngle);
+
 	glm::mat3 ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
 	shader.SendUniformVariable("ndc", ndc);
 
@@ -182,23 +213,23 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		break;
 	case KeyboardButtons::W:
 		pressDirection.y +=
-			(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? -1.0f : 1.0f;
+			(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? -2.0f : 2.0f;
 		break;
 	case KeyboardButtons::S:
 		pressDirection.y +=
-			(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? 1.0f : -1.0f;
+			(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? 2.0f : -2.0f;
 		break;
 	case KeyboardButtons::A:
-		pressDirection.x -= 1.0f;
+		pressDirection.x -= 2.0f;
 		break;
 	case KeyboardButtons::D:
-		pressDirection.x += 1.0f;
+		pressDirection.x += 2.0f;
 		break;
 	case KeyboardButtons::Z:
-		cameraAngle += 0.005f;
+		cameraAngle += 0.025f;
 		break;
 	case KeyboardButtons::X:
-		cameraAngle -= 0.005f;
+		cameraAngle -= 0.025f;
 		break;
 	default:
 		break;
@@ -229,6 +260,7 @@ void Application::HandleKeyRelease(KeyboardButtons button)
 		break;
 	}
 }
+
 
 void Application::HandleResizeEvent(const int& width, const int& height)
 {

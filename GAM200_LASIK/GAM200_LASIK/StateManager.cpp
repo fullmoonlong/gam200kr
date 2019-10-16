@@ -3,13 +3,12 @@
 #include "LevelTest2.h"
 #include <iostream>
 
-//StateManager* STATEMANAGER = nullptr;
+StateManager* STATEMANAGER = nullptr;
 
 StateManager::StateManager()
 {
-	//STATEMANAGER = this;
+	STATEMANAGER = this;
 	std::cout << "StateManager Add Successful" << std::endl;
-	Initialize();
 }
 
 StateManager::~StateManager()

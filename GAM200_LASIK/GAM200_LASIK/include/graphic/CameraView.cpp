@@ -5,37 +5,37 @@ glm::mat3 BuildToNDC(CameraView* camera, glm::vec2 size)
 	switch (camera->GetFrameOfReference())
 	{
 	case FrameOfReference::RightHanded_OriginCenter:
-		return glm::mat3{ camera->GetZoom() * (2 / size.x),
-					   0,
-					   0,
-					   0,
-					   camera->GetZoom() * (2 / size.y),
-					   0,
-					   0,
-					   0,
-					   1 };
+		return glm::mat3{ camera->GetZoom() * (2.0f / size.x),
+					   0.0f,
+					   0.0f,
+					   0.0f,
+					   camera->GetZoom() * (2.0f / size.y),
+					   0.0f,
+					   0.0f,
+					   0.0f,
+					   1.0f };
 		break;
 	case FrameOfReference::RightHanded_OriginBottomLeft:
-		return glm::mat3{ camera->GetZoom() * (2 / size.x),
-					   0,
-					   0,
-					   0,
-					   camera->GetZoom() * (2 / size.y),
-					   0,
-					   -1,
-					   -1,
-					   1 };
+		return glm::mat3{ camera->GetZoom() * (2.0f / size.x),
+					   0.0f,
+					   0.0f,
+					   0.0f,
+					   camera->GetZoom() * (2.0f / size.y),
+					   0.0f,
+					   -1.0f,
+					   -1.0f,
+					   1.0f };
 		break;
 	case FrameOfReference::LeftHanded_OriginTopLeft:
-		return glm::mat3{ camera->GetZoom() * (2 / size.x),
-					   0,
-					   0,
-					   0,
-					   camera->GetZoom() * -(2 / size.y),
-					   0,
-					   -1,
-					   1,
-					   1 };
+		return glm::mat3{ camera->GetZoom() * (2.0f / size.x),
+					   0.0f,
+					   0.0f,
+					   0.0f,
+					   camera->GetZoom() * -(2.0f / size.y),
+					   0.0f,
+					   -1.0f,
+					   1.0f,
+					   1.0f };
 		break;
 	default:
 	return glm::mat3{ 1.0f,

@@ -12,6 +12,8 @@
 #include <string>
 #include <math/mat3.hpp>
 #include <graphic/ShaderDescription.h>
+#include <glm.hpp>
+#include <gtc/matrix_transform.hpp>
 
 class Mesh;
 
@@ -27,7 +29,8 @@ public:
 	void SendUniformVariable(const char* variable_name, const int& variable) const noexcept;
 	void SendUniformVariable(const char* variable_name, const float& variable) const noexcept;
 	void SendUniformVariable(const char* variable_name, const mat3<float>& matrix) const noexcept;
-	
+	void SendUniformVariable(const char* variable_name, const glm::mat3 mat3) const noexcept;
+
 	unsigned int VBO[2];
 	unsigned int VAO{};
 private:

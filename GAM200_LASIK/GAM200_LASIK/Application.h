@@ -7,18 +7,16 @@
 
 
 #pragma once
+#include <chrono>
 #include <graphic/OpenGL_Window.h>
 #include <graphic/Shader.h>
 #include <graphic/EventHandler.hpp>
 #include <graphic/Texture.hpp>
 #include <graphic/Mesh.h>
-#include <chrono>
-#include "StateManager.h"
-#include "Camera.hpp"
-#include "CameraView.hpp"
-#include "Transform.hpp"
+#include <graphic/Camera.hpp>
+#include <graphic/CameraView.hpp>
+#include <graphic/Transform.hpp>
 #include "glm.hpp"
-
 
 class Application : public SimpleEventHandler
 {
@@ -44,7 +42,7 @@ private:
 	Texture texture;
 	Shader shader;
 	glWindow glWindow;
-	StateManager level;
+
 	Camera camera;
 	CameraView view;
 	Transform transform;

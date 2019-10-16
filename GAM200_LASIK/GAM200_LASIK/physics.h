@@ -4,7 +4,10 @@
 #include "../math_lib/include/vec2.hpp"
 #include "../math_lib/include/vec3.hpp"
 #include<assert.h>
+#include"body.h"
+#include"Transform.h"
 
+class Body;
 
 struct AABB {
 	Math::vec2<float> min;
@@ -16,35 +19,42 @@ struct Circle {
 	Math::vec2<float> position;
 };
 
-class Physics_object {
 
-	Physics_object();
+class Pair{
+public:
+	Pair(Body* A, Body* B) : m_A(A), m_B(B) {}
+	
+	Body * m_A;
+	Body* m_B;
+};
+
+class Physics {
+	
+	friend class Transform;
+
+	Body* body;
+	Transform * transform;
+
+	Physics();
 	
 	void Initialize(Math::vec2<float> position);
 
-	void Integrate();
+	//void integrate();
 
-	Math::vec2<float> AddForce(Math::vec2<float> position);
+	Math::vec2<float> AddForce(float x, float y);
 
-	void SetVelocity(float x_velocity , float y_velocity);
+	const Math::vec2<float> GetVelocity() { return body->m_velocity; }
 
-	void SetGravity(float gravityAcc = -9.8f);
+	void SetVelocity(const Math::vec2<float> velocity) { body->m_velocity = velocity; }
 
-protected:
-	Math::vec2<float> position;
-	Math::vec2<float> m_velocity;
-	float acceleration;
-
-	float m_damping;
-	float m_inverseMass;
-	float m_mass;
+	void AddForce(const Math::vec2<float> force);
 
 };
 
-class GravityOb :public Physics_object {
+class GravityOb :public Physics {
 
 };
 
-class Static_physisOb : Physics_object {
+class Static_physisOb : Physics {
 
 };

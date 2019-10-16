@@ -16,6 +16,7 @@
 class [[nodiscard]]Camera
 {
 public:
+	constexpr Camera() noexcept = default;
 	Camera(glm::vec2 camera_center, glm::vec2 camera_up) noexcept;
 
 	glm::vec2 GetCenter() const noexcept { return center; }

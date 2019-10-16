@@ -10,6 +10,15 @@
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="include\graphic\Texture.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\graphic\Camera.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\graphic\CameraView.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
     <ClCompile Include="include\graphic\Color.cpp">
       <Filter>graphic</Filter>
     </ClCompile>
@@ -28,7 +37,7 @@
     <ClCompile Include="include\graphic\ShaderDescription.cpp">
       <Filter>graphic</Filter>
     </ClCompile>
-    <ClCompile Include="include\graphic\Texture.cpp">
+    <ClCompile Include="include\graphic\Transform.cpp">
       <Filter>graphic</Filter>
     </ClCompile>
   </ItemGroup>
@@ -57,6 +66,18 @@
       <Filter>math</Filter>
     </ClInclude>
     <ClInclude Include="Component.h" />
+    <ClInclude Include="include\graphic\ShaderDescription.h">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\Texture.hpp">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\Camera.hpp">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\CameraView.hpp">
+      <Filter>graphic</Filter>
+    </ClInclude>
     <ClInclude Include="include\graphic\Color4f.hpp">
       <Filter>graphic</Filter>
     </ClInclude>
@@ -78,10 +99,7 @@
     <ClInclude Include="include\graphic\Shader.h">
       <Filter>graphic</Filter>
     </ClInclude>
-    <ClInclude Include="include\graphic\ShaderDescription.h">
-      <Filter>graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="include\graphic\Texture.hpp">
+    <ClInclude Include="include\graphic\Transform.hpp">
       <Filter>graphic</Filter>
     </ClInclude>
   </ItemGroup>
