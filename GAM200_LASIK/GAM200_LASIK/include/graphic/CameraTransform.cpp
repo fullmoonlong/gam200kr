@@ -1,7 +1,7 @@
-#include "Transform.hpp"
+#include "CameraTransform.hpp"
 
 //operator* ->  Check later
-glm::mat3 Transform::GetModelToWorld() noexcept
+glm::mat3 CameraTransform::GetModelToWorld() noexcept
 {
 	glm::mat3 worldMatrix;
 	glm::mat3 translateMatrix = buildTranslation(translation);
@@ -17,7 +17,7 @@ glm::mat3 Transform::GetModelToWorld() noexcept
 	return worldMatrix;
 }
 
-glm::mat3 Transform::GetWorldToModel() noexcept
+glm::mat3 CameraTransform::GetWorldToModel() noexcept
 {
 	glm::mat3 modelMatrix;
 	glm::mat3 translateMatrix = buildTranslation(translation);
@@ -33,7 +33,7 @@ glm::mat3 Transform::GetWorldToModel() noexcept
 	return modelMatrix;
 }
 
-float Transform::CalculateWorldDepth() const noexcept
+float CameraTransform::CalculateWorldDepth() const noexcept
 {
 	float sum = 0;
 	sum = depth;

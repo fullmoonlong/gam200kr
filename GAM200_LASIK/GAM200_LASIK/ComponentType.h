@@ -1,5 +1,8 @@
 #pragma once
 typedef enum {
-	TEST = 0
+	TEST = 0,
+	CP_TRANSFORM,
+	CP_BODY,
+	PHYSICS
 	//Add here component type
 }ComponentType;

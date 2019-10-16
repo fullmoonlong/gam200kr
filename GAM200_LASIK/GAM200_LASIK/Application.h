@@ -15,7 +15,7 @@
 #include <graphic/Mesh.h>
 #include <graphic/Camera.hpp>
 #include <graphic/CameraView.hpp>
-#include <graphic/Transform.hpp>
+#include <graphic/CameraTransform.hpp>
 #include "glm.hpp"
 
 class Application : public SimpleEventHandler
@@ -45,7 +45,7 @@ private:
 
 	Camera camera;
 	CameraView view;
-	Transform transform;
+	CameraTransform transform;
 
 	//float cameraSpeed{ 80.0f };
 	float depth = 1.0f;

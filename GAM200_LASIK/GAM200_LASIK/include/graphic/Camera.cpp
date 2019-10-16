@@ -10,7 +10,7 @@
 
 
 #include "Camera.hpp"
-#include "Transform.hpp"
+#include "CameraTransform.hpp"
 
 void Camera::ResetUp(glm::vec2 camera_up) noexcept
 {

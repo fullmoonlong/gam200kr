@@ -1,10 +1,10 @@
 #pragma once
 #include <glm.hpp>
 
-class [[nodiscard]] Transform
+class [[nodiscard]] CameraTransform
 {
 public:
-	Transform() noexcept = default;
+	CameraTransform() noexcept = default;
 	glm::mat3 GetModelToWorld() noexcept;
 	glm::mat3 GetWorldToModel() noexcept;
 
@@ -22,8 +22,8 @@ public:
 	float GetRotation() const noexcept { return rotation; }
 	void  SetRotation(float new_rotation) noexcept { rotation = new_rotation; }
 
-	const Transform* GetParent() const noexcept { return parent; }
-	void SetParent(Transform * transform_parent) noexcept { parent = transform_parent; }
+	const CameraTransform* GetParent() const noexcept { return parent; }
+	void SetParent(CameraTransform * transform_parent) noexcept { parent = transform_parent; }
 
 	glm::mat3 buildTranslation(glm::vec2 translate) noexcept
 	{
@@ -51,5 +51,5 @@ private:
 	glm::vec2 scale{1.0f, 1.0f};
 	float rotation = 0.0f;
 	float depth = 0.0f;
-	Transform* parent = nullptr;
+	CameraTransform* parent = nullptr;
 };

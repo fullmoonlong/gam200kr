@@ -3,9 +3,9 @@
 #include "Object.h"
 #include "../math_lib/include/vec2.hpp"
 #include "../math_lib/include/vec3.hpp"
-#include<assert.h>
 #include"body.h"
 #include"Transform.h"
+#include <ctime>
 
 class Body;
 
@@ -20,41 +20,41 @@ struct Circle {
 };
 
 
-class Pair{
+class Pair {
 public:
 	Pair(Body* A, Body* B) : m_A(A), m_B(B) {}
-	
+
 	Body * m_A;
 	Body* m_B;
 };
 
 class Physics {
-	
+
 	friend class Transform;
 
-	Body* body;
-	Transform * transform;
+	Body* m_body;
 
 	Physics();
-	
+
 	void Initialize(Math::vec2<float> position);
 
 	//void integrate();
 
-	Math::vec2<float> AddForce(float x, float y);
+	void AddForce(float x, float y);
 
-	const Math::vec2<float> GetVelocity() { return body->m_velocity; }
+	const Math::vec2<float> GetVelocity();
 
-	void SetVelocity(const Math::vec2<float> velocity) { body->m_velocity = velocity; }
+	void SetVelocity(const Math::vec2<float> velocity);
 
-	void AddForce(const Math::vec2<float> force);
+	//void AddForce(const Math::vec2<float> force);
 
+	bool AABBvsAABB(AABB a, AABB b);
 };
 
-class GravityOb :public Physics {
-
-};
-
-class Static_physisOb : Physics {
-
-};
+//class GravityOb :public Physics {
+//
+//};
+//
+//class Static_physisOb : Physics {
+//
+//};

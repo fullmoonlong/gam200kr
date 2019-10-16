@@ -37,9 +37,10 @@
     <ClCompile Include="include\graphic\ShaderDescription.cpp">
       <Filter>graphic</Filter>
     </ClCompile>
-    <ClCompile Include="include\graphic\Transform.cpp">
+    <ClCompile Include="include\graphic\CameraTransform.cpp">
       <Filter>graphic</Filter>
     </ClCompile>
+    <ClCompile Include="Body.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -99,9 +100,11 @@
     <ClInclude Include="include\graphic\Shader.h">
       <Filter>graphic</Filter>
     </ClInclude>
-    <ClInclude Include="include\graphic\Transform.hpp">
+    <ClInclude Include="include\graphic\CameraTransform.hpp">
       <Filter>graphic</Filter>
     </ClInclude>
+    <ClInclude Include="Body.h" />
+    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="math">
