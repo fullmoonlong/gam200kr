@@ -11,7 +11,7 @@
 #include <graphic/Mesh.h>
 #include <math/Angle.hpp>
 
-void Mesh::AddPoint(Math::vec2<float> point) noexcept
+void Mesh::AddPoint(vec2<float> point) noexcept
 {
 	points.push_back(point);
 }
@@ -21,12 +21,12 @@ void Mesh::AddColor(Color4f color) noexcept
 	colors.push_back(color);
 }
 
-void Mesh::AddTextureCoordinate(Math::vec2<float> textureCoordinate) noexcept
+void Mesh::AddTextureCoordinate(vec2<float> texture_coordinate) noexcept
 {
-	textureCoordinates.push_back(textureCoordinate);
+	textureCoordinates.push_back(texture_coordinate);
 }
 
-Math::vec2<float> Mesh::GetPoint(int index) const noexcept
+vec2<float> Mesh::GetPoint(int index) const noexcept
 {
 	return points[index];
 }
@@ -36,7 +36,7 @@ Color4f Mesh::GetColor(int index) const noexcept
 	return colors[index];
 }
 
-Math::vec2<float> Mesh::GetTextureCoordinate(int index) const noexcept
+vec2<float> Mesh::GetTextureCoordinate(int index) const noexcept
 {
 	return textureCoordinates[index];
 }
@@ -74,7 +74,7 @@ Mesh MESH::draw_ellipse(float rx, float ry, int pointsNum, Color4f /*color*/)
 	return circle;
 }
 
-Mesh MESH::draw_rectangle(float width, float height, Color4f color)
+Mesh MESH::draw_rectangle(float xPos, float yPos, float width, float height, Color4f color)
 {
 	Mesh rectangle;
 
@@ -83,21 +83,21 @@ Mesh MESH::draw_rectangle(float width, float height, Color4f color)
 	float xHalf = width / 2.0f;
 	float yHalf = height / 2.0f;
 	
-	rectangle.AddPoint({ -xHalf, -yHalf });
-	rectangle.AddPoint({ -xHalf, yHalf });
-	rectangle.AddPoint({ xHalf, yHalf });
-	rectangle.AddPoint({ xHalf, -yHalf });
-	rectangle.AddPoint({ -xHalf, -yHalf });
+	rectangle.AddPoint({ -xHalf + xPos, -yHalf + yPos });
+	rectangle.AddPoint({ -xHalf + xPos, yHalf + yPos });
+	rectangle.AddPoint({ xHalf + xPos, yHalf + yPos});
+	rectangle.AddPoint({ xHalf + xPos, -yHalf + yPos });
+	//rectangle.AddPoint({ -xHalf + xPos, -yHalf + yPos });
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
-	rectangle.AddColor(color);
-	rectangle.AddTextureCoordinate({ 0, 1 });
-	rectangle.AddTextureCoordinate({ 0, 0 });
-	rectangle.AddTextureCoordinate({ 1, 0 });
-	rectangle.AddTextureCoordinate({ 1, 1 });
-	rectangle.AddTextureCoordinate({ 0, 1 });
+	//rectangle.AddColor(color);
+	rectangle.AddTextureCoordinate({ 0.f, 1.f });
+	rectangle.AddTextureCoordinate({ 0.f, 0.f });
+	rectangle.AddTextureCoordinate({ 1.f, 0.f });
+	rectangle.AddTextureCoordinate({ 1.f, 1.f });
+	//rectangle.AddTextureCoordinate({ 0, 1 });
 
 	return rectangle;
 }

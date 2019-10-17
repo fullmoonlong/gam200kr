@@ -8,6 +8,8 @@
 */
 
 #pragma once
+#include <cassert>
+#include <algorithm>
 
 template <typename T>
 class vec2
@@ -126,7 +128,7 @@ constexpr T magnitude_squared(vec2<T> v) noexcept
 template <typename T>
 constexpr T magnitude(vec2<T> v) noexcept
 {
-	return sqrt(magnitude_squared(v));
+	return (T)sqrt(magnitude_squared(v));
 }
 
 template <typename T>
@@ -153,7 +155,7 @@ constexpr vec2<T> rotate_by(float angle_in_radians, vec2<T> v) noexcept
 template <typename T>
 constexpr vec2<T> normalize(vec2<T>& v) noexcept
 {
-	T magnitude = magnitude(v);
-	assert(magnitude != (T)0);
-	return v / magnitude;
+	T mag = magnitude(v);
+	assert(mag != 0);
+	return v / mag;
 }

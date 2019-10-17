@@ -9,7 +9,7 @@
 */
 
 #include <GL\glew.h>
-#include <vec2.hpp>
+#include <math/vec2.hpp>
 #include <graphic/Shader.h>
 #include <graphic/Mesh.h>
 #include <iostream>
@@ -149,21 +149,16 @@ void Shader::SendUniformVariable(const char* variable_name, const mat3<float>& m
 	glUniformMatrix3fv(location, 1, false, matrix3);
 }
 
-void Shader::SendUniformVariable(const char* variable_name, const glm::mat3 mat3) const noexcept
-{
-	const int location = glGetUniformLocation(handleToShader, variable_name);
-	glUniformMatrix3fv(location, 1, false, &mat3[0][0]);
-}
-
 void Shader::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
 {
 	char* buffer = reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
+	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
 	unsigned offset = 0;
 	
-	Math::vec2<float> point;
+	vec2<float> point;
 	Color4f color;
-	Math::vec2<float> texture;
+	vec2<float> texture;
 	
 	for (int i = 0; i < static_cast<int>(verticesCount); i++)
 	{
@@ -174,7 +169,7 @@ void Shader::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
 			case ShaderDescription::Type::Point:
 				point = mesh.GetPoint(i);
 				memcpy(buffer + offset, &point, sizeof(point));
-				offset += sizeof(Math::vec2<float>);
+				offset += sizeof(vec2<float>);
 				break;
 			case ShaderDescription::Type::Color:
 				color = mesh.GetColor(i);
@@ -184,7 +179,7 @@ void Shader::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
 			case ShaderDescription::Type::TextCoordinate:
 				texture = mesh.GetTextureCoordinate(i);
 				memcpy(buffer + offset, &texture, sizeof(texture));
-				offset += sizeof(Math::vec2<float>);
+				offset += sizeof(vec2<float>);
 				break;
 			}
 		}

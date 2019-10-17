@@ -163,7 +163,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Body.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="include\graphic\Camera.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -178,23 +178,15 @@
     <ClCompile Include="include\graphic\Shader.cpp" />
     <ClCompile Include="include\graphic\ShaderDescription.cpp" />
     <ClCompile Include="include\graphic\Texture.cpp" />
-    <ClCompile Include="include\graphic\CameraTransform.cpp" />
-    <ClCompile Include="LevelTest1.cpp" />
-    <ClCompile Include="LevelTest2.cpp" />
+    <ClCompile Include="include\graphic\Transform.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
-    <ClCompile Include="physics.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="StateManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\Desktop\GAM200_LASIK\LevelSystem.h" />
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Body.h" />
+    <ClInclude Include="Collision.hpp" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTest.h" />
     <ClInclude Include="ComponentType.h" />
@@ -213,21 +205,14 @@
     <ClInclude Include="include\graphic\Shader.h" />
     <ClInclude Include="include\graphic\ShaderDescription.h" />
     <ClInclude Include="include\graphic\Texture.hpp" />
-    <ClInclude Include="include\graphic\CameraTransform.hpp" />
+    <ClInclude Include="include\graphic\Transform.hpp" />
     <ClInclude Include="include\math\Angle.hpp" />
     <ClInclude Include="include\math\mat3.hpp" />
     <ClInclude Include="include\math\vec2.hpp" />
     <ClInclude Include="include\math\vec3.hpp" />
-    <ClInclude Include="LevelTest1.h" />
-    <ClInclude Include="LevelTest2.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectFactory.h" />
-    <ClInclude Include="physics.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="StateManager.h" />
     <ClInclude Include="System.h" />
-    <ClInclude Include="Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,58 +1,37 @@
 #include"CameraView.hpp"
 
-glm::mat3 BuildToNDC(CameraView* camera, glm::vec2 size)
+mat3<float> BuildToNDC(CameraView* camera, vec2<float> windowSize)
 {
 	switch (camera->GetFrameOfReference())
 	{
 	case FrameOfReference::RightHanded_OriginCenter:
-		return glm::mat3{ camera->GetZoom() * (2.0f / size.x),
-					   0.0f,
-					   0.0f,
-					   0.0f,
-					   camera->GetZoom() * (2.0f / size.y),
-					   0.0f,
-					   0.0f,
-					   0.0f,
-					   1.0f };
+		return mat3<float>{
+			camera->GetZoom() * (2.0f / windowSize.x), 0.0f, 0.0f,
+			0.0f, camera->GetZoom() * (2.0f / windowSize.y), 0.0f,
+			0.0f, 0.0f, 1.0f };
 		break;
 	case FrameOfReference::RightHanded_OriginBottomLeft:
-		return glm::mat3{ camera->GetZoom() * (2.0f / size.x),
-					   0.0f,
-					   0.0f,
-					   0.0f,
-					   camera->GetZoom() * (2.0f / size.y),
-					   0.0f,
-					   -1.0f,
-					   -1.0f,
-					   1.0f };
+		return mat3<float>{
+			camera->GetZoom() * (2.0f / windowSize.x), 0.0f, 0.0f,
+			0.0f, camera->GetZoom() * (2.0f / windowSize.y), 0.0f,
+			-1.0f, -1.0f, 1.0f };
 		break;
 	case FrameOfReference::LeftHanded_OriginTopLeft:
-		return glm::mat3{ camera->GetZoom() * (2.0f / size.x),
-					   0.0f,
-					   0.0f,
-					   0.0f,
-					   camera->GetZoom() * -(2.0f / size.y),
-					   0.0f,
-					   -1.0f,
-					   1.0f,
-					   1.0f };
+		return mat3<float>{
+			camera->GetZoom() * (2.0f / windowSize.x), 0.0f, 0.0f,
+			0.0f, camera->GetZoom() * -(2.0f / windowSize.y), 0.0f,
+			-1.0f, 1.0f, 1.0f };
 		break;
 	default:
-	return glm::mat3{ 1.0f,
-		0.0f,
-		0.0f,
-		0.0f,
-		1.0f,
-		0.0f,
-		0.0f,
-		0.0f,
-		1.0f,	
-	};
+	return mat3<float>{
+		1.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 1.0f };
 	}
 
 }
 
-void CameraView::SetViewSize(glm::vec2 size) noexcept
+void CameraView::SetViewSize(vec2<float> size) noexcept
 {
 	displaySize = size;
 	cameraToNDC = BuildToNDC(this, displaySize);

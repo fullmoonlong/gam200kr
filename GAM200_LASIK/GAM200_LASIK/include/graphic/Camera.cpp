@@ -10,9 +10,9 @@
 
 
 #include "Camera.hpp"
-#include "CameraTransform.hpp"
+#include "Transform.hpp"
 
-void Camera::ResetUp(glm::vec2 camera_up) noexcept
+void Camera::ResetUp(vec2<float> camera_up) noexcept
 {
 	up.x = camera_up.x;
 	up.y = camera_up.y;
@@ -21,12 +21,12 @@ void Camera::ResetUp(glm::vec2 camera_up) noexcept
 
 void Camera::MoveUp(float distance) noexcept
 {
-	center += glm::normalize(up) * distance;
+	center += normalize(up) * distance;
 }
 
 void Camera::MoveRight(float distance) noexcept
 {
-	center += glm::normalize(right) * distance;
+	center += normalize(right) * distance;
 }
 
 void Camera::Rotate(float angle_radians) noexcept
@@ -35,19 +35,44 @@ void Camera::Rotate(float angle_radians) noexcept
 	right = rotate_by(angle_radians, right);
 }
 
-glm::mat3 Camera::CameraToWorld() const noexcept
+mat3<float> Camera::CameraToWorld() const noexcept
 {
-	glm::mat3 inverseTransformMatrix = { up.y,  -right.y, (right.y * glm::dot(-up, center) - glm::dot(-right, center) * up.y),
-								  -up.x, right.x,  (glm::dot(-right, center) * up.x - right.x * glm::dot(-up, center)),
-								  0.0f,  0.0f,     1.0f };
+	//return build_translation(center.x, center.y) * transpose(mat3<float>{
+	//	right.x, up.x, 0.f,
+	//	right.y, up.y, 0.f,
+	//	0.f, 0.f, 1.f });
+	mat3<float> inverseTransformMatrix = { up.y,  -right.y, (right.y * dot_product(-up, center) - dot_product(-right, center) * up.y),
+		-up.x, right.x,  (dot_product(-right, center) * up.x - right.x * dot_product(-up, center)),
+		0.0f,  0.0f,     1.0f };
 	return transpose(inverseTransformMatrix);
 }
 
-glm::mat3 Camera::WorldToCamera() const noexcept
+mat3<float> Camera::WorldToCamera() const noexcept
 {
-	glm::mat3 transformMatrix = {
-			right.x, up.x, 0.0f,
-			right.y, up.y, 0.0f,
-			glm::dot(right, center), glm::dot(up, center),1.0f };
+	//return transpose(mat3<float>{
+	//	right.x, right.y, 0.f,
+	//	up.x, up.y, 0.f,
+	//	0.f, 0.f, 1.f }) * build_translation(-center.x, -center.y);
+	mat3<float> transformMatrix = {
+		right.x, up.x, 0.0f,
+		right.y, up.y, 0.0f,
+		dot_product(right, center), dot_product(up, center),1.0f };
 	return transformMatrix;
 }
+
+//glm::mat3 Camera::CameraToWorld() const noexcept
+//{
+//	glm::mat3 inverseTransformMatrix = { up.y,  -right.y, (right.y * glm::dot(-up, center) - glm::dot(-right, center) * up.y),
+//		-up.x, right.x,  (glm::dot(-right, center) * up.x - right.x * glm::dot(-up, center)),
+//		0.0f,  0.0f,     1.0f };
+//	return transpose(inverseTransformMatrix);
+//}
+//
+//glm::mat3 Camera::WorldToCamera() const noexcept
+//{
+//	glm::mat3 transformMatrix = {
+//		right.x, up.x, 0.0f,
+//		right.y, up.y, 0.0f,
+//		glm::dot(right, center), glm::dot(up, center),1.0f };
+//	return transformMatrix;
+//}

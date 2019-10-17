@@ -69,6 +69,18 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 		case GLFW_KEY_X:
 			eventHandler->HandleKeyPress(KeyboardButtons::X);
 			break;
+		case GLFW_KEY_LEFT:
+			eventHandler->HandleKeyPress(KeyboardButtons::Arrow_Left);
+			break;
+		case GLFW_KEY_RIGHT:
+			eventHandler->HandleKeyPress(KeyboardButtons::Arrow_Right);
+			break;
+		case GLFW_KEY_UP:
+			eventHandler->HandleKeyPress(KeyboardButtons::Arrow_Up);
+			break;
+		case GLFW_KEY_DOWN:
+			eventHandler->HandleKeyPress(KeyboardButtons::Arrow_Down);
+			break;
 		default:
 			break;
 		}

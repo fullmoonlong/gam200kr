@@ -16,6 +16,10 @@
 const std::filesystem::path vertex_path = "../assets/test.vert";
 const std::filesystem::path fragment_path = "../assets/test.frag";
 
+const std::filesystem::path vertex_path2 = "../assets/test2.vert";
+const std::filesystem::path fragment_path2 = "../assets/test2.frag";
+
+
 const std::filesystem::path texture_image = "../assets/sprite.png";
 
 std::string ReadSourceFrom(const std::filesystem::path& path)
@@ -45,29 +49,28 @@ Application::~Application()
 	
 }
 
-unsigned int VAO;
-unsigned int VBO[2];
+unsigned int VAO[2];
+unsigned int VBO[6];
 
 float vertices[] = {
-	// positions		// colors
-	-50.f, -50.f,		1.0f, 0.0f, 0.0f,
-	50.f, -50.f,		0.0f, 1.0f, 0.0f,
-	50.f,  50.f,		0.0f, 0.0f, 1.0f,
-	-50.f, 50.f,		0.7f, 0.7f, 0.7f
+	-50.f, -50.f,
+	50.f, -50.f,
+	50.f, 50.f,
+	-50.f, 50.f
 };
 
-//float texCoord[] = {
-//	0.0f, 0.0f,
-//	1.0f, 0.0f,
-//	1.0f, 1.0f,
-//	0.0f, 1.0f
-//};
+float vertices2[] = {
+	-50.f, -50.f,
+	50.f, -50.f,
+	50.f, 50.f,
+	-50.f, 50.f
+};
 
-float texCoord[] = {
-	0.0f, 0.0f,
-	0.123f, 0.0f,
-	0.123f, 1.0f,
-	0.0f, 1.0f
+float colors[] = {
+	1.0f, 0.0f, 0.0f,
+	0.0f, 1.0f, 0.0f,
+	0.0f, 0.0f, 1.0f,
+	0.7f, 0.7f, 0.7f
 };
 
 void Application::Initialize()
@@ -75,112 +78,151 @@ void Application::Initialize()
 	glWindow.CanCreateWindow(800, 600, this,"Prototype"); //initialize window
 	const std::string vertex_source = ReadSourceFrom(vertex_path);
 	const std::string fragment_source = ReadSourceFrom(fragment_path);
+	const std::string vertex_source2 = ReadSourceFrom(vertex_path2);
+	const std::string fragment_source2 = ReadSourceFrom(fragment_path2);
 	shader.LoadShader(vertex_source, fragment_source);
+	shader2.LoadShader(vertex_source2, fragment_source2);
 
-	glGenVertexArrays(1, &VAO);
+
+	Color4f color{ 1.f, 0.f, 0.f, 1.0f };
+	rectangle = MESH::draw_rectangle(0.f, 0.f, 50.f, 50.f, color);
+	rectangle2 = MESH::draw_rectangle(100.f, 100.f, 50.f, 50.f, color);
+
+
+	glGenVertexArrays(1, &VAO[0]);
 	glGenBuffers(1, &VBO[0]);
 	glGenBuffers(1, &VBO[1]);
+	glGenBuffers(1, &VBO[2]);
 
-	glBindVertexArray(VAO);
+	glGenVertexArrays(1, &VAO[1]);
+	glGenBuffers(1, &VBO[3]);
+	glGenBuffers(1, &VBO[4]);
+	glGenBuffers(1, &VBO[5]);
+
+
+	glBindVertexArray(VAO[0]);
+
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
-
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(2 * sizeof(float)));
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoord), texCoord, GL_DYNAMIC_DRAW);
 
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(2);
+	glBindVertexArray(VAO[1]);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[3]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices2), vertices2, GL_DYNAMIC_DRAW);
+
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[4]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(colors), colors, GL_DYNAMIC_DRAW);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+
+
 
 	Image image;
 	image.LoadFrom(texture_image);
 	texture.LoadTextureFrom(image);
 
+	texture2.LoadTextureFrom(image);
+
 	//camera
 	view.SetViewSize(glWindow.GetWindowWidth(), glWindow.GetWindowHeight());
 	view.SetZoom(zoom);
 	//camera
+
+	object1.Initialize({ 0.f,0.f }, 8);
+	object2.Initialize({ 200.f,0.f }, 8);
+	object1.min = { -50.f, -50.f };
+	object1.max = { 50.f, 50.f };
+	object2.min = { 150.f, -50.f };
+	object2.max = { 250.f, 50.f };
 }
 
 void Application::Update()
 {
 	auto start = std::chrono::system_clock::now();
 
+	static float frameTime = 0;
+
 	glWindow.SwapBuffers();
 	glWindow.PollEvents();
 
+
+	// collision check
+	static float decision = -0.8f;
+	float dx = object2.transform.GetTranslation().x + decision;
+	object2.transform.SetTranslation({ dx, object2.transform.GetTranslation().y });
+	object2.min.x += decision;
+	object2.max.x += decision;
+	// collision check
+
+
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-
+	
 	glUseProgram(shader.GetHandleToShader());
 
+	glBindVertexArray(VAO[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[2]);
+	object1.Update(deltaTime);
+	mat3<float> ndc1 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object1.transform.GetModelToWorld();
+	shader.SendUniformVariable("ndc", ndc1);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(2);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoord), texCoord, GL_DYNAMIC_DRAW);
+	glUseProgram(shader2.GetHandleToShader());
 
+	glBindVertexArray(VAO[1]);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[5]);
+	object2.Update(deltaTime);
+	mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
+	shader2.SendUniformVariable("ndc", ndc2);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(2);
 
 
-	//glActiveTexture(GL_TEXTURE0);
-	//glBindTexture(GL_TEXTURE_2D, texture.GetTexturehandle());
-	glBindVertexArray(VAO);
-	glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-	
-	auto currentTime = std::chrono::system_clock::now();
-	deltaTime = std::chrono::duration<float>(currentTime - start);
 
-	float time = deltaTime.count();
-
-	std::cout << time << std::endl;
-
-
-	frameCount++;
-
-	static int spriteIndex = 0;
-
-	if (frameCount % 8 == 0)
+	if (object1.isCollideWith(object2))
 	{
-		spriteIndex++;
-		texCoord[0] = (spriteIndex - 1) * (0.125f);
-		texCoord[2] = spriteIndex * (0.125f);
-		texCoord[4] = texCoord[2];
-		texCoord[6] = texCoord[0];
-		
-		if (spriteIndex == 8)
-		{
-			spriteIndex = 0;
-		}
+		decision = 0.8f;
 	}
 
-	timePassed += time;
-	if (timePassed >= 1.0f)
-	{
-		std::cout << frameCount << std::endl;
+	// transform
 
-		frameCount = 0;
-		timePassed = 0;
-	}
-	//camera
-	camera.MoveRight(pressDirection.x);
-	camera.MoveUp(pressDirection.y);
 	camera.Rotate(cameraAngle);
-
-	transform.SetTranslation(pressDirection);
-	transform.SetRotation(cameraAngle);
-
-	glm::mat3 ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
-	shader.SendUniformVariable("ndc", ndc);
 
 	view.SetViewSize(glWindow.GetWindowWidth(), glWindow.GetWindowHeight());
 	view.SetZoom(zoom);
-	//camera
+	// transform
+
+	auto currentTime = std::chrono::system_clock::now();
+	deltaTime = std::chrono::duration<float>(currentTime - start).count();
+
+	frameCount++;
+	timePassed += deltaTime;
+	static float timeCheck = 0;
+	frameTime += deltaTime;
+	if (timePassed >= 1.0f)
+	{
+		timeCheck++;
+		std::cout << frameCount << std::endl;
+		std::cout << timeCheck << std::endl;
+		frameCount = 0;
+		timePassed = 0;
+	}
 }
 
 void Application::ShutDown()
@@ -207,12 +249,8 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		}
 		glWindow.ToggleVSync(false);
 		break;
-	case KeyboardButtons::G:
-		std::cout << "G pressed" << std::endl;
-		//view.SetFrameOfReference(FrameOfReference((view.GetFrameOfReference() + 1) % 3));
-		break;
 	case KeyboardButtons::W:
-		pressDirection.y +=
+		pressDirection.y += 
 			(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? -2.0f : 2.0f;
 		break;
 	case KeyboardButtons::S:

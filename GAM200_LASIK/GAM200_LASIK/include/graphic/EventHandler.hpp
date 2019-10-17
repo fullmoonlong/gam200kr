@@ -21,7 +21,11 @@ enum class KeyboardButtons
 	S,
 	D,
 	Z,
-	X
+	X,
+	Arrow_Left,
+	Arrow_Right,
+	Arrow_Up,
+	Arrow_Down
 };
 
 enum class MouseButtons

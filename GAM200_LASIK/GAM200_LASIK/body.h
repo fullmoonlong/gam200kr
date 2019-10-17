@@ -1,4 +1,3 @@
-#pragma once
 #include "../external/math_lib/include/vec2.hpp"
 #include "Transform.h"
 
@@ -26,6 +25,7 @@ public:
 	Math::vec2<float> m_force;
 	Math::vec2<float> m_gravity;
 	Math::vec2<float> m_velocity;
+	Math::vec2<float> m_force;
 	
 	MassData mass_data;
 	float gravityScale;

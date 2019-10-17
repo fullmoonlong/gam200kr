@@ -1,23 +1,30 @@
 #pragma once
 #include <string>
+#include <vector>
+#include <math/vec2.hpp>
+#include <graphic/Image.hpp>
+#include <graphic/Texture.hpp>
+#include <graphic/Transform.hpp>
 
 typedef unsigned int ObjectID;
 
-struct position
+class Object
 {
-	float x, y;
-	position(float x_, float y_) : x(x_), y(y_) {}
-};
-
-class Object {
 public:
 	friend class ObjectFactory;
+	struct Animation
+	{
+		int spriteCount = 0;
+		std::vector<float> texCoord;
+		Texture sprite;
+		float baseTime;
+	};
+	
 	Object();
 	~Object();
 
-	void Initialize();
-	void Update();
-	//void Render();
+	void Initialize(vec2<float> starting_position, int spriteCount) noexcept;
+	void Update(float dt) noexcept;
 
 	ObjectID GetObjectID(){	return objectID;}
 	void SetObjectID(ObjectID objID){ objectID = objID;}
@@ -25,13 +32,22 @@ public:
 	std::string GetName() const{return objectName;}
 	void SetName(const std::string& name){objectName = name;}
 
-	float GetXposition() { return xpos; };
-	float GetYposition() { return ypos; };
-	position SetPosition(float x, float y) { xpos = x; ypos = y; return position(xpos, ypos); }
+	float GetXposition() { return position.x; };
+	float GetYposition() { return position.y; };
+
+	Transform transform;
+
+
+	// Collision
+	vec2<float> min;
+	vec2<float> max;
+
+	bool isCollideWith(Object& object) noexcept;
 
 private:
+	Animation animation;
 	ObjectID objectID;
 	std::string objectName = "";
-	float xpos;
-	float ypos;
+	vec2<float> position;
+	vec2<float> size;
 };

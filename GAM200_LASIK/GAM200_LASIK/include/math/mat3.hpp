@@ -75,11 +75,27 @@ public:
 	}
 };
 
-//template <typename T>
-//mat3<T> operator*(const mat3<T>& m1, const mat3<T>& m2) noexcept;
+template <typename T>
+mat3<T> operator*(const mat3<T>& m1, const mat3<T>& m2) noexcept
+{
+	mat3<T> m;
+	for (int i = 0; i <= 2; i++)
+	{
+		for (int j = 0; j <= 2; j++)
+		{
+			m.elements[i][j] =   m1.elements[0][j] * m2.elements[i][0] 
+				+ m1.elements[1][j] * m2.elements[i][1] 
+				+ m1.elements[2][j] * m2.elements[i][2];
+		}
+	}
+	return m;
+}
 
-//template <typename T>
-//void operator*=(mat3<T>& m1, const mat3<T>& m2) noexcept;
+template <typename T>
+void operator*=(mat3<T>& m1, const mat3<T>& m2) noexcept
+{
+	m1 = m1 * m2;
+}
 
 template <typename T>
 constexpr mat3<T> build_translation(T translate_x, T translate_y) noexcept
@@ -91,11 +107,20 @@ constexpr mat3<T> build_translation(T translate_x, T translate_y) noexcept
 }
 
 template <typename T>
-constexpr mat3<T> build_rotation(float angle_in_radians) noexcept
+constexpr mat3<T> build_translation(T translate) noexcept
 {
 	return mat3<T>{
-		cos(angle_in_radians), sin(angle_in_radians), 0,
-		-sin(angle_in_radians), cos(angle_in_radians), 0,
+		1, 0, 0,
+		0, 1, 0,
+		translate, translate, 1};
+}
+
+template <typename T>
+mat3<T> build_rotation(T angle_in_radians) noexcept
+{
+	return mat3<T>{
+		cos(angle_in_radians), -sin(angle_in_radians), 0,
+		sin(angle_in_radians), cos(angle_in_radians), 0,
 		0, 0, 1 };
 }
 
@@ -114,5 +139,14 @@ constexpr mat3<T> build_scaling(T scale_x, T scale_y) noexcept
 	return mat3<T>{
 		scale_x, 0, 0,
 		0, scale_y, 0,
-		0, 0, 1};
+		0, 0, 1 };
+}
+
+template <typename T>
+constexpr mat3<T> transpose(const mat3<T>& m) noexcept
+{
+	return mat3<T>{
+		m.column[0].x, m.column[1].x, m.column[2].x,
+		m.column[0].y, m.column[1].y, m.column[2].y,
+		m.column[0].z, m.column[1].z, m.column[2].z };
 }
