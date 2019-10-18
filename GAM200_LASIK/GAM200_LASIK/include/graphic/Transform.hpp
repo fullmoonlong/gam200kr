@@ -27,7 +27,7 @@ public:
 	void SetParent(Transform * transform_parent) noexcept { parent = transform_parent; }
 
 private:
-	vec2<float> translation{ 0.f, 0.f };
+	vec2<float> translation{  };
 	vec2<float> scale{ 1.0f, 1.0f };
 	float rotation = 0.0f;
 	float depth = 0.0f;

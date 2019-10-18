@@ -111,14 +111,36 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 	}
 }
 
-//void mouse_input_callback()
-//{
-//	
-//}
+void mouse_button_callback(GLFWwindow*, int button, int action, int /*mods*/)
+{
+	if (action == GLFW_PRESS)
+	{
+		switch (button)
+		{
+		case GLFW_MOUSE_BUTTON_LEFT:
+			eventHandler->HandleMouseEvent(MouseButtons::LEFT_PRESS);
+			break;
+		}
+	}
+	else if (action == GLFW_RELEASE)
+	{
+		switch (button)
+		{
+		case GLFW_MOUSE_BUTTON_LEFT:
+			eventHandler->HandleMouseEvent(MouseButtons::LEFT_RELEASE);
+			break;
+		}
+	}
+}
 
 void scroll_callback(GLFWwindow*, double, double y_offset)
 {
 	eventHandler->HandleScrollEvent(float(y_offset));
+}
+
+static void cursor_position_callback(GLFWwindow*, double xpos, double ypos)
+{
+	eventHandler->HandleMousePositionEvent(float(xpos), float(ypos));
 }
 
 bool glWindow::CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept
@@ -159,6 +181,8 @@ bool glWindow::CanCreateWindow(int width, int height, EventHandler* event_handle
 	//glfwSetWindowCloseCallback(window, window_close_callback);
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetScrollCallback(window, scroll_callback);
+	glfwSetCursorPosCallback(window, cursor_position_callback);
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
 
 	GLenum err = glewInit();
 	if (err != GLEW_OK)

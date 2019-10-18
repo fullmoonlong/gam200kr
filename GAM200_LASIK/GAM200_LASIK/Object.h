@@ -42,7 +42,12 @@ public:
 	vec2<float> min;
 	vec2<float> max;
 
+	vec2<float> speed;
+
 	bool isCollideWith(Object& object) noexcept;
+	bool isCollideWithMouse(vec2<float>& mouse, int width, int height) noexcept;
+
+	bool isMouseCollide = false;
 
 private:
 	Animation animation;
