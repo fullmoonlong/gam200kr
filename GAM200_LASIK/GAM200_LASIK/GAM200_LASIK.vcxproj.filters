@@ -2,46 +2,107 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="Image.cpp" />
-    <ClCompile Include="LevelTest1.cpp" />
-    <ClCompile Include="LevelTest2.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
-    <ClCompile Include="OpenGL_Window.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShaderDescription.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Physics.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
-    <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="include\graphic\Texture.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\graphic\Camera.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\graphic\CameraView.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\graphic\Color.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\graphic\Image.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\graphic\Mesh.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\graphic\OpenGL_Window.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\graphic\Shader.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\graphic\ShaderDescription.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="include\graphic\Transform.cpp">
+      <Filter>graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Angle.hpp" />
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Camera.hpp" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="EventHandler.hpp" />
-    <ClInclude Include="Image.hpp" />
-    <ClInclude Include="LevelTest1.h" />
-    <ClInclude Include="LevelTest2.h" />
-    <ClInclude Include="Mesh.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectFactory.h" />
-    <ClInclude Include="OpenGL_Window.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShaderDescription.h" />
-    <ClInclude Include="Texture.hpp" />
-    <ClInclude Include="Color4f.hpp" />
-    <ClInclude Include="Color4uc.hpp" />
-    <ClInclude Include="Physics.h" />
     <ClInclude Include="ComponentTest.h" />
     <ClInclude Include="ComponentType.h" />
     <ClInclude Include="..\..\..\..\..\Desktop\GAM200_LASIK\LevelSystem.h" />
-    <ClInclude Include="StateManager.h" />
     <ClInclude Include="System.h" />
+    <ClInclude Include="include\math\Angle.hpp">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\math\vec2.hpp">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\math\vec3.hpp">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="include\math\mat3.hpp">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="include\graphic\ShaderDescription.h">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\Texture.hpp">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\Camera.hpp">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\CameraView.hpp">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\Color4f.hpp">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\Color4uc.hpp">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\EventHandler.hpp">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\Image.hpp">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\Mesh.h">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\OpenGL_Window.h">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\Shader.h">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\graphic\Transform.hpp">
+      <Filter>graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="math">
+      <UniqueIdentifier>{018ad832-6954-4ded-a7fe-56558ebe1b00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphic">
+      <UniqueIdentifier>{54957373-b0c9-4773-9601-61f8ec7042a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

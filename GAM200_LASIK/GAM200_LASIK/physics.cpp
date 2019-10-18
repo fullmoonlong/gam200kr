@@ -1,46 +1,35 @@
-#include "Physics.h" 
-#include "Application.h" 
-//#include<SFML/Graphics.hpp>
+#include "physics.h"
 
-
-Physics_object::Physics_object()
+void Physics::Initialize(Math::vec2<float> position)
 {
-	position.x = 0;
-	position.y = 0;
-	m_velocity = 0;
-	acceleration = 0;
-}
-
-
-void Physics_object::Initialize(Math::vec2<float> new_position)
-{
-	new_position.x = 0.f;
-	new_position.y = 0.f;
-}
-
-void Physics_object::SetVelocity(float x_velocity, float y_velocity) {
-	m_velocity.x = x_velocity;
-	m_velocity.y = y_velocity;
-}
-
-void Physics_object::SetGravity(float gravityAcc)
-{
-	gravityAcc;
-}
-
-void Physics_object::Integrate()
-{
-	if (m_inverseMass <= 0.0f) return;
-
-	AddForce(m_velocity);
-
-	Math::vec3 resultingAcc = acceleration;
 
 }
 
-Math::vec2<float> Physics_object::AddForce(Math::vec2<float> v)
+void Physics::AddForce(float x, float y)
 {
-	v.x += m_velocity.x;
-	v.y += m_velocity.y;
-	return position;
+	Transform * m_transform = nullptr;
+	m_transform->GetPosition() += GetVelocity() * dt;
+
+}
+
+const Math::vec2<float> Physics::GetVelocity()
+{
+	return m_body->m_velocity;
+}
+
+void Physics::SetVelocity(const Math::vec2<float> velocity)
+{
+	m_body->m_velocity = velocity;
+}
+
+//void Physics::AddForce(const Math::vec2<float> force)
+//{
+//}
+
+bool Physics::AABBvsAABB(AABB a, AABB b)
+{
+	if (a.max.x < b.min.x or a.min.x > b.max.x) return false;
+	if (a.max.y < b.min.y or a.min.y > b.max.y) return false;
+
+	return true;
 }

@@ -1,26 +1,30 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Component.h"
-#include "ComponentType.h"
+#include <math/vec2.hpp>
+#include <graphic/Image.hpp>
+#include <graphic/Texture.hpp>
+#include <graphic/Transform.hpp>
 
 typedef unsigned int ObjectID;
 
-struct position
+class Object
 {
-	float x, y;
-	position(float x_, float y_) : x(x_), y(y_) {}
-};
-
-class Object {
 public:
 	friend class ObjectFactory;
+	struct Animation
+	{
+		int spriteCount = 0;
+		std::vector<float> texCoord;
+		Texture sprite;
+		float baseTime;
+	};
+	
 	Object();
 	~Object();
 
-	void Initialize();
-	void Update();
-	//void Render();
+	void Initialize(vec2<float> starting_position, int spriteCount) noexcept;
+	void Update(float dt) noexcept;
 
 	ObjectID GetObjectID(){	return objectID;}
 	void SetObjectID(ObjectID objID){ objectID = objID;}
@@ -28,49 +32,27 @@ public:
 	std::string GetName() const{return objectName;}
 	void SetName(const std::string& name){objectName = name;}
 
-	float GetXposition() { return xpos; };
-	float GetYposition() { return ypos; };
-	position SetPosition(float x, float y) { xpos = x; ypos = y; return position(xpos, ypos); }
-	
-	template <typename ComponentType>
-	bool HasComponent()
-	{
-		for (auto componentList : mComponetList)
-		{
-			if (typeid(*componentList).name() == typeid(ComponentType).name())
-				return true;
-		}
-		return false;
+	float GetXposition() { return position.x; };
+	float GetYposition() { return position.y; };
 
-	}
+	Transform transform;
 
-	template<typename ComponentType>
-	constexpr void AddComponent()
-	{
-		if (HasComponent<ComponentType>()) 
-		{
-			return;
-		}
-		ComponentType * componentType = new ComponentType();
-		dynamic_cast<Component*>(componentType)->SetOwner(this);
-		this->mComponetList.push_back(componentType);
-	}
 
-	template<typename ComponentType>
-	ComponentType* GetComponent()
-	{
-		for (auto componentList : mComponetList)
-		{
-			if (typeid(*componentList).name() == typeid(ComponentType).name())
-				return dynamic_cast<ComponentType*>(componentList);
-		}
-		return nullptr;
+	// Collision
+	vec2<float> min;
+	vec2<float> max;
 
-	}
+	vec2<float> speed;
+
+	bool isCollideWith(Object& object) noexcept;
+	bool isCollideWithMouse(vec2<float>& mouse, int width, int height) noexcept;
+
+	bool isMouseCollide = false;
+
 private:
+	Animation animation;
 	ObjectID objectID;
 	std::string objectName = "";
-	float xpos;
-	float ypos;
-	std::vector <Component*>mComponetList;
+	vec2<float> position;
+	vec2<float> size;
 };
