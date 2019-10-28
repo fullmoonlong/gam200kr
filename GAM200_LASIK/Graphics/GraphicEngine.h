@@ -18,11 +18,11 @@
 #include <Graphics/Transform.hpp>
 #include "Object.h"
 
-class Application : public SimpleEventHandler
+class GraphicEngine : public SimpleEventHandler
 {
 public:
-	Application();
-	~Application() = default;
+	GraphicEngine();
+	~GraphicEngine() = default;
 
 	void Initialize();
 	void Update();
@@ -59,3 +59,5 @@ private:
 	vec2<float> mousePosition{ 0.f, 0.f };
 
 };
+
+extern GraphicEngine graphics;

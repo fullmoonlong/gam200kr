@@ -10,8 +10,8 @@
 
 #pragma once
 #include <string>
-#include <math/mat3.hpp>
-#include <graphic/ShaderDescription.h>
+#include <Math/mat3.hpp>
+#include <Graphics/ShaderDescription.h>
 
 class Mesh;
 

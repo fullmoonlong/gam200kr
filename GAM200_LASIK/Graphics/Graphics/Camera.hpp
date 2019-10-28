@@ -10,8 +10,8 @@
 
 
 #pragma once
-#include <math/vec2.hpp>
-#include <math/mat3.hpp>
+#include <Math/vec2.hpp>
+#include <Math/mat3.hpp>
 
 class [[nodiscard]]Camera
 {
@@ -45,4 +45,3 @@ private:
 	vec2<float> up{0.f , 1.f};
 	vec2<float> right{1.f, 0.f};
 };
-

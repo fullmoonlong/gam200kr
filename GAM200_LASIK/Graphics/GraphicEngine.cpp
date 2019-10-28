@@ -9,8 +9,8 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-#include "Application.h"
 #include <Graphics/Image.hpp>
+#include "GraphicEngine.h"
 
 
 const std::filesystem::path vertex_path = "../assets/texture.vert";
@@ -37,13 +37,13 @@ std::string ReadSourceFrom(const std::filesystem::path& path)
 	return {};
 }
 
-Application::Application()
+GraphicEngine::GraphicEngine()
 {
 	Initialize();
 	isRunning = true;
 }
 
-void Application::Initialize()
+void GraphicEngine::Initialize()
 {
 	glWindow.CanCreateWindow(800, 600, this,"Prototype"); //initialize window
 
@@ -54,7 +54,7 @@ void Application::Initialize()
 
 	Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
 	rectangle = MESH::draw_rectangle(50.f, 50.f, 150.f, 50.f, color);
-	
+
 	ShaderDescription layout{ ShaderDescription::Type::Point, ShaderDescription::Type::Color };
 	shader.InitializeWithMesh(rectangle, layout);
 
@@ -71,7 +71,7 @@ void Application::Initialize()
 	//object2.max = { 250.f, 50.f };
 }
 
-void Application::Update()
+void GraphicEngine::Update()
 {
 	auto start = std::chrono::system_clock::now();
 
@@ -83,7 +83,7 @@ void Application::Update()
 
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-	
+
 	glUseProgram(shader.GetHandleToShader());
 	glBindVertexArray(shader.VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, shader.VBO);
@@ -127,13 +127,13 @@ void Application::Update()
 	}
 }
 
-void Application::ShutDown()
+void GraphicEngine::ShutDown()
 {
 	isRunning = false;
 	glfwSetWindowShouldClose(glWindow.window, GLFW_TRUE);
 }
 
-void Application::HandleKeyPress(KeyboardButtons button)
+void GraphicEngine::HandleKeyPress(KeyboardButtons button)
 {
 	switch (button)
 	{
@@ -179,7 +179,7 @@ void Application::HandleKeyPress(KeyboardButtons button)
 	}
 }
 
-void Application::HandleKeyRelease(KeyboardButtons button)
+void GraphicEngine::HandleKeyRelease(KeyboardButtons button)
 {
 	switch (button)
 	{
@@ -209,7 +209,7 @@ void Application::HandleKeyRelease(KeyboardButtons button)
 	}
 }
 
-void Application::HandleMouseEvent(MouseButtons button)
+void GraphicEngine::HandleMouseEvent(MouseButtons button)
 {
 	switch (button)
 	{
@@ -230,7 +230,7 @@ void Application::HandleMouseEvent(MouseButtons button)
 }
 
 
-void Application::HandleResizeEvent(const int& width, const int& height)
+void GraphicEngine::HandleResizeEvent(const int& width, const int& height)
 {
 	glWindow.SetWindowWidth(width);
 	glWindow.SetWindowHeight(height);
@@ -241,14 +241,14 @@ void Application::HandleResizeEvent(const int& width, const int& height)
 	//camera
 }
 
-void Application::HandleScrollEvent(float scroll_amount)
+void GraphicEngine::HandleScrollEvent(float scroll_amount)
 {
 	zoom = view.GetZoom() + (scroll_amount * 0.05f);
 	zoom = std::clamp(zoom, 0.1f, 2.0f);
 	view.SetZoom(zoom);
 }
 
-void Application::HandleMousePositionEvent(float xpos, float ypos)
+void GraphicEngine::HandleMousePositionEvent(float xpos, float ypos)
 {
 	//vec2<float> newMousePosition{ xpos, ypos };
 	mousePosition = { xpos, ypos };

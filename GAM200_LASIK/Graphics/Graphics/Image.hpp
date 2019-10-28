@@ -10,8 +10,8 @@
 
 
 #pragma once
-#include <graphic/Color4f.hpp>
-#include <graphic/Color4uc.hpp>
+#include <Graphics/Color4f.hpp>
+#include <Graphics/Color4uc.hpp>
 #include <vector>
 #include <filesystem>
 

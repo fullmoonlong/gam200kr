@@ -1,10 +1,10 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <math/vec2.hpp>
-#include <graphic/Image.hpp>
-#include <graphic/Texture.hpp>
-#include <graphic/Transform.hpp>
+#include <Math/vec2.hpp>
+#include <Graphics/Image.hpp>
+#include <Graphics/Texture.hpp>
+#include <Graphics/Transform.hpp>
 
 typedef unsigned int ObjectID;
 
