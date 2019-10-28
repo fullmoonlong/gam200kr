@@ -17,7 +17,7 @@
 Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) noexcept
 {
 	VAO = 0;
-	VBO[0] = 0;
+	VBO = 0;
 	LoadShader(vertex_source, fragment_source);
 }
 
@@ -83,8 +83,6 @@ bool Shader::LoadShader(const std::string& vertex_source, const std::string& fra
 
 void Shader::InitializeWithMesh(const Mesh& mesh, const ShaderDescription& shader_layout) noexcept
 {
-	VAO = 0;
-	VBO[0] = 0;
 	switch (mesh.GetShapePattern())
 	{
 	case ShapePattern::Triangle:
@@ -104,10 +102,10 @@ void Shader::InitializeWithMesh(const Mesh& mesh, const ShaderDescription& shade
 	bufferVertexCapacity = static_cast<int>(verticesCount * layout.GetVertexSize());
 	
 	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO[0]);
+	glGenBuffers(1, &VBO);
 	glBindVertexArray(VAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, bufferVertexCapacity, NULL, GL_STATIC_DRAW);
 
 	GLenum err = glGetError();
@@ -153,7 +151,7 @@ void Shader::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
 {
 	char* buffer = reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
 	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	unsigned offset = 0;
 	
 	vec2<float> point;

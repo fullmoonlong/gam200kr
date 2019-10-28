@@ -17,7 +17,6 @@
 #include <graphic/CameraView.hpp>
 #include <graphic/Transform.hpp>
 #include "Object.h"
-//#include "glm.hpp"
 
 class Application : public SimpleEventHandler
 {
