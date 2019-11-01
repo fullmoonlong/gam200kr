@@ -11,7 +11,7 @@
 
 #pragma once
 #include <graphic/Color4f.hpp>
-#include <graphic/Color4uc.hpp>
+#include <graphic/ColorInChar.hpp>
 #include <vector>
 #include <filesystem>
 
@@ -19,6 +19,7 @@ class [[nodiscard]]Image
 {
 public:	
 	Image() = default;
+	Image(const std::filesystem::path& source) noexcept;
 
 	void ResizePixelSize(int image_width, int image_height) noexcept;
 	bool LoadFrom(const std::filesystem::path& source) noexcept;
@@ -26,11 +27,11 @@ public:
 	int GetWidth() const noexcept;
 	int GetHeight() const noexcept;
 
-	Color4uc* GetPixelPointer() noexcept;
-	const Color4uc* GetPixelPointer() const noexcept;
+	ColorInChar* GetPixelPointer() noexcept;
+	const ColorInChar* GetPixelPointer() const noexcept;
 	
 private:
 
 	int width, height;
-	std::vector<Color4uc> pixels{};
+	std::vector<ColorInChar> pixels{};
 };
