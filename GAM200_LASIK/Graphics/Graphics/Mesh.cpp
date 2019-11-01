@@ -1,12 +1,12 @@
 /*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: Mesh.cpp
-*	
-*	Implement Mesh class
-*	
-*	2019/10/02
-*/
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *	
+ *	File_name: Mesh.cpp
+ *	
+ *	Implement Mesh class
+ *	
+ *	2019/10/02
+ */
 
 #include <graphic/Mesh.h>
 #include <math/Angle.hpp>
@@ -74,7 +74,7 @@ Mesh MESH::draw_ellipse(float rx, float ry, int pointsNum, Color4f /*color*/)
 	return circle;
 }
 
-Mesh MESH::draw_rectangle(float xPos, float yPos, float width, float height, Color4f color)
+Mesh MESH::createRectangle(float xPos, float yPos, float width, float height, Color4f color)
 {
 	Mesh rectangle;
 

@@ -1,12 +1,12 @@
 /*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: Mesh.h
-*	
-*	Header of Mesh
-*	
-*	2019/10/02
-*/
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *	
+ *	File_name: Mesh.h
+ *	
+ *	Header of Mesh
+ *	
+ *	2019/10/02
+ */
 
 #pragma once
 #include <vector>
@@ -35,18 +35,16 @@ public:
 	ShapePattern GetShapePattern() const noexcept;
 
 	size_t GetPointsCount() const noexcept;
-
 private:
 	std::vector<vec2<float>> points;
 	std::vector<Color4f> colors;
 	std::vector<vec2<float>> textureCoordinates;
 	ShapePattern pattern = ShapePattern::Triangle;
-	
 };
 
 namespace MESH
 {
 	Mesh draw_ellipse(float rx, float ry, int pointsNum, Color4f color);
-	Mesh draw_rectangle(float xPos, float yPos, float width, float height, Color4f color);
+	Mesh createRectangle(float xPos, float yPos, float width, float height, Color4f color);
 	//void draw_line(vec2, vec2, vec3 color);
 };

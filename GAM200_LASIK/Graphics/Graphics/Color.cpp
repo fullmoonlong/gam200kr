@@ -9,9 +9,9 @@
 */
 
 #include <graphic/Color4f.hpp>
-#include <graphic/Color4uc.hpp>
+#include <graphic/ColorInChar.hpp>
 
-Color4f to4f(Color4uc eight_bit_color)
+Color4f to4f(ColorInChar eight_bit_color)
 {
 	Color4f color4f;
 	color4f.r = static_cast<float>(eight_bit_color.r) / static_cast<float>(255);

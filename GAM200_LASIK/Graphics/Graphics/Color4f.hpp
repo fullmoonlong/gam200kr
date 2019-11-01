@@ -35,6 +35,6 @@ public:
 	float r, g, b, a;
 };
 
-class Color4uc;
+class ColorInChar;
 
-Color4f to4f(Color4uc eight_bit_color);
+Color4f to4f(ColorInChar eight_bit_color);
