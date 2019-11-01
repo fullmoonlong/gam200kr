@@ -67,7 +67,7 @@ Mesh MESH::draw_ellipse(float rx, float ry, int pointsNum, Color4f /*color*/)
 
 	for (int i = 0; i <= pointsNum; i++)
 	{
-		circle.AddPoint({ rx * (float)cos((double)i * angle), ry * (float)sin((double)i * angle) });
+		circle.AddPoint({ rx * (float)cos((float)i * angle), ry * (float)sin((float)i * angle) });
 		//circle.AddColor(color);
 	}
 
@@ -87,14 +87,17 @@ Mesh MESH::createRectangle(float xPos, float yPos, float width, float height, Co
 	rectangle.AddPoint({ -xHalf + xPos, yHalf + yPos });
 	rectangle.AddPoint({ xHalf + xPos, yHalf + yPos});
 	rectangle.AddPoint({ xHalf + xPos, -yHalf + yPos });
+	//rectangle.AddPoint({ -xHalf + xPos, -yHalf + yPos });
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
-	//rectangle.AddTextureCoordinate({ 0.f, 1.f });
-	//rectangle.AddTextureCoordinate({ 0.f, 0.f });
-	//rectangle.AddTextureCoordinate({ 1.f, 0.f });
-	//rectangle.AddTextureCoordinate({ 1.f, 1.f });
+	//rectangle.AddColor(color);
+	rectangle.AddTextureCoordinate({ 0.f, 1.f });
+	rectangle.AddTextureCoordinate({ 0.f, 0.f });
+	rectangle.AddTextureCoordinate({ 1.f, 0.f });
+	rectangle.AddTextureCoordinate({ 1.f, 1.f });
+	//rectangle.AddTextureCoordinate({ 0, 1 });
 
 	return rectangle;
 }

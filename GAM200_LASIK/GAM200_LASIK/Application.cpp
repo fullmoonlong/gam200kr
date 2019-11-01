@@ -48,6 +48,12 @@ Application::Application()
 void Application::Initialize()
 {
 	glWindow.CanCreateWindow(800, 600, this,"Prototype"); //initialize window
+	const std::string vertex_source = ReadSourceFrom(vertex_path);
+	const std::string fragment_source = ReadSourceFrom(fragment_path);
+	const std::string vertex_source2 = ReadSourceFrom(vertex_path2);
+	const std::string fragment_source2 = ReadSourceFrom(fragment_path2);
+	shader.LoadShader(vertex_source, fragment_source);
+	shader2.LoadShader(vertex_source2, fragment_source2);
 
 	shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 
