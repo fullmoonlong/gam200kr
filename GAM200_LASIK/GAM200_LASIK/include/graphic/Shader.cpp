@@ -1,33 +1,53 @@
 /*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: Shader.cpp
-*	
-*	Implementing shader
-*	
-*	2019/09/25
-*/
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *	
+ *	File_name: Shader.cpp
+ *	
+ *	Implementing shader
+ *	
+ *	2019/09/25
+ */
 
 #include <GL\glew.h>
-#include <math/vec2.hpp>
+#include <ostream>
+#include <string>
+#include <fstream>
 #include <graphic/Shader.h>
-#include <graphic/Mesh.h>
 #include <iostream>
 
-Shader::Shader(const std::string& vertex_source, const std::string& fragment_source) noexcept
+std::string ReadSourceFrom(const std::filesystem::path& path)
 {
-	VAO = 0;
-	VBO[0] = 0;
-	LoadShader(vertex_source, fragment_source);
+	std::ifstream in(path, std::ios::in | std::ios::binary);
+	if (in)
+	{
+		std::string contents;
+		in.seekg(0, std::ios::end);
+		contents.resize(unsigned(in.tellg()));
+		in.seekg(0, std::ios::beg);
+		in.read(&contents[0], contents.size());
+		in.close();
+		return contents;
+	}
+	return {};
 }
 
-bool Shader::LoadShader(const std::string& vertex_source, const std::string& fragment_source) noexcept
+Shader::Shader(const std::filesystem::path& vertex_source,
+	const std::filesystem::path& fragment_source) noexcept
+{
+	LoadShaderFrom(vertex_source, fragment_source);
+}
+
+bool Shader::LoadShaderFrom(const std::filesystem::path& vertex_source,
+	const std::filesystem::path& fragment_source) noexcept
 {
 	const GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	const GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-	const char* vertexSource = vertex_source.c_str();
-	const char* fragmentSource = fragment_source.c_str();
+	const std::string vert = ReadSourceFrom(vertex_source);
+	const std::string frag = ReadSourceFrom(fragment_source);
+	
+	const char* vertexSource = vert.c_str();
+	const char* fragmentSource = frag.c_str();
 
 	glShaderSource(vertexShader, 1, &vertexSource, NULL);
 	glCompileShader(vertexShader);
@@ -81,46 +101,6 @@ bool Shader::LoadShader(const std::string& vertex_source, const std::string& fra
 	return true;
 }
 
-void Shader::InitializeWithMesh(const Mesh& mesh, const ShaderDescription& shader_layout) noexcept
-{
-	VAO = 0;
-	VBO[0] = 0;
-	switch (mesh.GetShapePattern())
-	{
-	case ShapePattern::Triangle:
-		pattern = GL_TRIANGLES;
-		break;
-	case ShapePattern::TriangleFan:
-		pattern = GL_TRIANGLE_FAN;
-		break;
-	case ShapePattern::TriangleStrip:
-		pattern = GL_TRIANGLE_STRIP;
-		break;
-	default:
-		break;
-	}
-	layout = shader_layout;
-	verticesCount = (int)mesh.GetPointsCount();
-	bufferVertexCapacity = static_cast<int>(verticesCount * layout.GetVertexSize());
-	
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO[0]);
-	glBindVertexArray(VAO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
-	glBufferData(GL_ARRAY_BUFFER, bufferVertexCapacity, NULL, GL_STATIC_DRAW);
-
-	GLenum err = glGetError();
-	if (err != GL_NO_ERROR)
-	{
-		std::cout << "Error: " << err << std::endl;
-	}
-	
-	layout.EnableAttributes();
-	WriteMeshDataToVertexBuffer(mesh);
-	
-}
-
 unsigned Shader::GetHandleToShader() const noexcept
 {
 	return handleToShader;
@@ -147,44 +127,4 @@ void Shader::SendUniformVariable(const char* variable_name, const mat3<float>& m
 		matrix.elements[2][0], matrix.elements[2][1], matrix.elements[2][2]
 	};
 	glUniformMatrix3fv(location, 1, false, matrix3);
-}
-
-void Shader::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
-{
-	char* buffer = reinterpret_cast<char*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
-	glBindVertexArray(VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
-	unsigned offset = 0;
-	
-	vec2<float> point;
-	Color4f color;
-	vec2<float> texture;
-	
-	for (int i = 0; i < static_cast<int>(verticesCount); i++)
-	{
-		for (ShaderDescription::Type element : layout.GetTypes())
-		{
-			switch (element)
-			{
-			case ShaderDescription::Type::Point:
-				point = mesh.GetPoint(i);
-				memcpy(buffer + offset, &point, sizeof(point));
-				offset += sizeof(vec2<float>);
-				break;
-			case ShaderDescription::Type::Color:
-				color = mesh.GetColor(i);
-				memcpy(buffer + offset, &color, sizeof(color));
-				offset += sizeof(Color4f);
-				break;
-			case ShaderDescription::Type::TextCoordinate:
-				texture = mesh.GetTextureCoordinate(i);
-				memcpy(buffer + offset, &texture, sizeof(texture));
-				offset += sizeof(vec2<float>);
-				break;
-			}
-		}
-	}
-	glUnmapBuffer(GL_ARRAY_BUFFER);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
 }
