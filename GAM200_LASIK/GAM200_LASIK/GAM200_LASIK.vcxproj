@@ -115,8 +115,8 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\glfw3\lib\x64;$(SolutionDir)external\glew\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\glfw3\lib\x64;$(SolutionDir)external\glew\lib\x64;$(SolutionDir)lib\Graphics;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;Graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -166,27 +166,9 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
-<<<<<<< Updated upstream
-=======
-    <ClCompile Include="include\graphic\Camera.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="include\graphic\CameraView.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="include\graphic\Color.cpp" />
-    <ClCompile Include="include\graphic\Image.cpp" />
-    <ClCompile Include="include\graphic\Mesh.cpp" />
-    <ClCompile Include="include\graphic\OpenGL_Window.cpp" />
-    <ClCompile Include="include\graphic\Shader.cpp" />
-    <ClCompile Include="include\graphic\VerticesDescription.cpp" />
-    <ClCompile Include="include\graphic\Texture.cpp" />
-    <ClCompile Include="include\graphic\Transform.cpp" />
->>>>>>> Stashed changes
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
-    <ClCompile Include="include\graphic\Vertices.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -195,33 +177,9 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTest.h" />
     <ClInclude Include="ComponentType.h" />
-<<<<<<< Updated upstream
-=======
-    <ClInclude Include="include\graphic\Camera.hpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="include\graphic\CameraView.hpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="include\graphic\Color4f.hpp" />
-    <ClInclude Include="include\graphic\ColorInChar.hpp" />
-    <ClInclude Include="include\graphic\EventHandler.hpp" />
-    <ClInclude Include="include\graphic\Image.hpp" />
-    <ClInclude Include="include\graphic\Mesh.h" />
-    <ClInclude Include="include\graphic\OpenGL_Window.h" />
-    <ClInclude Include="include\graphic\Shader.h" />
-    <ClInclude Include="include\graphic\VerticesDescription.h" />
-    <ClInclude Include="include\graphic\Texture.hpp" />
-    <ClInclude Include="include\graphic\Transform.hpp" />
-    <ClInclude Include="include\math\Angle.hpp" />
-    <ClInclude Include="include\math\mat3.hpp" />
-    <ClInclude Include="include\math\vec2.hpp" />
-    <ClInclude Include="include\math\vec3.hpp" />
->>>>>>> Stashed changes
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="System.h" />
-    <ClInclude Include="include\graphic\Vertices.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

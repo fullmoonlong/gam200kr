@@ -9,8 +9,8 @@
  */
 
 #pragma once
-#include <filesystem>	//filesystem
-#include <math/mat3.hpp>
+#include <filesystem>
+#include "Math/mat3.hpp"
 
 class [[nodiscard]] Shader
 {

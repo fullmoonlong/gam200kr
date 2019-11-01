@@ -8,7 +8,6 @@
 *	2019/10/07
 */
 
-
 #pragma once
 
 class Image;

@@ -1,6 +1,6 @@
 #pragma once
-#include <math/vec2.hpp>
-#include <math/mat3.hpp>
+#include "Math/vec2.hpp"
+#include "Math/mat3.hpp"
 
 enum FrameOfReference
 {

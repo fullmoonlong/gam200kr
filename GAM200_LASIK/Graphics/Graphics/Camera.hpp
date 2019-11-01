@@ -8,10 +8,9 @@
 *	2019/10/10
 */
 
-
 #pragma once
-#include <Math/vec2.hpp>
-#include <Math/mat3.hpp>
+#include "Math/vec2.hpp"
+#include "Math/mat3.hpp"
 
 class [[nodiscard]]Camera
 {

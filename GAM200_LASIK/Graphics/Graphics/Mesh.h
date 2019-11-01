@@ -10,8 +10,8 @@
 
 #pragma once
 #include <vector>
-#include <Math/vec2.hpp>
-#include <Graphics/Color4f.hpp>
+#include "Math/vec2.hpp"
+#include "Color4f.hpp"
 
 enum class ShapePattern
 {

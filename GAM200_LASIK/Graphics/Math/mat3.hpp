@@ -7,12 +7,10 @@
 *	2019/09/20
 */
 
-
 #pragma once
 #include <complex>	// cos, sin
 #include <cassert>	// assert
-#include <math/vec3.hpp>
-
+#include "vec3.hpp"
 
 template <typename T>
 class mat3

@@ -10,16 +10,16 @@
 #include <fstream>
 #include <filesystem>
 #include "Application.h"
-#include <graphic/Image.hpp>
-#include "graphic/VerticesDescription.h"
+#include "Graphics/Image.hpp"
+#include "Graphics/VerticesDescription.h"
 
 namespace PATH
 {
-	const std::filesystem::path prototype_vert = "../assets/prototype.vert";
-	const std::filesystem::path prototype_frag = "../assets/prototype.frag";
+	const std::filesystem::path shape_vert = "../assets/shape.vert";
+	const std::filesystem::path shape_frag = "../assets/shape.frag";
 
-	const std::filesystem::path texture_vert = "../assets/test.vert";
-	const std::filesystem::path texture_frag = "../assets/test.frag";
+	const std::filesystem::path texture_vert = "../assets/texture.vert";
+	const std::filesystem::path texture_frag = "../assets/texture.frag";
 	
 	const std::filesystem::path texture_image = "../assets/sprite.png";
 }
@@ -32,9 +32,10 @@ Application::Application()
 
 void Application::Initialize()
 {
-	glWindow.CanCreateWindow(800, 600, this,"Prototype"); //initialize window
+	Window.CanCreateWindow(800, 600, this,"Lasik"); //initialize window
 
-	shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	//shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	shader.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
 
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
 	rectangle = MESH::createRectangle(0.0f, 0.0f, 150.f, 150.f, color);
@@ -44,17 +45,15 @@ void Application::Initialize()
 
 	
 	//camera
-	view.SetViewSize(glWindow.GetWindowWidth(), glWindow.GetWindowHeight());
+	view.SetViewSize(Window.GetWindowWidth(), Window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//camera
 
-	//Image image(PATH::texture_image);
-	//texture.LoadTextureFrom(image);
-	texture.LoadTextureFrom(PATH::texture_image);
+	//texture.LoadTextureFrom(PATH::texture_image);
 
-	object.Initialize({ 0, 0 }, 8);
-	object.min = { -75.0f, -75.0f };
-	object.max = { 75.0f, 75.0f };
+	//object.Initialize({ 0, 0 }, 8);
+	//object.min = { -75.0f, -75.0f };
+	//object.max = { 75.0f, 75.0f };
 }
 
 void Application::Update()
@@ -62,10 +61,10 @@ void Application::Update()
 	auto start = std::chrono::system_clock::now();
 	static float frameTime = 0;
 
-	glWindow.SwapBuffers();
-	glWindow.PollEvents();
+	Window.SwapBuffers();
+	Window.PollEvents();
 
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+	glClearColor(0.2f, 0.3f, 0.4f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	//Make graphic engine extern and doing something like graphic application.
@@ -74,18 +73,17 @@ void Application::Update()
 	glUseProgram(shader.GetHandleToShader());
 	Vertices::SelecteVAO(vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, vertices.VBO);
-	glBindTexture(GL_TEXTURE_2D, texture.GetTexturehandle());
-	glDrawArrays(vertices.GetPattern(), 0,	(int)rectangle.GetPointsCount());
+	glDrawArrays(vertices.GetPattern(), 0, (int)rectangle.GetPointsCount());
 	//Draw
 	
 	mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
 	shader.SendUniformVariable("ndc", ndc);
 
-	object.Update(deltaTime);
+	//object.Update(deltaTime);
 	
 	// transform
 	camera.Rotate(cameraAngle);
-	view.SetViewSize(glWindow.GetWindowWidth(), glWindow.GetWindowHeight());
+	view.SetViewSize(Window.GetWindowWidth(), Window.GetWindowHeight());
 	view.SetZoom(zoom);
 	// transform
 
@@ -113,7 +111,7 @@ void Application::Update()
 void Application::ShutDown()
 {
 	isRunning = false;
-	glfwSetWindowShouldClose(glWindow.window, GLFW_TRUE);
+	glfwSetWindowShouldClose(Window.window, GLFW_TRUE);
 }
 
 void Application::HandleKeyPress(KeyboardButtons button)
@@ -124,15 +122,15 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		this->ShutDown();
 		break;
 	case KeyboardButtons::F:
-		glWindow.ToggleFullScreen();
+		Window.ToggleFullScreen();
 		break;
 	case KeyboardButtons::V:
-		if (glWindow.IsVSyncOn() == false)
+		if (Window.IsVSyncOn() == false)
 		{
-			glWindow.ToggleVSync(true);
+			Window.ToggleVSync(true);
 			break;
 		}
-		glWindow.ToggleVSync(false);
+		Window.ToggleVSync(false);
 		break;
 	case KeyboardButtons::W:
 		//pressDirection.y += 
@@ -199,7 +197,7 @@ void Application::HandleMouseEvent(MouseButtons button)
 	case MouseButtons::LEFT_PRESS:
 	{
 		//mouse check
-		if (object.isCollideWithMouse(mousePosition, glWindow.GetWindowWidth(), glWindow.GetWindowHeight()))
+		if (object.isCollideWithMouse(mousePosition, Window.GetWindowWidth(), Window.GetWindowHeight()))
 		{
 			object.isMouseCollide = true;
 		}
@@ -215,9 +213,9 @@ void Application::HandleMouseEvent(MouseButtons button)
 
 void Application::HandleResizeEvent(const int& width, const int& height)
 {
-	glWindow.SetWindowWidth(width);
-	glWindow.SetWindowHeight(height);
-	glfwSetWindowSize(glWindow.window, width, height);
+	Window.SetWindowWidth(width);
+	Window.SetWindowHeight(height);
+	glfwSetWindowSize(Window.window, width, height);
 	//camera
 	view.SetViewSize(width, height);
 	view.SetZoom(zoom);

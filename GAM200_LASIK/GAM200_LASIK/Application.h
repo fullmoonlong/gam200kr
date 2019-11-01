@@ -8,25 +8,15 @@
 
 #pragma once
 #include <chrono>
-<<<<<<< Updated upstream
-#include <Graphics//OpenGL_Window.h>
-#include <Graphics/Shader.h>
-#include <Graphics/EventHandler.hpp>
-#include <Graphics/Texture.hpp>
-#include <Graphics/Mesh.h>
-#include <Graphics/Camera.hpp>
-#include <Graphics/CameraView.hpp>
-#include <Graphics/Transform.hpp>
-=======
-#include <graphic/OpenGL_Window.h>
-#include <graphic/Shader.h>
-#include <graphic/EventHandler.hpp>
-#include <graphic/Texture.hpp>
-#include <graphic/Mesh.h>
-#include <graphic/Camera.hpp>
-#include <graphic/CameraView.hpp>
-#include <graphic/Transform.hpp>
-#include <graphic/Vertices.h>
+#include "Graphics/OpenGL_Window.h"
+#include "Graphics/Shader.h"
+#include "Graphics/EventHandler.hpp"
+#include "Graphics/Texture.hpp"
+#include "Graphics/Mesh.h"
+#include "Graphics/Camera.hpp"
+#include "Graphics/CameraView.hpp"
+#include "Graphics/Transform.hpp"
+#include "Graphics/Vertices.h"
 #include "Object.h"
 #include "Util/Clock.hpp"
 
@@ -57,7 +47,7 @@ private:
 	Vertices vertices;
 	Texture texture;
 	Shader shader;
-	glWindow glWindow;
+	Window Window;
 	Clock clock;
 	
 	Camera camera;

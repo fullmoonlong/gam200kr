@@ -8,9 +8,9 @@
  *	2019/10/31
  */
 
+#include "GL/glew.h"
 #include "Vertices.h"
 #include "Mesh.h"
-#include "GL/glew.h"
 
 Vertices::Vertices(const Mesh& mesh, const VerticesDescription& vertex_layout) noexcept
 {

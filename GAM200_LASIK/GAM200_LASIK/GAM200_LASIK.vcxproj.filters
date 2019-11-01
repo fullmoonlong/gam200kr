@@ -2,100 +2,21 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
-    <ClCompile Include="ComponentTest.cpp" />
-<<<<<<< Updated upstream
-=======
-    <ClCompile Include="include\graphic\Texture.cpp">
-      <Filter>graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="include\graphic\Camera.cpp">
-      <Filter>graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="include\graphic\CameraView.cpp">
-      <Filter>graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="include\graphic\Color.cpp">
-      <Filter>graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="include\graphic\Image.cpp">
-      <Filter>graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="include\graphic\Mesh.cpp">
-      <Filter>graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="include\graphic\OpenGL_Window.cpp">
-      <Filter>graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="include\graphic\Shader.cpp">
-      <Filter>graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="include\graphic\Transform.cpp">
-      <Filter>graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="include\graphic\Vertices.cpp" />
-    <ClCompile Include="include\graphic\VerticesDescription.cpp">
-      <Filter>graphic</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="ObjectFactory.h" />
+    <ClInclude Include="Util\Clock.hpp" />
+    <ClInclude Include="Collision.hpp" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTest.h" />
     <ClInclude Include="ComponentType.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="System.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="include\graphic\Texture.hpp">
-      <Filter>graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="include\graphic\Camera.hpp">
-      <Filter>graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="include\graphic\CameraView.hpp">
-      <Filter>graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="include\graphic\Color4f.hpp">
-      <Filter>graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="include\graphic\EventHandler.hpp">
-      <Filter>graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="include\graphic\Image.hpp">
-      <Filter>graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="include\graphic\Mesh.h">
-      <Filter>graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="include\graphic\OpenGL_Window.h">
-      <Filter>graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="include\graphic\Shader.h">
-      <Filter>graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="include\graphic\Transform.hpp">
-      <Filter>graphic</Filter>
-    </ClInclude>
->>>>>>> Stashed changes
-    <ClInclude Include="Collision.hpp" />
-    <ClInclude Include="include\graphic\Vertices.h" />
-    <ClInclude Include="include\graphic\VerticesDescription.h">
-      <Filter>graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="Util\Clock.hpp" />
-    <ClInclude Include="include\graphic\ColorInChar.hpp">
-      <Filter>graphic</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="math">
-      <UniqueIdentifier>{018ad832-6954-4ded-a7fe-56558ebe1b00}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="graphic">
-      <UniqueIdentifier>{54957373-b0c9-4773-9601-61f8ec7042a0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
 </Project>

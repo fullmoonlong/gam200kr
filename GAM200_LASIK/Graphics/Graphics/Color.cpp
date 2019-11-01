@@ -8,8 +8,8 @@
 *	2019/10/13
 */
 
-#include <graphic/Color4f.hpp>
-#include <graphic/ColorInChar.hpp>
+#include "Color4f.hpp"
+#include "ColorInChar.hpp"
 
 Color4f to4f(ColorInChar eight_bit_color)
 {

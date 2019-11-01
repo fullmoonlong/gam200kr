@@ -10,10 +10,10 @@
 *	DoYoung Implemented fullscreen functions
 */
 
-#include <GL\glew.h>
-#include <graphic/OpenGL_Window.h>
-#include <graphic/EventHandler.hpp>
 #include <iostream>
+#include "GL\glew.h"
+#include "OpenGL_Window.h"
+#include "EventHandler.hpp"
 
 EventHandler* eventHandler;
 
@@ -143,7 +143,7 @@ static void cursor_position_callback(GLFWwindow*, double xpos, double ypos)
 	eventHandler->HandleMousePositionEvent(float(xpos), float(ypos));
 }
 
-bool glWindow::CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept
+bool Window::CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept
 {
 	eventHandler = event_handler;
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -194,33 +194,33 @@ bool glWindow::CanCreateWindow(int width, int height, EventHandler* event_handle
 	return true;
 }
 
-bool glWindow::IsVSyncOn() noexcept
+bool Window::IsVSyncOn() noexcept
 {
 	return isVSyncOn;
 }
 
-void glWindow::ToggleVSync(bool status) noexcept
+void Window::ToggleVSync(bool status) noexcept
 {
 	isVSyncOn = status;
 	glfwSwapInterval(isVSyncOn);
 }
 
-void glWindow::SwapBuffers() noexcept
+void Window::SwapBuffers() noexcept
 {
 	glfwSwapBuffers(window);
 }
 
-void glWindow::PollEvents() noexcept
+void Window::PollEvents() noexcept
 {
 	glfwPollEvents();
 }
 
-bool glWindow::IsFullScreen() noexcept
+bool Window::IsFullScreen() noexcept
 {
 	return isFullScreen;
 }
 
-void glWindow::ToggleFullScreen() noexcept
+void Window::ToggleFullScreen() noexcept
 {
 	if (!IsFullScreen())
 	{
@@ -239,27 +239,27 @@ void glWindow::ToggleFullScreen() noexcept
 	}
 }
 
-void glWindow::SetWindowTitle(const char* title) const noexcept
+void Window::SetWindowTitle(const char* title) const noexcept
 {
 	glfwSetWindowTitle(window, title);
 }
 
-int glWindow::GetWindowWidth() const noexcept
+int Window::GetWindowWidth() const noexcept
 {
 	return windowSize[0];
 }
 
-int glWindow::GetWindowHeight() const noexcept
+int Window::GetWindowHeight() const noexcept
 {
 	return windowSize[1];
 }
 
-void glWindow::SetWindowWidth(int new_width) noexcept
+void Window::SetWindowWidth(int new_width) noexcept
 {
 	windowSize[0] = new_width;
 }
 
-void glWindow::SetWindowHeight(int new_height) noexcept
+void Window::SetWindowHeight(int new_height) noexcept
 {
 	windowSize[1] = new_height;
 }
