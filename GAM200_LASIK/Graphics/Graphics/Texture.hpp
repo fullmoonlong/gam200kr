@@ -13,10 +13,11 @@
 class Image;
 class Color;
 
-class [[nodiscard]]Texture
+class [[nodiscard]] Texture
 {
 public:
 	Texture() = default;
+	Texture(Image& image);
 
 	unsigned int GetTexturehandle() const noexcept { return textureHandle; }
 

@@ -1,12 +1,12 @@
 /*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: Shader.hpp
-*	
-*	Header of event handler
-*	
-*	2019/10/03
-*/
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *	
+ *	File_name: Shader.hpp
+ *	
+ *	Header of event handler
+ *	
+ *	2019/10/03
+ */
 
 #pragma once
 

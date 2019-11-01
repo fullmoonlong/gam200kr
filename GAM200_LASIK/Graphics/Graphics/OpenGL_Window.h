@@ -1,14 +1,14 @@
 /*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: OpenGL_Window.h
-*	
-*	Header for window
-*	
-*	2019/09/21
-*	
-*	DoYoung Implemented fullscreen functions
-*/
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *	
+ *	File_name: OpenGL_Window.h
+ *	
+ *	Header for window
+ *	
+ *	2019/09/21
+ *	
+ *	DoYoung Implemented fullscreen functions
+ */
 
 #pragma once
 #include "glfw3.h"

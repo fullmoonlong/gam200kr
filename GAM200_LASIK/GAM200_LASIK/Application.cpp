@@ -8,21 +8,10 @@
 #include <GL/glew.h>
 #include <iostream>
 #include <fstream>
-#include <filesystem>
+#include "Graphics/PATH.hpp"
 #include "Application.h"
 #include "Graphics/Image.hpp"
 #include "Graphics/VerticesDescription.h"
-
-namespace PATH
-{
-	const std::filesystem::path shape_vert = "../assets/shape.vert";
-	const std::filesystem::path shape_frag = "../assets/shape.frag";
-
-	const std::filesystem::path texture_vert = "../assets/texture.vert";
-	const std::filesystem::path texture_frag = "../assets/texture.frag";
-	
-	const std::filesystem::path texture_image = "../assets/sprite.png";
-}
 
 Application::Application()
 {
@@ -30,27 +19,34 @@ Application::Application()
 	isRunning = true;
 }
 
+unsigned int vbo;
+
 void Application::Initialize()
 {
 	Window.CanCreateWindow(800, 600, this,"Lasik"); //initialize window
 
-	//shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	shader.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
-
+	//shader.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
+	shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
-	rectangle = MESH::createRectangle(0.0f, 0.0f, 150.f, 150.f, color);
+	rectangle = MESH::create_rectangle(0.0f, 0.0f, 150.f, 150.f, color);
 	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	vertices.InitializeWithMeshAndLayout(rectangle, layout);
+
+
+	
+	glGenBuffers(1, &vbo);
+	Image image(PATH::sprite_image);
+	animation.Initialize(image, rectangle, 8);
+
 
 	
 	//camera
 	view.SetViewSize(Window.GetWindowWidth(), Window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//camera
-
-	//texture.LoadTextureFrom(PATH::texture_image);
-
+	
 	//object.Initialize({ 0, 0 }, 8);
 	//object.min = { -75.0f, -75.0f };
 	//object.max = { 75.0f, 75.0f };
@@ -58,8 +54,7 @@ void Application::Initialize()
 
 void Application::Update()
 {
-	auto start = std::chrono::system_clock::now();
-	static float frameTime = 0;
+	clock.UpdateClock();
 
 	Window.SwapBuffers();
 	Window.PollEvents();
@@ -73,13 +68,19 @@ void Application::Update()
 	glUseProgram(shader.GetHandleToShader());
 	Vertices::SelecteVAO(vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, vertices.VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	animation.Animate(deltaTime);
 	glDrawArrays(vertices.GetPattern(), 0, (int)rectangle.GetPointsCount());
+	//Animation
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(2);
 	//Draw
+
+
 	
-	mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
+	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
 	shader.SendUniformVariable("ndc", ndc);
 
-	//object.Update(deltaTime);
 	
 	// transform
 	camera.Rotate(cameraAngle);
@@ -87,25 +88,14 @@ void Application::Update()
 	view.SetZoom(zoom);
 	// transform
 
-	
-	auto currentTime = std::chrono::system_clock::now();
-	deltaTime = std::chrono::duration<float>(currentTime - start).count();
-
-	frameCount++;
-	timePassed += deltaTime;
-	static float timeCheck = 0;
-	frameTime += deltaTime;
-	if (timePassed >= 1.0f)
+	++frameCount;
+	if (clock.timePassed >= 1.0f)
 	{
-		timeCheck++;
 		std::cout << frameCount << std::endl;
-		std::cout << timeCheck << std::endl;
+		clock.timePassed -= 1.0f;
 		frameCount = 0;
-		timePassed = 0;
 	}
-	
-	//clock.UpdateTime();
-	//std::cout << clock.GetTimeBySecond() << std::endl;
+	deltaTime = clock.GetTimeFromLastUpdate();
 }
 
 void Application::ShutDown()

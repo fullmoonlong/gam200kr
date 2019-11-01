@@ -56,25 +56,25 @@ size_t Mesh::GetPointsCount() const noexcept
 	return points.size();
 }
 
-Mesh MESH::draw_ellipse(float rx, float ry, int pointsNum, Color4f /*color*/)
+Mesh MESH::create_ellipse(float rx, float ry, int pointsNum, Color4f color)
 {
 	Mesh circle;
 	
 	circle.SetShapePattern(ShapePattern::TriangleFan);
-	const float angle = Angle::TWO_PI / (float)pointsNum;
-	circle.AddPoint({ 0.0f,0.0f });	// Initial point
-	//circle.AddColor(color);			// Color of initial point
+	const float angle = ANGLE::two_pi / static_cast<float>(pointsNum);
+	//circle.AddPoint({ 0.0f,0.0f });
+	//circle.AddColor(color);
 
-	for (int i = 0; i <= pointsNum; i++)
+	for (int i = 0; i <= pointsNum; ++i)
 	{
 		circle.AddPoint({ rx * (float)cos((float)i * angle), ry * (float)sin((float)i * angle) });
-		//circle.AddColor(color);
+		circle.AddColor(color);
 	}
 
 	return circle;
 }
 
-Mesh MESH::createRectangle(float xPos, float yPos, float width, float height, Color4f color)
+Mesh MESH::create_rectangle(float xPos, float yPos, float width, float height, Color4f color)
 {
 	Mesh rectangle;
 

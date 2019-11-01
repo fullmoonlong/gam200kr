@@ -1,12 +1,12 @@
 /*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: Image.hpp
-*	
-*	Image class that load from image file
-*	
-*	2019/10/07
-*/
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *	
+ *	File_name: Image.hpp
+ *	
+ *	Image class that load from image file
+ *	
+ *	2019/10/07
+ */
 
 
 #pragma once

@@ -62,7 +62,7 @@ void VerticesDescription::EnableAttributes() const noexcept
 {
 	const int index = (int)typeDescription.size();
 	uintptr_t offset = 0;
-	for (int i = 0; i < index; i++)
+	for (int i = 0; i < index; ++i)
 	{
 		TypeDescription description = typeDescription[i];
 		glEnableVertexAttribArray(i);

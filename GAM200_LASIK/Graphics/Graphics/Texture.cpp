@@ -12,6 +12,11 @@
 #include "Image.hpp"
 #include "Texture.hpp"
 
+Texture::Texture(Image& image)
+{
+	LoadTextureFrom(image);
+}
+
 bool Texture::LoadTextureFrom(const Image& image) noexcept
 {
 	if (GetTexturehandle() != 0)

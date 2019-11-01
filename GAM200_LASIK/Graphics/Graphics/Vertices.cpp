@@ -79,7 +79,7 @@ void Vertices::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
 	Color4f color;
 	vec2<float> texture;
 
-	for (int i = 0; i < static_cast<int>(verticesCount); i++)
+	for (int i = 0; i < static_cast<int>(verticesCount); ++i)
 	{
 		for (VerticesDescription::Type element : layout.GetTypes())
 		{

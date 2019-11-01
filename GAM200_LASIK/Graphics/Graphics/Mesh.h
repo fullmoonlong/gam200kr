@@ -44,7 +44,7 @@ private:
 
 namespace MESH
 {
-	Mesh draw_ellipse(float rx, float ry, int pointsNum, Color4f color);
-	Mesh createRectangle(float xPos, float yPos, float width, float height, Color4f color);
+	Mesh create_ellipse(float rx, float ry, int pointsNum, Color4f color);
+	Mesh create_rectangle(float xPos, float yPos, float width, float height, Color4f color);
 	//void draw_line(vec2, vec2, vec3 color);
 };

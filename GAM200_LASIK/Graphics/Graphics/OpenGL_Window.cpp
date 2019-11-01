@@ -1,14 +1,14 @@
 /*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: OpenGL_Window.cpp
-*	
-*	Implementing of openGL window functions
-*	
-*	2019/09/21
-*	
-*	DoYoung Implemented fullscreen functions
-*/
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *	
+ *	File_name: OpenGL_Window.cpp
+ *	
+ *	Implementing of openGL window functions
+ *	
+ *	2019/09/21
+ *	
+ *	DoYoung Implemented fullscreen functions
+ */
 
 #include <iostream>
 #include "GL\glew.h"

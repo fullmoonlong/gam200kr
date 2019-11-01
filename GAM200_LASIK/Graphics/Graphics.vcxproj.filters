@@ -9,9 +9,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Math\Angle.hpp">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="Math\mat3.hpp">
       <Filter>Math</Filter>
     </ClInclude>
@@ -60,6 +57,15 @@
     <ClInclude Include="Graphics\Vertices.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Math\ANGLE.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Animation.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\PATH.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\Camera.cpp">
@@ -93,6 +99,9 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Vertices.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Animation.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>

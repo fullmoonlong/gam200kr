@@ -7,16 +7,14 @@
 
 
 #pragma once
-#include <chrono>
 #include "Graphics/OpenGL_Window.h"
 #include "Graphics/Shader.h"
 #include "Graphics/EventHandler.hpp"
-#include "Graphics/Texture.hpp"
 #include "Graphics/Mesh.h"
 #include "Graphics/Camera.hpp"
 #include "Graphics/CameraView.hpp"
-#include "Graphics/Transform.hpp"
 #include "Graphics/Vertices.h"
+#include "Graphics/Animation.hpp"
 #include "Object.h"
 #include "Util/Clock.hpp"
 
@@ -39,16 +37,15 @@ public:
 	bool isRunning = false;
 
 private:
-	Object object;
-	float timePassed = 0;
 	int frameCount = 0;
 	float deltaTime = 0;
+	Object object;
 	Mesh rectangle;
 	Vertices vertices;
-	Texture texture;
 	Shader shader;
 	Window Window;
 	Clock clock;
+	Animation animation;
 	
 	Camera camera;
 	CameraView view;

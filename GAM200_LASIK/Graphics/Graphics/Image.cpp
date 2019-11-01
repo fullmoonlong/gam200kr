@@ -1,12 +1,12 @@
 /*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: Image.cpp
-*	
-*	Image class that load from image file
-*	
-*	2019/10/07
-*/
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *	
+ *	File_name: Image.cpp
+ *	
+ *	Image class that load from image file
+ *	
+ *	2019/10/07
+ */
 
 #include <cassert>
 #include "Image.hpp"
@@ -35,7 +35,7 @@ bool Image::LoadFrom(const std::filesystem::path& source) noexcept
 
 	if (image != nullptr)
 	{
-		for (int i = 0; i < width * height; i++)
+		for (int i = 0; i < width * height; ++i)
 		{
 			ColorInChar color(image[i * 4], image[i * 4 + 1], image[i * 4 + 2], image[i * 4 + 3]);
 			pixels.push_back(color);

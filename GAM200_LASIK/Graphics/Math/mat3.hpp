@@ -77,9 +77,9 @@ template <typename T>
 mat3<T> operator*(const mat3<T>& m1, const mat3<T>& m2) noexcept
 {
 	mat3<T> m;
-	for (int i = 0; i <= 2; i++)
+	for (int i = 0; i <= 2; ++i)
 	{
-		for (int j = 0; j <= 2; j++)
+		for (int j = 0; j <= 2; ++j)
 		{
 			m.elements[i][j] =   m1.elements[0][j] * m2.elements[i][0] 
 				+ m1.elements[1][j] * m2.elements[i][1] 

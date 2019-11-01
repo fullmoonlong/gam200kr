@@ -14,23 +14,24 @@
 class Clock
 {
 public:
-	using time = std::chrono::system_clock;
-	using second = std::chrono::duration<float, std::ratio<1000>>;
+	using time = std::chrono::high_resolution_clock;
+	using second = std::chrono::duration<float>;
 
 	Clock() noexcept
-		: timeStamp(time::now()) {}
-	void UpdateTime() noexcept
+		: timePassed(0), timeStamp(time::now()) {}
+	void UpdateClock() noexcept
 	{
+		timePassed += GetTimeFromLastUpdate();
 		timeStamp = time::now();
 	}
-	float GetTimeBySecond() const noexcept
-	{
-		return std::chrono::duration_cast<second>(time::now() - timeStamp).count();
-	}
-	float GetDeltaTime() const noexcept
+	
+	float GetTimeFromLastUpdate() const noexcept
 	{
 		return std::chrono::duration<float>(time::now() - timeStamp).count();
 	}
+public:
+	float timePassed;
 private:
 	time::time_point timeStamp;
+	//float timePassed;
 };
