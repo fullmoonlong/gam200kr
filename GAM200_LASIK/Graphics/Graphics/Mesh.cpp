@@ -8,8 +8,8 @@
  *	2019/10/02
  */
 
-#include <graphic/Mesh.h>
-#include <math/Angle.hpp>
+#include "Mesh.h"
+#include "Math/Angle.hpp"
 
 void Mesh::AddPoint(vec2<float> point) noexcept
 {
@@ -87,17 +87,14 @@ Mesh MESH::createRectangle(float xPos, float yPos, float width, float height, Co
 	rectangle.AddPoint({ -xHalf + xPos, yHalf + yPos });
 	rectangle.AddPoint({ xHalf + xPos, yHalf + yPos});
 	rectangle.AddPoint({ xHalf + xPos, -yHalf + yPos });
-	//rectangle.AddPoint({ -xHalf + xPos, -yHalf + yPos });
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
-	//rectangle.AddColor(color);
-	rectangle.AddTextureCoordinate({ 0.f, 1.f });
-	rectangle.AddTextureCoordinate({ 0.f, 0.f });
-	rectangle.AddTextureCoordinate({ 1.f, 0.f });
-	rectangle.AddTextureCoordinate({ 1.f, 1.f });
-	//rectangle.AddTextureCoordinate({ 0, 1 });
+	//rectangle.AddTextureCoordinate({ 0.f, 1.f });
+	//rectangle.AddTextureCoordinate({ 0.f, 0.f });
+	//rectangle.AddTextureCoordinate({ 1.f, 0.f });
+	//rectangle.AddTextureCoordinate({ 1.f, 1.f });
 
 	return rectangle;
 }

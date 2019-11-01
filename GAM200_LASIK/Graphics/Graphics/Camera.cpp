@@ -8,7 +8,6 @@
 *	2019/10/10
 */
 
-
 #include "Camera.hpp"
 #include "Transform.hpp"
 

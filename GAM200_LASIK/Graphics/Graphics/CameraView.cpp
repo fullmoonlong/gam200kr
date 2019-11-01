@@ -1,4 +1,4 @@
-#include"CameraView.hpp"
+#include "CameraView.hpp"
 
 mat3<float> BuildToNDC(CameraView* camera, vec2<float> windowSize)
 {

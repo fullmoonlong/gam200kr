@@ -10,10 +10,10 @@
 
 
 #pragma once
-#include <graphic/Color4f.hpp>
-#include <graphic/ColorInChar.hpp>
 #include <vector>
 #include <filesystem>
+#include "Color4f.hpp"
+#include "ColorInChar.hpp"
 
 class [[nodiscard]]Image
 {

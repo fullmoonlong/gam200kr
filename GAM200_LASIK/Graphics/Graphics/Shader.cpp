@@ -8,12 +8,11 @@
  *	2019/09/25
  */
 
-#include <GL\glew.h>
-#include <ostream>
+#include <iostream>
 #include <string>
 #include <fstream>
-#include <graphic/Shader.h>
-#include <iostream>
+#include "GL\glew.h"
+#include "Shader.h"
 
 std::string ReadSourceFrom(const std::filesystem::path& path)
 {

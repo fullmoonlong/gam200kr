@@ -72,6 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>..\lib\Graphics\</OutDir>
+    <IntDir>..\temp\Graphics\Debug\x64\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -84,13 +86,14 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Graphics\;$(SolutionDir)GAM200_LASIK;$(SolutionDir)external\glfw3\include;$(SolutionDir)external\glew\include;$(SolutionDir)external\stbi;$(SolutionDir)GAM200_LASIK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Graphics\;$(SolutionDir)external\glfw3\include;$(SolutionDir)external\glew\include;$(SolutionDir)external\stbi;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,38 +154,36 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GraphicEngine.h" />
     <ClInclude Include="Graphics\Camera.hpp" />
-    <ClInclude Include="Graphics\CameraTransform.hpp" />
     <ClInclude Include="Graphics\CameraView.hpp" />
     <ClInclude Include="Graphics\Color4f.hpp" />
-    <ClInclude Include="Graphics\Color4uc.hpp" />
+    <ClInclude Include="Graphics\ColorInChar.hpp" />
     <ClInclude Include="Graphics\EventHandler.hpp" />
     <ClInclude Include="Graphics\Image.hpp" />
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\OpenGL_Window.h" />
     <ClInclude Include="Graphics\Shader.h" />
-    <ClInclude Include="Graphics\ShaderDescription.h" />
     <ClInclude Include="Graphics\Texture.hpp" />
     <ClInclude Include="Graphics\Transform.hpp" />
+    <ClInclude Include="Graphics\Vertices.h" />
+    <ClInclude Include="Graphics\VerticesDescription.h" />
     <ClInclude Include="Math\Angle.hpp" />
     <ClInclude Include="Math\mat3.hpp" />
     <ClInclude Include="Math\vec2.hpp" />
     <ClInclude Include="Math\vec3.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GraphicEngine.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
-    <ClCompile Include="Graphics\CameraTransform.cpp" />
     <ClCompile Include="Graphics\CameraView.cpp" />
     <ClCompile Include="Graphics\Color.cpp" />
     <ClCompile Include="Graphics\Image.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\OpenGL_Window.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
-    <ClCompile Include="Graphics\ShaderDescription.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
     <ClCompile Include="Graphics\Transform.cpp" />
+    <ClCompile Include="Graphics\Vertices.cpp" />
+    <ClCompile Include="Graphics\VerticesDescription.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

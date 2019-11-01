@@ -8,8 +8,8 @@
  *	2019/10/31
  */
 
-#include <GL/glew.h>
-#include <graphic/VerticesDescription.h>
+#include "GL/glew.h"
+#include "VerticesDescription.h"
 
 void VerticesDescription::AddType(Type type) noexcept
 {
@@ -60,7 +60,7 @@ unsigned VerticesDescription::GetVertexSize() const noexcept
 
 void VerticesDescription::EnableAttributes() const noexcept
 {
-	const int index = (int)(typeDescription.size());
+	const int index = (int)typeDescription.size();
 	uintptr_t offset = 0;
 	for (int i = 0; i < index; i++)
 	{

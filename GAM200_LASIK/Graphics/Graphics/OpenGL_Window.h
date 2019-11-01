@@ -11,11 +11,11 @@
 */
 
 #pragma once
-#include <glfw3.h>
+#include "glfw3.h"
 
 class EventHandler;
 
-class [[nodiscard]]glWindow
+class [[nodiscard]] Window
 {
 public:
 	GLFWwindow* window;

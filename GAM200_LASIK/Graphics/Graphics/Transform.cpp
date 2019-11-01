@@ -1,6 +1,5 @@
 #include "Transform.hpp"
 
-//operator* ->  Check later
 mat3<float> Transform::GetModelToWorld() noexcept
 {
 	mat3<float> M;

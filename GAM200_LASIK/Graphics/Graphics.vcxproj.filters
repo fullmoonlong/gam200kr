@@ -24,16 +24,10 @@
     <ClInclude Include="Graphics\Camera.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\CameraTransform.hpp">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\CameraView.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Color4f.hpp">
-      <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Color4uc.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\EventHandler.hpp">
@@ -51,22 +45,24 @@
     <ClInclude Include="Graphics\Shader.h">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\ShaderDescription.h">
-      <Filter>Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\Texture.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Transform.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="GraphicEngine.h" />
+    <ClInclude Include="Graphics\ColorInChar.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\VerticesDescription.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Vertices.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\Camera.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\CameraTransform.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\CameraView.cpp">
@@ -87,15 +83,17 @@
     <ClCompile Include="Graphics\Shader.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\ShaderDescription.cpp">
-      <Filter>Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\Texture.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Transform.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicEngine.cpp" />
+    <ClCompile Include="Graphics\VerticesDescription.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Vertices.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
