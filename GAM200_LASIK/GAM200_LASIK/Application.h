@@ -27,7 +27,6 @@
 #include <graphic/CameraView.hpp>
 #include <graphic/Transform.hpp>
 #include <graphic/Vertices.h>
->>>>>>> Stashed changes
 #include "Object.h"
 #include "Util/Clock.hpp"
 
@@ -36,10 +35,6 @@ class Application : public SimpleEventHandler
 public:
 	Application();
 	~Application() = default;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 	void Initialize();
 	void Update();
 	void ShutDown();
@@ -59,10 +54,7 @@ private:
 	int frameCount = 0;
 	float deltaTime = 0;
 	Mesh rectangle;
-<<<<<<< Updated upstream
-=======
 	Vertices vertices;
->>>>>>> Stashed changes
 	Texture texture;
 	Shader shader;
 	glWindow glWindow;

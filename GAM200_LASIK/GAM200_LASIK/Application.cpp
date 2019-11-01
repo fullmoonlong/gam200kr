@@ -10,25 +10,10 @@
 #include <fstream>
 #include <filesystem>
 #include "Application.h"
-<<<<<<< Updated upstream
-#include <Graphics/Image.hpp>
-
-
-const std::filesystem::path vertex_path = "../assets/texture.vert";
-const std::filesystem::path fragment_path = "../assets/texture.frag";
-
-const std::filesystem::path vertex_test = "../assets/shape.vert";
-const std::filesystem::path fragmenet_test = "../assets/shape.frag";
-
-const std::filesystem::path texture_image = "../assets/sprite.png";
-
-std::string ReadSourceFrom(const std::filesystem::path& path)
-=======
 #include <graphic/Image.hpp>
 #include "graphic/VerticesDescription.h"
 
 namespace PATH
->>>>>>> Stashed changes
 {
 	const std::filesystem::path prototype_vert = "../assets/prototype.vert";
 	const std::filesystem::path prototype_frag = "../assets/prototype.frag";

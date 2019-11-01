@@ -35,7 +35,6 @@
     <ClCompile Include="include\graphic\Transform.cpp">
       <Filter>graphic</Filter>
     </ClCompile>
->>>>>>> Stashed changes
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="include\graphic\Vertices.cpp" />
     <ClCompile Include="include\graphic\VerticesDescription.cpp">
@@ -50,8 +49,6 @@
     <ClInclude Include="ComponentType.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Component.h" />
-<<<<<<< Updated upstream
-=======
     <ClInclude Include="include\graphic\Texture.hpp">
       <Filter>graphic</Filter>
     </ClInclude>
