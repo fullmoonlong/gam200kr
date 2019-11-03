@@ -1,10 +1,10 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <math/vec2.hpp>
-#include <graphic/Image.hpp>
-#include <graphic/Texture.hpp>
-#include <graphic/Transform.hpp>
+#include <Math/vec2.hpp>
+#include <Graphics/Image.hpp>
+#include <Graphics/Texture.hpp>
+#include <Graphics/Transform.hpp>
 
 typedef unsigned int ObjectID;
 
@@ -12,18 +12,11 @@ class Object
 {
 public:
 	friend class ObjectFactory;
-	struct Animation
-	{
-		int spriteCount = 0;
-		std::vector<float> texCoord;
-		Texture sprite;
-		float baseTime;
-	};
 	
 	Object();
-	~Object();
+	~Object() = default;
 
-	void Initialize(vec2<float> starting_position, int spriteCount) noexcept;
+	void Initialize(vec2<float> starting_position) noexcept;
 	void Update(float dt) noexcept;
 
 	ObjectID GetObjectID(){	return objectID;}
@@ -50,7 +43,6 @@ public:
 	bool isMouseCollide = false;
 
 private:
-	Animation animation;
 	ObjectID objectID;
 	std::string objectName = "";
 	vec2<float> position;

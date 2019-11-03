@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.489
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GAM200_LASIK", "GAM200_LASIK\GAM200_LASIK.vcxproj", "{4E4BC61A-CA1C-4D83-B4EB-114A4B30E491}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rescue", "GAM200_LASIK\GAM200_LASIK.vcxproj", "{4E4BC61A-CA1C-4D83-B4EB-114A4B30E491}"
+	ProjectSection(ProjectDependencies) = postProject
+		{28E010A9-B76A-46A5-AC19-CCBF2EFDDC10} = {28E010A9-B76A-46A5-AC19-CCBF2EFDDC10}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Graphics", "Graphics\Graphics.vcxproj", "{28E010A9-B76A-46A5-AC19-CCBF2EFDDC10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,14 @@ Global
 		{4E4BC61A-CA1C-4D83-B4EB-114A4B30E491}.Release|x64.Build.0 = Release|x64
 		{4E4BC61A-CA1C-4D83-B4EB-114A4B30E491}.Release|x86.ActiveCfg = Release|Win32
 		{4E4BC61A-CA1C-4D83-B4EB-114A4B30E491}.Release|x86.Build.0 = Release|Win32
+		{28E010A9-B76A-46A5-AC19-CCBF2EFDDC10}.Debug|x64.ActiveCfg = Debug|x64
+		{28E010A9-B76A-46A5-AC19-CCBF2EFDDC10}.Debug|x64.Build.0 = Debug|x64
+		{28E010A9-B76A-46A5-AC19-CCBF2EFDDC10}.Debug|x86.ActiveCfg = Debug|Win32
+		{28E010A9-B76A-46A5-AC19-CCBF2EFDDC10}.Debug|x86.Build.0 = Debug|Win32
+		{28E010A9-B76A-46A5-AC19-CCBF2EFDDC10}.Release|x64.ActiveCfg = Release|x64
+		{28E010A9-B76A-46A5-AC19-CCBF2EFDDC10}.Release|x64.Build.0 = Release|x64
+		{28E010A9-B76A-46A5-AC19-CCBF2EFDDC10}.Release|x86.ActiveCfg = Release|Win32
+		{28E010A9-B76A-46A5-AC19-CCBF2EFDDC10}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

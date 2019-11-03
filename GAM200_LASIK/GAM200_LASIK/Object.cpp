@@ -4,57 +4,18 @@
 *	2019/09/25
 */
 
-#include <GL/glew.h>
 #include "Object.h"
 
-const std::filesystem::path sprite_image = "../assets/sprite.png";
-
 Object::Object()
-	: position(0), objectID(0) {}
+	: objectID(0), position(0) {}
 
-Object::~Object()
-{
-}
-
-void Object::Initialize(vec2<float> starting_position, int spriteCount) noexcept
+void Object::Initialize(vec2<float> starting_position) noexcept
 {
 	transform.SetTranslation(starting_position);
-	animation.spriteCount = spriteCount;
-	float oneSide = 1.f / (float)animation.spriteCount;
-	for (int i = 0; i <= animation.spriteCount; i++)
-	{
-		animation.texCoord.push_back((float)i * oneSide);
-	}
-	Image image;
-	image.LoadFrom(sprite_image);
-	animation.sprite.LoadTextureFrom(image);
-	animation.baseTime = 0;
 }
 
 void Object::Update(float dt) noexcept
 {
-	static int spriteIndex = 0;
-	animation.baseTime += dt;
-
-	float texCoord[] = {
-		animation.texCoord.at(spriteIndex), 0.f,
-		animation.texCoord.at(spriteIndex + 1), 0.f,
-		animation.texCoord.at(spriteIndex + 1), 1.f,
-		animation.texCoord.at(spriteIndex), 1.f
-	};
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoord), texCoord, GL_DYNAMIC_DRAW);
-
-	if (animation.baseTime >= 0.125f)
-	{
-		spriteIndex++;
-		if (spriteIndex == 8)
-		{
-			spriteIndex = 0;
-		}
-		animation.baseTime -= 0.125f;
-	}
-
 	float decision_x = 120.f * speed.x * dt;
 	float dicision_y = 120.f * speed.y * dt;
 	float dx = transform.GetTranslation().x + decision_x;

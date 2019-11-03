@@ -1,29 +1,28 @@
 /*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*			Doyeong Yi doyoung.lee@digipen.edu
-*	Application
-*	2019/07/04
-*/
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *			Doyeong Yi doyoung.lee@digipen.edu
+ *	Application
+ *	2019/07/04
+ */
 
 
 #pragma once
-#include <chrono>
-#include <graphic/OpenGL_Window.h>
-#include <graphic/Shader.h>
-#include <graphic/EventHandler.hpp>
-#include <graphic/Texture.hpp>
-#include <graphic/Mesh.h>
-#include <graphic/Camera.hpp>
-#include <graphic/CameraView.hpp>
-#include <graphic/Transform.hpp>
+#include "Graphics/OpenGL_Window.h"
+#include "Graphics/Shader.h"
+#include "Graphics/EventHandler.hpp"
+#include "Graphics/Mesh.h"
+#include "Graphics/Camera.hpp"
+#include "Graphics/CameraView.hpp"
+#include "Graphics/Vertices.h"
+#include "Graphics/Animation.hpp"
 #include "Object.h"
-//#include "glm.hpp"
+#include "Util/Clock.hpp"
 
 class Application : public SimpleEventHandler
 {
 public:
 	Application();
-	~Application();
+	~Application() = default;
 	void Initialize();
 	void Update();
 	void ShutDown();
@@ -38,19 +37,16 @@ public:
 	bool isRunning = false;
 
 private:
-	Object object1;
-	Object object2;
-	float timePassed = 0;
 	int frameCount = 0;
 	float deltaTime = 0;
+	Object object;
 	Mesh rectangle;
-	Mesh rectangle2;
-	Texture texture;
-	Texture texture2;
+	Vertices vertices;
 	Shader shader;
-	Shader shader2;
-	glWindow glWindow;
-
+	Window Window;
+	Clock clock;
+	Animation animation;
+	
 	Camera camera;
 	CameraView view;
 
@@ -60,5 +56,4 @@ private:
 	float cameraAngle = 0.0f;
 	vec2<float> pressDirection{ 0.f, 0.f };
 	vec2<float> mousePosition{ 0.f, 0.f };
-
 };
