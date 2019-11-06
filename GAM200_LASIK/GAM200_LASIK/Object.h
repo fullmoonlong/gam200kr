@@ -1,9 +1,7 @@
 #pragma once
 #include <string>
-#include <vector>
 #include <Math/vec2.hpp>
 #include <Graphics/Image.hpp>
-#include <Graphics/Texture.hpp>
 #include <Graphics/Transform.hpp>
 
 typedef unsigned int ObjectID;
@@ -16,7 +14,7 @@ public:
 	Object();
 	~Object() = default;
 
-	void Initialize(vec2<float> starting_position) noexcept;
+	void Initialize(vec2<float> starting_position, float width, float height) noexcept;
 	void Update(float dt) noexcept;
 
 	ObjectID GetObjectID(){	return objectID;}
@@ -38,8 +36,7 @@ public:
 	vec2<float> speed;
 
 	bool isCollideWith(Object& object) noexcept;
-	bool isCollideWithMouse(vec2<float>& mouse, int width, int height) noexcept;
-
+	bool isCollideWithMouse(vec2<float>& mouse_position, int width, int height) noexcept;
 	bool isMouseCollide = false;
 
 private:
