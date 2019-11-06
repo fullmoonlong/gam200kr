@@ -29,7 +29,11 @@ void Application::Initialize()
 	shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
-	rectangle = MESH::create_rectangle(0.0f, 0.0f, 150.f, 150.f, color);
+	const float starting_x = 0.0f;
+	const float starting_y = 0.0f;
+	const float width = 150.0f;
+	const float height = 150.0f;
+	rectangle = MESH::create_rectangle(starting_x, starting_y, width, height, color);
 	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -38,6 +42,7 @@ void Application::Initialize()
 	
 	glGenBuffers(1, &vbo);
 	Image image(PATH::sprite_image);
+	
 	animation.Initialize(image, rectangle, 8);
 
 
@@ -47,9 +52,7 @@ void Application::Initialize()
 	view.SetZoom(zoom);
 	//camera
 	
-	//object.Initialize({ 0, 0 }, 8);
-	//object.min = { -75.0f, -75.0f };
-	//object.max = { 75.0f, 75.0f };
+	object.Initialize({ starting_x, starting_y }, width, height);
 }
 
 void Application::Update()
@@ -76,17 +79,28 @@ void Application::Update()
 	glEnableVertexAttribArray(2);
 	//Draw
 
+	//Object moving
+	object.Update(deltaTime);
+	if (-400.0f < object.GetXposition() && object.GetXposition() < -300.0f)	//if collide
+	{
+		std::cout << "fight!" << std::endl;
+		object.speed.x = 0.0f;
+	}
+	else
+	{
+		object.speed.x = -50.0f;
+	}
+	//Object moving
 
-	
 	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
 	shader.SendUniformVariable("ndc", ndc);
 
 	
-	// transform
+	//Transform
 	camera.Rotate(cameraAngle);
 	view.SetViewSize(Window.GetWindowWidth(), Window.GetWindowHeight());
 	view.SetZoom(zoom);
-	// transform
+	//Transform
 
 	++frameCount;
 	if (clock.timePassed >= 1.0f)

@@ -40,6 +40,7 @@ private:
 	int frameCount = 0;
 	float deltaTime = 0;
 	Object object;
+	
 	Mesh rectangle;
 	Vertices vertices;
 	Shader shader;
