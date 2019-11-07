@@ -7,6 +7,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
+    <ClCompile Include="Draw.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -18,5 +19,6 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="System.h" />
+    <ClInclude Include="Draw.h" />
   </ItemGroup>
 </Project>

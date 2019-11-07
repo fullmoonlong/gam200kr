@@ -11,40 +11,6 @@
 #include <GL/glew.h>
 #include "Animation.hpp"
 
-//animation.spriteCount = spriteCount;
-//float oneSide = 1.f / (float)animation.spriteCount;
-//for (int i = 0; i <= animation.spriteCount; ++i)
-//{
-//	animation.texCoord.push_back((float)i * oneSide);
-//}
-//Image image;
-//image.LoadFrom(sprite_image);
-//animation.sprite.LoadTextureFrom(image);
-//animation.baseTime = 0;
-
-
-//static int spriteIndex = 0;
-//animation.baseTime += dt;
-//
-//float texCoord[] = {
-//	animation.texCoord.at(spriteIndex), 0.f,
-//	animation.texCoord.at(spriteIndex + 1), 0.f,
-//	animation.texCoord.at(spriteIndex + 1), 1.f,
-//	animation.texCoord.at(spriteIndex), 1.f
-//};
-//
-//glBufferData(GL_ARRAY_BUFFER, sizeof(texCoord), texCoord, GL_DYNAMIC_DRAW);
-//
-//if (animation.baseTime >= 0.125f)
-//{
-//	spriteIndex++;
-//	if (spriteIndex == 8)
-//	{
-//		spriteIndex = 0;
-//	}
-//	animation.baseTime -= 0.125f;
-//}
-
 void Animation::Initialize(Image& new_sprite, Mesh& new_shape, int new_count)
 {
 	spriteSheet.LoadTextureFrom(new_sprite);

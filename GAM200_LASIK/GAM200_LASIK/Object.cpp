@@ -13,10 +13,12 @@ void Object::Initialize(vec2<float> starting_position, float width, float height
 {
 	transform.SetTranslation(starting_position);
 	position = starting_position;
-	float half_width = width / 2;
-	float half_height = height / 2;
-	min = { starting_position.x - half_width, starting_position.y - half_height };
-	max = { starting_position.x + half_width, starting_position.y + half_height };
+	size = { width, height };
+	float half_width = size.x / 2;
+	float half_height = size.y / 2;
+	min = { position.x - half_width, position.y - half_height };
+	max = { position.x + half_width, position.y + half_height };
+	transform.SetScale({ width, height });
 }
 
 void Object::Update(float dt) noexcept
@@ -28,10 +30,10 @@ void Object::Update(float dt) noexcept
 	transform.SetTranslation({ dx, dy });
 	position.x += decision_x;
 	position.y += decision_y;
-	min.x += decision_x;
-	max.x += decision_x;
-	min.y += decision_y;
-	max.y += decision_y;
+	float half_width = size.x / 2;
+	float half_height = size.y / 2;
+	min = { position.x - half_width, position.y - half_height };
+	max = { position.x + half_width, position.y + half_height };
 }
 
 bool Object::isCollideWith(Object& object) noexcept

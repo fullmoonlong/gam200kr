@@ -4,7 +4,7 @@
 #include <Graphics/Image.hpp>
 #include <Graphics/Transform.hpp>
 
-typedef unsigned int ObjectID;
+using ObjectID = unsigned int;
 
 class Object
 {

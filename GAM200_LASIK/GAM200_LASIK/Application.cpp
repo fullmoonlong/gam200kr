@@ -29,7 +29,7 @@ void Application::Initialize()
 	shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
-	const float starting_x = 0.0f;
+	const float starting_x = 300.0f;
 	const float starting_y = 0.0f;
 	const float width = 150.0f;
 	const float height = 150.0f;
@@ -72,9 +72,9 @@ void Application::Update()
 	Vertices::SelecteVAO(vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, vertices.VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	animation.Animate(deltaTime);
 	glDrawArrays(vertices.GetPattern(), 0, (int)rectangle.GetPointsCount());
 	//Animation
+	animation.Animate(deltaTime);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(2);
 	//Draw
@@ -103,8 +103,12 @@ void Application::Update()
 	//Transform
 
 	++frameCount;
+	static int time = 0;
 	if (clock.timePassed >= 1.0f)
 	{
+		//std::cout << frameCount << std::endl;
+		++time;
+		std::cout << time << std::endl;
 		std::cout << frameCount << std::endl;
 		clock.timePassed -= 1.0f;
 		frameCount = 0;
