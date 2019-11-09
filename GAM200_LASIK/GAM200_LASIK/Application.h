@@ -19,6 +19,8 @@
 #include "Object.h"
 #include "ObjectFactory.h"
 #include "Util/Clock.hpp"
+#include "Sound.hpp"
+#include "ObjectFactory.h"
 
 class Application : public SimpleEventHandler
 {
@@ -49,9 +51,8 @@ private:
 	Object* objectTest1;
 
 	Object object;
-	Object object2;
-	Material material;
-	Material material2;
+	ObjectFactory objFactory;
+
 	Mesh rectangle;
 	Mesh rectangle2;
 	Vertices vertices;
@@ -67,6 +68,7 @@ private:
 	Camera camera;
 	CameraView view;
 
+	SoundManager soundManager;
 	//float cameraSpeed{ 80.0f };
 	float depth = 1.0f;
 	float zoom = 1.0f;
