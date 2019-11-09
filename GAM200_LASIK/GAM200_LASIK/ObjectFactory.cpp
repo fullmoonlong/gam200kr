@@ -6,14 +6,14 @@
 #include "ObjectFactory.h"
 #include "Object.h"
 #include <iostream>
+#include <stdlib.h>
 
-extern ObjectFactory* objectFactory = nullptr;
+extern ObjectFactory* OBJECTFACTORY = nullptr;
 
 ObjectFactory::ObjectFactory()
 {
 	std::cout << "ObjectFactory Add Successful" << std::endl;
-	objectFactory = this;
-	lastObjectID = 0;
+	OBJECTFACTORY = this;
 }
 
 ObjectFactory::~ObjectFactory()
@@ -46,9 +46,9 @@ void ObjectFactory::Destroy(Object * object)
 
 void ObjectFactory::GiveObjectID(Object * object)
 {
-	lastObjectID++;
 	object->objectID = lastObjectID;
 	objectIDMap[lastObjectID] = object;
+	lastObjectID++;
 }
 
 int ObjectFactory::GetObjectID(int id)
@@ -59,9 +59,7 @@ int ObjectFactory::GetObjectID(int id)
 Object * ObjectFactory::CreateEmptyObject()
 {
 	Object* object = new Object();
-
 	GiveObjectID(object);
-
 	return object;
 }
 
@@ -73,4 +71,36 @@ void ObjectFactory::DestroyAllObjects()
 		delete object.second;
 	}
 	objectIDMap.clear();
+}
+
+Object* ObjectFactory::FindObjectwithName(std::string& name)
+{
+	for (auto object : objectIDMap)
+	{
+		if (object.second->objectName == name)
+			return object.second;
+	}
+	return nullptr;
+}
+
+Object* ObjectFactory::FindObjectwithID(ObjectID id)
+{
+	for (auto object : objectIDMap)
+	{
+		if (object.second->objectID == id)
+			return object.second;
+	}
+	return nullptr;
+}
+
+void ObjectFactory::CopyObject(Object* object)
+{
+	Object* newObject = new Object();
+	object->objectCopyId++;
+	newObject = object->Clone();
+	std::string ID = std::to_string(newObject->GetObjectCopyID());
+
+	newObject->SetName(object->GetName() + ID);
+
+	GiveObjectID(newObject);
 }

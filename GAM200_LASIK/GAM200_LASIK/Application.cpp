@@ -23,36 +23,48 @@ unsigned int vbo;
 
 void Application::Initialize()
 {
-	Window.CanCreateWindow(800, 600, this,"Lasik"); //initialize window
+	Window.CanCreateWindow(800, 600, this, "Lasik"); //initialize window
 
 	//shader.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
 	shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	
+
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
 	const float starting_x = 0.0f;
 	const float starting_y = 0.0f;
 	const float width = 150.0f;
 	const float height = 150.0f;
 	rectangle = MESH::create_rectangle(starting_x, starting_y, width, height, color);
-	
+
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	vertices.InitializeWithMeshAndLayout(rectangle, layout);
 
 
-	
+
 	glGenBuffers(1, &vbo);
 	Image image(PATH::sprite_image);
-	
+
 	animation.Initialize(image, rectangle, 8);
 
 
-	
+
 	//camera
 	view.SetViewSize(Window.GetWindowWidth(), Window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//camera
-	
 	object.Initialize({ starting_x, starting_y }, width, height);
+
+	//test sound and make object
+	objectTest = OBJECTFACTORY->CreateEmptyObject();
+	objectTest->SetName("Test");
+
+	test1 = OBJECTFACTORY->CreateEmptyObject();
+	test1->SetName("Addi");
+
+	soundManager.Initialize();
+	soundManager.LoadFile("sound.mp3");
+	soundManager.LoadFile("beep.wav");
+	soundManager.PlaySound(1, 0);
+	//test sound and make object
 }
 
 void Application::Update()
@@ -64,7 +76,6 @@ void Application::Update()
 
 	glClearColor(0.2f, 0.3f, 0.4f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
-
 	//Make graphic engine extern and doing something like graphic application.
 	//So that it can be use like graphicApplication.Draw()
 	//Draw
@@ -83,7 +94,7 @@ void Application::Update()
 	object.Update(deltaTime);
 	if (-400.0f < object.GetXposition() && object.GetXposition() < -300.0f)	//if collide
 	{
-		std::cout << "fight!" << std::endl;
+		//std::cout << "fight!" << std::endl;
 		object.speed.x = 0.0f;
 	}
 	else
@@ -149,6 +160,15 @@ void Application::HandleKeyPress(KeyboardButtons button)
 	case KeyboardButtons::A:
 		//pressDirection.x -= 2.0f;
 		object.speed.x = -0.8f;
+		//test sound and make object
+		soundManager.PlaySound(0, 1);
+		OBJECTFACTORY->CopyObject(objectTest);
+		OBJECTFACTORY->CopyObject(test1);
+		for (auto object2 : OBJECTFACTORY->GetObjecteList())
+		{
+			std::cout << object2.second->GetObjectID() << " / " << object2.second->GetObjectCopyID() << " / " << object2.second->GetName() << std::endl;
+		}
+		//test sound and make object
 		break;
 	case KeyboardButtons::D:
 		//pressDirection.x += 2.0f;
