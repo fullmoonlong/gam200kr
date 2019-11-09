@@ -9,26 +9,22 @@ mat3<float> BuildToNDC(CameraView* camera, vec2<float> windowSize)
 			camera->GetZoom() * (2.0f / windowSize.x), 0.0f, 0.0f,
 			0.0f, camera->GetZoom() * (2.0f / windowSize.y), 0.0f,
 			0.0f, 0.0f, 1.0f };
-		break;
 	case FrameOfReference::RightHanded_OriginBottomLeft:
 		return mat3<float>{
 			camera->GetZoom() * (2.0f / windowSize.x), 0.0f, 0.0f,
 			0.0f, camera->GetZoom() * (2.0f / windowSize.y), 0.0f,
 			-1.0f, -1.0f, 1.0f };
-		break;
 	case FrameOfReference::LeftHanded_OriginTopLeft:
 		return mat3<float>{
 			camera->GetZoom() * (2.0f / windowSize.x), 0.0f, 0.0f,
 			0.0f, camera->GetZoom() * -(2.0f / windowSize.y), 0.0f,
 			-1.0f, 1.0f, 1.0f };
-		break;
 	default:
 	return mat3<float>{
 		1.0f, 0.0f, 0.0f,
 		0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 1.0f };
 	}
-
 }
 
 void CameraView::SetViewSize(vec2<float> size) noexcept

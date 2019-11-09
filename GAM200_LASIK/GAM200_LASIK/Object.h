@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
-#include <Math/vec2.hpp>
-#include <Graphics/Image.hpp>
-#include <Graphics/Transform.hpp>
+#include <vec2.hpp>
+#include <Image.hpp>
+#include <Transform.hpp>
 
 using ObjectID = unsigned int;
 

@@ -11,9 +11,11 @@
  */
 
 #include <iostream>
-#include "GL\glew.h"
+#include "GL/glew.h"
 #include "OpenGL_Window.h"
 #include "EventHandler.hpp"
+#include "Graphics/PATH.hpp"
+#include <stb_image.h>
 
 EventHandler* eventHandler;
 
@@ -190,7 +192,12 @@ bool Window::CanCreateWindow(int width, int height, EventHandler* event_handler,
 		std::cerr << glewGetErrorString(err);
 		return false;
 	}
-
+	
+	GLFWimage icon;
+	icon.pixels = stbi_load(PATH::icon_image.generic_string().c_str() , &icon.width, &icon.height, 0, STBI_rgb_alpha);
+	glfwSetWindowIcon(window, 1, &icon);
+	stbi_image_free(icon.pixels);
+	
 	return true;
 }
 

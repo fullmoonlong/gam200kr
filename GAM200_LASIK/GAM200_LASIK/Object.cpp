@@ -12,6 +12,7 @@ Object::Object()
 void Object::Initialize(vec2<float> starting_position, float width, float height) noexcept
 {
 	transform.SetTranslation(starting_position);
+	transform.SetScale({ width, height });
 	position = starting_position;
 	size = { width, height };
 	float half_width = size.x / 2;

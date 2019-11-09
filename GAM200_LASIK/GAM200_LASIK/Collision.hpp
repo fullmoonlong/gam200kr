@@ -8,7 +8,7 @@
 
 
 #pragma once
-#include <math/vec2.hpp>
+#include <vec2.hpp>
 
 class Collision
 {

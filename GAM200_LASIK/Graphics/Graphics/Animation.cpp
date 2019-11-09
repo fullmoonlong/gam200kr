@@ -10,16 +10,19 @@
 
 #include <GL/glew.h>
 #include "Animation.hpp"
+#include "Image.hpp"
 
 void Animation::Initialize(Image& new_sprite, Mesh& new_shape, int new_count)
 {
+	glGenBuffers(1, &textureCoordinateBuffer);
 	spriteSheet.LoadTextureFrom(new_sprite);
 	shape = new_shape;
 	sceneCount = new_count;
 	float oneSide = 1.0f / (float)sceneCount;
+	const float correction = 0.0005f * sceneCount;	//this number hide the texture coordinate error
 	for (int i = 0; i <= sceneCount; ++i)
 	{
-		textureCoord.push_back((float)i * oneSide);
+		textureCoord.push_back((float)i * oneSide - correction);
 	}
 }
 
@@ -40,16 +43,32 @@ void Animation::Animate(float dt)
 		textureCoord.at(spriteIndex + 1), 0.0f,
 	};
 	
+	glBindBuffer(GL_ARRAY_BUFFER, textureCoordinateBuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoord), texCoord, GL_DYNAMIC_DRAW);
 	//glBindTexture(GL_TEXTURE_2D, spriteSheet.GetTexturehandle());
 	
 	if (baseTime >= 0.125f)
 	{
 		spriteIndex++;
-		if (spriteIndex == 8)
+		if (spriteIndex == sceneCount)
 		{
 			spriteIndex = 0;
 		}
 		baseTime -= 0.125f;
+	}
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(2);
+}
+
+void Animation::ChangeAnimation(const std::filesystem::path& new_sprite, int new_count)
+{
+	spriteSheet.LoadTextureFrom(new_sprite);
+	textureCoord.clear();
+	sceneCount = new_count;
+	float oneSide = 1.0f / (float)sceneCount;
+	const float correction = 0.0005f * sceneCount;	//this number hide the texture coordinate error
+	for (int i = 0; i <= sceneCount; ++i)
+	{
+		textureCoord.push_back((float)i * oneSide - correction);
 	}
 }

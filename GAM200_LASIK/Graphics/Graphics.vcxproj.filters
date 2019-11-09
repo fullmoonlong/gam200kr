@@ -66,6 +66,9 @@
     <ClInclude Include="Graphics\PATH.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\Draw.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\Camera.cpp">
@@ -102,6 +105,9 @@
       <Filter>Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Animation.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Draw.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>

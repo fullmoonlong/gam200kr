@@ -7,14 +7,15 @@
 
 
 #pragma once
-#include "Graphics/OpenGL_Window.h"
-#include "Graphics/Shader.h"
-#include "Graphics/EventHandler.hpp"
-#include "Graphics/Mesh.h"
-#include "Graphics/Camera.hpp"
-#include "Graphics/CameraView.hpp"
-#include "Graphics/Vertices.h"
-#include "Graphics/Animation.hpp"
+#include "OpenGL_Window.h"
+#include "EventHandler.hpp"
+#include "Camera.hpp"
+#include "CameraView.hpp"
+#include "Shader.h"
+#include "Vertices.h"
+#include "Mesh.h"
+#include "Animation.hpp"
+#include "Draw.hpp"
 #include "Object.h"
 #include "Util/Clock.hpp"
 
@@ -39,14 +40,25 @@ public:
 private:
 	int frameCount = 0;
 	float deltaTime = 0;
-	Object object;
+
+	Draw draw;
 	
+	Object object;
+	Object object2;
+	Material material;
+	Material material2;
 	Mesh rectangle;
+	Mesh rectangle2;
 	Vertices vertices;
+	Vertices vertices2;
 	Shader shader;
-	Window Window;
-	Clock clock;
+	Shader shader2;
 	Animation animation;
+	Animation animation2;
+	
+	Window window;
+	Clock clock;
+	Texture texture;
 	
 	Camera camera;
 	CameraView view;

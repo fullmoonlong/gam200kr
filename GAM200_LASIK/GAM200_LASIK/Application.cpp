@@ -5,13 +5,13 @@
  *	2019/07/04
  */
 
-#include <GL/glew.h>
 #include <iostream>
 #include <fstream>
-#include "Graphics/PATH.hpp"
+#include <GL/glew.h>
+#include "PATH.hpp"
 #include "Application.h"
-#include "Graphics/Image.hpp"
-#include "Graphics/VerticesDescription.h"
+#include "VerticesDescription.h"
+#include "Image.hpp"
 
 Application::Application()
 {
@@ -19,51 +19,59 @@ Application::Application()
 	isRunning = true;
 }
 
-unsigned int vbo;
+//unsigned int vbo;
 
 void Application::Initialize()
 {
-	Window.CanCreateWindow(800, 600, this,"Lasik"); //initialize window
+	window.CanCreateWindow(800, 600, this,"Lasik"); //initialize window
 
-	//shader.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
-	shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	//shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	//shader2.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	shader.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
+	shader2.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
 	
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
+	const Color4f color2{ 0.5f, 0.5f, 0.3f, 1.0f };
 	const float starting_x = 300.0f;
 	const float starting_y = 0.0f;
-	const float width = 150.0f;
-	const float height = 150.0f;
-	rectangle = MESH::create_rectangle(starting_x, starting_y, width, height, color);
+	const float width = 50.0f;
+	const float height = 50.0f;
+	rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+	rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
 	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	vertices.InitializeWithMeshAndLayout(rectangle, layout);
+	vertices2.InitializeWithMeshAndLayout(rectangle2, layout);
 
-
+	material.vertices = vertices;
+	material.mesh = rectangle;
+	material2.vertices = vertices2;
+	material2.mesh = rectangle2;
 	
-	glGenBuffers(1, &vbo);
-	Image image(PATH::sprite_image);
-	
-	animation.Initialize(image, rectangle, 8);
+	//Image image(PATH::kevin_move);
+	//Image image2(PATH::kevin_attack);
 
-
+	//animation.Initialize(image, rectangle, 8);
+	//animation2.Initialize(image2, rectangle2, 8);
 	
 	//camera
-	view.SetViewSize(Window.GetWindowWidth(), Window.GetWindowHeight());
+	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//camera
 	
 	object.Initialize({ starting_x, starting_y }, width, height);
+	object.speed.x = -150.0f;
+	object2.Initialize({-300.0f, 0.0f }, width, height);
+	object2.speed.x = 150.0f;
 }
 
 void Application::Update()
 {
 	clock.UpdateClock();
 
-	Window.SwapBuffers();
-	Window.PollEvents();
+	window.PollEvents();
 
-	glClearColor(0.2f, 0.3f, 0.4f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	
 
 	//Make graphic engine extern and doing something like graphic application.
 	//So that it can be use like graphicApplication.Draw()
@@ -72,33 +80,42 @@ void Application::Update()
 	Vertices::SelecteVAO(vertices);
 	glBindBuffer(GL_ARRAY_BUFFER, vertices.VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	animation.Animate(deltaTime);
 	glDrawArrays(vertices.GetPattern(), 0, (int)rectangle.GetPointsCount());
 	//Animation
-	animation.Animate(deltaTime);
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(2);
 	//Draw
 
 	//Object moving
 	object.Update(deltaTime);
-	if (-400.0f < object.GetXposition() && object.GetXposition() < -300.0f)	//if collide
-	{
-		std::cout << "fight!" << std::endl;
-		object.speed.x = 0.0f;
-	}
-	else
-	{
-		object.speed.x = -50.0f;
-	}
+	object2.Update(deltaTime);
+	//if (object.GetXposition() < 0.0f)
+	//{
+	//	animation.ChangeAnimation(PATH::kevin_attack, 7);
+	//	object.speed.x = 0.0f;
+	//}
 	//Object moving
 
+
+	//Draw
+	draw.StartDrawing();
+	
+	draw.draw(shader, material);
 	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
 	shader.SendUniformVariable("ndc", ndc);
+	
+	draw.draw(shader2, material2);
+	const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
+	shader2.SendUniformVariable("ndc", ndc2);
+	
+	draw.Finish();
+	//Draw
 
 	
 	//Transform
 	camera.Rotate(cameraAngle);
-	view.SetViewSize(Window.GetWindowWidth(), Window.GetWindowHeight());
+	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//Transform
 
@@ -114,12 +131,14 @@ void Application::Update()
 		frameCount = 0;
 	}
 	deltaTime = clock.GetTimeFromLastUpdate();
+	
+	window.SwapBuffers();
 }
 
 void Application::ShutDown()
 {
 	isRunning = false;
-	glfwSetWindowShouldClose(Window.window, GLFW_TRUE);
+	glfwSetWindowShouldClose(window.window, GLFW_TRUE);
 }
 
 void Application::HandleKeyPress(KeyboardButtons button)
@@ -130,15 +149,15 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		this->ShutDown();
 		break;
 	case KeyboardButtons::F:
-		Window.ToggleFullScreen();
+		window.ToggleFullScreen();
 		break;
 	case KeyboardButtons::V:
-		if (Window.IsVSyncOn() == false)
+		if (window.IsVSyncOn() == false)
 		{
-			Window.ToggleVSync(true);
+			window.ToggleVSync(true);
 			break;
 		}
-		Window.ToggleVSync(false);
+		window.ToggleVSync(false);
 		break;
 	case KeyboardButtons::W:
 		//pressDirection.y += 
@@ -205,7 +224,7 @@ void Application::HandleMouseEvent(MouseButtons button)
 	case MouseButtons::LEFT_PRESS:
 	{
 		//mouse check
-		if (object.isCollideWithMouse(mousePosition, Window.GetWindowWidth(), Window.GetWindowHeight()))
+		if (object.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
 		{
 			object.isMouseCollide = true;
 		}
@@ -221,9 +240,9 @@ void Application::HandleMouseEvent(MouseButtons button)
 
 void Application::HandleResizeEvent(const int& width, const int& height)
 {
-	Window.SetWindowWidth(width);
-	Window.SetWindowHeight(height);
-	glfwSetWindowSize(Window.window, width, height);
+	window.SetWindowWidth(width);
+	window.SetWindowHeight(height);
+	glfwSetWindowSize(window.window, width, height);
 	//camera
 	view.SetViewSize(width, height);
 	view.SetZoom(zoom);

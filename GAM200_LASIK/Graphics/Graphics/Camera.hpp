@@ -9,8 +9,8 @@
 */
 
 #pragma once
-#include "Math/vec2.hpp"
-#include "Math/mat3.hpp"
+#include "vec2.hpp"
+#include "mat3.hpp"
 
 class [[nodiscard]]Camera
 {
