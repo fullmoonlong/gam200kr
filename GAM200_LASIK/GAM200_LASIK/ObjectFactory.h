@@ -32,7 +32,7 @@ public:
 
 	std::map<ObjectID, Object*> GetObjecteList() { return objectIDMap; };
 
-	Object* CreateDynamicObject();
+	void CopyObject(Object* object);
 
 private:
 	std::map<ObjectID, Object*> objectIDMap;

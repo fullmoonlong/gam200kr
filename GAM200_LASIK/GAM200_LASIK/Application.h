@@ -17,6 +17,8 @@
 #include "Graphics/Animation.hpp"
 #include "Object.h"
 #include "Util/Clock.hpp"
+#include "Sound.hpp"
+#include "ObjectFactory.h"
 
 class Application : public SimpleEventHandler
 {
@@ -40,7 +42,11 @@ private:
 	int frameCount = 0;
 	float deltaTime = 0;
 	Object object;
-	
+
+	Object* objectTest;
+	Object* test1;
+	ObjectFactory objFactory;
+
 	Mesh rectangle;
 	Vertices vertices;
 	Shader shader;
@@ -51,6 +57,7 @@ private:
 	Camera camera;
 	CameraView view;
 
+	SoundManager soundManager;
 	//float cameraSpeed{ 80.0f };
 	float depth = 1.0f;
 	float zoom = 1.0f;

@@ -5,6 +5,7 @@
 */
 
 #include "Object.h"
+#include <iostream>
 
 Object::Object()
 	: objectID(0), position(0) {}
@@ -33,6 +34,11 @@ void Object::Update(float dt) noexcept
 	min.y += decision_y;
 	max.y += decision_y;
 }
+Object* Object::Clone()
+{
+	return new Object(*this);
+}
+
 
 bool Object::isCollideWith(Object& object) noexcept
 {

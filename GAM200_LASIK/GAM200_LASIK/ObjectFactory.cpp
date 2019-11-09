@@ -6,6 +6,7 @@
 #include "ObjectFactory.h"
 #include "Object.h"
 #include <iostream>
+#include <stdlib.h>
 
 extern ObjectFactory* OBJECTFACTORY = nullptr;
 
@@ -92,9 +93,14 @@ Object* ObjectFactory::FindObjectwithID(ObjectID id)
 	return nullptr;
 }
 
-Object* ObjectFactory::CreateDynamicObject()
+void ObjectFactory::CopyObject(Object* object)
 {
+	Object* newObject = new Object();
+	object->objectCopyId++;
+	newObject = object->Clone();
+	std::string ID = std::to_string(newObject->GetObjectCopyID());
 
+	newObject->SetName(object->GetName() + ID);
 
-	return  a;
+	GiveObjectID(newObject);
 }
