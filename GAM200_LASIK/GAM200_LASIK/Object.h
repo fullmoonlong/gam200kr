@@ -42,6 +42,8 @@ public:
 	ObjectID GetObjectID(){	return objectID;}
 	void SetObjectID(ObjectID objID){ objectID = objID;}
 
+	int GetObjectCopyID() { return objectCopyId; }
+
 	std::string GetName() const{return objectName;}
 	void SetName(const std::string& name){objectName = name;}
 
@@ -131,6 +133,7 @@ public:
 	}
 private:
 	ObjectID objectID;
+	int objectCopyId = 0;
 	std::string objectName = "";
 
 	vec2<float> position;

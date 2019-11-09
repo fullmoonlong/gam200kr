@@ -80,6 +80,10 @@ void Object::Update(float dt) noexcept
 		OBJECTFACTORY->Destroy(this);
 	}
 }
+Object* Object::Clone()
+{
+	return new Object(*this);
+}
 
 Object* Object::Clone()
 {
