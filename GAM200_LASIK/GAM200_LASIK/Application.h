@@ -55,10 +55,9 @@ private:
 	Shader shader2;
 	Animation animation;
 	Animation animation2;
-	
+
 	Window window;
 	Clock clock;
-	Texture texture;
 	
 	Camera camera;
 	CameraView view;

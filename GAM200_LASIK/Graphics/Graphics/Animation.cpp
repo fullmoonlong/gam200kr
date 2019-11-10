@@ -12,63 +12,40 @@
 #include "Animation.hpp"
 #include "Image.hpp"
 
-void Animation::Initialize(Image& new_sprite, Mesh& new_shape, int new_count)
+void Animation::Initialize(Image& new_sprite, Mesh& new_shape, int new_count, Shader& new_shader)
 {
-	glGenBuffers(1, &textureCoordinateBuffer);
+	shader = new_shader;
 	spriteSheet.LoadTextureFrom(new_sprite);
 	shape = new_shape;
-	sceneCount = new_count;
-	float oneSide = 1.0f / (float)sceneCount;
-	const float correction = 0.0005f * sceneCount;	//this number hide the texture coordinate error
-	for (int i = 0; i <= sceneCount; ++i)
-	{
-		textureCoord.push_back((float)i * oneSide - correction);
-	}
+	frameCount = new_count;
+	animateSpeed = 50.0f;
 }
 
-Animation::Animation(Image& new_sprite, Mesh& new_shape, int new_count)
+Animation::Animation(Image& new_sprite, Mesh& new_shape, int new_count, Shader& new_shader)
 {
-	Initialize(new_sprite, new_shape, new_count);
+	Initialize(new_sprite, new_shape, new_count, new_shader);
 }
 
 void Animation::Animate(float dt)
 {
-	static int spriteIndex = 0;
-	baseTime += dt;
+	glBindTexture(GL_TEXTURE_2D, spriteSheet.GetTexturehandle());
+	shader.SendUniformVariable("frameX", frameCount);
+	shader.SendUniformVariable("frameIndex", frameIndex);
+	shader.SendUniformVariable("correction", 0.003f);
 	
-	float texCoord[] = {
-		textureCoord.at(spriteIndex), 0.0f,
-		textureCoord.at(spriteIndex), 1.0f,
-		textureCoord.at(spriteIndex + 1), 1.0f,
-		textureCoord.at(spriteIndex + 1), 0.0f,
-	};
-	
-	glBindBuffer(GL_ARRAY_BUFFER, textureCoordinateBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoord), texCoord, GL_DYNAMIC_DRAW);
-	//glBindTexture(GL_TEXTURE_2D, spriteSheet.GetTexturehandle());
-	
-	if (baseTime >= 0.125f)
-	{
-		spriteIndex++;
-		if (spriteIndex == sceneCount)
-		{
-			spriteIndex = 0;
-		}
-		baseTime -= 0.125f;
-	}
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(2);
+	frameIndex = int(baseTime) % frameCount;
+	baseTime += animateSpeed * dt;
 }
 
-void Animation::ChangeAnimation(const std::filesystem::path& new_sprite, int new_count)
+void Animation::ChangeAnimation(const std::filesystem::path& /*new_sprite*/, int /*new_count*/)
 {
-	spriteSheet.LoadTextureFrom(new_sprite);
-	textureCoord.clear();
-	sceneCount = new_count;
-	float oneSide = 1.0f / (float)sceneCount;
-	const float correction = 0.0005f * sceneCount;	//this number hide the texture coordinate error
-	for (int i = 0; i <= sceneCount; ++i)
-	{
-		textureCoord.push_back((float)i * oneSide - correction);
-	}
+	//spriteSheet.LoadTextureFrom(new_sprite);
+	//textureCoord.clear();
+	//frameCount = new_count;
+	//float oneSide = 1.0f / (float)frameCount;
+	//const float correction = 0.0005f * frameCount;	//this number hide the texture coordinate error
+	//for (int i = 0; i <= frameCount; ++i)
+	//{
+	//	textureCoord.push_back((float)i * oneSide - correction);
+	//}
 }

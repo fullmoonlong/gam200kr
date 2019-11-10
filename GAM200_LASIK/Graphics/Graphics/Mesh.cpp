@@ -91,10 +91,10 @@ Mesh MESH::create_rectangle(float xPos, float yPos, float width, float height, C
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
-	//rectangle.AddTextureCoordinate({ 0.f, 1.f });
-	//rectangle.AddTextureCoordinate({ 0.f, 0.f });
-	//rectangle.AddTextureCoordinate({ 1.f, 0.f });
-	//rectangle.AddTextureCoordinate({ 1.f, 1.f });
+	rectangle.AddTextureCoordinate({ 0.f, 0.f });
+	rectangle.AddTextureCoordinate({ 0.f, 1.f });
+	rectangle.AddTextureCoordinate({ 1.f, 1.f });
+	rectangle.AddTextureCoordinate({ 1.f, 0.f });
 
 	return rectangle;
 }

@@ -13,6 +13,9 @@
 
 namespace PATH
 {
+	const std::filesystem::path animation_vert = "../assets/animation.vert";
+	const std::filesystem::path animation_frag = "../assets/animation.frag";
+	
 	const std::filesystem::path shape_vert = "../assets/shape.vert";
 	const std::filesystem::path shape_frag = "../assets/shape.frag";
 
