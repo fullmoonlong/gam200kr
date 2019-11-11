@@ -19,7 +19,6 @@ class Animation
 {
 public:
 	Animation() = default;
-	Animation(Image& new_sprite, Mesh& new_shape, int new_count, Shader& new_shader);
 
 	void Initialize(Image& new_sprite, Mesh& new_shape, int new_count, Shader& new_shader);
 	void Animate(float dt);

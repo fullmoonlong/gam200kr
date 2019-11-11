@@ -18,12 +18,7 @@ void Animation::Initialize(Image& new_sprite, Mesh& new_shape, int new_count, Sh
 	spriteSheet.LoadTextureFrom(new_sprite);
 	shape = new_shape;
 	frameCount = new_count;
-	animateSpeed = 50.0f;
-}
-
-Animation::Animation(Image& new_sprite, Mesh& new_shape, int new_count, Shader& new_shader)
-{
-	Initialize(new_sprite, new_shape, new_count, new_shader);
+	animateSpeed = 100.0f;
 }
 
 void Animation::Animate(float dt)
@@ -37,15 +32,8 @@ void Animation::Animate(float dt)
 	baseTime += animateSpeed * dt;
 }
 
-void Animation::ChangeAnimation(const std::filesystem::path& /*new_sprite*/, int /*new_count*/)
+void Animation::ChangeAnimation(const std::filesystem::path& new_sprite, int new_count)
 {
-	//spriteSheet.LoadTextureFrom(new_sprite);
-	//textureCoord.clear();
-	//frameCount = new_count;
-	//float oneSide = 1.0f / (float)frameCount;
-	//const float correction = 0.0005f * frameCount;	//this number hide the texture coordinate error
-	//for (int i = 0; i <= frameCount; ++i)
-	//{
-	//	textureCoord.push_back((float)i * oneSide - correction);
-	//}
+	frameCount = new_count;
+	spriteSheet.LoadTextureFrom(new_sprite);
 }

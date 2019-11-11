@@ -43,6 +43,7 @@ private:
 
 	Draw draw;
 	
+	Shader shader;
 	Object object;
 	Object object2;
 	Material material;
@@ -51,8 +52,6 @@ private:
 	Mesh rectangle2;
 	Vertices vertices;
 	Vertices vertices2;
-	Shader shader;
-	Shader shader2;
 	Animation animation;
 	Animation animation2;
 
