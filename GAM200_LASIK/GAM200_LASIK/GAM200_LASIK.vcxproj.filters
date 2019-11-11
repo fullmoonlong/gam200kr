@@ -20,5 +20,6 @@
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Draw.h" />
+    <ClInclude Include="MovestateType.h" />
   </ItemGroup>
 </Project>

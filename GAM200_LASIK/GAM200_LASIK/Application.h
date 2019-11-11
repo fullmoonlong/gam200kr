@@ -18,7 +18,7 @@
 #include "Draw.hpp"
 #include "Object.h"
 #include "Util/Clock.hpp"
-
+#include"MovestateType.h"
 class Application : public SimpleEventHandler
 {
 public:
@@ -27,6 +27,8 @@ public:
 	void Initialize();
 	void Update();
 	void ShutDown();
+
+	MovestateType c_check;
 
 	void HandleKeyPress(KeyboardButtons button) override;
 	void HandleKeyRelease(KeyboardButtons button) override;
@@ -38,8 +40,14 @@ public:
 	bool isRunning = false;
 
 private:
+
 	int frameCount = 0;
 	float deltaTime = 0;
+
+
+	Object enemy;
+	Object player;
+	
 
 	Draw draw;
 	

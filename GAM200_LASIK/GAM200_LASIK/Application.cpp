@@ -17,6 +17,7 @@ Application::Application()
 {
 	Initialize();
 	isRunning = true;
+	c_check = MovestateType::MOVE;
 }
 
 void Application::Initialize()
