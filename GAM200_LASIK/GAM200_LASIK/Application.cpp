@@ -36,23 +36,24 @@ void Application::Initialize()
 	const float starting_y = 0.0f;
 	const float width = 50.0f;
 	const float height = 50.0f;
-	rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-	rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
-	
+	//rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+	//rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
+	//
+	//VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
+	//vertices.InitializeWithMeshAndLayout(rectangle, layout);
+	//vertices2.InitializeWithMeshAndLayout(rectangle2, layout);
+
+	//material.vertices = vertices;
+	//material.mesh = rectangle;
+	//material2.vertices = vertices2;
+	//material2.mesh = rectangle2;
+	//
+	//Image image(PATH::kevin_move);
+	//Image image2(PATH::kevin_attack);
+
+	//animation.Initialize(image2, rectangle, 7, shader);
+	//animation2.Initialize(image2, rectangle2, 7, shader);
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
-	vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	vertices2.InitializeWithMeshAndLayout(rectangle2, layout);
-
-	material.vertices = vertices;
-	material.mesh = rectangle;
-	material2.vertices = vertices2;
-	material2.mesh = rectangle2;
-	
-	Image image(PATH::kevin_move);
-	Image image2(PATH::kevin_attack);
-
-	animation.Initialize(image2, rectangle, 7, shader);
-	animation2.Initialize(image2, rectangle2, 7, shader);
 	
 	//camera
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
@@ -94,10 +95,18 @@ void Application::Initialize()
 	objectTest1->animation.Initialize(objectTest1->image, objectTest1->mesh, 7, shader);
 	//dynamic test
 
-	object.Initialize({ starting_x, starting_y }, width, height);
-	object.speed.x = -150.0f;
-	object2.Initialize({-300.0f, 0.0f }, width, height);
-	object2.speed.x = 150.0f;
+	//test sound and make object
+	SOUNDMANAGER->Initialize();
+	SOUNDMANAGER->LoadFile("sound.mp3");
+	SOUNDMANAGER->LoadFile("beep.wav");
+	SOUNDMANAGER->LoadFile("hit.ogg");
+	SOUNDMANAGER->PlaySound(1, 0);
+	//test sound and make object
+
+	//object.Initialize({ starting_x, starting_y }, width, height);
+	//object.speed.x = -150.0f;
+	//object2.Initialize({-300.0f, 0.0f }, width, height);
+	//object2.speed.x = 150.0f;
 }
 
 void Application::Update()
@@ -106,9 +115,9 @@ void Application::Update()
 
 	OBJECTFACTORY->Update();
 
-	//Object moving
-	object.Update(deltaTime);
-	object2.Update(deltaTime);
+	////Object moving
+	//object.Update(deltaTime);
+	//object2.Update(deltaTime);
 	
 	//if (object.GetXposition() < 0.0f)
 	//{
@@ -208,11 +217,13 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		break;
 	case KeyboardButtons::A:
 		//pressDirection.x -= 2.0f;
+		SOUNDMANAGER->PlaySound(0, 1);
 		OBJECTFACTORY->CopyObject(objectTest);
 		//object.speed.x = -0.8f;
 		break;
 	case KeyboardButtons::D:
 		//pressDirection.x += 2.0f;
+		SOUNDMANAGER->PlaySound(0, 1);
 		OBJECTFACTORY->CopyObject(objectTest1);
 		//object.speed.x = 0.8f;
 		break;

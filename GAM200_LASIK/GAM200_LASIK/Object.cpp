@@ -42,11 +42,6 @@ Object* Object::Clone()
 {
 	return new Object(*this);
 }
-Object* Object::Clone()
-{
-	return new Object(*this);
-}
-
 
 bool Object::isCollideWith(Object& object) noexcept
 {

@@ -3,6 +3,7 @@
 *	GAM200 Engine Prototype
 *	2019/09/26
 */
+#include "Sound.hpp"
 #include "ObjectFactory.h"
 #include "Object.h"
 #include <iostream>
@@ -118,6 +119,7 @@ void ObjectFactory::CheckCollision()
 				{
 					if (object.second->isCollideWith(*object1.second))
 					{
+						SOUNDMANAGER->PlaySound(0, 2);
 						Destroy(object.second);
 					}
 				}

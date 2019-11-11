@@ -46,4 +46,6 @@ private:
 	bool soundState = true;
 	bool loopState;
 };
+
+extern SoundManager* SOUNDMANAGER;
 #endif

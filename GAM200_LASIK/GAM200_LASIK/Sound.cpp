@@ -1,7 +1,11 @@
 #include "Sound.hpp"
 
+
+extern SoundManager* SOUNDMANAGER = nullptr;
 SoundManager::SoundManager()
 {
+	std::cout << "SoundManager Add Successful" << std::endl;
+	SOUNDMANAGER = this;
 }
 
 SoundManager::~SoundManager()

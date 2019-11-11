@@ -51,7 +51,6 @@ private:
 	Object* objectTest1;
 
 	Object object;
-	ObjectFactory objFactory;
 
 	Mesh rectangle;
 	Mesh rectangle2;
