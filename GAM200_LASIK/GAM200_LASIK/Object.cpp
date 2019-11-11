@@ -37,6 +37,11 @@ void Object::Update(float dt) noexcept
 	max = { position.x + half_width, position.y + half_height };
 }
 
+Object* Object::Clone()
+{
+	return new Object(*this);
+}
+
 bool Object::isCollideWith(Object& object) noexcept
 {
 	return !(max.x < object.min.x || object.max.x < min.x || max.y < object.min.y || object.max.y < min.y);

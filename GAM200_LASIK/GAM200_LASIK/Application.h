@@ -17,6 +17,7 @@
 #include "Animation.hpp"
 #include "Draw.hpp"
 #include "Object.h"
+#include "ObjectFactory.h"
 #include "Util/Clock.hpp"
 
 class Application : public SimpleEventHandler
@@ -42,7 +43,11 @@ private:
 	float deltaTime = 0;
 
 	Draw draw;
-	
+
+	ObjectFactory objectFactory;
+	Object* objectTest;
+	Object* objectTest1;
+
 	Object object;
 	Object object2;
 	Material material;

@@ -25,11 +25,22 @@ public:
 	Object* CreateEmptyObject();
 
 	void DestroyAllObjects();
+
+	Object* FindObjectwithName(std::string& name);
+	Object* FindObjectwithID(ObjectID id);
+
+
+	std::map<ObjectID, Object*> GetObjecteList() { return objectIDMap; };
+
+	void CopyObject(Object* object);
+
+	void CheckCollision();
+
 private:
 	std::map<ObjectID, Object*> objectIDMap;
 	std::vector<Object*> objectsToBeDeleted;
 
-	ObjectID lastObjectID;
+	ObjectID lastObjectID = 0;
 };
 
-extern ObjectFactory* objectFactory;
+extern ObjectFactory* OBJECTFACTORY;
