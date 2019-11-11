@@ -25,6 +25,11 @@ void Application::Initialize()
 	window.CanCreateWindow(800, 600, this,"Lasik"); //initialize window
 
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
+	shader2.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
+	//shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	//shader2.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	//shader.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
+	//shader2.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
 	
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
 	const Color4f color2{ 0.5f, 0.5f, 0.3f, 1.0f };
@@ -47,8 +52,8 @@ void Application::Initialize()
 	Image image(PATH::kevin_move);
 	Image image2(PATH::kevin_attack);
 
-	animation.Initialize(image, rectangle, 8, shader);
-	animation2.Initialize(image2, rectangle2, 7, shader);
+	animation.Initialize(image, rectangle, 7, shader);
+	animation2.Initialize(image2, rectangle2, 8, shader2);
 	
 	//camera
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
@@ -56,7 +61,7 @@ void Application::Initialize()
 	//camera
 	
 	object.Initialize({ starting_x, starting_y }, width, height);
-	object.speed.x = -150.0f;
+	//object.speed.x = -150.0f;
 	object2.Initialize({-300.0f, 0.0f }, width, height);
 	//object2.speed.x = 150.0f;
 }
@@ -66,15 +71,16 @@ void Application::Update()
 	clock.UpdateClock();
 
 
+
 	//Object moving
 	object.Update(deltaTime);
 	object2.Update(deltaTime);
 	
-	if (object.GetXposition() < 0.0f)
-	{
-		animation.ChangeAnimation(PATH::kevin_attack, 7);
-		object.speed.x = 0.0f;
-	}
+	//if (object.GetXposition() < 0.0f)
+	//{
+	//	animation.ChangeAnimation(PATH::kevin_attack, 7);
+	//	object.speed.x = 0.0f;
+	//}
 	//Object moving
 
 
@@ -86,10 +92,10 @@ void Application::Update()
 	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
 	shader.SendUniformVariable("ndc", ndc);
 
-	draw.draw(shader, material2);
+	draw.draw(shader2, material2);
 	animation2.Animate(deltaTime);
 	const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
-	shader.SendUniformVariable("ndc", ndc2);
+	shader2.SendUniformVariable("ndc", ndc2);
 	
 	draw.Finish();
 	//Draw
