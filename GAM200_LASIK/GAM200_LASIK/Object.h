@@ -3,6 +3,7 @@
 #include <vec2.hpp>
 #include <Image.hpp>
 #include <Transform.hpp>
+#include"Collision.hpp"
 
 using ObjectID = unsigned int;
 

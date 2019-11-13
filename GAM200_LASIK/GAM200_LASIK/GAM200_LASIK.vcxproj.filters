@@ -7,7 +7,6 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="Draw.cpp" />
-    <ClCompile Include="Collision.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -19,6 +18,6 @@
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="System.h" />
     <ClInclude Include="Draw.h" />
-    <ClInclude Include="Collision.hpp" />
+    <ClInclude Include="MovestateType.h" />
   </ItemGroup>
 </Project>

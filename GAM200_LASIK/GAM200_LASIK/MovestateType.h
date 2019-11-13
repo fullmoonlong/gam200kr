@@ -1,6 +1,6 @@
 #pragma once
 enum class MovestateType
 {
-	MOVE,
+	MOVE = 0,
 	ATTACK
 };

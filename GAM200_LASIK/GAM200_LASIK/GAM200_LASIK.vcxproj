@@ -174,7 +174,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="Draw.cpp" />
     <ClCompile Include="main.cpp" />
@@ -183,8 +182,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Collision.hpp" />
     <ClInclude Include="Draw.h" />
+    <ClInclude Include="MovestateType.h" />
     <ClInclude Include="Util\Clock.hpp" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTest.h" />

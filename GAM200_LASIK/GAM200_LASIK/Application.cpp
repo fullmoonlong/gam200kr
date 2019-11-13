@@ -12,18 +12,21 @@
 #include "Application.h"
 #include "VerticesDescription.h"
 #include "Image.hpp"
+#include "Collision.hpp"
 
 Application::Application()
 {
 	Initialize();
 	isRunning = true;
+	check = MovestateType::MOVE;
 }
 
 void Application::Initialize()
 {
 	window.CanCreateWindow(800, 600, this,"Lasik"); //initialize window
 
-	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
+	player_s.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
+	enemy_s.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
 	
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
 	const Color4f color2{ 0.5f, 0.5f, 0.3f, 1.0f };
@@ -31,64 +34,76 @@ void Application::Initialize()
 	const float starting_y = 0.0f;
 	const float width = 50.0f;
 	const float height = 50.0f;
-	rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-	rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
+	
+	player_m = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+	enemy_m  = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
 	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
-	vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	vertices2.InitializeWithMeshAndLayout(rectangle2, layout);
+	player_v.InitializeWithMeshAndLayout(player_m, layout);
+	enemy_v.InitializeWithMeshAndLayout(enemy_m, layout);
 
-	material.vertices = vertices;
-	material.mesh = rectangle;
-	material2.vertices = vertices2;
-	material2.mesh = rectangle2;
+	player_a.vertices = player_v;
+	player_a.mesh = player_m;
+	enemy_a.vertices = enemy_v;
+	enemy_a.mesh = enemy_m;
 	
 	Image image(PATH::kevin_move);
 	Image image2(PATH::kevin_attack);
 
-	animation.Initialize(image, rectangle, 8, shader);
-	animation2.Initialize(image2, rectangle2, 7, shader);
+	player_ani.Initialize(image, player_m, 8, player_s);
+	enemy_ani.Initialize(image2, enemy_m, 7, enemy_s);
 	
 	//camera
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//camera
 	
-	object.Initialize({ starting_x, starting_y }, width, height);
-	object.speed.x = -150.0f;
-	object2.Initialize({-300.0f, 0.0f }, width, height);
-	//object2.speed.x = 150.0f;
+	player.Initialize({ starting_x, starting_y }, width, height);
+	player.speed.x = -1000;
+	enemy.Initialize({-300.0f, 0.0f }, width, height);
+	//enemy.speed.x = 150.0f;
 }
 
 void Application::Update()
 {
 	clock.UpdateClock();
 
-
-	//Object moving
-	object.Update(deltaTime);
-	object2.Update(deltaTime);
-	
-	if (object.GetXposition() < 0.0f)
+	if(player.isCollideWith(enemy) == true)
 	{
-		animation.ChangeAnimation(PATH::kevin_attack, 7);
-		object.speed.x = 0.0f;
+		std::cout << "collision" << std::endl;
+		check = MovestateType::ATTACK;
 	}
+	
+	//Object moving
+	player.Update(deltaTime);
+	enemy.Update(deltaTime);
+	
+	//if (player.GetXposition() < 0.0f)
+	//{
+	//	player_ani.ChangeAnimation(PATH::kevin_attack, 7);
+	//	player.speed.x = 0.0f;
+	//}
+
+	//if (enemy.GetXposition() < 0.0f)
+	//{
+	//	enemy_ani.ChangeAnimation(PATH::kevin_attack, 7);
+	//	enemy.speed.x = 0.0f;
+	//}
 	//Object moving
 
 
 	//Draw
 	draw.StartDrawing();
 
-	draw.draw(shader, material);
-	animation.Animate(deltaTime);
-	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
-	shader.SendUniformVariable("ndc", ndc);
+	draw.draw(player_s, player_a);
+	player_ani.Animate(deltaTime);
+	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * player.transform.GetModelToWorld();
+	player_s.SendUniformVariable("ndc", ndc);
 
-	draw.draw(shader, material2);
-	animation2.Animate(deltaTime);
-	const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
-	shader.SendUniformVariable("ndc", ndc2);
+	draw.draw(enemy_s, enemy_a);
+	enemy_ani.Animate(deltaTime);
+	const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * enemy.transform.GetModelToWorld();
+	enemy_s.SendUniformVariable("ndc", ndc2);
 	
 	draw.Finish();
 	//Draw
@@ -141,22 +156,22 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		window.ToggleVSync(false);
 		break;
 	case KeyboardButtons::W:
-		//pressDirection.y += 
-		//	(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? -2.0f : 2.0f;
-		object.speed.y = 0.8f;
+		pressDirection.y += 
+			(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? -2.0f : 2.0f;
+		player.speed.y = 0.8f;
 		break;
 	case KeyboardButtons::S:
-		//pressDirection.y +=
-		//	(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? 2.0f : -2.0f;
-		object.speed.y = -0.8f;
+		pressDirection.y +=
+			(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? 2.0f : -2.0f;
+		player.speed.y = -0.8f;
 		break;
 	case KeyboardButtons::A:
-		//pressDirection.x -= 2.0f;
-		object.speed.x = -0.8f;
+		pressDirection.x -= 2.0f;
+		player.speed.x = -0.8f;
 		break;
 	case KeyboardButtons::D:
-		//pressDirection.x += 2.0f;
-		object.speed.x = 0.8f;
+		pressDirection.x += 2.0f;
+		player.speed.x = 0.8f;
 		break;
 	case KeyboardButtons::Z:
 		cameraAngle += 0.025f;
@@ -174,19 +189,19 @@ void Application::HandleKeyRelease(KeyboardButtons button)
 	{
 	case KeyboardButtons::W:
 		pressDirection.y = 0;
-		object.speed.y = 0.f;
+		player.speed.y = 0.f;
 		break;
 	case KeyboardButtons::S:
 		pressDirection.y = 0;
-		object.speed.y = 0.f;
+		player.speed.y = 0.f;
 		break;
 	case KeyboardButtons::A:
 		pressDirection.x = 0;
-		object.speed.x = 0.f;
+		player.speed.x = 0.f;
 		break;
 	case KeyboardButtons::D:
 		pressDirection.x = 0;
-		object.speed.x = 0.f;
+		player.speed.x = 0.f;
 		break;
 	case KeyboardButtons::Z:
 		cameraAngle = 0.0f;
@@ -205,15 +220,21 @@ void Application::HandleMouseEvent(MouseButtons button)
 	case MouseButtons::LEFT_PRESS:
 	{
 		//mouse check
-		if (object.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
+		if (player.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
 		{
-			object.isMouseCollide = true;
+			player.isMouseCollide = true;
+		}
+		//mouse check
+		if (enemy.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
+		{
+			enemy.isMouseCollide = true;
 		}
 		//mouse check
 		break;
 	}
 	case MouseButtons::LEFT_RELEASE:
-		object.isMouseCollide = false;
+		player.isMouseCollide = false;
+		enemy.isMouseCollide = false;
 		break;
 	}
 }
@@ -239,6 +260,6 @@ void Application::HandleScrollEvent(float scroll_amount)
 
 void Application::HandleMousePositionEvent(float xpos, float ypos)
 {
-	//vec2<float> newMousePosition{ xpos, ypos };
+	vec2<float> newMousePosition{ xpos, ypos };
 	mousePosition = { xpos, ypos };
 }

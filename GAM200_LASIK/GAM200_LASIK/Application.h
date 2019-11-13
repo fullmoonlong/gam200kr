@@ -18,7 +18,8 @@
 #include "Draw.hpp"
 #include "Object.h"
 #include "Util/Clock.hpp"
-
+#include"MovestateType.h"
+//#include "Collision.hpp"
 class Application : public SimpleEventHandler
 {
 public:
@@ -41,19 +42,27 @@ private:
 	int frameCount = 0;
 	float deltaTime = 0;
 
+	MovestateType check;
+	
+	Object player;
+	Object enemy;
+	
 	Draw draw;
 	
-	Shader shader;
-	Object object;
-	Object object2;
-	Material material;
-	Material material2;
-	Mesh rectangle;
-	Mesh rectangle2;
-	Vertices vertices;
-	Vertices vertices2;
-	Animation animation;
-	Animation animation2;
+	Shader player_s;
+	Shader enemy_s;
+
+	Mesh player_m;
+	Mesh enemy_m;
+
+	Vertices player_v;
+	Vertices enemy_v;
+
+	Material player_a;
+	Material enemy_a;
+
+	Animation player_ani;
+	Animation enemy_ani;
 
 	Window window;
 	Clock clock;
@@ -61,7 +70,9 @@ private:
 	Camera camera;
 	CameraView view;
 
-	//float cameraSpeed{ 80.0f };
+	//Collision collision;
+	
+	float cameraSpeed{ 80.0f };
 	float depth = 1.0f;
 	float zoom = 1.0f;
 	float cameraAngle = 0.0f;
