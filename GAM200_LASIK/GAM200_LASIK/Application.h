@@ -19,7 +19,6 @@
 #include "Object.h"
 #include "Util/Clock.hpp"
 #include"MovestateType.h"
-//#include "Collision.hpp"
 class Application : public SimpleEventHandler
 {
 public:

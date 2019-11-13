@@ -12,7 +12,6 @@
 #include "Application.h"
 #include "VerticesDescription.h"
 #include "Image.hpp"
-#include "Collision.hpp"
 
 Application::Application()
 {
@@ -59,9 +58,9 @@ void Application::Initialize()
 	//camera
 	
 	player.Initialize({ starting_x, starting_y }, width, height);
-	player.speed.x = -1000;
+	player.speed.x = 0.0f;
 	enemy.Initialize({-300.0f, 0.0f }, width, height);
-	//enemy.speed.x = 150.0f;
+	enemy.speed.x = 0.0f;
 }
 
 void Application::Update()
@@ -78,17 +77,18 @@ void Application::Update()
 	player.Update(deltaTime);
 	enemy.Update(deltaTime);
 	
-	//if (player.GetXposition() < 0.0f)
-	//{
-	//	player_ani.ChangeAnimation(PATH::kevin_attack, 7);
-	//	player.speed.x = 0.0f;
-	//}
+	if (check == MovestateType::ATTACK)
+	{
+		player_ani.ChangeAnimation(PATH::kevin_attack, 7);
+		player.speed.x = 0.0f;
+		enemy_ani.ChangeAnimation(PATH::kevin_attack, 7);
+		enemy.speed.x = 0.0f;
 
-	//if (enemy.GetXposition() < 0.0f)
-	//{
-	//	enemy_ani.ChangeAnimation(PATH::kevin_attack, 7);
-	//	enemy.speed.x = 0.0f;
-	//}
+	}
+
+	/*if (enemy.GetXposition() < 0.0f)
+	{
+	}*/
 	//Object moving
 
 
@@ -167,11 +167,11 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		break;
 	case KeyboardButtons::A:
 		pressDirection.x -= 2.0f;
-		player.speed.x = -0.8f;
+		player.speed.x = -500.0f;
 		break;
 	case KeyboardButtons::D:
 		pressDirection.x += 2.0f;
-		player.speed.x = 0.8f;
+		player.speed.x = 500.0f;
 		break;
 	case KeyboardButtons::Z:
 		cameraAngle += 0.025f;
