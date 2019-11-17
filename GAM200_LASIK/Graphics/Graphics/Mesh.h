@@ -26,12 +26,11 @@ public:
 	void AddPoint(vec2<float> point) noexcept;
 	void AddColor(Color4f color) noexcept;
 	void AddTextureCoordinate(vec2<float> texture_coordinate) noexcept;
+	void SetShapePattern(ShapePattern new_pattern) noexcept;
 
 	vec2<float> GetPoint(int index) const noexcept;
 	Color4f GetColor(int index) const noexcept;
 	vec2<float> GetTextureCoordinate(int index) const noexcept;
-
-	void SetShapePattern(ShapePattern new_pattern) noexcept;
 	ShapePattern GetShapePattern() const noexcept;
 
 	size_t GetPointsCount() const noexcept;

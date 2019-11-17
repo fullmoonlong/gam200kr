@@ -16,6 +16,7 @@
 #include "Mesh.h"
 #include "Animation.hpp"
 #include "Draw.hpp"
+#include "BitmapFont.hpp"
 #include "Object.h"
 #include "Util/Clock.hpp"
 
@@ -43,6 +44,14 @@ private:
 
 	Draw draw;
 	
+	BitmapFont bitmapFont;
+	Shader fontShader;
+	Object lasik;
+	Mesh textMesh;
+	Vertices textVertices;
+	Texture fontTexture;
+	//Text text;
+
 	Shader shader;
 	Object object;
 	Object object2;

@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Graphics\BitmapFont.hpp" />
     <ClInclude Include="Graphics\Draw.hpp" />
     <ClInclude Include="Graphics\Animation.hpp" />
     <ClInclude Include="Graphics\Camera.hpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Graphics\OpenGL_Window.h" />
     <ClInclude Include="Graphics\PATH.hpp" />
     <ClInclude Include="Graphics\Shader.h" />
+    <ClInclude Include="Graphics\Text.hpp" />
     <ClInclude Include="Graphics\Texture.hpp" />
     <ClInclude Include="Graphics\Transform.hpp" />
     <ClInclude Include="Graphics\Vertices.h" />
@@ -184,6 +186,7 @@
     <ClInclude Include="Math\vec3.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Graphics\BitmapFont.cpp" />
     <ClCompile Include="Graphics\Draw.cpp" />
     <ClCompile Include="Graphics\Animation.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
@@ -193,6 +196,7 @@
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\OpenGL_Window.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
+    <ClCompile Include="Graphics\Text.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
     <ClCompile Include="Graphics\Transform.cpp" />
     <ClCompile Include="Graphics\Vertices.cpp" />

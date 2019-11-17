@@ -15,7 +15,7 @@
 void Animation::Initialize(Image& new_sprite, Mesh& new_shape, int new_count, Shader& new_shader)
 {
 	shader = new_shader;
-	spriteSheet.LoadTextureFrom(new_sprite);
+	spriteSheet.LoadFromImage(new_sprite);
 	shape = new_shape;
 	frameCount = new_count;
 	animateSpeed = 100.0f;
@@ -35,5 +35,5 @@ void Animation::Animate(float dt)
 void Animation::ChangeAnimation(const std::filesystem::path& new_sprite, int new_count)
 {
 	frameCount = new_count;
-	spriteSheet.LoadTextureFrom(new_sprite);
+	spriteSheet.LoadFromImage(new_sprite);
 }

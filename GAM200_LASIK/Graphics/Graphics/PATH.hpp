@@ -26,4 +26,7 @@ namespace PATH
 	const std::filesystem::path kevin_attack = "../assets/kevin_attack.png";
 
 	const std::filesystem::path icon_image = "../assets/icon.png";
+
+	const std::filesystem::path bitmapfont_fnt = "../assets/bitmapfont.fnt";
+	const std::filesystem::path bitmapfont_png = "../assets/bitmapfont_0.png";
 }

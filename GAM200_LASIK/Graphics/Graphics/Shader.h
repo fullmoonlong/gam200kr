@@ -22,6 +22,9 @@ public:
 		const std::filesystem::path& fragment_source) noexcept;
 	unsigned GetHandleToShader() const noexcept;
 
+	static void UseShader(const Shader& shader);
+	static void UseNothing();
+
 	void SendUniformVariable(const char* variable_name, const int& variable) const noexcept;
 	void SendUniformVariable(const char* variable_name, const float& variable) const noexcept;
 	void SendUniformVariable(const char* variable_name, const mat3<float>& matrix) const noexcept;

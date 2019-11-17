@@ -37,7 +37,7 @@ void Vertices::InitializeWithMeshAndLayout(const Mesh& mesh, const VerticesDescr
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
-	SelecteVAO(*this);
+	SelectVAO(*this);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, bufferVertexCapacity, NULL, GL_STATIC_DRAW);
 
@@ -54,7 +54,7 @@ void Vertices::UpdateVeticesFromMesh(const Mesh& mesh)
 	}
 }
 
-void Vertices::SelecteVAO(const Vertices& vertices) noexcept
+void Vertices::SelectVAO(const Vertices& vertices) noexcept
 {
 	glBindVertexArray(vertices.VAO);
 }
@@ -67,6 +67,11 @@ void Vertices::SelectNothing()
 unsigned Vertices::GetPattern() const noexcept
 {
 	return pattern;
+}
+
+int Vertices::GetVerticesCount() const noexcept
+{
+	return verticesCount;
 }
 
 void Vertices::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
