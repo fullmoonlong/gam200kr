@@ -178,7 +178,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="EnemyUnits.cpp" />
     <ClCompile Include="FileLoadAndSave.cpp" />
@@ -195,7 +194,6 @@
     <ClInclude Include="Sound.hpp" />
     <ClInclude Include="Units.hpp" />
     <ClInclude Include="Util\Clock.hpp" />
-    <ClInclude Include="Collision.hpp" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTest.h" />
     <ClInclude Include="ComponentType.h" />

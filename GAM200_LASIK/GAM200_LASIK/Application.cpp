@@ -18,11 +18,12 @@ Application::Application()
 {
 	Initialize();
 	isRunning = true;
+	check = MovestateType::MOVE;
 }
 
 void Application::Initialize()
 {
-	window.CanCreateWindow(800, 600, this,"Lasik"); //initialize window
+	window.CanCreateWindow(800, 600, this,"Lasik"); 
 
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
 	
@@ -218,7 +219,7 @@ void Application::Update()
 	camera.Rotate(cameraAngle);
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
-	//Transform
+
 
 	++frameCount;
 	static int time = 0;
@@ -316,7 +317,7 @@ void Application::HandleKeyRelease(KeyboardButtons button)
 {
 	switch (button)
 	{
-	case KeyboardButtons::W:
+	/*case KeyboardButtons::W:
 		pressDirection.y = 0;
 		//object.speed.y = 0.f;
 		break;
@@ -349,15 +350,21 @@ void Application::HandleMouseEvent(MouseButtons button)
 	case MouseButtons::LEFT_PRESS:
 	{
 		//mouse check
-		if (object.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
+		if (Knight.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
 		{
-			object.isMouseCollide = true;
+			Knight.isMouseCollide = true;
+		}
+		//mouse check
+		if (Skeleton.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
+		{
+			Skeleton.isMouseCollide = true;
 		}
 		//mouse check
 		break;
 	}
 	case MouseButtons::LEFT_RELEASE:
-		object.isMouseCollide = false;
+		Knight.isMouseCollide = false;
+		Skeleton.isMouseCollide = false;
 		break;
 	}
 }
@@ -383,6 +390,6 @@ void Application::HandleScrollEvent(float scroll_amount)
 
 void Application::HandleMousePositionEvent(float xpos, float ypos)
 {
-	//vec2<float> newMousePosition{ xpos, ypos };
+	vec2<float> newMousePosition{ xpos, ypos };
 	mousePosition = { xpos, ypos };
 }
