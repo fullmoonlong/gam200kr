@@ -11,20 +11,32 @@
 #include "Mesh.h"
 #include "Math/Angle.hpp"
 
-void Mesh::AddPoint(vec2<float> point) noexcept
+void Mesh::AddPoint(vec2<float> point)
 {
 	points.push_back(point);
 }
 
-void Mesh::AddColor(Color4f color) noexcept
+void Mesh::AddPoint(float x, float y)
+{
+	points.push_back({ x, y });
+}
+
+
+void Mesh::AddColor(Color4f color)
 {
 	colors.push_back(color);
 }
 
-void Mesh::AddTextureCoordinate(vec2<float> texture_coordinate) noexcept
+void Mesh::AddTextureCoordinate(vec2<float> texture_coordinate)
 {
 	textureCoordinates.push_back(texture_coordinate);
 }
+
+void Mesh::AddTextureCoordinate(float u, float v)
+{
+	textureCoordinates.push_back({ u, v });
+}
+
 
 void Mesh::SetShapePattern(::ShapePattern new_pattern) noexcept
 {

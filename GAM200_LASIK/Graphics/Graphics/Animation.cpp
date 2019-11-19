@@ -18,12 +18,12 @@ void Animation::Initialize(Image& new_sprite, Mesh& new_shape, int new_count, Sh
 	spriteSheet.LoadFromImage(new_sprite);
 	shape = new_shape;
 	frameCount = new_count;
-	animateSpeed = 100.0f;
+	animateSpeed = 50.0f;
 }
 
 void Animation::Animate(float dt)
 {
-	glBindTexture(GL_TEXTURE_2D, spriteSheet.GetTexturehandle());
+	Shader::UseShader(shader);
 	shader.SendUniformVariable("frameX", frameCount);
 	shader.SendUniformVariable("frameIndex", frameIndex);
 	shader.SendUniformVariable("correction", 0.003f);

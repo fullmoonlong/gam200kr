@@ -35,20 +35,58 @@ void Application::Initialize()
 	const float height = 50.0f;
 	rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
 	rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
-	textMesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
+	//textMesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
+	textMesh.AddPoint({ -0.5f, -0.5f });
+	textMesh.AddPoint({ -0.5f, 0.5f });
+	textMesh.AddPoint({ 0.5f, 0.5f });
+	textMesh.AddPoint({ 0.5f, -0.5f });
+	textMesh.AddTextureCoordinate(0.0f, 0.5f);
+	textMesh.AddTextureCoordinate(0.0f, 1.0f);
+	textMesh.AddTextureCoordinate(0.5f, 1.0f);
+	textMesh.AddTextureCoordinate(0.5f, 0.5f);
+	//float left = 0 + -1;
+	//float right = left + 19;
+	//float bottom = -1 * (6 + 20) + 32 + 0;
+	//float top = bottom + 20;
+
+	//float textureLeft = 0.0f / 256;
+	//float textureTop = 0.0f / 256;
+	//float textureRight = 19.0f / 256;
+	//float textureBottom = 20.0f / 256;
+
+	//textMesh.AddPoint({ left, top });
+	//textMesh.AddPoint({ right, top });
+	//textMesh.AddPoint({ left, bottom });
+	//textMesh.AddTextureCoordinate({ textureLeft, textureTop });
+	//textMesh.AddTextureCoordinate({ textureRight, textureTop });
+	//textMesh.AddTextureCoordinate({ textureLeft, textureBottom });
+
+	//textMesh.AddPoint({ right, top });
+	//textMesh.AddPoint({ left, bottom });
+	//textMesh.AddPoint({ right, bottom });
+	//textMesh.AddTextureCoordinate({ textureRight, textureTop });
+	//textMesh.AddTextureCoordinate({ textureLeft, textureBottom });
+	//textMesh.AddTextureCoordinate({ textureRight, textureBottom });
 	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
 	vertices.InitializeWithMeshAndLayout(rectangle, layout);
 	vertices2.InitializeWithMeshAndLayout(rectangle2, layout);
 	textVertices.InitializeWithMeshAndLayout(textMesh, layout);
 
-	material.vertices = vertices;
-	material.mesh = rectangle;
-	material2.vertices = vertices2;
-	material2.mesh = rectangle2;
-	
 	Image image(PATH::kevin_move);
 	Image image2(PATH::kevin_attack);
+	
+	Texture t1(image);
+	Texture t2(image2);
+	
+	material.vertices = vertices;
+	material.mesh = rectangle;
+	material.texture = t1;
+	material2.vertices = vertices2;
+	material2.mesh = rectangle2;
+	material2.texture = t2;
+	
+
 
 	fontTexture.LoadFromPath(PATH::bitmapfont_png);
 
@@ -134,19 +172,6 @@ void Application::Update()
 	//textMesh.AddTextureCoordinate({ textureRight, textureTop });
 	//textMesh.AddTextureCoordinate({ textureLeft, textureBottom });
 	//textMesh.AddTextureCoordinate({ textureRight, textureBottom });
-	//textMesh.AddPoint({ -50.0f, 50.0f });
-	//textMesh.AddPoint({ 50.0f, 50.0f });
-	//textMesh.AddPoint({ -50.0f, -50.0f });
-	//textMesh.AddTextureCoordinate({ 0.0f, 0.0f });
-	//textMesh.AddTextureCoordinate({ 1.0f, 0.0f });
-	//textMesh.AddTextureCoordinate({ 0.0f, 1.0f });
-
-	//textMesh.AddPoint({ 50.0f, 50.0f });
-	//textMesh.AddPoint({ -50.0f, -50.0f });
-	//textMesh.AddPoint({ 50.0f, -50.0f });
-	//textMesh.AddTextureCoordinate({ 1.0f, 0.0f });
-	//textMesh.AddTextureCoordinate({ 0.0f, 1.0f });
-	//textMesh.AddTextureCoordinate({ 1.0f, 1.0f });
 
 	//Vertices textVertices;
 	//const VerticesDescription textLayout = { VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
@@ -154,25 +179,22 @@ void Application::Update()
 
 	//Image fontImage(PATH::bitmapfont_png);
 	//Texture fontTexture(fontImage);
-	glBindTexture(GL_TEXTURE_2D, fontTexture.GetTexturehandle());
-	mat3<float> ndc_font = view.GetCameraToNDCTransform() * camera.WorldToCamera() * lasik.transform.GetModelToWorld();
+	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
+	const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
+	const mat3<float> ndc_font = view.GetCameraToNDCTransform() * camera.WorldToCamera() * lasik.transform.GetModelToWorld();
+	
+
+	animation.Animate(deltaTime);
+	shader.SendUniformVariable("ndc", ndc);
+	Draw::draw(shader, material);
+
+	animation2.Animate(deltaTime);
+	shader.SendUniformVariable("ndc", ndc2);
+	Draw::draw(shader, material2);
+
+	Draw::draw(fontShader, { textVertices, fontTexture, textMesh });
 	fontShader.SendUniformVariable("ndc", ndc_font);
-	Vertices::SelectVAO(textVertices);
-	Shader::UseShader(fontShader);
-	//glBindBuffer(GL_ARRAY_BUFFER, material.vertices.VBO);
-	glDrawArrays(material.vertices.GetPattern(), 0, (int)material.mesh.GetPointsCount());
-	
 
-	//draw.draw(shader, material);
-	//animation.Animate(deltaTime);
-	//const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
-	//shader.SendUniformVariable("ndc", ndc);
-
-	//draw.draw(shader, material2);
-	//animation2.Animate(deltaTime);
-	//const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
-	//shader.SendUniformVariable("ndc", ndc2);
-	
 	draw.Finish();
 	//Draw
 

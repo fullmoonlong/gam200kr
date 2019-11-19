@@ -9,7 +9,6 @@
  */
 
 #pragma once
-#include <vector>
 #include <filesystem>
 #include "Mesh.h"
 #include "Texture.hpp"
@@ -23,8 +22,8 @@ public:
 	void Initialize(Image& new_sprite, Mesh& new_shape, int new_count, Shader& new_shader);
 	void Animate(float dt);
 	void ChangeAnimation(const std::filesystem::path& new_sprite, int new_count);
-private:
 	Texture spriteSheet;
+private:
 	Mesh shape;
 	Shader shader;
 	int frameCount;

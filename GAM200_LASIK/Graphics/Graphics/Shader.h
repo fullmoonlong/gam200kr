@@ -31,4 +31,3 @@ public:
 private:
 	unsigned int handleToShader = 0;
 };
-
