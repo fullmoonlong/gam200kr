@@ -7,8 +7,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
-    <ClCompile Include="Draw.cpp" />
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="FileLoadAndSave.cpp" />
+    <ClCompile Include="Units.cpp" />
+    <ClCompile Include="EnemyUnits.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -20,7 +22,9 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectFactory.h" />
     <ClInclude Include="System.h" />
-    <ClInclude Include="Draw.h" />
     <ClInclude Include="Sound.hpp" />
+    <ClInclude Include="FileLoadAndSave.hpp" />
+    <ClInclude Include="Units.hpp" />
+    <ClInclude Include="EnemyUnits.hpp" />
   </ItemGroup>
 </Project>

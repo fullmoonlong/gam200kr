@@ -24,21 +24,28 @@ public:
 	int GetObjectID(int id);
 	Object* CreateEmptyObject();
 
+	ObjectID GetLastObjectID() { return lastObjectID; }
+
 	void DestroyAllObjects();
 
 	Object* FindObjectwithName(std::string& name);
 	Object* FindObjectwithID(ObjectID id);
-
 
 	std::map<ObjectID, Object*> GetObjecteList() { return objectIDMap; };
 
 	void CopyObject(Object* object);
 
 	void CheckCollision();
+	void CheckAttackState();
+	void DamageTest(int time);
 
 private:
 	std::map<ObjectID, Object*> objectIDMap;
+
 	std::vector<Object*> objectsToBeDeleted;
+
+	int playerAmounts = 0;
+	int enemyAmounts = 0;
 
 	ObjectID lastObjectID = 0;
 };

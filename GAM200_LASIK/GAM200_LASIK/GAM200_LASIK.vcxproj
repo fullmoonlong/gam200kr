@@ -128,7 +128,8 @@
       <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;Graphics.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y $(SolutionDir)external\FMOD\lib\x64\fmod.dll</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -179,16 +180,20 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="ComponentTest.cpp" />
-    <ClCompile Include="Draw.cpp" />
+    <ClCompile Include="EnemyUnits.cpp" />
+    <ClCompile Include="FileLoadAndSave.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Units.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="EnemyUnits.hpp" />
+    <ClInclude Include="FileLoadAndSave.hpp" />
     <ClInclude Include="Sound.hpp" />
-    <ClInclude Include="Draw.h" />
+    <ClInclude Include="Units.hpp" />
     <ClInclude Include="Util\Clock.hpp" />
     <ClInclude Include="Collision.hpp" />
     <ClInclude Include="Component.h" />

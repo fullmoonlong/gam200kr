@@ -1,15 +1,19 @@
 #pragma once
 #include "Component.h"
 #include "ComponentType.h"
+#include "Object.h"
+#include "Sound.hpp"
 
 class TestComponent : public Component
 {
 public:
-	TestComponent() : Component(ComponentType::TEST), x(0.f), y(0.0) {};
+	TestComponent() : Component(ComponentType::TEST), object(){};
 	~TestComponent() override;
 	virtual void Initialize() override;
-	virtual void Update() override;
+	virtual void Update(float dt) override;
 
-	float x;
-	float y;
+	Object* object;
+	Object* attack;
+	float baseTime = 0.f;
+	
 };

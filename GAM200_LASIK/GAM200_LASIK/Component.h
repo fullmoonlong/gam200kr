@@ -7,11 +7,11 @@ class Component
 public:
 	friend class Object;
 
-	Component(ComponentType type) : componentType(type) {}	
+	Component(ComponentType type) : componentType(type) {};
 	virtual ~Component() { };
 
 	virtual void Initialize() {};
-	virtual void Update() {};
+	virtual void Update(float dt) = 0;
 
 	Object * GetOwner() const { return pOwner; }
 	void SetOwner(Object * owner) { pOwner = owner; }

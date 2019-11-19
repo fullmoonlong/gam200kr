@@ -21,6 +21,7 @@
 #include "Util/Clock.hpp"
 #include "Sound.hpp"
 #include "ObjectFactory.h"
+#include "Units.hpp"
 
 class Application : public SimpleEventHandler
 {
@@ -47,19 +48,37 @@ private:
 	Draw draw;
 
 	ObjectFactory objectFactory;
-	Object* objectTest;
+	Object* proKevin;
 	Object* objectTest1;
+	
+	//Units
+	Knight* knight;
+	Magician* magician;
+	Archer* archer;
+	//Units
+
+	//projectiles
+	Object* swordAttack;
+	Object arrow;
+	Object* fireball;
+	//projectiles
+
+	//tower
+	Object* tower;
+	Object* lair;
+	//tower
+
+	//background
+	Mesh mesh;
+	Vertices vertices;
+	Material material;
+	Image image;
+	Transform transform;
+	//background
 
 	Object object;
 
-	Mesh rectangle;
-	Mesh rectangle2;
-	Vertices vertices;
-	Vertices vertices2;
 	Shader shader;
-	Shader shader2;
-	Animation animation;
-	Animation animation2;
 
 	Window window;
 	Clock clock;

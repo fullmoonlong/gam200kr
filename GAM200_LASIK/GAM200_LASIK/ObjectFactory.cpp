@@ -29,8 +29,16 @@ void ObjectFactory::Update()
 		{
 			continue;
 		}
-
 		auto objID = objectIDMap.find(object->objectID);
+		if (object->GetType() == UnitType::Player)
+		{
+			playerAmounts--;
+		}
+		else if (object->GetType() == UnitType::Enemy)
+		{
+			enemyAmounts--;
+		}
+
 		if (objID != objectIDMap.end())
 		{
 			delete object;
@@ -39,6 +47,7 @@ void ObjectFactory::Update()
 	}
 	objectsToBeDeleted.clear();
 	CheckCollision();
+	CheckAttackState();
 }
 
 void ObjectFactory::Destroy(Object* object)
@@ -68,6 +77,9 @@ Object* ObjectFactory::CreateEmptyObject()
 void ObjectFactory::DestroyAllObjects()
 {
 	lastObjectID = 0;
+	playerAmounts = 0;
+	enemyAmounts = 0;
+
 	for (auto object : objectIDMap)
 	{
 		delete object.second;
@@ -98,13 +110,20 @@ Object* ObjectFactory::FindObjectwithID(ObjectID id)
 void ObjectFactory::CopyObject(Object* object)
 {
 	Object* newObject = new Object();
-	object->objectCopyId++;
 	newObject = object->Clone();
-	std::string ID = std::to_string(newObject->GetObjectCopyID());
 
-	newObject->SetName(object->GetName() + ID);
-
-	GiveObjectID(newObject);
+	//GiveObjectID(newObject);
+	newObject->objectID = lastObjectID;
+	objectIDMap[lastObjectID] = newObject;
+	lastObjectID++;
+	if (newObject->GetType() == UnitType::Player)
+	{
+		playerAmounts++;
+	}
+	else if (newObject->GetType() == UnitType::Enemy)
+	{
+		enemyAmounts++;
+	}
 }
 
 void ObjectFactory::CheckCollision()
@@ -117,10 +136,107 @@ void ObjectFactory::CheckCollision()
 			{
 				if (object.second->GetType() != object1.second->GetType())
 				{
-					if (object.second->isCollideWith(*object1.second))
+					if (object.second->isObjectInAttackRange(*object1.second))
 					{
-						SOUNDMANAGER->PlaySound(0, 2);
-						Destroy(object.second);
+						if (object.second->GetState() != State::ATTACK)
+						{
+							if (object.second->GetType() == UnitType::Player || object.second->GetType() == UnitType::Enemy)
+							{
+								object.second->SetState(State::ATTACK);
+								object.second->SetAttackState(true);
+								object.second->SetSpriteChangeState(true);
+							}
+						}
+					}
+					if (object.second->isCollideWith(*object1.second) && object.second->GetType() == UnitType::ProjectilesPlayer && object1.second->GetType() == UnitType::Enemy)
+					{
+						object1.second->SetHealth(object1.second->GetHealth() - object.second->GetDamage());
+						OBJECTFACTORY->Destroy(object.second);
+					}
+					if (object.second->isCollideWith(*object1.second) && object.second->GetType() == UnitType::ProjectilesEnemy && object1.second->GetType() == UnitType::Player)
+					{
+						object1.second->SetHealth(object1.second->GetHealth() - object.second->GetDamage());
+						OBJECTFACTORY->Destroy(object.second);
+					}
+				}
+			}
+		}
+	}
+}
+
+void ObjectFactory::CheckAttackState()
+{
+	int playerTotalNotWhileAttack = 0;
+	int enemyTotalNotWhileAttack = 0;
+
+
+	for (auto obj : objectIDMap)
+	{
+		if (obj.second == nullptr)
+		{
+			continue;
+		}
+		if (obj.second->GetAttackState() == false && obj.second->GetType() == UnitType::Player)
+		{
+			playerTotalNotWhileAttack++;
+		}
+		else if (obj.second->GetAttackState() == false && obj.second->GetType() == UnitType::Enemy)
+		{
+			enemyTotalNotWhileAttack++;
+		}
+	}
+
+	for (auto obj : objectIDMap)
+	{
+		if (obj.second->GetType() == UnitType::Enemy)
+		{
+			if ((playerTotalNotWhileAttack == playerAmounts) && obj.second->GetAttackState() == true)
+			{
+				if (obj.second == nullptr)
+				{
+					continue;
+				}
+				obj.second->SetSpriteChangeState(true);
+				obj.second->SetAttackState(false);
+				obj.second->SetState(State::WALK);
+			}
+		}
+		else if (obj.second->GetType() == UnitType::Player)
+		{
+			if ((enemyTotalNotWhileAttack == enemyAmounts) && obj.second->GetAttackState() == true)
+			{
+				if (obj.second == nullptr)
+				{
+					continue;
+				}
+				obj.second->SetSpriteChangeState(true);
+				obj.second->SetAttackState(false);
+				obj.second->SetState(State::WALK);
+			}
+		}
+	}
+}
+
+void ObjectFactory::DamageTest(int time)
+{
+	if (time % 2 == 0)
+	{
+		for (auto object : objectIDMap)
+		{
+			for (auto object1 : objectIDMap)
+			{
+				if (object != object1)
+				{
+					if (object.second->GetType() != object1.second->GetType())
+					{
+						if (object.second->isObjectInAttackRange(*object1.second))
+						{
+							if (object.second->GetState() == State::ATTACK)
+							{
+								object.second->SetHealth(object.second->GetHealth() - object1.second->GetDamage());
+								object1.second->SetHealth(object1.second->GetHealth() - object.second->GetDamage());
+							}
+						}
 					}
 				}
 			}

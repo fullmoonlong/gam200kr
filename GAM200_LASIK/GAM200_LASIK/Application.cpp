@@ -12,6 +12,7 @@
 #include "Application.h"
 #include "VerticesDescription.h"
 #include "Image.hpp"
+#include "ComponentTest.h"
 
 Application::Application()
 {
@@ -24,35 +25,10 @@ void Application::Initialize()
 	window.CanCreateWindow(800, 600, this,"Lasik"); //initialize window
 
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
-	shader2.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
-	//shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	//shader2.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	//shader.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
-	//shader2.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
 	
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
 	const Color4f color2{ 0.5f, 0.5f, 0.3f, 1.0f };
-	const float starting_x = 300.0f;
-	const float starting_y = 0.0f;
-	const float width = 50.0f;
-	const float height = 50.0f;
-	//rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-	//rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
-	//
-	//VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
-	//vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	//vertices2.InitializeWithMeshAndLayout(rectangle2, layout);
 
-	//material.vertices = vertices;
-	//material.mesh = rectangle;
-	//material2.vertices = vertices2;
-	//material2.mesh = rectangle2;
-	//
-	//Image image(PATH::kevin_move);
-	//Image image2(PATH::kevin_attack);
-
-	//animation.Initialize(image2, rectangle, 7, shader);
-	//animation2.Initialize(image2, rectangle2, 7, shader);
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
 	
 	//camera
@@ -60,39 +36,138 @@ void Application::Initialize()
 	view.SetZoom(zoom);
 	//camera
 
+	//background
+	image.LoadFrom(PATH::knight_move);
+	mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+	vertices.InitializeWithMeshAndLayout(mesh, layout);
+
+	material.vertices = vertices;
+	material.mesh = mesh;
+
+	//background
+
 	//dynamic test
-	objectTest = new Object();
-	objectTest->Initialize({ -300.0f, 0.0f }, width, height);
-	objectTest->SetType(UnitType::Player);
-	objectTest->speed.x = 150.0f;
-	objectTest->image.LoadFrom(PATH::kevin_attack);
+	proKevin = new Object();
+	proKevin->Initialize("enemyPrototype.txt");
+	proKevin->image.LoadFrom(PATH::kevin_move);
+
+	proKevin->SetHealth(100);
+	proKevin->SetDamage(15);
 
 	const Color4f color3{ 1.0f, 0.0f, 0.0f, 1.0f };
 
-	objectTest->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color3);
-	objectTest->vertices.InitializeWithMeshAndLayout(objectTest->mesh, layout);
+	proKevin->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color3);
+	proKevin->vertices.InitializeWithMeshAndLayout(proKevin->mesh, layout);
 
-	objectTest->material.vertices = objectTest->vertices;
-	objectTest->material.mesh = objectTest->mesh;
+	proKevin->material.vertices = proKevin->vertices;
+	proKevin->material.mesh = proKevin->mesh;
 
-	objectTest->animation.Initialize(objectTest->image, objectTest->mesh, 7, shader);
+	proKevin->animation.Initialize(proKevin->image, proKevin->mesh, 8, shader);
+	proKevin->SetState(State::WALK);
 
-	//object2
-	objectTest1 = new Object();
-	objectTest1->Initialize({ starting_x, starting_y }, width, height);
-	objectTest->SetType(UnitType::Enemy);
-	objectTest1->speed.x -= 150.0f;
-	objectTest1->image.LoadFrom(PATH::kevin_attack);
+	//knight
+	knight = new Knight();
+	knight->Initialize("knight.txt");
+	knight->image.LoadFrom(PATH::knight_move);
+
+	knight->SetHealth(knight->GetKnightHealth());
+	knight->SetDamage(knight->GetKnightDamage());
 
 	const Color4f color4{ 1.0f, 0.0f, 0.0f, 1.0f };
 
-	objectTest1->mesh = MESH::create_rectangle(0.f, 0.f, -1.0f, 1.0f, color4);
-	objectTest1->vertices.InitializeWithMeshAndLayout(objectTest1->mesh, layout);
+	knight->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
+	knight->vertices.InitializeWithMeshAndLayout(knight->mesh, layout);
 
-	objectTest1->material.vertices = objectTest1->vertices;
-	objectTest1->material.mesh = objectTest1->mesh;
+	knight->material.vertices = knight->vertices;
+	knight->material.mesh = knight->mesh;
 
-	objectTest1->animation.Initialize(objectTest1->image, objectTest1->mesh, 7, shader);
+	knight->animation.Initialize(knight->image, knight->mesh, 8, shader);
+	knight->SetState(State::WALK);
+	//knight
+
+	//archer
+	archer = new Archer();
+	archer->Initialize("archer.txt");
+	archer->image.LoadFrom(PATH::archer_move);
+
+	archer->SetHealth(archer->GetArcherHealth());
+	archer->SetDamage(archer->GetArcherDamage());
+	archer->SetAttackRange(archer->GetArcherAttackRange());
+
+	archer->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
+	archer->vertices.InitializeWithMeshAndLayout(archer->mesh, layout);
+
+	archer->material.vertices = archer->vertices;
+	archer->material.mesh = archer->mesh;
+
+	archer->animation.Initialize(archer->image, archer->mesh, 8, shader);
+	archer->SetState(State::WALK);
+	//archer
+
+	//magician
+	magician = new Magician();
+	magician->Initialize("wizard.txt");
+	magician->image.LoadFrom(PATH::wizard_move);
+
+	magician->SetHealth(magician->GetMagicianHealth());
+	magician->SetDamage(magician->GetMagicianDamage());
+	magician->SetAttackRange(magician->GetMagicianAttackRange());
+
+	magician->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
+	magician->vertices.InitializeWithMeshAndLayout(magician->mesh, layout);
+
+	magician->material.vertices = magician->vertices;
+	magician->material.mesh = magician->mesh;
+
+	magician->animation.Initialize(magician->image, magician->mesh, 8, shader);
+	magician->SetState(State::WALK);
+	//magician
+
+	//sword
+	swordAttack = new Object();
+	swordAttack->Initialize("swordAttack.txt");
+
+	swordAttack->SetDamage(knight->GetKnightDamage());
+
+	swordAttack->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
+	swordAttack->vertices.InitializeWithMeshAndLayout(swordAttack->mesh, layout);
+
+	swordAttack->material.vertices = swordAttack->vertices;
+	swordAttack->material.mesh = swordAttack->mesh;
+	//sword
+
+	//fireball
+	fireball = new Object();
+	fireball->Initialize("fireball.txt");
+	fireball->image.LoadFrom(PATH::fireball);
+
+	fireball->SetDamage(magician->GetMagicianDamage());
+
+	fireball->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
+	fireball->vertices.InitializeWithMeshAndLayout(fireball->mesh, layout);
+
+	fireball->material.vertices = fireball->vertices;
+	fireball->material.mesh = fireball->mesh;
+
+	fireball->animation.Initialize(fireball->image, fireball->mesh, 3, shader);
+	fireball->SetState(State::WALK);
+	//fireball
+
+	//arrow
+	arrow.Initialize("arrow.txt");
+	arrow.image.LoadFrom(PATH::arrow);
+
+	arrow.SetDamage(archer->GetArcherDamage());
+
+	arrow.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
+	arrow.vertices.InitializeWithMeshAndLayout(arrow.mesh, layout);
+
+	arrow.material.vertices = arrow.vertices;
+	arrow.material.mesh = arrow.mesh;
+
+	arrow.animation.Initialize(arrow.image, arrow.mesh, 1, shader);
+	arrow.SetState(State::WALK);
+	//arrow
 	//dynamic test
 
 	//test sound and make object
@@ -100,13 +175,9 @@ void Application::Initialize()
 	SOUNDMANAGER->LoadFile("sound.mp3");
 	SOUNDMANAGER->LoadFile("beep.wav");
 	SOUNDMANAGER->LoadFile("hit.ogg");
-	SOUNDMANAGER->PlaySound(1, 0);
+	//SOUNDMANAGER->PlaySound(1, 0);
 	//test sound and make object
 
-	//object.Initialize({ starting_x, starting_y }, width, height);
-	//object.speed.x = -150.0f;
-	//object2.Initialize({-300.0f, 0.0f }, width, height);
-	//object2.speed.x = 150.0f;
 }
 
 void Application::Update()
@@ -115,41 +186,26 @@ void Application::Update()
 
 	OBJECTFACTORY->Update();
 
-	////Object moving
-	//object.Update(deltaTime);
-	//object2.Update(deltaTime);
-	
-	//if (object.GetXposition() < 0.0f)
-	//{
-	//	animation.ChangeAnimation(PATH::kevin_attack, 7);
-	//	object.speed.x = 0.0f;
-	//}
-	//Object moving
-
-
 	//Draw
 	draw.StartDrawing();
 
-	//draw.draw(shader, material);
-	//animation.Animate(deltaTime);
-	//const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
-	//shader.SendUniformVariable("ndc", ndc);
-
-	//draw.draw(shader, material2);
-	//animation2.Animate(deltaTime);
-	//const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
-	//shader.SendUniformVariable("ndc", ndc2);
-
 	//dynamic test
+	/*vec2<float> a = {(window.GetWindowWidth()/2.f) , (window.GetWindowHeight()/2.f)};
+	transform.SetTranslation(a);
+	const mat3<float> ndc1 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
+	shader.SendUniformVariable("ndc", ndc1);
+	draw.draw(shader, material);*/
+
 	for (auto obj : OBJECTFACTORY->GetObjecteList())
 	{
 		if (obj.second != nullptr)
 		{
 			obj.second->Update(deltaTime);
+			obj.second->ChangeUnitAnimation();
 			obj.second->animation.Animate(deltaTime);
+			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
+			shader.SendUniformVariable("ndc", ndc);
 			draw.draw(shader, obj.second->material);
-			const mat3<float> ndc3 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
-			shader.SendUniformVariable("ndc", ndc3);
 		}
 	}
 	//dynamic test
@@ -176,6 +232,7 @@ void Application::Update()
 	}
 	deltaTime = clock.GetTimeFromLastUpdate();
 	
+	OBJECTFACTORY->DamageTest(time); //test for damage
 	window.SwapBuffers();
 	window.PollEvents();
 }
@@ -208,30 +265,48 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		//pressDirection.y += 
 		//	(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? -2.0f : 2.0f;
 		//object.speed.y = 0.8f;
+		for (auto obj : OBJECTFACTORY->GetObjecteList())
+		{
+			if (obj.second->GetType() == UnitType::Enemy)
+			{
+				OBJECTFACTORY->Destroy(obj.second);
+			}
+		}
 		break;
 	case KeyboardButtons::S:
 		//pressDirection.y +=
 		//	(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? 2.0f : -2.0f;
 		//object.speed.y = -0.8f;
-		OBJECTFACTORY->DestroyAllObjects();
+		for (auto obj : OBJECTFACTORY->GetObjecteList())
+		{
+			if (obj.second->GetType() == UnitType::Player)
+			{
+				OBJECTFACTORY->Destroy(obj.second);
+			}
+		}
 		break;
 	case KeyboardButtons::A:
 		//pressDirection.x -= 2.0f;
 		SOUNDMANAGER->PlaySound(0, 1);
-		OBJECTFACTORY->CopyObject(objectTest);
+		OBJECTFACTORY->CopyObject(knight);
 		//object.speed.x = -0.8f;
 		break;
 	case KeyboardButtons::D:
 		//pressDirection.x += 2.0f;
 		SOUNDMANAGER->PlaySound(0, 1);
-		OBJECTFACTORY->CopyObject(objectTest1);
+		OBJECTFACTORY->CopyObject(proKevin);
 		//object.speed.x = 0.8f;
 		break;
 	case KeyboardButtons::Z:
-		cameraAngle += 0.025f;
+		//cameraAngle += 0.025f;
+		OBJECTFACTORY->CopyObject(archer);
+		/*OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->AddComponent<TestComponent>();
+		OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->object = OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1);
+		OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->attack = fireball;*/
 		break;
 	case KeyboardButtons::X:
-		cameraAngle -= 0.025f;
+		//cameraAngle -= 0.025f;
+		OBJECTFACTORY->CopyObject(magician);
 		break;
 	default:;
 	}
