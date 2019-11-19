@@ -35,38 +35,31 @@ void Application::Initialize()
 	const float objectHeight = 50.0f;
 	rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
 	rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
-	//textMesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
-	textMesh.AddPoint({ -0.5f, -0.5f });
-	textMesh.AddPoint({ -0.5f, 0.5f });
-	textMesh.AddPoint({ 0.5f, 0.5f });
-	textMesh.AddPoint({ 0.5f, -0.5f });
-	textMesh.AddTextureCoordinate(0.0f, 0.5f);
-	textMesh.AddTextureCoordinate(0.0f, 1.0f);
-	textMesh.AddTextureCoordinate(0.5f, 1.0f);
-	textMesh.AddTextureCoordinate(0.5f, 0.5f);
-	//float left = 0 + -1;
-	//float right = left + 19;
-	//float bottom = -1 * (6 + 20) + 32 + 0;
-	//float top = bottom + 20;
+	
+	float aLeft = 0.0f / 256;
+	float aBottom = 1.0f - 20.0f / 256;
+	float aTop = aBottom + 20.0f / 256;
+	float aRight = 19.0f / 256;
+	textMesh.SetShapePattern(ShapePattern::Triangle);
+	textMesh.AddPoint(-0.5f, 0.5f);
+	textMesh.AddPoint(0.5f, 0.5f);
+	textMesh.AddPoint(-0.5f, -0.5f);
+	textMesh.AddTextureCoordinate(aLeft, aTop);
+	textMesh.AddTextureCoordinate(aRight, aTop);
+	textMesh.AddTextureCoordinate(aLeft, aBottom);
 
-	//float textureLeft = 0.0f / 256;
-	//float textureTop = 0.0f / 256;
-	//float textureRight = 19.0f / 256;
-	//float textureBottom = 20.0f / 256;
+	float iLeft = 
+	textMesh.AddPoint(0.5f, 0.5f);
+	textMesh.AddPoint(-0.5f, -0.5f);
+	textMesh.AddPoint(0.5f, -0.5f);
+	textMesh.AddTextureCoordinate({ aRight, aTop });
+	textMesh.AddTextureCoordinate({ aLeft, aBottom });
+	textMesh.AddTextureCoordinate({ aRight, aBottom });
 
-	//textMesh.AddPoint({ left, top });
-	//textMesh.AddPoint({ right, top });
-	//textMesh.AddPoint({ left, bottom });
-	//textMesh.AddTextureCoordinate({ textureLeft, textureTop });
-	//textMesh.AddTextureCoordinate({ textureRight, textureTop });
-	//textMesh.AddTextureCoordinate({ textureLeft, textureBottom });
-
-	//textMesh.AddPoint({ right, top });
-	//textMesh.AddPoint({ left, bottom });
-	//textMesh.AddPoint({ right, bottom });
-	//textMesh.AddTextureCoordinate({ textureRight, textureTop });
-	//textMesh.AddTextureCoordinate({ textureLeft, textureBottom });
-	//textMesh.AddTextureCoordinate({ textureRight, textureBottom });
+	textMesh.AddPoint(0.5f, 0.5f);
+	textMesh.AddPoint(1.5f, 0.5f);
+	textMesh.AddPoint(0.5f, 0.5f);
+	textMesh.AddTextureCoordinate()
 	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
 	vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -85,8 +78,6 @@ void Application::Initialize()
 	material2.vertices = vertices2;
 	material2.mesh = rectangle2;
 	material2.texture = t2;
-	
-
 
 	fontTexture.LoadFromPath(PATH::bitmapfont_png);
 
@@ -103,7 +94,7 @@ void Application::Initialize()
 	object2.Initialize({-300.0f, 0.0f }, objectWidth, objectHeight);
 	object2.speed.x = 150.0f;
 
-	lasik.Initialize({ 0.0f, 0.0f }, 50.0f, 50.0f);
+	lasik.Initialize({ 0.0f, 0.0f }, 30.0f, 30.0f);
 	
 
 	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
@@ -146,39 +137,7 @@ void Application::Update()
 	//	glBindTexture(GL_TEXTURE_2D, text_texture->GetTexturehandle());
 	//	draw.draw(fontShader, fontMaterial);
 	//}
-	//Mesh textMesh;
-	//textMesh.SetShapePattern(ShapePattern::Triangle);
 
-	//float left = 0 + -1;
-	//float right = left + 19;
-	//float bottom = -1 * (6 + 20) + 32 + 0;
-	//float top = bottom + 20;
-
-	//float textureLeft = 0.0f / 256;
-	//float textureTop = 0.0f / 256;
-	//float textureRight = 19.0f / 256;
-	//float textureBottom = 20.0f / 256;
-	
-	//textMesh.AddPoint({ left, top });
-	//textMesh.AddPoint({ right, top });
-	//textMesh.AddPoint({ left, bottom });
-	//textMesh.AddTextureCoordinate({ textureLeft, textureTop });
-	//textMesh.AddTextureCoordinate({ textureRight, textureTop });
-	//textMesh.AddTextureCoordinate({ textureLeft, textureBottom });
-
-	//textMesh.AddPoint({ right, top });
-	//textMesh.AddPoint({ left, bottom });
-	//textMesh.AddPoint({ right, bottom });
-	//textMesh.AddTextureCoordinate({ textureRight, textureTop });
-	//textMesh.AddTextureCoordinate({ textureLeft, textureBottom });
-	//textMesh.AddTextureCoordinate({ textureRight, textureBottom });
-
-	//Vertices textVertices;
-	//const VerticesDescription textLayout = { VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
-	//textVertices.InitializeWithMeshAndLayout(textMesh, textLayout);
-
-	//Image fontImage(PATH::bitmapfont_png);
-	//Texture fontTexture(fontImage);
 	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
 	const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
 	const mat3<float> ndc_font = view.GetCameraToNDCTransform() * camera.WorldToCamera() * lasik.transform.GetModelToWorld();
