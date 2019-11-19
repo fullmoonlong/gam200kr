@@ -29,19 +29,20 @@ public:
 	void Update();
 	void ShutDown();
 
-	void HandleKeyPress(KeyboardButtons button) override;
-	void HandleKeyRelease(KeyboardButtons button) override;
-	void HandleMouseEvent(MouseButtons button) override;
-	void HandleResizeEvent(const int& width, const int& height) override;
-	void HandleScrollEvent(float scroll_amount) override;
-	void HandleMousePositionEvent(float xpos, float ypos) override;
+	void HandleKeyPress(KeyboardButtons button) override final;
+	void HandleKeyRelease(KeyboardButtons button) override final;
+	void HandleMouseEvent(MouseButtons button) override final;
+	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
+	void HandleScrollEvent(float scroll_amount) override final;
+	void HandleMousePositionEvent(float xpos, float ypos) override final;
+	void HandleWindowClose() override final;
 
 	bool isRunning = false;
 
 private:
 	int frameCount = 0;
 	float deltaTime = 0;
-
+	
 	Draw draw;
 	
 	BitmapFont bitmapFont;

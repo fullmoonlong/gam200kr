@@ -28,6 +28,7 @@ public:
 	bool IsFullScreen() noexcept;
 	void ToggleFullScreen() noexcept;
 	void SetWindowTitle(const char* title) const noexcept;
+	void SetWindowIcon() const noexcept;
 	int GetWindowWidth() const noexcept;
 	int GetWindowHeight() const noexcept;
 
@@ -39,5 +40,6 @@ private:
 	bool isFullScreen = false;
 	int windowPos[2] = { 0,0 };
 	int windowSize[2] = { 0,0 };
-	
+	int sizeBackup[2] = { 0,0 };
+	int posBackup[2] = { 0,0 };
 };

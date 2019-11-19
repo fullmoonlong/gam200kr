@@ -31,8 +31,8 @@ void Application::Initialize()
 	const Color4f color2{ 0.5f, 0.5f, 0.3f, 1.0f };
 	const float starting_x = 300.0f;
 	const float starting_y = 0.0f;
-	const float width = 50.0f;
-	const float height = 50.0f;
+	const float objectWidth = 50.0f;
+	const float objectHeight = 50.0f;
 	rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
 	rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
 	//textMesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
@@ -98,9 +98,9 @@ void Application::Initialize()
 	view.SetZoom(zoom);
 	//camera
 	
-	object.Initialize({ starting_x, starting_y }, width, height);
+	object.Initialize({ starting_x, starting_y }, objectWidth, objectHeight);
 	object.speed.x = -150.0f;
-	object2.Initialize({-300.0f, 0.0f }, width, height);
+	object2.Initialize({-300.0f, 0.0f }, objectWidth, objectHeight);
 	object2.speed.x = 150.0f;
 
 	lasik.Initialize({ 0.0f, 0.0f }, 50.0f, 50.0f);
@@ -224,7 +224,10 @@ void Application::Update()
 void Application::ShutDown()
 {
 	isRunning = false;
-	glfwSetWindowShouldClose(window.window, GLFW_TRUE);
+	if ((bool)glfwWindowShouldClose(window.window) != true)
+	{
+		glfwSetWindowShouldClose(window.window, GLFW_FALSE);
+	}
 }
 
 void Application::HandleKeyPress(KeyboardButtons button)
@@ -323,14 +326,13 @@ void Application::HandleMouseEvent(MouseButtons button)
 	}
 }
 
-
-void Application::HandleResizeEvent(const int& width, const int& height)
+void Application::HandleResizeEvent(const int& new_width, const int& new_height)
 {
-	window.SetWindowWidth(width);
-	window.SetWindowHeight(height);
-	glfwSetWindowSize(window.window, width, height);
+	window.SetWindowWidth(new_width);
+	window.SetWindowHeight(new_height);
+
 	//camera
-	view.SetViewSize(width, height);
+	view.SetViewSize(new_width, new_height);
 	view.SetZoom(zoom);
 	//camera
 }
@@ -346,4 +348,9 @@ void Application::HandleMousePositionEvent(float xpos, float ypos)
 {
 	//vec2<float> newMousePosition{ xpos, ypos };
 	mousePosition = { xpos, ypos };
+}
+
+void Application::HandleWindowClose()
+{
+	ShutDown();
 }

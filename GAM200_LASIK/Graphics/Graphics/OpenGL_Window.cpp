@@ -13,28 +13,26 @@
 #include <iostream>
 #include "GL/glew.h"
 #include "OpenGL_Window.h"
+#include "PATH.hpp"
 #include "EventHandler.hpp"
-#include "Graphics/PATH.hpp"
 #include <stb_image.h>
 
 EventHandler* eventHandler;
 
-void frame_buffer_size_callback(GLFWwindow*, int width, int height)
+void frame_buffer_size_callback(GLFWwindow* /*window*/, int width, int height)
 {
 	glViewport(0, 0, width, height);
 }
 
-void resize_callback(GLFWwindow*, int width, int height)
+void resize_callback(GLFWwindow* /*window*/, int width, int height)
 {
 	eventHandler->HandleResizeEvent(width, height);
 }
 
-void window_close_callback()
+void window_close_callback(GLFWwindow* /*window*/)
 {
 	eventHandler->HandleWindowClose();
 }
-
-
 void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action, int /*mods*/)
 {
 	if (action == GLFW_PRESS)
@@ -180,7 +178,7 @@ bool Window::CanCreateWindow(int width, int height, EventHandler* event_handler,
 	glfwMakeContextCurrent(window);
 	glfwSetFramebufferSizeCallback(window, frame_buffer_size_callback);
 	glfwSetWindowSizeCallback(window, resize_callback);
-	//glfwSetWindowCloseCallback(window, window_close_callback);
+	glfwSetWindowCloseCallback(window, window_close_callback);
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 	glfwSetCursorPosCallback(window, cursor_position_callback);
@@ -192,11 +190,8 @@ bool Window::CanCreateWindow(int width, int height, EventHandler* event_handler,
 		std::cerr << glewGetErrorString(err);
 		return false;
 	}
-	
-	GLFWimage icon;
-	icon.pixels = stbi_load(PATH::icon_image.generic_string().c_str() , &icon.width, &icon.height, 0, STBI_rgb_alpha);
-	glfwSetWindowIcon(window, 1, &icon);
-	stbi_image_free(icon.pixels);
+
+	SetWindowIcon();
 	
 	return true;
 }
@@ -229,26 +224,33 @@ bool Window::IsFullScreen() noexcept
 
 void Window::ToggleFullScreen() noexcept
 {
+	isFullScreen = !isFullScreen;
 	if (!IsFullScreen())
 	{
-		glfwGetWindowPos(window, &windowPos[0], &windowPos[1]);
-		glfwGetWindowSize(window, &windowSize[0], &windowSize[1]);
+		glfwGetWindowPos(window, &posBackup[0], &posBackup[1]);
+		glfwGetWindowSize(window, &sizeBackup[0], &sizeBackup[1]);
 
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 		glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, 0);
-		isFullScreen = true;
 	}
 	else
 	{
-		glfwSetWindowMonitor(window, nullptr, windowPos[0], windowPos[1], windowSize[0], windowSize[1], 0);
-		isFullScreen = false;
+		glfwSetWindowMonitor(window, nullptr, posBackup[0], posBackup[1], sizeBackup[0], sizeBackup[1], 0);
 	}
 }
 
 void Window::SetWindowTitle(const char* title) const noexcept
 {
 	glfwSetWindowTitle(window, title);
+}
+
+void Window::SetWindowIcon() const noexcept
+{
+	GLFWimage icon;
+	icon.pixels = stbi_load(PATH::icon_image.generic_string().c_str() , &icon.width, &icon.height, 0, STBI_rgb_alpha);
+	glfwSetWindowIcon(window, 1, &icon);
+	stbi_image_free(icon.pixels);
 }
 
 int Window::GetWindowWidth() const noexcept
