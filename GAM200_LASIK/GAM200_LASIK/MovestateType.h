@@ -2,5 +2,6 @@
 enum class MovestateType
 {
 	MOVE = 0,
-	ATTACK
+	ATTACK,
+	DIE
 };

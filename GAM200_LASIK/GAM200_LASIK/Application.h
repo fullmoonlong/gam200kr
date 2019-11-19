@@ -19,6 +19,9 @@
 #include "Object.h"
 #include "Util/Clock.hpp"
 #include"MovestateType.h"
+#include "Units.hpp"
+#include "EnemyUnits.hpp"
+
 class Application : public SimpleEventHandler
 {
 public:
@@ -43,25 +46,46 @@ private:
 
 	MovestateType check;
 	
-	Object player;
-	Object enemy;
+	//Object player;
+	//Object Enemy;
+
+	EnemyUnits::Skeleton Skeleton;
 	
+	//Units::Archer    Archer;
+	Units::Knight    Knight;
+	//Units::Magician  Magician;
+
 	Draw draw;
 	
-	Shader player_s;
-	Shader enemy_s;
+	Shader   SkeletonShader;
 
-	Mesh player_m;
-	Mesh enemy_m;
+	//Shader   ArcherShader;
+	Shader   KnightShader;
+	//Shader MagicianShader;
 
-	Vertices player_v;
-	Vertices enemy_v;
+	Mesh SkeletonMesh;
 
-	Material player_a;
-	Material enemy_a;
+	//Mesh ArcherMesh;
+	Mesh KnightMesh;
+	//Mesh MagicianMesh;
 
-	Animation player_ani;
-	Animation enemy_ani;
+	Vertices SkeletonVertices;
+
+	//Vertices ArcherVertices;
+	Vertices KnightVertices;	
+	//Vertices MaigicianVertices;
+
+	Material SkeletonMaterial;
+
+	//Material ArcherMaterial;
+	Material KnightMaterial;
+	//Material MagicianMaterial;
+
+	Animation SkeletonAnimation;
+
+	//Animation ArcherAnimation;
+	Animation KnightAnimation;
+	//Animation MagicianAnimation;
 
 	Window window;
 	Clock clock;
@@ -69,6 +93,7 @@ private:
 	Camera camera;
 	CameraView view;
 
+	
 	//Collision collision;
 	
 	float cameraSpeed{ 80.0f };

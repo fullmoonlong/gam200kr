@@ -22,10 +22,10 @@ Application::Application()
 
 void Application::Initialize()
 {
-	window.CanCreateWindow(800, 600, this,"Lasik"); //initialize window
+	window.CanCreateWindow(800, 600, this,"Lasik"); 
 
-	player_s.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
-	enemy_s.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
+	KnightShader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
+	SkeletonShader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
 	
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
 	const Color4f color2{ 0.5f, 0.5f, 0.3f, 1.0f };
@@ -34,76 +34,82 @@ void Application::Initialize()
 	const float width = 50.0f;
 	const float height = 50.0f;
 	
-	player_m = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-	enemy_m  = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
+	SkeletonMesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+	KnightMesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
 	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
-	player_v.InitializeWithMeshAndLayout(player_m, layout);
-	enemy_v.InitializeWithMeshAndLayout(enemy_m, layout);
+	SkeletonVertices.InitializeWithMeshAndLayout(SkeletonMesh, layout);
+	KnightVertices.InitializeWithMeshAndLayout(KnightMesh, layout);
 
-	player_a.vertices = player_v;
-	player_a.mesh = player_m;
-	enemy_a.vertices = enemy_v;
-	enemy_a.mesh = enemy_m;
+	SkeletonMaterial.vertices = SkeletonVertices;
+	SkeletonMaterial.mesh     = SkeletonMesh;
+	KnightMaterial.vertices = KnightVertices;
+	KnightMaterial.mesh = KnightMesh;
 	
-	Image image(PATH::kevin_move);
-	Image image2(PATH::kevin_attack);
+	Image image (PATH::knight_move);
+	Image image2(PATH::kevin_move);
 
-	player_ani.Initialize(image, player_m, 8, player_s);
-	enemy_ani.Initialize(image2, enemy_m, 7, enemy_s);
+	KnightAnimation.Initialize(image, KnightMesh, 8, KnightShader);
+	SkeletonAnimation.Initialize(image2, SkeletonMesh,  8, SkeletonShader);
 	
 	//camera
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
-	//camera
 	
-	player.Initialize({ starting_x, starting_y }, width, height);
-	player.speed.x = 0.0f;
-	enemy.Initialize({-300.0f, 0.0f }, width, height);
-	enemy.speed.x = 0.0f;
+	Knight.Initialize({ starting_x, starting_y }, width, height);
+	Knight.speed.x = -100.0f;
+	
+	Skeleton.Initialize({-300.0f, 0.0f }, width, height);
+	Skeleton.speed.x = 100.0f;
 }
 
 void Application::Update()
 {
 	clock.UpdateClock();
 
-	if(player.isCollideWith(enemy) == true)
+	if(Knight.isCollideWith(Skeleton) == true)
 	{
 		std::cout << "collision" << std::endl;
 		check = MovestateType::ATTACK;
 	}
 	
 	//Object moving
-	player.Update(deltaTime);
-	enemy.Update(deltaTime);
+	Knight.Update(deltaTime);
+	Skeleton.Update(deltaTime);
 	
 	if (check == MovestateType::ATTACK)
 	{
-		player_ani.ChangeAnimation(PATH::kevin_attack, 7);
-		player.speed.x = 0.0f;
-		enemy_ani.ChangeAnimation(PATH::kevin_attack, 7);
-		enemy.speed.x = 0.0f;
+		KnightAnimation.ChangeAnimation(PATH::knight_attack, 8);
+		Knight.SetKnightHealth(20);
+		Knight.speed.x = 0.0f;
+		
+		SkeletonAnimation.ChangeAnimation(PATH::kevin_attack, 7);
+		Skeleton.speed.x = 0.0f;
 
 	}
 
-	/*if (enemy.GetXposition() < 0.0f)
+	if (Knight.GetKnightHealth() == 0)
 	{
-	}*/
-	//Object moving
-
+		check = MovestateType::DIE;
+		std::cout << "Knight dead" << std::endl;
+		std::cout << "Knight dead" << std::endl;
+		std::cout << "Knight dead" << std::endl;
+		std::cout << "Knight dead" << std::endl;
+	}
 
 	//Draw
 	draw.StartDrawing();
 
-	draw.draw(player_s, player_a);
-	player_ani.Animate(deltaTime);
-	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * player.transform.GetModelToWorld();
-	player_s.SendUniformVariable("ndc", ndc);
+	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * Knight.transform.GetModelToWorld();
+	const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * Skeleton.transform.GetModelToWorld();
 
-	draw.draw(enemy_s, enemy_a);
-	enemy_ani.Animate(deltaTime);
-	const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * enemy.transform.GetModelToWorld();
-	enemy_s.SendUniformVariable("ndc", ndc2);
+	draw.draw(KnightShader, KnightMaterial);
+	KnightAnimation.Animate(deltaTime);
+	KnightShader.SendUniformVariable("ndc", ndc);
+
+	draw.draw(SkeletonShader, SkeletonMaterial);
+	SkeletonAnimation.Animate(deltaTime);
+	SkeletonShader.SendUniformVariable("ndc", ndc2);
 	
 	draw.Finish();
 	//Draw
@@ -113,7 +119,7 @@ void Application::Update()
 	camera.Rotate(cameraAngle);
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
-	//Transform
+
 
 	++frameCount;
 	static int time = 0;
@@ -155,24 +161,24 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		}
 		window.ToggleVSync(false);
 		break;
-	case KeyboardButtons::W:
-		pressDirection.y += 
-			(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? -2.0f : 2.0f;
-		player.speed.y = 0.8f;
-		break;
-	case KeyboardButtons::S:
-		pressDirection.y +=
-			(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? 2.0f : -2.0f;
-		player.speed.y = -0.8f;
-		break;
-	case KeyboardButtons::A:
-		pressDirection.x -= 2.0f;
-		player.speed.x = -500.0f;
-		break;
-	case KeyboardButtons::D:
-		pressDirection.x += 2.0f;
-		player.speed.x = 500.0f;
-		break;
+	//case KeyboardButtons::W:
+	//	pressDirection.y += 
+	//		(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? -2.0f : 2.0f;
+	//	Knight.speed.y = 0.8f;
+	//	break;
+	//case KeyboardButtons::S:
+	//	pressDirection.y +=
+	//		(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? 2.0f : -2.0f;
+	//	Knight.speed.y = -0.8f;
+	//	break;
+	//case KeyboardButtons::A:
+	//	pressDirection.x -= 2.0f;
+	//	Knight.speed.x = -500.0f;
+	//	break;
+	//case KeyboardButtons::D:
+	//	pressDirection.x += 2.0f;
+	//	Knight.speed.x = 500.0f;
+	//	break;
 	case KeyboardButtons::Z:
 		cameraAngle += 0.025f;
 		break;
@@ -187,22 +193,22 @@ void Application::HandleKeyRelease(KeyboardButtons button)
 {
 	switch (button)
 	{
-	case KeyboardButtons::W:
+	/*case KeyboardButtons::W:
 		pressDirection.y = 0;
-		player.speed.y = 0.f;
+		Knight.speed.y = 0.f;
 		break;
 	case KeyboardButtons::S:
 		pressDirection.y = 0;
-		player.speed.y = 0.f;
+		Knight.speed.y = 0.f;
 		break;
 	case KeyboardButtons::A:
 		pressDirection.x = 0;
-		player.speed.x = 0.f;
+		Knight.speed.x = 0.f;
 		break;
 	case KeyboardButtons::D:
 		pressDirection.x = 0;
-		player.speed.x = 0.f;
-		break;
+		Knight.speed.x = 0.f;
+		break;*/
 	case KeyboardButtons::Z:
 		cameraAngle = 0.0f;
 		break;
@@ -220,21 +226,21 @@ void Application::HandleMouseEvent(MouseButtons button)
 	case MouseButtons::LEFT_PRESS:
 	{
 		//mouse check
-		if (player.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
+		if (Knight.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
 		{
-			player.isMouseCollide = true;
+			Knight.isMouseCollide = true;
 		}
 		//mouse check
-		if (enemy.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
+		if (Skeleton.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
 		{
-			enemy.isMouseCollide = true;
+			Skeleton.isMouseCollide = true;
 		}
 		//mouse check
 		break;
 	}
 	case MouseButtons::LEFT_RELEASE:
-		player.isMouseCollide = false;
-		enemy.isMouseCollide = false;
+		Knight.isMouseCollide = false;
+		Skeleton.isMouseCollide = false;
 		break;
 	}
 }

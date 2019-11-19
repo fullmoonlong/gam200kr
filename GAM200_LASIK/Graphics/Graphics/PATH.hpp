@@ -22,8 +22,11 @@ namespace PATH
 	const std::filesystem::path texture_vert = "../assets/texture.vert";
 	const std::filesystem::path texture_frag = "../assets/texture.frag";
 
-	const std::filesystem::path kevin_move = "../assets/kevin_move.png";
+	const std::filesystem::path kevin_move   = "../assets/kevin_move.png";
 	const std::filesystem::path kevin_attack = "../assets/kevin_attack.png";
+
+	const std::filesystem::path knight_move   = "../assets/knight_move.png";
+	const std::filesystem::path knight_attack = "../assets/knight_attack.png";
 
 	const std::filesystem::path icon_image = "../assets/icon.png";
 }
