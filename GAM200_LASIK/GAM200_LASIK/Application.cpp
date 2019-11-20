@@ -13,6 +13,7 @@
 #include "VerticesDescription.h"
 #include "Image.hpp"
 #include "ComponentTest.h"
+#include "GetInput.hpp"
 
 Application::Application()
 {
@@ -180,6 +181,10 @@ void Application::Initialize()
 	//SOUNDMANAGER->PlaySound(1, 0);
 	//test sound and make object
 
+	//object.Initialize({ starting_x, starting_y }, width, height);
+	//object.speed.x = -150.0f;
+	//object2.Initialize({-300.0f, 0.0f }, width, height);
+	//object2.speed.x = 150.0f;
 }
 
 void Application::Update()
@@ -187,6 +192,14 @@ void Application::Update()
 	clock.UpdateClock();
 
 	OBJECTFACTORY->Update();
+	if (object1->speed.x == 0.f)
+	{
+		object1->SetStatus(IDLE);
+	}
+	else if (object1->speed.x > 0.f)
+	{
+		object1->SetStatus(MOVE);
+	}
 
 	
 	//Transform
@@ -218,13 +231,17 @@ void Application::Update()
 	//Draw
 	draw.StartDrawing();
 
-	//dynamic test
-	/*vec2<float> a = {(window.GetWindowWidth()/2.f) , (window.GetWindowHeight()/2.f)};
-	transform.SetTranslation(a);
-	const mat3<float> ndc1 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
-	shader.SendUniformVariable("ndc", ndc1);
-	draw.draw(shader, material);*/
+	//draw.draw(shader, material);
+	//animation.Animate(deltaTime);
+	//const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
+	//shader.SendUniformVariable("ndc", ndc);
 
+	//draw.draw(shader, material2);
+	//animation2.Animate(deltaTime);
+	//const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
+	//shader.SendUniformVariable("ndc", ndc2);
+
+	//dynamic test
 	for (auto obj : OBJECTFACTORY->GetObjecteList())
 	{
 		if (obj.second != nullptr)
@@ -236,6 +253,7 @@ void Application::Update()
 			shader.SendUniformVariable("ndc", ndc);
 			draw.draw(shader, obj.second->material);
 		}
+		
 	}
 	//dynamic test
 
@@ -296,7 +314,11 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		break;
 	case KeyboardButtons::A:
 		//pressDirection.x -= 2.0f;
-		SOUNDMANAGER->PlaySound(0, 1);
+		input.TakeAsInput();
+		if (input.MatchStringWithInput() == 1)
+		{
+			SOUNDMANAGER->PlaySound(0, 1);
+		}
 		OBJECTFACTORY->CopyObject(knight);
 		//object.speed.x = -0.8f;
 		break;

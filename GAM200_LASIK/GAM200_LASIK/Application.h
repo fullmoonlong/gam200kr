@@ -22,6 +22,7 @@
 #include "Sound.hpp"
 #include "ObjectFactory.h"
 #include "Units.hpp"
+#include "GetInput.hpp"
 
 class Application : public SimpleEventHandler
 {
@@ -44,7 +45,7 @@ public:
 private:
 	int frameCount = 0;
 	float deltaTime = 0;
-
+	GetInput input;
 	Draw draw;
 
 	ObjectFactory objectFactory;
@@ -56,6 +57,8 @@ private:
 	Magician* magician;
 	Archer* archer;
 	//Units
+	Object* object1;
+	Object* object2;
 
 	//projectiles
 	Object* swordAttack;
