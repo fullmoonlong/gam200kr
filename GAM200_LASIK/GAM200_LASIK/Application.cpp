@@ -12,6 +12,7 @@
 #include "Application.h"
 #include "VerticesDescription.h"
 #include "Image.hpp"
+#include "GetInput.hpp"
 
 Application::Application()
 {
@@ -25,10 +26,6 @@ void Application::Initialize()
 
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
 	shader2.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
-	//shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	//shader2.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	//shader.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
-	//shader2.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
 	
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
 	const Color4f color2{ 0.5f, 0.5f, 0.3f, 1.0f };
@@ -36,23 +33,7 @@ void Application::Initialize()
 	const float starting_y = 0.0f;
 	const float width = 50.0f;
 	const float height = 50.0f;
-	//rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-	//rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
-	//
-	//VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
-	//vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	//vertices2.InitializeWithMeshAndLayout(rectangle2, layout);
 
-	//material.vertices = vertices;
-	//material.mesh = rectangle;
-	//material2.vertices = vertices2;
-	//material2.mesh = rectangle2;
-	//
-	//Image image(PATH::kevin_move);
-	//Image image2(PATH::kevin_attack);
-
-	//animation.Initialize(image2, rectangle, 7, shader);
-	//animation2.Initialize(image2, rectangle2, 7, shader);
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
 	
 	//camera
@@ -61,38 +42,38 @@ void Application::Initialize()
 	//camera
 
 	//dynamic test
-	objectTest = new Object();
-	objectTest->Initialize({ -300.0f, 0.0f }, width, height);
-	objectTest->SetType(UnitType::Player);
-	objectTest->speed.x = 150.0f;
-	objectTest->image.LoadFrom(PATH::kevin_attack);
+	object1 = new Object();
+	object1->Initialize({ -300.0f, 0.0f }, width, height);
+	object1->SetType(UnitType::Player);
+	object1->speed.x = 150.0f;
+	object1->image.LoadFrom(PATH::kevin_attack);
 
 	const Color4f color3{ 1.0f, 0.0f, 0.0f, 1.0f };
 
-	objectTest->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color3);
-	objectTest->vertices.InitializeWithMeshAndLayout(objectTest->mesh, layout);
+	object1->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color3);
+	object1->vertices.InitializeWithMeshAndLayout(object1->mesh, layout);
 
-	objectTest->material.vertices = objectTest->vertices;
-	objectTest->material.mesh = objectTest->mesh;
+	object1->material.vertices = object1->vertices;
+	object1->material.mesh = object1->mesh;
 
-	objectTest->animation.Initialize(objectTest->image, objectTest->mesh, 7, shader);
+	object1->animation.Initialize(object1->image, object1->mesh, 7, shader);
 
 	//object2
-	objectTest1 = new Object();
-	objectTest1->Initialize({ starting_x, starting_y }, width, height);
-	objectTest->SetType(UnitType::Enemy);
-	objectTest1->speed.x -= 150.0f;
-	objectTest1->image.LoadFrom(PATH::kevin_attack);
+	object2 = new Object();
+	object2->Initialize({ starting_x, starting_y }, width, height);
+	object2->SetType(UnitType::Enemy);
+	object2->speed.x -= 150.0f;
+	object2->image.LoadFrom(PATH::kevin_attack);
 
 	const Color4f color4{ 1.0f, 0.0f, 0.0f, 1.0f };
 
-	objectTest1->mesh = MESH::create_rectangle(0.f, 0.f, -1.0f, 1.0f, color4);
-	objectTest1->vertices.InitializeWithMeshAndLayout(objectTest1->mesh, layout);
+	object2->mesh = MESH::create_rectangle(0.f, 0.f, -1.0f, 1.0f, color4);
+	object2->vertices.InitializeWithMeshAndLayout(object2->mesh, layout);
 
-	objectTest1->material.vertices = objectTest1->vertices;
-	objectTest1->material.mesh = objectTest1->mesh;
+	object2->material.vertices = object2->vertices;
+	object2->material.mesh = object2->mesh;
 
-	objectTest1->animation.Initialize(objectTest1->image, objectTest1->mesh, 7, shader);
+	object2->animation.Initialize(object2->image, object2->mesh, 7, shader);
 	//dynamic test
 
 	//test sound and make object
@@ -102,11 +83,6 @@ void Application::Initialize()
 	SOUNDMANAGER->LoadFile("hit.ogg");
 	SOUNDMANAGER->PlaySound(1, 0);
 	//test sound and make object
-
-	//object.Initialize({ starting_x, starting_y }, width, height);
-	//object.speed.x = -150.0f;
-	//object2.Initialize({-300.0f, 0.0f }, width, height);
-	//object2.speed.x = 150.0f;
 }
 
 void Application::Update()
@@ -114,31 +90,34 @@ void Application::Update()
 	clock.UpdateClock();
 
 	OBJECTFACTORY->Update();
+	if (object1->speed.x == 0.f)
+	{
+		object1->SetStatus(IDLE);
+	}
+	else if (object1->speed.x > 0.f)
+	{
+		object1->SetStatus(MOVE);
+	}
 
-	////Object moving
-	//object.Update(deltaTime);
-	//object2.Update(deltaTime);
-	
-	//if (object.GetXposition() < 0.0f)
+	if (object2->speed.x == 0.f)
+	{
+		object2->SetStatus(IDLE);
+	}
+	else if (object2->speed.x > 0.f)
+	{
+		object2->SetStatus(MOVE);
+	}
+
+	//if (object1->GetStatus() == MOVE)
 	//{
-	//	animation.ChangeAnimation(PATH::kevin_attack, 7);
-	//	object.speed.x = 0.0f;
+	//	std::cout << "obj1 MOVE" << std::endl;
 	//}
-	//Object moving
-
-
+	//if (object2->GetStatus() == MOVE)
+	//{
+	//	std::cout << "obj2 MOVE" << std::endl;
+	//}
 	//Draw
 	draw.StartDrawing();
-
-	//draw.draw(shader, material);
-	//animation.Animate(deltaTime);
-	//const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
-	//shader.SendUniformVariable("ndc", ndc);
-
-	//draw.draw(shader, material2);
-	//animation2.Animate(deltaTime);
-	//const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
-	//shader.SendUniformVariable("ndc", ndc2);
 
 	//dynamic test
 	for (auto obj : OBJECTFACTORY->GetObjecteList())
@@ -151,6 +130,7 @@ void Application::Update()
 			const mat3<float> ndc3 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
 			shader.SendUniformVariable("ndc", ndc3);
 		}
+		
 	}
 	//dynamic test
 
@@ -217,14 +197,18 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		break;
 	case KeyboardButtons::A:
 		//pressDirection.x -= 2.0f;
-		SOUNDMANAGER->PlaySound(0, 1);
-		OBJECTFACTORY->CopyObject(objectTest);
+		input.TakeAsInput();
+		if (input.MatchStringWithInput() == 1)
+		{
+			SOUNDMANAGER->PlaySound(0, 1);
+			OBJECTFACTORY->CopyObject(object1);
+		}
 		//object.speed.x = -0.8f;
 		break;
 	case KeyboardButtons::D:
 		//pressDirection.x += 2.0f;
 		SOUNDMANAGER->PlaySound(0, 1);
-		OBJECTFACTORY->CopyObject(objectTest1);
+		OBJECTFACTORY->CopyObject(object2);
 		//object.speed.x = 0.8f;
 		break;
 	case KeyboardButtons::Z:

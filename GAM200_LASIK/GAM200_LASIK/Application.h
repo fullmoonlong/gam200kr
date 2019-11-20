@@ -20,7 +20,7 @@
 #include "ObjectFactory.h"
 #include "Util/Clock.hpp"
 #include "Sound.hpp"
-#include "ObjectFactory.h"
+#include "GetInput.hpp"
 
 class Application : public SimpleEventHandler
 {
@@ -43,12 +43,12 @@ public:
 private:
 	int frameCount = 0;
 	float deltaTime = 0;
-
+	GetInput input;
 	Draw draw;
 
 	ObjectFactory objectFactory;
-	Object* objectTest;
-	Object* objectTest1;
+	Object* object1;
+	Object* object2;
 
 	Object object;
 
