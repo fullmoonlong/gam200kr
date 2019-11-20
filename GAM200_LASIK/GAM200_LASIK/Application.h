@@ -45,17 +45,6 @@ private:
 	int frameCount = 0;
 	float deltaTime = 0;
 
-	MovestateType check;
-	
-	//Object player;
-	//Object Enemy;
-
-	EnemyUnits::Skeleton Skeleton;
-	
-	//Units::Archer    Archer;
-	Units::Knight    Knight;
-	//Units::Magician  Magician;
-
 	Draw draw;
 
 	ObjectFactory objectFactory;
@@ -90,34 +79,6 @@ private:
 	Object object;
 
 	Shader shader;
-
-	//Shader   ArcherShader;
-	Shader   KnightShader;
-	//Shader MagicianShader;
-
-	Mesh SkeletonMesh;
-
-	//Mesh ArcherMesh;
-	Mesh KnightMesh;
-	//Mesh MagicianMesh;
-
-	Vertices SkeletonVertices;
-
-	//Vertices ArcherVertices;
-	Vertices KnightVertices;	
-	//Vertices MaigicianVertices;
-
-	Material SkeletonMaterial;
-
-	//Material ArcherMaterial;
-	Material KnightMaterial;
-	//Material MagicianMaterial;
-
-	Animation SkeletonAnimation;
-
-	//Animation ArcherAnimation;
-	Animation KnightAnimation;
-	//Animation MagicianAnimation;
 
 	Window window;
 	Clock clock;

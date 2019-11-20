@@ -18,12 +18,11 @@ Application::Application()
 {
 	Initialize();
 	isRunning = true;
-	check = MovestateType::MOVE;
 }
 
 void Application::Initialize()
 {
-	window.CanCreateWindow(800, 600, this,"Lasik"); 
+	window.CanCreateWindow(800, 600, this,"Lasik"); //initialize window
 
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);
 	
@@ -54,6 +53,8 @@ void Application::Initialize()
 
 	proKevin->SetHealth(100);
 	proKevin->SetDamage(15);
+	vec2<float> a = {1, 0};
+	proKevin->SetAttackRange(a);
 
 	const Color4f color3{ 1.0f, 0.0f, 0.0f, 1.0f };
 
@@ -187,6 +188,33 @@ void Application::Update()
 
 	OBJECTFACTORY->Update();
 
+	
+	//Transform
+	camera.Rotate(cameraAngle);
+	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
+	view.SetZoom(zoom);
+	//Transform
+
+	++frameCount;
+	static int time = 0;
+	if (clock.timePassed >= 1.0f)
+	{
+		++time;
+		std::cout << time << std::endl;
+		std::cout << frameCount << std::endl;
+		clock.timePassed -= 1.0f;
+		frameCount = 0;
+		OBJECTFACTORY->DamageTest(time); //test for damage
+		/*for (auto obj : OBJECTFACTORY->GetObjecteList())
+		{
+			if (obj.second->GetName() == "Archer" && time % 2 == 0)
+			{
+				obj.second->GetComponent<TestComponent>()->Attack();
+			}
+		}*/
+	}
+	deltaTime = clock.GetTimeFromLastUpdate();
+	
 	//Draw
 	draw.StartDrawing();
 
@@ -214,26 +242,6 @@ void Application::Update()
 	draw.Finish();
 	//Draw
 
-	
-	//Transform
-	camera.Rotate(cameraAngle);
-	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
-	view.SetZoom(zoom);
-
-
-	++frameCount;
-	static int time = 0;
-	if (clock.timePassed >= 1.0f)
-	{
-		++time;
-		std::cout << time << std::endl;
-		std::cout << frameCount << std::endl;
-		clock.timePassed -= 1.0f;
-		frameCount = 0;
-	}
-	deltaTime = clock.GetTimeFromLastUpdate();
-	
-	OBJECTFACTORY->DamageTest(time); //test for damage
 	window.SwapBuffers();
 	window.PollEvents();
 }
@@ -301,9 +309,9 @@ void Application::HandleKeyPress(KeyboardButtons button)
 	case KeyboardButtons::Z:
 		//cameraAngle += 0.025f;
 		OBJECTFACTORY->CopyObject(archer);
-		/*OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->AddComponent<TestComponent>();
+		OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->AddComponent<TestComponent>();
 		OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->object = OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1);
-		OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->attack = fireball;*/
+		OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->attack = &arrow;
 		break;
 	case KeyboardButtons::X:
 		//cameraAngle -= 0.025f;
@@ -317,7 +325,7 @@ void Application::HandleKeyRelease(KeyboardButtons button)
 {
 	switch (button)
 	{
-	/*case KeyboardButtons::W:
+	case KeyboardButtons::W:
 		pressDirection.y = 0;
 		//object.speed.y = 0.f;
 		break;
@@ -350,21 +358,15 @@ void Application::HandleMouseEvent(MouseButtons button)
 	case MouseButtons::LEFT_PRESS:
 	{
 		//mouse check
-		if (Knight.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
+		if (object.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
 		{
-			Knight.isMouseCollide = true;
-		}
-		//mouse check
-		if (Skeleton.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
-		{
-			Skeleton.isMouseCollide = true;
+			object.isMouseCollide = true;
 		}
 		//mouse check
 		break;
 	}
 	case MouseButtons::LEFT_RELEASE:
-		Knight.isMouseCollide = false;
-		Skeleton.isMouseCollide = false;
+		object.isMouseCollide = false;
 		break;
 	}
 }
@@ -390,6 +392,6 @@ void Application::HandleScrollEvent(float scroll_amount)
 
 void Application::HandleMousePositionEvent(float xpos, float ypos)
 {
-	vec2<float> newMousePosition{ xpos, ypos };
+	//vec2<float> newMousePosition{ xpos, ypos };
 	mousePosition = { xpos, ypos };
 }

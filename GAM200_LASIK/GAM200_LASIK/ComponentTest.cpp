@@ -14,14 +14,10 @@ void TestComponent::Initialize()
 
 void TestComponent::Update(float /*delta_time*/)
 {
-	if (object->GetState() == State::ATTACK)
-	{
-			baseTime += 0.1f;
-			if (baseTime <= 80.f)
-			{
-				baseTime = 0;
-				attack->transform.SetTranslation(object->transform.GetTranslation());
-				OBJECTFACTORY->CopyObject(attack);
-			}
-	}
+}
+
+void TestComponent::Attack()
+{
+	attack->transform.SetTranslation(object->transform.GetTranslation());
+	OBJECTFACTORY->CopyObject(attack);
 }

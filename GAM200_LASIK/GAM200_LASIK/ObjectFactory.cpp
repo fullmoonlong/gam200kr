@@ -233,7 +233,6 @@ void ObjectFactory::DamageTest(int time)
 						{
 							if (object.second->GetState() == State::ATTACK)
 							{
-								object.second->SetHealth(object.second->GetHealth() - object1.second->GetDamage());
 								object1.second->SetHealth(object1.second->GetHealth() - object.second->GetDamage());
 							}
 						}
