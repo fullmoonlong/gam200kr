@@ -22,10 +22,11 @@ public:
 	void InitializeWithMeshAndLayout(const Mesh& mesh, const VerticesDescription& vertex_layout) noexcept;
 	void UpdateVeticesFromMesh(const Mesh& mesh);
 
-	static void SelecteVAO(const Vertices& vertices) noexcept;
+	static void SelectVAO(const Vertices& vertices) noexcept;
 	static void SelectNothing();
 
 	unsigned int GetPattern() const noexcept;
+	int GetVerticesCount() const noexcept;
 	
 	void WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept;
 	void DeleteVerticesOnGPU() const;

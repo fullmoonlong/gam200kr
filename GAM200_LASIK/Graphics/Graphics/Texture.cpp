@@ -14,10 +14,22 @@
 
 Texture::Texture(Image& image)
 {
-	LoadTextureFrom(image);
+	LoadFromImage(image);
 }
 
-bool Texture::LoadTextureFrom(const Image& image) noexcept
+
+bool Texture::LoadFromPath(const std::filesystem::path& image_path) noexcept
+{
+	Image image;
+
+	if (!image.LoadFrom(image_path))
+	{
+		return false;
+	}
+	return LoadFromImage(image);
+}
+
+bool Texture::LoadFromImage(const Image& image) noexcept
 {
 	if (GetTexturehandle() != 0)
 	{

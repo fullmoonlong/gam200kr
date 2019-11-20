@@ -105,6 +105,16 @@ unsigned Shader::GetHandleToShader() const noexcept
 	return handleToShader;
 }
 
+void Shader::UseShader(const Shader& shader)
+{
+	glUseProgram(shader.GetHandleToShader());
+}
+
+void Shader::UseNothing()
+{
+	glUseProgram(0);
+}
+
 void Shader::SendUniformVariable(const char* variable_name, const int& variable) const noexcept
 {
 	const int location = glGetUniformLocation(handleToShader, variable_name);

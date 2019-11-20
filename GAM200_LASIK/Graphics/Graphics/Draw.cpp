@@ -14,9 +14,9 @@ void Draw::Finish()
 }
 
 void Draw::draw(const Shader& shader, const Material& material)
-{
-	glUseProgram(shader.GetHandleToShader());
-	Vertices::SelecteVAO(material.vertices);
-	//glBindBuffer(GL_ARRAY_BUFFER, material.vertices.VBO);
+{	
+	glBindTexture(GL_TEXTURE_2D, material.texture.GetTexturehandle());
+	Shader::UseShader(shader);
+	Vertices::SelectVAO(material.vertices);
 	glDrawArrays(material.vertices.GetPattern(), 0, (int)material.mesh.GetPointsCount());
 }

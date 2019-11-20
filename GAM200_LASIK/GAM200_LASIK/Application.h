@@ -5,7 +5,6 @@
  *	2019/07/04
  */
 
-
 #pragma once
 #include "OpenGL_Window.h"
 #include "EventHandler.hpp"
@@ -16,6 +15,7 @@
 #include "Mesh.h"
 #include "Animation.hpp"
 #include "Draw.hpp"
+#include "BitmapFont.hpp"
 #include "Object.h"
 #include "ObjectFactory.h"
 #include "Util/Clock.hpp"
@@ -33,12 +33,13 @@ public:
 	void Update();
 	void ShutDown();
 
-	void HandleKeyPress(KeyboardButtons button) override;
-	void HandleKeyRelease(KeyboardButtons button) override;
-	void HandleMouseEvent(MouseButtons button) override;
-	void HandleResizeEvent(const int& width, const int& height) override;
-	void HandleScrollEvent(float scroll_amount) override;
-	void HandleMousePositionEvent(float xpos, float ypos) override;
+	void HandleKeyPress(KeyboardButtons button) override final;
+	void HandleKeyRelease(KeyboardButtons button) override final;
+	void HandleMouseEvent(MouseButtons button) override final;
+	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
+	void HandleScrollEvent(float scroll_amount) override final;
+	void HandleMousePositionEvent(float xpos, float ypos) override final;
+	void HandleWindowClose() override final;
 
 	bool isRunning = false;
 
@@ -46,12 +47,30 @@ private:
 	int frameCount = 0;
 	float deltaTime = 0;
 	GetInput input;
+	
 	Draw draw;
-
 	ObjectFactory objectFactory;
 	Object* proKevin;
 	Object* objectTest1;
 	
+	Object background;
+	Shader backgroundShader;
+	Mesh backgroundMesh;
+	Vertices backgroundVertices;
+	Texture backgroundTexture;
+	Material backgroundMaterial;
+	
+	BitmapFont bitmapFont;
+	Shader fontShader;
+	Object lasik;
+	Mesh textMesh;
+	Vertices textVertices;
+	Texture fontTexture;
+	//Text text;
+
+	Shader shader;
+	Object object;
+	Object object2;
 	//Units
 	Knight* knight;
 	Magician* magician;

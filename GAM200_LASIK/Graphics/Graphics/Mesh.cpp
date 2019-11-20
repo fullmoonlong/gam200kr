@@ -11,19 +11,36 @@
 #include "Mesh.h"
 #include "Math/Angle.hpp"
 
-void Mesh::AddPoint(vec2<float> point) noexcept
+void Mesh::AddPoint(vec2<float> point)
 {
 	points.push_back(point);
 }
 
-void Mesh::AddColor(Color4f color) noexcept
+void Mesh::AddPoint(float x, float y)
+{
+	points.push_back({ x, y });
+}
+
+
+void Mesh::AddColor(Color4f color)
 {
 	colors.push_back(color);
 }
 
-void Mesh::AddTextureCoordinate(vec2<float> texture_coordinate) noexcept
+void Mesh::AddTextureCoordinate(vec2<float> texture_coordinate)
 {
 	textureCoordinates.push_back(texture_coordinate);
+}
+
+void Mesh::AddTextureCoordinate(float u, float v)
+{
+	textureCoordinates.push_back({ u, v });
+}
+
+
+void Mesh::SetShapePattern(::ShapePattern new_pattern) noexcept
+{
+	pattern = new_pattern;
 }
 
 vec2<float> Mesh::GetPoint(int index) const noexcept
@@ -39,11 +56,6 @@ Color4f Mesh::GetColor(int index) const noexcept
 vec2<float> Mesh::GetTextureCoordinate(int index) const noexcept
 {
 	return textureCoordinates[index];
-}
-
-void Mesh::SetShapePattern(ShapePattern new_pattern) noexcept
-{
-	pattern = new_pattern;
 }
 
 ShapePattern Mesh::GetShapePattern() const noexcept
@@ -62,12 +74,11 @@ Mesh MESH::create_ellipse(float rx, float ry, int pointsNum, Color4f color)
 	
 	circle.SetShapePattern(ShapePattern::TriangleFan);
 	const float angle = ANGLE::two_pi / static_cast<float>(pointsNum);
-	//circle.AddPoint({ 0.0f,0.0f });
-	//circle.AddColor(color);
 
 	for (int i = 0; i <= pointsNum; ++i)
 	{
-		circle.AddPoint({ rx * (float)cos((float)i * angle), ry * (float)sin((float)i * angle) });
+		circle.AddPoint({ rx * static_cast<float>(cos((float)i * angle)),
+			ry * static_cast<float>(sin((float)i * angle)) });
 		circle.AddColor(color);
 	}
 

@@ -44,18 +44,16 @@ public:
 	virtual void HandleMousePositionEvent(float xpos, float ypos) = 0;
 	virtual void HandleMouseEvent(MouseButtons button) = 0;
 	virtual void HandleWindowClose() = 0;
-
 };
 
 class SimpleEventHandler : public EventHandler
 {
 public:
-	void HandleKeyPress(KeyboardButtons) override {}
-	void HandleKeyRelease(KeyboardButtons) override {}
+	void HandleKeyPress(KeyboardButtons /*button*/) override {}
+	void HandleKeyRelease(KeyboardButtons /*button*/) override {}
 	void HandleResizeEvent(const int& /*width*/, const int& /*height*/) override {}
 	void HandleScrollEvent(float /*scroll_amount*/) override {};
 	void HandleMousePositionEvent(float /*xpos*/, float /*ypos*/) override {}
 	void HandleMouseEvent(MouseButtons /*button*/) override {}
 	void HandleWindowClose() override {}
-	
 };

@@ -69,6 +69,8 @@
     <ClInclude Include="Graphics\Draw.hpp">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\BitmapFont.hpp" />
+    <ClInclude Include="Graphics\Text.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\Camera.cpp">
@@ -110,5 +112,7 @@
     <ClCompile Include="Graphics\Draw.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\BitmapFont.cpp" />
+    <ClCompile Include="Graphics\Text.cpp" />
   </ItemGroup>
 </Project>
