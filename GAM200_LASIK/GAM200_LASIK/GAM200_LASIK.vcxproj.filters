@@ -10,6 +10,7 @@
     <ClCompile Include="FileLoadAndSave.cpp" />
     <ClCompile Include="Units.cpp" />
     <ClCompile Include="EnemyUnits.cpp" />
+    <ClCompile Include="GetInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -24,5 +25,6 @@
     <ClInclude Include="FileLoadAndSave.hpp" />
     <ClInclude Include="Units.hpp" />
     <ClInclude Include="EnemyUnits.hpp" />
+    <ClInclude Include="GetInput.hpp" />
   </ItemGroup>
 </Project>

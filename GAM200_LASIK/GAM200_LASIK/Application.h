@@ -57,8 +57,6 @@ private:
 	Magician* magician;
 	Archer* archer;
 	//Units
-	Object* object1;
-	Object* object2;
 
 	//projectiles
 	Object* swordAttack;

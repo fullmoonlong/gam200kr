@@ -15,9 +15,9 @@ void TestComponent::Initialize()
 void TestComponent::Update(float /*delta_time*/)
 {
 }
-
-void TestComponent::Attack()
-{
-	attack->transform.SetTranslation(object->transform.GetTranslation());
-	OBJECTFACTORY->CopyObject(attack);
-}
+//
+//void TestComponent::Attack()
+//{
+//	attack->transform.SetTranslation(object->transform.GetTranslation());
+//	OBJECTFACTORY->CopyObject(attack);
+//}

@@ -181,6 +181,7 @@
     <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="EnemyUnits.cpp" />
     <ClCompile Include="FileLoadAndSave.cpp" />
+    <ClCompile Include="GetInput.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="EnemyUnits.hpp" />
     <ClInclude Include="FileLoadAndSave.hpp" />
+    <ClInclude Include="GetInput.hpp" />
     <ClInclude Include="Sound.hpp" />
     <ClInclude Include="Units.hpp" />
     <ClInclude Include="Util\Clock.hpp" />

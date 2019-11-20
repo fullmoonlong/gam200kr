@@ -11,7 +11,7 @@ public:
 	~TestComponent() override;
 	virtual void Initialize() override;
 	virtual void Update(float dt) override;
-	void Attack();
+	//void Attack();
 
 	Object* object;
 	Object* attack;

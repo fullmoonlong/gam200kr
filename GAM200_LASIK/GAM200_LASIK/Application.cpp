@@ -178,7 +178,8 @@ void Application::Initialize()
 	SOUNDMANAGER->LoadFile("sound.mp3");
 	SOUNDMANAGER->LoadFile("beep.wav");
 	SOUNDMANAGER->LoadFile("hit.ogg");
-	//SOUNDMANAGER->PlaySound(1, 0);
+	SOUNDMANAGER->PlaySound(1, 0);
+	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
 
 	//object.Initialize({ starting_x, starting_y }, width, height);
@@ -192,54 +193,15 @@ void Application::Update()
 	clock.UpdateClock();
 
 	OBJECTFACTORY->Update();
-	if (object1->speed.x == 0.f)
-	{
-		object1->SetStatus(IDLE);
-	}
-	else if (object1->speed.x > 0.f)
-	{
-		object1->SetStatus(MOVE);
-	}
-
-	
 	//Transform
 	camera.Rotate(cameraAngle);
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//Transform
-
-	++frameCount;
-	static int time = 0;
-	if (clock.timePassed >= 1.0f)
-	{
-		++time;
-		std::cout << time << std::endl;
-		std::cout << frameCount << std::endl;
-		clock.timePassed -= 1.0f;
-		frameCount = 0;
-		OBJECTFACTORY->DamageTest(time); //test for damage
-		/*for (auto obj : OBJECTFACTORY->GetObjecteList())
-		{
-			if (obj.second->GetName() == "Archer" && time % 2 == 0)
-			{
-				obj.second->GetComponent<TestComponent>()->Attack();
-			}
-		}*/
-	}
-	deltaTime = clock.GetTimeFromLastUpdate();
 	
 	//Draw
 	draw.StartDrawing();
 
-	//draw.draw(shader, material);
-	//animation.Animate(deltaTime);
-	//const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
-	//shader.SendUniformVariable("ndc", ndc);
-
-	//draw.draw(shader, material2);
-	//animation2.Animate(deltaTime);
-	//const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
-	//shader.SendUniformVariable("ndc", ndc2);
 
 	//dynamic test
 	for (auto obj : OBJECTFACTORY->GetObjecteList())
@@ -259,6 +221,27 @@ void Application::Update()
 
 	draw.Finish();
 	//Draw
+
+	++frameCount;
+	static int time = 0;
+	if (clock.timePassed >= 1.0f)
+	{
+		++time;
+		std::cout << time << std::endl;
+		std::cout << frameCount << std::endl;
+		clock.timePassed -= 1.0f;
+		frameCount = 0;
+		OBJECTFACTORY->DamageTest(time); //test for damage
+
+		//for (auto obj : OBJECTFACTORY->GetObjecteList())
+		//{
+		//	if (obj.second->GetName() == "Archer" && time % 2 == 0)
+		//	{
+		//		obj.second->GetComponent<TestComponent>()->Attack();
+		//	}
+		//}
+	}
+	deltaTime = clock.GetTimeFromLastUpdate();
 
 	window.SwapBuffers();
 	window.PollEvents();
@@ -317,9 +300,22 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		input.TakeAsInput();
 		if (input.MatchStringWithInput() == 1)
 		{
+			OBJECTFACTORY->CopyObject(knight);
 			SOUNDMANAGER->PlaySound(0, 1);
 		}
-		OBJECTFACTORY->CopyObject(knight);
+		else if (input.MatchStringWithInput() == 2)
+		{
+			OBJECTFACTORY->CopyObject(archer);
+			/*OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->AddComponent<TestComponent>();
+			OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->object = OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1);
+			OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->attack = &arrow;*/
+			SOUNDMANAGER->PlaySound(0, 1);
+		}
+		else if (input.MatchStringWithInput() == 3)
+		{
+			OBJECTFACTORY->CopyObject(magician);
+			SOUNDMANAGER->PlaySound(0, 1);
+		}
 		//object.speed.x = -0.8f;
 		break;
 	case KeyboardButtons::D:
@@ -330,14 +326,9 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		break;
 	case KeyboardButtons::Z:
 		//cameraAngle += 0.025f;
-		OBJECTFACTORY->CopyObject(archer);
-		OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->AddComponent<TestComponent>();
-		OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->object = OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1);
-		OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->attack = &arrow;
 		break;
 	case KeyboardButtons::X:
 		//cameraAngle -= 0.025f;
-		OBJECTFACTORY->CopyObject(magician);
 		break;
 	default:;
 	}
