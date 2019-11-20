@@ -5,7 +5,6 @@
  *	2019/07/04
  */
 
-
 #pragma once
 #include "OpenGL_Window.h"
 #include "EventHandler.hpp"
@@ -44,6 +43,13 @@ private:
 	float deltaTime = 0;
 	
 	Draw draw;
+	
+	Object background;
+	Shader backgroundShader;
+	Mesh backgroundMesh;
+	Vertices backgroundVertices;
+	Texture backgroundTexture;
+	Material backgroundMaterial;
 	
 	BitmapFont bitmapFont;
 	Shader fontShader;

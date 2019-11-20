@@ -15,7 +15,7 @@ void Draw::Finish()
 
 void Draw::draw(const Shader& shader, const Material& material)
 {	
-	glBindTexture(GL_TEXTURE_2D, material.texture.GetTexturehandle());	// go to draw call
+	glBindTexture(GL_TEXTURE_2D, material.texture.GetTexturehandle());
 	Shader::UseShader(shader);
 	Vertices::SelectVAO(material.vertices);
 	glDrawArrays(material.vertices.GetPattern(), 0, (int)material.mesh.GetPointsCount());

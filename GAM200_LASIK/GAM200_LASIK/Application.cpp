@@ -48,18 +48,30 @@ void Application::Initialize()
 	textMesh.AddTextureCoordinate(aRight, aTop);
 	textMesh.AddTextureCoordinate(aLeft, aBottom);
 
-	float iLeft = 
 	textMesh.AddPoint(0.5f, 0.5f);
 	textMesh.AddPoint(-0.5f, -0.5f);
 	textMesh.AddPoint(0.5f, -0.5f);
-	textMesh.AddTextureCoordinate({ aRight, aTop });
-	textMesh.AddTextureCoordinate({ aLeft, aBottom });
-	textMesh.AddTextureCoordinate({ aRight, aBottom });
+	textMesh.AddTextureCoordinate(aRight, aTop);
+	textMesh.AddTextureCoordinate(aLeft, aBottom);
+	textMesh.AddTextureCoordinate(aRight, aBottom);
 
+	float kLeft = 20.0f / 256;
+	float kBottom = 1.0f - 20.0f / 256;
+	float kTop = kBottom + 20.0f / 256;
+	float kRight = (20.0f + 18.0f) / 256;
 	textMesh.AddPoint(0.5f, 0.5f);
 	textMesh.AddPoint(1.5f, 0.5f);
-	textMesh.AddPoint(0.5f, 0.5f);
-	textMesh.AddTextureCoordinate()
+	textMesh.AddPoint(0.5f, -0.5f);
+	textMesh.AddTextureCoordinate(kLeft, kTop);
+	textMesh.AddTextureCoordinate(kRight, kTop);
+	textMesh.AddTextureCoordinate(kLeft, kBottom);
+
+	textMesh.AddPoint(1.5f, 0.5f);
+	textMesh.AddPoint(0.5f, -0.5f);
+	textMesh.AddPoint(1.5f, -0.5f);
+	textMesh.AddTextureCoordinate(kRight, aTop);
+	textMesh.AddTextureCoordinate(kLeft, aBottom);
+	textMesh.AddTextureCoordinate(kRight, aBottom);
 	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
 	vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -98,6 +110,18 @@ void Application::Initialize()
 	
 
 	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
+
+	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	backgroundMesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
+	backgroundVertices.InitializeWithMeshAndLayout(backgroundMesh, layout);
+	backgroundTexture.LoadFromPath(PATH::background);
+	background.transform.SetDepth(-0.5f);
+
+	backgroundMaterial.mesh = backgroundMesh;
+	backgroundMaterial.vertices = backgroundVertices;
+	backgroundMaterial.texture = backgroundTexture;
+	
+	background.Initialize({ 0.0f, 0.0f }, 50.0f, 50.0f);
 }
 
 void Application::Update()
@@ -141,8 +165,11 @@ void Application::Update()
 	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
 	const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
 	const mat3<float> ndc_font = view.GetCameraToNDCTransform() * camera.WorldToCamera() * lasik.transform.GetModelToWorld();
+	const mat3<float> ndcBackground = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
 	
-
+	Draw::draw(backgroundShader, backgroundMaterial);
+	shader.SendUniformVariable("ndc", ndcBackground);
+	
 	animation.Animate(deltaTime);
 	shader.SendUniformVariable("ndc", ndc);
 	Draw::draw(shader, material);
