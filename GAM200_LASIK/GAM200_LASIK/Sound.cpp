@@ -35,9 +35,9 @@ void SoundManager::Shutdown()
 {
 }
 
-void SoundManager::ErrorCheck(FMOD_RESULT result)
+void SoundManager::ErrorCheck(FMOD_RESULT /*result*/)
 {
-	assert(result == FMOD_OK);
+	//assert(result == FMOD_OK);
 }
 
 void SoundManager::LoadFile(std::string filename)

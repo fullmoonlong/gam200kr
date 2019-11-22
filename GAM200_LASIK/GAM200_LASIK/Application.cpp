@@ -35,8 +35,8 @@ void Application::Initialize()
 	const float starting_y = 0.0f;
 	const float objectWidth = 50.0f;
 	const float objectHeight = 50.0f;
-	rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-	rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
+	//rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+	//rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
 	
 	float aLeft = 0.0f / 256;
 	float aBottom = 1.0f - 20.0f / 256;
@@ -56,8 +56,8 @@ void Application::Initialize()
 	textMesh.AddTextureCoordinate(aRight, aTop);
 	textMesh.AddTextureCoordinate(aLeft, aBottom);
 	textMesh.AddTextureCoordinate(aRight, aBottom);
-	float kLeft = 20.0f / 256;
 
+	float kLeft = 20.0f / 256;
 	float kBottom = 1.0f - 20.0f / 256;
 	float kRight = (20.0f + 18.0f) / 256;
 	float kTop = kBottom + 20.0f / 256;
@@ -65,50 +65,50 @@ void Application::Initialize()
 	textMesh.AddPoint(1.5f, 0.5f);
 	textMesh.AddPoint(0.5f, -0.5f);
 	textMesh.AddTextureCoordinate(kLeft, kTop);
-
-	textMesh.AddTextureCoordinate(kLeft, kBottom);
 	textMesh.AddTextureCoordinate(kRight, kTop);
+	textMesh.AddTextureCoordinate(kLeft, kBottom);
+	
 	textMesh.AddPoint(1.5f, 0.5f);
 	textMesh.AddPoint(0.5f, -0.5f);
 	textMesh.AddPoint(1.5f, -0.5f);
-	textMesh.AddTextureCoordinate(kRight, aTop);
-	textMesh.AddTextureCoordinate(kLeft, aBottom);
-	textMesh.AddTextureCoordinate(kRight, aBottom);
+	textMesh.AddTextureCoordinate(kRight, kTop);
+	textMesh.AddTextureCoordinate(kLeft, kBottom);
+	textMesh.AddTextureCoordinate(kRight, kBottom);
 	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
-	vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	vertices2.InitializeWithMeshAndLayout(rectangle2, layout);
+	//vertices.InitializeWithMeshAndLayout(rectangle, layout);
+	//vertices2.InitializeWithMeshAndLayout(rectangle2, layout);
 	textVertices.InitializeWithMeshAndLayout(textMesh, layout);
 
 	Image image2(PATH::kevin_attack);
 	Image image(PATH::kevin_move);
 	
-	Texture t1(image);
-	
-	Texture t2(image2);
-	material.vertices = vertices;
-	material.mesh = rectangle;
-	material.texture = t1;
-	material2.vertices = vertices2;
-	material2.mesh = rectangle2;
-	material2.texture = t2;
+	//Texture t1(image);
+	//
+	//Texture t2(image2);
+	//material.vertices = vertices;
+	//material.mesh = rectangle;
+	//material.texture = t1;
+	//material2.vertices = vertices2;
+	//material2.mesh = rectangle2;
+	//material2.texture = t2;
 
 
-	animation.Initialize(image, rectangle, 8, shader);
+	//animation.Initialize(image, rectangle, 8, shader);
 	fontTexture.LoadFromPath(PATH::bitmapfont_png);
-	animation2.Initialize(image2, rectangle2, 7, shader);
+	//animation2.Initialize(image2, rectangle2, 7, shader);
 	
 	//camera
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//camera
 	
-	object.Initialize({ starting_x, starting_y }, objectWidth, objectHeight);
-	object.speed.x = -150.0f;
-	object2.Initialize({-300.0f, 0.0f }, objectWidth, objectHeight);
-	object2.speed.x = 150.0f;
+	//object.Initialize({ starting_x, starting_y }, objectWidth, objectHeight);
+	//object.speed.x = -150.0f;
+	//object2.Initialize({-300.0f, 0.0f }, objectWidth, objectHeight);
+	//object2.speed.x = 150.0f;
 
-	lasik.Initialize({ 0.0f, 0.0f }, 30.0f, 30.0f);
+	lasik.Initialize("text.txt");
 	
 
 	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
@@ -122,16 +122,9 @@ void Application::Initialize()
 	backgroundMaterial.mesh = backgroundMesh;
 	backgroundMaterial.vertices = backgroundVertices;
 	backgroundMaterial.texture = backgroundTexture;
-	
-	background.Initialize({ 0.0f, 0.0f }, 50.0f, 50.0f);
 
 	//background
 	image.LoadFrom(PATH::knight_move);
-	mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-	vertices.InitializeWithMeshAndLayout(mesh, layout);
-
-	material.vertices = vertices;
-	material.mesh = mesh;
 
 	//background
 
@@ -150,6 +143,7 @@ void Application::Initialize()
 	proKevin->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color3);
 	proKevin->vertices.InitializeWithMeshAndLayout(proKevin->mesh, layout);
 
+	proKevin->material.texture = Texture(proKevin->image);
 	proKevin->material.vertices = proKevin->vertices;
 	proKevin->material.mesh = proKevin->mesh;
 
@@ -169,6 +163,7 @@ void Application::Initialize()
 	knight->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
 	knight->vertices.InitializeWithMeshAndLayout(knight->mesh, layout);
 
+	knight->material.texture = Texture(knight->image);
 	knight->material.vertices = knight->vertices;
 	knight->material.mesh = knight->mesh;
 
@@ -188,6 +183,7 @@ void Application::Initialize()
 	archer->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
 	archer->vertices.InitializeWithMeshAndLayout(archer->mesh, layout);
 
+	archer->material.texture = Texture(archer->image);
 	archer->material.vertices = archer->vertices;
 	archer->material.mesh = archer->mesh;
 
@@ -207,6 +203,7 @@ void Application::Initialize()
 	magician->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
 	magician->vertices.InitializeWithMeshAndLayout(magician->mesh, layout);
 
+	magician->material.texture = Texture(magician->image);
 	magician->material.vertices = magician->vertices;
 	magician->material.mesh = magician->mesh;
 
@@ -223,6 +220,7 @@ void Application::Initialize()
 	swordAttack->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
 	swordAttack->vertices.InitializeWithMeshAndLayout(swordAttack->mesh, layout);
 
+	//swordAttack->material.texture = Texture(swordAttack->image);
 	swordAttack->material.vertices = swordAttack->vertices;
 	swordAttack->material.mesh = swordAttack->mesh;
 	//sword
@@ -237,6 +235,7 @@ void Application::Initialize()
 	fireball->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
 	fireball->vertices.InitializeWithMeshAndLayout(fireball->mesh, layout);
 
+	fireball->material.texture = Texture(fireball->image);
 	fireball->material.vertices = fireball->vertices;
 	fireball->material.mesh = fireball->mesh;
 
@@ -253,6 +252,7 @@ void Application::Initialize()
 	arrow.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
 	arrow.vertices.InitializeWithMeshAndLayout(arrow.mesh, layout);
 
+	arrow.material.texture = Texture(arrow.image);
 	arrow.material.vertices = arrow.vertices;
 	arrow.material.mesh = arrow.mesh;
 
@@ -309,21 +309,21 @@ void Application::Update()
 	//	draw.draw(fontShader, fontMaterial);
 	//}
 
-	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
-	const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
+	//const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
+	//const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
 	const mat3<float> ndc_font = view.GetCameraToNDCTransform() * camera.WorldToCamera() * lasik.transform.GetModelToWorld();
-	const mat3<float> ndcBackground = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
+	//const mat3<float> ndcBackground = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
 	
-	Draw::draw(backgroundShader, backgroundMaterial);
-	shader.SendUniformVariable("ndc", ndcBackground);
+	//Draw::draw(backgroundShader, backgroundMaterial);
+	//shader.SendUniformVariable("ndc", ndcBackground);
 	
-	animation.Animate(deltaTime);
-	shader.SendUniformVariable("ndc", ndc);
-	Draw::draw(shader, material);
+	//animation.Animate(deltaTime);
+	//shader.SendUniformVariable("ndc", ndc);
+	//Draw::draw(shader, material);
 
-	animation2.Animate(deltaTime);
-	shader.SendUniformVariable("ndc", ndc2);
-	Draw::draw(shader, material2);
+	//animation2.Animate(deltaTime);
+	//shader.SendUniformVariable("ndc", ndc2);
+	//Draw::draw(shader, material2);
 
 	Draw::draw(fontShader, { textVertices, fontTexture, textMesh });
 	fontShader.SendUniformVariable("ndc", ndc_font);
@@ -338,7 +338,7 @@ void Application::Update()
 			obj.second->animation.Animate(deltaTime);
 			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
 			shader.SendUniformVariable("ndc", ndc);
-			draw.draw(shader, obj.second->material);
+			Draw::draw(shader, obj.second->material);
 		}
 		
 	}
@@ -366,10 +366,9 @@ void Application::Update()
 		//	}
 		//}
 	}
-	deltaTime = clock.GetTimeFromLastUpdate();
-
 	window.SwapBuffers();
 	window.PollEvents();
+	deltaTime = clock.GetTimeFromLastUpdate();
 }
 
 void Application::ShutDown()

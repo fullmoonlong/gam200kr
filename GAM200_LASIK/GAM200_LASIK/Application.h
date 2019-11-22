@@ -88,18 +88,6 @@ private:
 	Object* lair;
 	//tower
 
-	//background
-	Mesh mesh;
-	Vertices vertices;
-	Material material;
-	Image image;
-	Transform transform;
-	//background
-
-	Object object;
-
-	Shader shader;
-
 	Window window;
 	Clock clock;
 	
