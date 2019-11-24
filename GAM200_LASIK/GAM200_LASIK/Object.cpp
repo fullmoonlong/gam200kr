@@ -85,25 +85,22 @@ Object* Object::Clone()
 	return new Object(*this);
 }
 
-Object* Object::Clone()
-{
-	return new Object(*this);
-}
-
 void Object::ChangeUnitAnimation()
 {
 	if (GetName() == "Knight")
 	{
 		if (GetState() == State::WALK && GetSpriteChangeState() == true)
 		{
-			animation.ChangeAnimation(PATH::knight_move, 8);
+			material.texture.LoadFromPath(PATH::knight_move);
+			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
 		else if (GetState() == State::ATTACK)
 		{
 			if (GetSpriteChangeState() == true && GetAttackState() == true)
 			{
-				animation.ChangeAnimation(PATH::knight_attack, 8);
+				material.texture.LoadFromPath(PATH::knight_attack);
+				animation.ChangeAnimation(8);
 				SetSpriteChangeState(false);
 			}
 		}
@@ -113,14 +110,16 @@ void Object::ChangeUnitAnimation()
 	{
 		if (GetState() == State::WALK && GetSpriteChangeState() == true)
 		{
-			animation.ChangeAnimation(PATH::archer_move, 8);
+			material.texture.LoadFromPath(PATH::archer_move);
+			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
 		else if (GetState() == State::ATTACK)
 		{
 			if (GetSpriteChangeState() == true)
 			{
-				animation.ChangeAnimation(PATH::archer_attack, 8);
+				material.texture.LoadFromPath(PATH::archer_attack);
+				animation.ChangeAnimation(8);
 				SetSpriteChangeState(false);
 			}
 		}
@@ -129,14 +128,16 @@ void Object::ChangeUnitAnimation()
 	{
 		if (GetState() == State::WALK && GetSpriteChangeState() == true)
 		{
-			animation.ChangeAnimation(PATH::wizard_move, 8);
+			material.texture.LoadFromPath(PATH::wizard_move);
+			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
 		else if (GetState() == State::ATTACK)
 		{
 			if (GetSpriteChangeState() == true)
 			{
-				animation.ChangeAnimation(PATH::wizard_attack, 5);
+				material.texture.LoadFromPath(PATH::wizard_attack);
+				animation.ChangeAnimation(5);
 				SetSpriteChangeState(false);
 			}
 		}

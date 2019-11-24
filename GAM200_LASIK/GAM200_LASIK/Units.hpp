@@ -6,7 +6,7 @@ Creation Date : 11/14/2019
 #include"Object.h"
 #include<vec2.hpp>
 
-class Knight :public Object {
+class Knight : public Object {
 public:	
 	
 	int GetKnightHealth() { return knightHealth; }

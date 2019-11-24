@@ -1,3 +1,12 @@
+/*
+*	Author: JeongHak Kim	junghak.kim@digipen.edu
+*	
+*	File_name: Draw.hpp
+*	
+*	Draw
+*	
+*	2019/11/02
+*/
 
 #pragma once
 #include "Shader.h"
@@ -15,7 +24,6 @@ struct Material
 class Draw
 {
 public:
-	
 	void StartDrawing();
 	void Finish();
 	static void draw(const Shader& shader, const Material& material);

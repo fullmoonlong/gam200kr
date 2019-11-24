@@ -28,16 +28,12 @@ void Application::Initialize()
 
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);	//shaders for animation
 	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+
+	const Color4f color{ 1.0f, 1.0f, 1.0f, 1.0f };
+	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
+
 	
-	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
-	const Color4f color2{ 0.5f, 0.5f, 0.3f, 1.0f };
-	const float starting_x = 300.0f;
-	const float starting_y = 0.0f;
-	const float objectWidth = 50.0f;
-	const float objectHeight = 50.0f;
-	//rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-	//rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
-	
+	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
 	float aLeft = 0.0f / 256;
 	float aBottom = 1.0f - 20.0f / 256;
 	float aTop = aBottom + 20.0f / 256;
@@ -75,192 +71,122 @@ void Application::Initialize()
 	textMesh.AddTextureCoordinate(kLeft, kBottom);
 	textMesh.AddTextureCoordinate(kRight, kBottom);
 	
-	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
-	//vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	//vertices2.InitializeWithMeshAndLayout(rectangle2, layout);
 	textVertices.InitializeWithMeshAndLayout(textMesh, layout);
 
-	Image image2(PATH::kevin_attack);
-	Image image(PATH::kevin_move);
-	
-	//Texture t1(image);
-	//
-	//Texture t2(image2);
-	//material.vertices = vertices;
-	//material.mesh = rectangle;
-	//material.texture = t1;
-	//material2.vertices = vertices2;
-	//material2.mesh = rectangle2;
-	//material2.texture = t2;
-
-
-	//animation.Initialize(image, rectangle, 8, shader);
 	fontTexture.LoadFromPath(PATH::bitmapfont_png);
-	//animation2.Initialize(image2, rectangle2, 7, shader);
 	
 	//camera
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//camera
 	
-	//object.Initialize({ starting_x, starting_y }, objectWidth, objectHeight);
-	//object.speed.x = -150.0f;
-	//object2.Initialize({-300.0f, 0.0f }, objectWidth, objectHeight);
-	//object2.speed.x = 150.0f;
-
 	lasik.Initialize("text.txt");
+
 	
-
-	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
-
-	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	backgroundMesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
-	backgroundVertices.InitializeWithMeshAndLayout(backgroundMesh, layout);
-	backgroundTexture.LoadFromPath(PATH::background);
-	background.transform.SetDepth(-0.5f);
-
-	backgroundMaterial.mesh = backgroundMesh;
-	backgroundMaterial.vertices = backgroundVertices;
-	backgroundMaterial.texture = backgroundTexture;
-
 	//background
-	image.LoadFrom(PATH::knight_move);
+
+	//backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	//backgroundMesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
+	//backgroundVertices.InitializeWithMeshAndLayout(backgroundMesh, layout);
+	//backgroundTexture.LoadFromPath(PATH::background);
+	//background.transform.SetDepth(-0.5f);
+
+	//backgroundMaterial.mesh = backgroundMesh;
+	//backgroundMaterial.vertices = backgroundVertices;
+	//backgroundMaterial.texture = backgroundTexture;
 
 	//background
 
-	//dynamic test
-	proKevin = new Object();
-	proKevin->Initialize("enemyPrototype.txt");
-	proKevin->image.LoadFrom(PATH::kevin_move);
+	// unit initialize
+	{
+		//kevin
+		proKevin = new Object();
+		proKevin->Initialize("enemyPrototype.txt");
+		proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		proKevin->material.vertices.InitializeWithMeshAndLayout(proKevin->material.mesh, layout);
+		proKevin->material.texture.LoadFromPath(PATH::kevin_move);
+		proKevin->animation.Initialize(8, shader);
 
-	proKevin->SetHealth(100);
-	proKevin->SetDamage(15);
-	vec2<float> a = {1, 0};
-	proKevin->SetAttackRange(a);
+		proKevin->SetState(State::WALK);
+		proKevin->SetHealth(100);
+		proKevin->SetDamage(15);
+		proKevin->SetAttackRange({ 1.0f, 0.0f });
+		//kevin
 
-	const Color4f color3{ 1.0f, 0.0f, 0.0f, 1.0f };
+		//knight
+		knight = new Knight();
+		knight->Initialize("knight.txt");
+		knight->material.mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
+		knight->material.vertices.InitializeWithMeshAndLayout(knight->material.mesh, layout);
+		knight->material.texture.LoadFromPath(PATH::knight_move);
+		knight->animation.Initialize(8, shader);
 
-	proKevin->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color3);
-	proKevin->vertices.InitializeWithMeshAndLayout(proKevin->mesh, layout);
+		knight->SetState(State::WALK);
+		knight->SetHealth(knight->GetKnightHealth());
+		knight->SetDamage(knight->GetKnightDamage());
+		//knight
 
-	proKevin->material.texture = Texture(proKevin->image);
-	proKevin->material.vertices = proKevin->vertices;
-	proKevin->material.mesh = proKevin->mesh;
+		//archer
+		archer = new Archer();
+		archer->Initialize("archer.txt");
+		archer->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		archer->material.vertices.InitializeWithMeshAndLayout(archer->material.mesh, layout);
+		archer->material.texture.LoadFromPath(PATH::archer_move);
+		archer->animation.Initialize(8, shader);
 
-	proKevin->animation.Initialize(proKevin->image, proKevin->mesh, 8, shader);
-	proKevin->SetState(State::WALK);
+		archer->SetState(State::WALK);
+		archer->SetHealth(archer->GetArcherHealth());
+		archer->SetDamage(archer->GetArcherDamage());
+		archer->SetAttackRange(archer->GetArcherAttackRange());
+		//archer
 
-	//knight
-	knight = new Knight();
-	knight->Initialize("knight.txt");
-	knight->image.LoadFrom(PATH::knight_move);
+		//magician
+		magician = new Magician();
+		magician->Initialize("wizard.txt");
+		magician->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		magician->material.vertices.InitializeWithMeshAndLayout(magician->material.mesh, layout);
+		magician->material.texture.LoadFromPath(PATH::wizard_move);
+		magician->animation.Initialize(8, shader);
 
-	knight->SetHealth(knight->GetKnightHealth());
-	knight->SetDamage(knight->GetKnightDamage());
+		magician->SetState(State::WALK);
+		magician->SetHealth(magician->GetMagicianHealth());
+		magician->SetDamage(magician->GetMagicianDamage());
+		magician->SetAttackRange(magician->GetMagicianAttackRange());
+		//magician
 
-	const Color4f color4{ 1.0f, 0.0f, 0.0f, 1.0f };
+		//sword attack
+		swordAttack = new Object();
+		swordAttack->Initialize("swordAttack.txt");
+		swordAttack->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		swordAttack->material.vertices.InitializeWithMeshAndLayout(swordAttack->material.mesh, layout);
 
-	knight->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
-	knight->vertices.InitializeWithMeshAndLayout(knight->mesh, layout);
+		swordAttack->SetDamage(knight->GetKnightDamage());
+		//sword attack
 
-	knight->material.texture = Texture(knight->image);
-	knight->material.vertices = knight->vertices;
-	knight->material.mesh = knight->mesh;
+		//fireball
+		fireball = new Object();
+		fireball->Initialize("fireball.txt");
+		fireball->material.mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
+		fireball->material.vertices.InitializeWithMeshAndLayout(fireball->material.mesh, layout);
+		fireball->material.texture.LoadFromPath(PATH::fireball);
+		fireball->animation.Initialize(3, shader);
 
-	knight->animation.Initialize(knight->image, knight->mesh, 8, shader);
-	knight->SetState(State::WALK);
-	//knight
+		fireball->SetState(State::WALK);
+		fireball->SetDamage(magician->GetMagicianDamage());
+		//fireball
 
-	//archer
-	archer = new Archer();
-	archer->Initialize("archer.txt");
-	archer->image.LoadFrom(PATH::archer_move);
+		//arrow
+		arrow.Initialize("arrow.txt");
+		arrow.material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		arrow.material.vertices.InitializeWithMeshAndLayout(arrow.material.mesh, layout);
+		arrow.material.texture.LoadFromPath(PATH::arrow);
+		arrow.animation.Initialize(1, shader);
 
-	archer->SetHealth(archer->GetArcherHealth());
-	archer->SetDamage(archer->GetArcherDamage());
-	archer->SetAttackRange(archer->GetArcherAttackRange());
-
-	archer->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
-	archer->vertices.InitializeWithMeshAndLayout(archer->mesh, layout);
-
-	archer->material.texture = Texture(archer->image);
-	archer->material.vertices = archer->vertices;
-	archer->material.mesh = archer->mesh;
-
-	archer->animation.Initialize(archer->image, archer->mesh, 8, shader);
-	archer->SetState(State::WALK);
-	//archer
-
-	//magician
-	magician = new Magician();
-	magician->Initialize("wizard.txt");
-	magician->image.LoadFrom(PATH::wizard_move);
-
-	magician->SetHealth(magician->GetMagicianHealth());
-	magician->SetDamage(magician->GetMagicianDamage());
-	magician->SetAttackRange(magician->GetMagicianAttackRange());
-
-	magician->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
-	magician->vertices.InitializeWithMeshAndLayout(magician->mesh, layout);
-
-	magician->material.texture = Texture(magician->image);
-	magician->material.vertices = magician->vertices;
-	magician->material.mesh = magician->mesh;
-
-	magician->animation.Initialize(magician->image, magician->mesh, 8, shader);
-	magician->SetState(State::WALK);
-	//magician
-
-	//sword
-	swordAttack = new Object();
-	swordAttack->Initialize("swordAttack.txt");
-
-	swordAttack->SetDamage(knight->GetKnightDamage());
-
-	swordAttack->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
-	swordAttack->vertices.InitializeWithMeshAndLayout(swordAttack->mesh, layout);
-
-	//swordAttack->material.texture = Texture(swordAttack->image);
-	swordAttack->material.vertices = swordAttack->vertices;
-	swordAttack->material.mesh = swordAttack->mesh;
-	//sword
-
-	//fireball
-	fireball = new Object();
-	fireball->Initialize("fireball.txt");
-	fireball->image.LoadFrom(PATH::fireball);
-
-	fireball->SetDamage(magician->GetMagicianDamage());
-
-	fireball->mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
-	fireball->vertices.InitializeWithMeshAndLayout(fireball->mesh, layout);
-
-	fireball->material.texture = Texture(fireball->image);
-	fireball->material.vertices = fireball->vertices;
-	fireball->material.mesh = fireball->mesh;
-
-	fireball->animation.Initialize(fireball->image, fireball->mesh, 3, shader);
-	fireball->SetState(State::WALK);
-	//fireball
-
-	//arrow
-	arrow.Initialize("arrow.txt");
-	arrow.image.LoadFrom(PATH::arrow);
-
-	arrow.SetDamage(archer->GetArcherDamage());
-
-	arrow.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color4);
-	arrow.vertices.InitializeWithMeshAndLayout(arrow.mesh, layout);
-
-	arrow.material.texture = Texture(arrow.image);
-	arrow.material.vertices = arrow.vertices;
-	arrow.material.mesh = arrow.mesh;
-
-	arrow.animation.Initialize(arrow.image, arrow.mesh, 1, shader);
-	arrow.SetState(State::WALK);
-	//arrow
-	//dynamic test
-
+		arrow.SetState(State::WALK);
+		arrow.SetDamage(archer->GetArcherDamage());
+		//arrow
+	}
+	
 	//test sound and make object
 	SOUNDMANAGER->Initialize();
 	SOUNDMANAGER->LoadFile("sound.mp3");
@@ -269,11 +195,6 @@ void Application::Initialize()
 	SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
-
-	//object.Initialize({ starting_x, starting_y }, width, height);
-	//object.speed.x = -150.0f;
-	//object2.Initialize({-300.0f, 0.0f }, width, height);
-	//object2.speed.x = 150.0f;
 }
 
 void Application::Update()
@@ -340,7 +261,6 @@ void Application::Update()
 			shader.SendUniformVariable("ndc", ndc);
 			Draw::draw(shader, obj.second->material);
 		}
-		
 	}
 	//dynamic test
 

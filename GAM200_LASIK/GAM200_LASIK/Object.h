@@ -2,6 +2,7 @@
 #include <string>
 #include "vec2.hpp"
 #include "Image.hpp"
+#include "Texture.hpp"
 #include "Transform.hpp"
 #include "Vertices.h"
 #include "Mesh.h"
@@ -75,11 +76,7 @@ public:
 
 	Transform transform;
 	Material material;
-	Mesh mesh;
-	Vertices vertices;
 	Animation animation;
-	Image image;
-
 
 	// Collision
 	vec2<float> min;
