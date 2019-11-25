@@ -137,21 +137,6 @@ void Text::BuildNewMeshesIfNeeded() const noexcept
 				meshes.at(ch.page).AddTextureCoordinate({ textureRight, textureTop });
 				meshes.at(ch.page).AddTextureCoordinate({ textureLeft, textureBottom });
 				meshes.at(ch.page).AddTextureCoordinate({ textureRight, textureBottom });
-
-				meshes.at(ch.page).SetShapePattern(ShapePattern::Triangle);
-				//meshes.at(ch.page).AddPoint({ 0.0f, 1.0f });
-				//meshes.at(ch.page).AddPoint({ 1.0f, 1.0f });
-				//meshes.at(ch.page).AddPoint({ 0.0f, 0.0f });
-				//meshes.at(ch.page).AddTextureCoordinate({ 0.0f, 1.0f });
-				//meshes.at(ch.page).AddTextureCoordinate({ 1.0f, 1.0f });
-				//meshes.at(ch.page).AddTextureCoordinate({ 0.0f, 0.0f });
-
-				//meshes.at(ch.page).AddPoint({ 1.0f, 1.0f });
-				//meshes.at(ch.page).AddPoint({ 0.0f, 0.0f });
-				//meshes.at(ch.page).AddPoint({ 1.0f, 0.0f });
-				//meshes.at(ch.page).AddTextureCoordinate({ 1.0f, 1.0f });
-				//meshes.at(ch.page).AddTextureCoordinate({ 0.0f, 0.0f });
-				//meshes.at(ch.page).AddTextureCoordinate({ 1.0f, 0.0f });
 				
 				cursor.x += ch.xAdvance;
 			}

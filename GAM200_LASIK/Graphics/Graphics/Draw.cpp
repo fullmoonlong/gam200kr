@@ -29,3 +29,13 @@ void Draw::draw(const Shader& shader, const Material& material)
 	Vertices::SelectVAO(material.vertices);
 	glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
 }
+
+void Draw::DrawText(const Shader& shader, const Text& text)
+{
+	for (const auto& vertices_texture : text.GetVerticesWithMatchingTextures())
+	{
+		const Vertices& textVertices = *vertices_texture.first;
+		const Texture*  textTexture  = vertices_texture.second;
+		draw(shader, { textVertices, *textTexture });
+	}
+}

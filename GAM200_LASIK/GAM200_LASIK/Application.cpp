@@ -11,7 +11,6 @@
 #include "PATH.hpp"
 #include "VerticesDescription.h"
 #include "Image.hpp"
-#include "Text.hpp"
 #include "ComponentTest.h"
 #include "GetInput.hpp"
 #include "Application.h"
@@ -24,7 +23,7 @@ Application::Application()
 
 void Application::Initialize()
 {
-	window.CanCreateWindow(800, 600, this,"Lasik");
+	window.CanCreateWindow(800, 600, this, "Lasik");
 
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);	//shaders for animation
 	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
@@ -32,59 +31,18 @@ void Application::Initialize()
 	const Color4f color{ 1.0f, 1.0f, 1.0f, 1.0f };
 	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
 
-	
+
 	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
-	//float aLeft = 0.0f / 256;
-	//float aBottom = 1.0f - 20.0f / 256;
-	//float aTop = aBottom + 20.0f / 256;
-	//float aRight = 19.0f / 256;
-	//textMesh.SetShapePattern(ShapePattern::Triangle);
-	//textMesh.AddPoint(-0.5f, 0.5f);
-	//textMesh.AddPoint(0.5f, 0.5f);
-	//textMesh.AddPoint(-0.5f, -0.5f);
-	//textMesh.AddTextureCoordinate(aLeft, aTop);
-	//textMesh.AddTextureCoordinate(aRight, aTop);
-	//textMesh.AddTextureCoordinate(aLeft, aBottom);
-
-	//textMesh.AddPoint(0.5f, 0.5f);
-	//textMesh.AddPoint(-0.5f, -0.5f);
-	//textMesh.AddPoint(0.5f, -0.5f);
-	//textMesh.AddTextureCoordinate(aRight, aTop);
-	//textMesh.AddTextureCoordinate(aLeft, aBottom);
-	//textMesh.AddTextureCoordinate(aRight, aBottom);
-
-	//float kLeft = 20.0f / 256;
-	//float kBottom = 1.0f - 20.0f / 256;
-	//float kRight = (20.0f + 18.0f) / 256;
-	//float kTop = kBottom + 20.0f / 256;
-	//textMesh.AddPoint(0.5f, 0.5f);
-	//textMesh.AddPoint(1.5f, 0.5f);
-	//textMesh.AddPoint(0.5f, -0.5f);
-	//textMesh.AddTextureCoordinate(kLeft, kTop);
-	//textMesh.AddTextureCoordinate(kRight, kTop);
-	//textMesh.AddTextureCoordinate(kLeft, kBottom);
-	//
-	//textMesh.AddPoint(1.5f, 0.5f);
-	//textMesh.AddPoint(0.5f, -0.5f);
-	//textMesh.AddPoint(1.5f, -0.5f);
-	//textMesh.AddTextureCoordinate(kRight, kTop);
-	//textMesh.AddTextureCoordinate(kLeft, kBottom);
-	//textMesh.AddTextureCoordinate(kRight, kBottom);
-	
-	textVertices.InitializeWithMeshAndLayout(textMesh, layout);
-
-	fontTexture.LoadFromPath(PATH::bitmapfont_png);
+	text.SetFont(bitmapFont);
+	text.SetString(L"LASIK");
+	textTransform.SetTranslation({ -300.0f, 0.0f });
 	
 	//camera
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//camera
 	
-	lasik.Initialize("text.txt");
-
-	
 	//background
-
 	//backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	//backgroundMesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
 	//backgroundVertices.InitializeWithMeshAndLayout(backgroundMesh, layout);
@@ -94,7 +52,6 @@ void Application::Initialize()
 	//backgroundMaterial.mesh = backgroundMesh;
 	//backgroundMaterial.vertices = backgroundVertices;
 	//backgroundMaterial.texture = backgroundTexture;
-
 	//background
 
 	Mesh mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
@@ -212,40 +169,9 @@ void Application::Update()
 	//Draw
 	draw.StartDrawing();
 
-
-	Text text(L"LASIK", bitmapFont);
-	for (const auto& vertices_texture_pair : text.GetVerticesWithMatchingTextures())
-	{
-		const Vertices& text_vertices = *vertices_texture_pair.first;
-		const Texture*  text_texture  = vertices_texture_pair.second;
-		//	textMaterial.textureUniforms.insert_or_assign(SHADER::Uniform_Texture, texture_uniform{text_texture});
-		//	//GL::draw(text_vertices, textMaterial);
-		Transform fontTransform;
-		//fontTransform.SetScale({ 10.0f, 10.0f });
-		//glActiveTexture(GL_TEXTURE0);
-		Draw::draw(fontShader, { text_vertices, *text_texture });
-		const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * fontTransform.GetModelToWorld();
-		fontShader.SendUniformVariable("ndc", ndc);
-	}
-
-	//const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
-	//const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
-	const mat3<float> ndc_font = view.GetCameraToNDCTransform() * camera.WorldToCamera() * lasik.transform.GetModelToWorld();
-	//const mat3<float> ndcBackground = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
-	
-	//Draw::draw(backgroundShader, backgroundMaterial);
-	//shader.SendUniformVariable("ndc", ndcBackground);
-	
-	//animation.Animate(deltaTime);
-	//shader.SendUniformVariable("ndc", ndc);
-	//Draw::draw(shader, material);
-
-	//animation2.Animate(deltaTime);
-	//shader.SendUniformVariable("ndc", ndc2);
-	//Draw::draw(shader, material2);
-
-	Draw::draw(fontShader, { textVertices, fontTexture });
-	fontShader.SendUniformVariable("ndc", ndc_font);
+	Draw::DrawText(fontShader, text);
+	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
+	fontShader.SendUniformVariable("ndc", textNDC);
 
 	//dynamic test
 	for (auto obj : OBJECTFACTORY->GetObjecteList())
