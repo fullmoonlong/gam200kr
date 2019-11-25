@@ -18,7 +18,6 @@ struct Material
 {
 	Vertices vertices;
 	Texture texture;
-	Mesh mesh;
 };
 
 class Draw

@@ -34,42 +34,42 @@ void Application::Initialize()
 
 	
 	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
-	float aLeft = 0.0f / 256;
-	float aBottom = 1.0f - 20.0f / 256;
-	float aTop = aBottom + 20.0f / 256;
-	float aRight = 19.0f / 256;
-	textMesh.SetShapePattern(ShapePattern::Triangle);
-	textMesh.AddPoint(-0.5f, 0.5f);
-	textMesh.AddPoint(0.5f, 0.5f);
-	textMesh.AddPoint(-0.5f, -0.5f);
-	textMesh.AddTextureCoordinate(aLeft, aTop);
-	textMesh.AddTextureCoordinate(aRight, aTop);
-	textMesh.AddTextureCoordinate(aLeft, aBottom);
+	//float aLeft = 0.0f / 256;
+	//float aBottom = 1.0f - 20.0f / 256;
+	//float aTop = aBottom + 20.0f / 256;
+	//float aRight = 19.0f / 256;
+	//textMesh.SetShapePattern(ShapePattern::Triangle);
+	//textMesh.AddPoint(-0.5f, 0.5f);
+	//textMesh.AddPoint(0.5f, 0.5f);
+	//textMesh.AddPoint(-0.5f, -0.5f);
+	//textMesh.AddTextureCoordinate(aLeft, aTop);
+	//textMesh.AddTextureCoordinate(aRight, aTop);
+	//textMesh.AddTextureCoordinate(aLeft, aBottom);
 
-	textMesh.AddPoint(0.5f, 0.5f);
-	textMesh.AddPoint(-0.5f, -0.5f);
-	textMesh.AddPoint(0.5f, -0.5f);
-	textMesh.AddTextureCoordinate(aRight, aTop);
-	textMesh.AddTextureCoordinate(aLeft, aBottom);
-	textMesh.AddTextureCoordinate(aRight, aBottom);
+	//textMesh.AddPoint(0.5f, 0.5f);
+	//textMesh.AddPoint(-0.5f, -0.5f);
+	//textMesh.AddPoint(0.5f, -0.5f);
+	//textMesh.AddTextureCoordinate(aRight, aTop);
+	//textMesh.AddTextureCoordinate(aLeft, aBottom);
+	//textMesh.AddTextureCoordinate(aRight, aBottom);
 
-	float kLeft = 20.0f / 256;
-	float kBottom = 1.0f - 20.0f / 256;
-	float kRight = (20.0f + 18.0f) / 256;
-	float kTop = kBottom + 20.0f / 256;
-	textMesh.AddPoint(0.5f, 0.5f);
-	textMesh.AddPoint(1.5f, 0.5f);
-	textMesh.AddPoint(0.5f, -0.5f);
-	textMesh.AddTextureCoordinate(kLeft, kTop);
-	textMesh.AddTextureCoordinate(kRight, kTop);
-	textMesh.AddTextureCoordinate(kLeft, kBottom);
-	
-	textMesh.AddPoint(1.5f, 0.5f);
-	textMesh.AddPoint(0.5f, -0.5f);
-	textMesh.AddPoint(1.5f, -0.5f);
-	textMesh.AddTextureCoordinate(kRight, kTop);
-	textMesh.AddTextureCoordinate(kLeft, kBottom);
-	textMesh.AddTextureCoordinate(kRight, kBottom);
+	//float kLeft = 20.0f / 256;
+	//float kBottom = 1.0f - 20.0f / 256;
+	//float kRight = (20.0f + 18.0f) / 256;
+	//float kTop = kBottom + 20.0f / 256;
+	//textMesh.AddPoint(0.5f, 0.5f);
+	//textMesh.AddPoint(1.5f, 0.5f);
+	//textMesh.AddPoint(0.5f, -0.5f);
+	//textMesh.AddTextureCoordinate(kLeft, kTop);
+	//textMesh.AddTextureCoordinate(kRight, kTop);
+	//textMesh.AddTextureCoordinate(kLeft, kBottom);
+	//
+	//textMesh.AddPoint(1.5f, 0.5f);
+	//textMesh.AddPoint(0.5f, -0.5f);
+	//textMesh.AddPoint(1.5f, -0.5f);
+	//textMesh.AddTextureCoordinate(kRight, kTop);
+	//textMesh.AddTextureCoordinate(kLeft, kBottom);
+	//textMesh.AddTextureCoordinate(kRight, kBottom);
 	
 	textVertices.InitializeWithMeshAndLayout(textMesh, layout);
 
@@ -97,13 +97,14 @@ void Application::Initialize()
 
 	//background
 
+	Mesh mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
 	// unit initialize
 	{
 		//kevin
 		proKevin = new Object();
 		proKevin->Initialize("enemyPrototype.txt");
-		proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		proKevin->material.vertices.InitializeWithMeshAndLayout(proKevin->material.mesh, layout);
+		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		proKevin->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
 		proKevin->material.texture.LoadFromPath(PATH::kevin_move);
 		proKevin->animation.Initialize(8, shader);
 
@@ -116,8 +117,8 @@ void Application::Initialize()
 		//knight
 		knight = new Knight();
 		knight->Initialize("knight.txt");
-		knight->material.mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
-		knight->material.vertices.InitializeWithMeshAndLayout(knight->material.mesh, layout);
+		//knight->material.mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
+		knight->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
 		knight->material.texture.LoadFromPath(PATH::knight_move);
 		knight->animation.Initialize(8, shader);
 
@@ -129,8 +130,8 @@ void Application::Initialize()
 		//archer
 		archer = new Archer();
 		archer->Initialize("archer.txt");
-		archer->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		archer->material.vertices.InitializeWithMeshAndLayout(archer->material.mesh, layout);
+		//archer->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		archer->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
 		archer->material.texture.LoadFromPath(PATH::archer_move);
 		archer->animation.Initialize(8, shader);
 
@@ -143,8 +144,8 @@ void Application::Initialize()
 		//magician
 		magician = new Magician();
 		magician->Initialize("wizard.txt");
-		magician->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		magician->material.vertices.InitializeWithMeshAndLayout(magician->material.mesh, layout);
+		//magician->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		magician->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
 		magician->material.texture.LoadFromPath(PATH::wizard_move);
 		magician->animation.Initialize(8, shader);
 
@@ -157,8 +158,8 @@ void Application::Initialize()
 		//sword attack
 		swordAttack = new Object();
 		swordAttack->Initialize("swordAttack.txt");
-		swordAttack->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		swordAttack->material.vertices.InitializeWithMeshAndLayout(swordAttack->material.mesh, layout);
+		//swordAttack->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		swordAttack->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
 
 		swordAttack->SetDamage(knight->GetKnightDamage());
 		//sword attack
@@ -166,8 +167,8 @@ void Application::Initialize()
 		//fireball
 		fireball = new Object();
 		fireball->Initialize("fireball.txt");
-		fireball->material.mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
-		fireball->material.vertices.InitializeWithMeshAndLayout(fireball->material.mesh, layout);
+		//fireball->material.mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
+		fireball->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
 		fireball->material.texture.LoadFromPath(PATH::fireball);
 		fireball->animation.Initialize(3, shader);
 
@@ -177,8 +178,8 @@ void Application::Initialize()
 
 		//arrow
 		arrow.Initialize("arrow.txt");
-		arrow.material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		arrow.material.vertices.InitializeWithMeshAndLayout(arrow.material.mesh, layout);
+		//arrow.material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		arrow.material.vertices.InitializeWithMeshAndLayout(mesh, layout);
 		arrow.material.texture.LoadFromPath(PATH::arrow);
 		arrow.animation.Initialize(1, shader);
 
@@ -213,22 +214,19 @@ void Application::Update()
 
 
 	Text text(L"LASIK", bitmapFont);
-	//for (const auto& vertices_texture_pair : text.GetVerticesWithMatchingTextures())
-	//{
-	//	const Vertices& text_vertices = *vertices_texture_pair.first;
-	//	const Texture*  text_texture  = vertices_texture_pair.second;
-	//	//	textMaterial.textureUniforms.insert_or_assign(SHADER::Uniform_Texture, texture_uniform{text_texture});
-	//	//	//GL::draw(text_vertices, textMaterial);
-	//	Material fontMaterial;
-	//	Transform fontTransform;
-	//	fontTransform.SetScale({ 100.0f, 100.0f });
-	//	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * fontTransform.GetModelToWorld();
-	//	fontShader.SendUniformVariable("ndc", ndc);
-	//	fontMaterial.vertices = text_vertices;
-	//	//glActiveTexture(GL_TEXTURE0);
-	//	glBindTexture(GL_TEXTURE_2D, text_texture->GetTexturehandle());
-	//	draw.draw(fontShader, fontMaterial);
-	//}
+	for (const auto& vertices_texture_pair : text.GetVerticesWithMatchingTextures())
+	{
+		const Vertices& text_vertices = *vertices_texture_pair.first;
+		const Texture*  text_texture  = vertices_texture_pair.second;
+		//	textMaterial.textureUniforms.insert_or_assign(SHADER::Uniform_Texture, texture_uniform{text_texture});
+		//	//GL::draw(text_vertices, textMaterial);
+		Transform fontTransform;
+		//fontTransform.SetScale({ 10.0f, 10.0f });
+		//glActiveTexture(GL_TEXTURE0);
+		Draw::draw(fontShader, { text_vertices, *text_texture });
+		const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * fontTransform.GetModelToWorld();
+		fontShader.SendUniformVariable("ndc", ndc);
+	}
 
 	//const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object.transform.GetModelToWorld();
 	//const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
@@ -246,7 +244,7 @@ void Application::Update()
 	//shader.SendUniformVariable("ndc", ndc2);
 	//Draw::draw(shader, material2);
 
-	Draw::draw(fontShader, { textVertices, fontTexture, textMesh });
+	Draw::draw(fontShader, { textVertices, fontTexture });
 	fontShader.SendUniformVariable("ndc", ndc_font);
 
 	//dynamic test
