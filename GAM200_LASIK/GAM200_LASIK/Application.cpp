@@ -23,13 +23,15 @@ Application::Application()
 
 void Application::Initialize()
 {
-	window.CanCreateWindow(800, 600, this, "Lasik");
+	window.CanCreateWindow(1280, 720, this, "Lasik");
 
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);	//shaders for animation
 	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 
 	const Color4f color{ 1.0f, 1.0f, 1.0f, 1.0f };
 	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
+	const Mesh& rectangle = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
 
 
 	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
@@ -41,27 +43,21 @@ void Application::Initialize()
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//camera
+
+	//background
+	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	backgroundVertices.InitializeWithMeshAndLayout(rectangle, layout);
+	backgroundTexture.LoadFromPath(PATH::background);
+	background.transform.SetScale({ 1000 });
+	//background
 	
-	//background
-	//backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	//backgroundMesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
-	//backgroundVertices.InitializeWithMeshAndLayout(backgroundMesh, layout);
-	//backgroundTexture.LoadFromPath(PATH::background);
-	//background.transform.SetDepth(-0.5f);
-
-	//backgroundMaterial.mesh = backgroundMesh;
-	//backgroundMaterial.vertices = backgroundVertices;
-	//backgroundMaterial.texture = backgroundTexture;
-	//background
-
-	Mesh mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
 	// unit initialize
 	{
 		//kevin
 		proKevin = new Object();
 		proKevin->Initialize("enemyPrototype.txt");
 		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		proKevin->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
+		proKevin->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		proKevin->material.texture.LoadFromPath(PATH::kevin_move);
 		proKevin->animation.Initialize(8, shader);
 
@@ -75,7 +71,7 @@ void Application::Initialize()
 		knight = new Knight();
 		knight->Initialize("knight.txt");
 		//knight->material.mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
-		knight->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
+		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		knight->material.texture.LoadFromPath(PATH::knight_move);
 		knight->animation.Initialize(8, shader);
 
@@ -88,7 +84,7 @@ void Application::Initialize()
 		archer = new Archer();
 		archer->Initialize("archer.txt");
 		//archer->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		archer->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
+		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		archer->material.texture.LoadFromPath(PATH::archer_move);
 		archer->animation.Initialize(8, shader);
 
@@ -102,7 +98,7 @@ void Application::Initialize()
 		magician = new Magician();
 		magician->Initialize("wizard.txt");
 		//magician->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		magician->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
+		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadFromPath(PATH::wizard_move);
 		magician->animation.Initialize(8, shader);
 
@@ -116,7 +112,7 @@ void Application::Initialize()
 		swordAttack = new Object();
 		swordAttack->Initialize("swordAttack.txt");
 		//swordAttack->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		swordAttack->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
+		swordAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 
 		swordAttack->SetDamage(knight->GetKnightDamage());
 		//sword attack
@@ -125,7 +121,7 @@ void Application::Initialize()
 		fireball = new Object();
 		fireball->Initialize("fireball.txt");
 		//fireball->material.mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
-		fireball->material.vertices.InitializeWithMeshAndLayout(mesh, layout);
+		fireball->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		fireball->material.texture.LoadFromPath(PATH::fireball);
 		fireball->animation.Initialize(3, shader);
 
@@ -136,7 +132,7 @@ void Application::Initialize()
 		//arrow
 		arrow.Initialize("arrow.txt");
 		//arrow.material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		arrow.material.vertices.InitializeWithMeshAndLayout(mesh, layout);
+		arrow.material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		arrow.material.texture.LoadFromPath(PATH::arrow);
 		arrow.animation.Initialize(1, shader);
 
@@ -167,8 +163,12 @@ void Application::Update()
 	//Transform
 	
 	//Draw
-	draw.StartDrawing();
+	Draw::StartDrawing();
 
+	Draw::draw(backgroundShader, { backgroundVertices, backgroundTexture });
+	const mat3<float> backgroundNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
+	backgroundShader.SendUniformVariable("ndc", backgroundNDC);
+	
 	Draw::DrawText(fontShader, text);
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	fontShader.SendUniformVariable("ndc", textNDC);
@@ -188,7 +188,7 @@ void Application::Update()
 	}
 	//dynamic test
 
-	draw.Finish();
+	Draw::FinishDrawing();
 	//Draw
 
 	++frameCount;
@@ -235,12 +235,7 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		window.ToggleFullScreen();
 		break;
 	case KeyboardButtons::V:
-		if (window.IsVSyncOn() == false)
-		{
-			window.ToggleVSync(true);
-			break;
-		}
-		window.ToggleVSync(false);
+		window.ToggleVSync(!window.IsVSyncOn());
 		break;
 	case KeyboardButtons::W:
 		//pressDirection.y += 

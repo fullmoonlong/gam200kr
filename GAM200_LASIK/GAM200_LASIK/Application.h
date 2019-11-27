@@ -54,9 +54,9 @@ private:
 	Object* proKevin;
 	Object* objectTest1;
 
-	Shader backgroundShader;
 	Object background;
-	Mesh backgroundMesh;
+	Shader backgroundShader;
+	//Mesh backgroundMesh;
 	Vertices backgroundVertices;
 	Texture backgroundTexture;
 	Material backgroundMaterial;

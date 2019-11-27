@@ -17,17 +17,24 @@ void Draw::StartDrawing()
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Draw::Finish()
+void Draw::FinishDrawing()
 {
 	glFinish();
 }
 
 void Draw::draw(const Shader& shader, const Material& material)
-{	
+{
 	glBindTexture(GL_TEXTURE_2D, material.texture.GetTexturehandle());
 	Shader::UseShader(shader);
 	Vertices::SelectVAO(material.vertices);
 	glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
+}
+
+void Draw::DrawShape(const Shader& shader, const Vertices& vertices)
+{
+	Shader::UseShader(shader);
+	Vertices::SelectVAO(vertices);
+	glDrawArrays(vertices.GetPattern(), 0, vertices.GetVerticesCount());
 }
 
 void Draw::DrawText(const Shader& shader, const Text& text)

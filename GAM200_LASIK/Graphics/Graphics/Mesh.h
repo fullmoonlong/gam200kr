@@ -15,9 +15,11 @@
 
 enum class ShapePattern
 {
-	Triangle,
+	Line,
+	Triangles,
 	TriangleStrip,
-	TriangleFan
+	TriangleFan,
+	Quads
 };
 
 class [[nodiscard]]Mesh
@@ -40,12 +42,13 @@ private:
 	std::vector<vec2<float>> points;
 	std::vector<Color4f> colors;
 	std::vector<vec2<float>> textureCoordinates;
-	ShapePattern pattern = ShapePattern::Triangle;
+	ShapePattern pattern = ShapePattern::Triangles;
 };
 
 namespace MESH
 {
 	Mesh create_ellipse(float rx, float ry, int pointsNum, Color4f color);
 	Mesh create_rectangle(float xPos, float yPos, float width, float height, Color4f color);
-	//void draw_line(vec2, vec2, vec3 color);
+	Mesh create_quad(vec2<float> p1, vec2<float> p2, vec2<float> p3, vec2<float> p4, Color4f color);
+	Mesh create_line(vec2<float> p1, vec2<float> p2, Color4f color);
 };

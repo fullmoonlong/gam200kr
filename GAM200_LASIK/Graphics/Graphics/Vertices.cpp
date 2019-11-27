@@ -21,7 +21,13 @@ void Vertices::InitializeWithMeshAndLayout(const Mesh& mesh, const VerticesDescr
 {
 	switch (mesh.GetShapePattern())
 	{
-	case ShapePattern::Triangle:
+	case ShapePattern::Line:
+		pattern = GL_LINES;
+		break;
+	case ShapePattern::Quads:
+		pattern = GL_QUADS;
+		break;
+	case ShapePattern::Triangles:
 		pattern = GL_TRIANGLES;
 		break;
 	case ShapePattern::TriangleFan:

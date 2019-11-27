@@ -12,7 +12,6 @@
 #include "Shader.h"
 #include "Vertices.h"
 #include "Texture.hpp"
-#include "Mesh.h"
 #include "Text.hpp"
 
 struct Material
@@ -24,9 +23,10 @@ struct Material
 class Draw
 {
 public:
-	void StartDrawing();
-	void Finish();
+	static void StartDrawing();
+	static void FinishDrawing();
 	static void draw(const Shader& shader, const Material& material);
+	static void DrawShape(const Shader& shader, const Vertices& vertices);
 	static void DrawText(const Shader& shader, const Text& text);
 private:
 };

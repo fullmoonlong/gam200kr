@@ -123,7 +123,7 @@ void Text::BuildNewMeshesIfNeeded() const noexcept
 				float textureRight = (ch.x + ch.width) / float(chDesc.imageWidth);
 				float textureBottom = 1.0f - (ch.y + ch.height) / float(chDesc.imageHeight);
 
-				meshes.at(ch.page).SetShapePattern(ShapePattern::Triangle);
+				meshes.at(ch.page).SetShapePattern(ShapePattern::Triangles);
 				meshes.at(ch.page).AddPoint({ left, top });
 				meshes.at(ch.page).AddPoint({ right, top });
 				meshes.at(ch.page).AddPoint({ left, bottom });
