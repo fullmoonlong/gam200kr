@@ -1,35 +1,35 @@
 /********************************************************
  *	Author: JeongHak Kim	junghak.kim@digipen.edu
  *	
- *	File_name: Application.cpp
+ *	File_name: ShapeDrawingDemo.cpp
  *	
  *	Graphic demo main file
  *	
- *	2019/11/25
+ *	Nov.25 2019
  *******************************************************/
 
 #include <iostream>
-#include "GraphicDemo.h"
+#include "ShapeDrawingDemo.h"
 #include "Draw.hpp"
 #include "PATH.hpp"
 
-GraphicDemo::GraphicDemo()
-{
-	isRunning = true;
-	Initialize();
-}
+//ShapeDrawingDemo::ShapeDrawingDemo()
+//{
+//	isRunning = true;
+//	Initialize();
+//}
 
-bool GraphicDemo::IsRunning() const
-{
-	return isRunning;
-}
+//bool ShapeDrawingDemo::IsRunning() const
+//{
+//	return isRunning;
+//}
 
-void GraphicDemo::Initialize()
+void ShapeDrawingDemo::Initialize()
 {
-	if (!window.CanCreateWindow(width, height, this, "GrahpicDemo"))
-	{
-		std::cout << "Failed to Create Window\n";
-	}
+	//if (!window.CanCreateWindow(width, height, this, "GrahpicDemo"))
+	//{
+	//	std::cout << "Failed to Create Window\n";
+	//}
 	shader.LoadShaderFrom(PATH::shape_vert, PATH::shape_frag);
 	const Color4f color{ .8f, .8f, .0f, 1.0f };
 	const Color4f lineColor{ .0f, .0f };
@@ -55,14 +55,14 @@ void GraphicDemo::Initialize()
 	triangleTransform.SetTranslation({ -100.0f, 100.0f });
 	
 	// camera
-	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
+	view.SetViewSize(1280, 720);
 	view.SetZoom(1.0f);
 	// camera
 }
 
-void GraphicDemo::Update()
+void ShapeDrawingDemo::Update()
 {
-	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
+	//view.SetViewSize(1280, 720);
 	
 	Draw::StartDrawing();
 	
@@ -88,58 +88,55 @@ void GraphicDemo::Update()
 	Draw::DrawShape(shader, triangleVertices);
 	
 	Draw::FinishDrawing();
-	
-	window.SwapBuffers();
-	window.PollEvents();
 }
 
-void GraphicDemo::ShutDown()
+void ShapeDrawingDemo::ShutDown()
 {
-	isRunning = false;
-	if (static_cast<bool>(glfwWindowShouldClose(window.window)) != true)
-	{
-		glfwSetWindowShouldClose(window.window, GLFW_FALSE);
-	}
+	//isRunning = false;
+	//if (static_cast<bool>(glfwWindowShouldClose(window.window)) != true)
+	//{
+	//	glfwSetWindowShouldClose(window.window, GLFW_FALSE);
+	//}
 }
 
-void GraphicDemo::HandleKeyPress(KeyboardButtons button)
-{
-	switch (button)
-	{
-	case KeyboardButtons::Escape:
-		this->ShutDown();
-		break;
-	case KeyboardButtons::F:
-		window.ToggleFullScreen();
-		break;
-	case KeyboardButtons::V:
-		window.ToggleVSync(!window.IsVSyncOn());
-		break;
-	default:
-		break;
-	}
-}
-
-void GraphicDemo::HandleResizeEvent(const int& new_width, const int& new_height)
-{
-	window.SetWindowWidth(new_width);
-	window.SetWindowHeight(new_height);
-
-	//camera
-	view.SetViewSize(new_width, new_height);
-	view.SetZoom(view.GetZoom());
-	//camera
-}
-
-void GraphicDemo::HandleScrollEvent(float scroll_amount)
-{
-	const float zoomSpeed = .05f;
-	float newZoom = view.GetZoom() + (scroll_amount * zoomSpeed);
-	newZoom = std::clamp(newZoom, 0.5f, 2.0f);
-	view.SetZoom(newZoom);
-}
-
-void GraphicDemo::HandleWindowClose()
-{
-	ShutDown();
-}
+//void ShapeDrawingDemo::HandleKeyPress(KeyboardButtons button)
+//{
+//	//switch (button)
+//	//{
+//	//case KeyboardButtons::Escape:
+//	//	this->ShutDown();
+//	//	break;
+//	//case KeyboardButtons::F:
+//	//	window.ToggleFullScreen();
+//	//	break;
+//	//case KeyboardButtons::V:
+//	//	window.ToggleVSync(!window.IsVSyncOn());
+//	//	break;
+//	//default:
+//	//	break;
+//	//}
+//}
+//
+//void ShapeDrawingDemo::HandleResizeEvent(const int& new_width, const int& new_height)
+//{
+//	//window.SetWindowWidth(new_width);
+//	//window.SetWindowHeight(new_height);
+//
+//	//camera
+//	//view.SetViewSize(new_width, new_height);
+//	//view.SetZoom(view.GetZoom());
+//	//camera
+//}
+//
+//void ShapeDrawingDemo::HandleScrollEvent(float scroll_amount)
+//{
+//	const float zoomSpeed = .05f;
+//	//float newZoom = view.GetZoom() + (scroll_amount * zoomSpeed);
+//	//newZoom = std::clamp(newZoom, 0.5f, 2.0f);
+//	//view.SetZoom(newZoom);
+//}
+//
+//void ShapeDrawingDemo::HandleWindowClose()
+//{
+//	ShutDown();
+//}

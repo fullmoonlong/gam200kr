@@ -1,43 +1,30 @@
 /********************************************************
  *	Author: JeongHak Kim	junghak.kim@digipen.edu
  *	
- *	File_name: Application.h
+ *	File_name: ShapeDrawingDemo.h
  *	
  *	Graphic demo main file
  *	
- *	2019/11/25
+ *	Nov.25 2019
  *******************************************************/
 
 #pragma  once
-#include "OpenGL_Window.h"
 #include "Shader.h"
 #include "Mesh.h"
 #include "Vertices.h"
 #include "VerticesDescription.h"
-#include "Texture.hpp"
 #include "Camera.hpp"
 #include "CameraView.hpp"
 #include "Transform.hpp"
 #include "EventHandler.hpp"
 
-class GraphicDemo : public SimpleEventHandler
+class ShapeDrawingDemo : public SimpleEventHandler
 {
 public:
-	GraphicDemo();
-	bool IsRunning() const;
 	void Initialize();
 	void Update();
 	void ShutDown();
-
-	void HandleKeyPress(KeyboardButtons button) override final;
-	void HandleWindowClose() override final;
-	void HandleResizeEvent(const int& width, const int& height) override final;
-	void HandleScrollEvent(float scroll_amount) override final;
 private:
-	bool isRunning;
-	Window window;
-	const int width = 1280;
-	const int height = 720;
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	Shader shader;
 

@@ -150,11 +150,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GraphicDemo.cpp" />
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Demo.cpp" />
+    <ClCompile Include="ShapeDrawingDemo.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GraphicDemo.h" />
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="Demo.h" />
+    <ClInclude Include="ShapeDrawingDemo.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Graphics\Graphics.vcxproj">

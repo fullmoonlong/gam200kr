@@ -5,18 +5,22 @@
  *	
  *	Graphic demo main file
  *	
- *	2019/11/25
+ *	Nov.25 2019
  *******************************************************/
 
-#include "GraphicDemo.h"
+#include "Application.h"
 
 int main()
 {
-	GraphicDemo demo;
+	//ShapeDrawingDemo demo;
 
-	while (demo.IsRunning())
+	Application app;
+	
+	//demo.Initialize();
+
+	while (app.IsRunning())
 	{
-		demo.Update();
+		app.Update();
 	}
 
 	return 0;
