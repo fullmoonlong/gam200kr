@@ -15,13 +15,13 @@
 
 GraphicDemo::GraphicDemo()
 {
-	running = true;
+	isRunning = true;
 	Initialize();
 }
 
-bool GraphicDemo::isRunning()
+bool GraphicDemo::IsRunning() const
 {
-	return running;
+	return isRunning;
 }
 
 void GraphicDemo::Initialize()
@@ -36,12 +36,24 @@ void GraphicDemo::Initialize()
 
 	rectangle = MESH::create_rectangle(.0f, .0f, 50.f, 50.f, color);
 	vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	transform.SetTranslation({ 300.0, 150.0f });
+	transform.SetTranslation({ 150.0f, 0.0f });
 
-	line = MESH::create_line({ 0.0f, 0.0f }, { -200.0f, -200.0f }, lineColor);
+	line = MESH::create_line({ 200.0f, 200.0f }, { 0.0f, 0.0f }, lineColor);
 	lineVertices.InitializeWithMeshAndLayout(line, layout);
-	lineTransform.SetTranslation({ -50.0f, 0.0f });
+	lineTransform.SetTranslation({ 0.0f, 0.0f });
 
+	quad = MESH::create_quad({ -20.f, 0.f }, { -50.f, -50.f }, { 50.f, -50.f }, { 20.f, 0.f }, color);
+	quadVertices.InitializeWithMeshAndLayout(quad, layout);
+	quadTransform.SetTranslation({ -100.f, 0.0f });
+
+	ellipse = MESH::create_ellipse(50.f, 50.f, 30, color);
+	ellipseVertices.InitializeWithMeshAndLayout(ellipse, layout);
+	ellipseTransform.SetTranslation({ 0.0f, 100.0f });
+
+	triangle = MESH::create_triangle({ 0.0f, 50.0f }, { -30.f, 0.0f }, { 30.f, 0.0f }, color);
+	triangleVertices.InitializeWithMeshAndLayout(triangle, layout);
+	triangleTransform.SetTranslation({ -100.0f, 100.0f });
+	
 	// camera
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(1.0f);
@@ -50,15 +62,30 @@ void GraphicDemo::Initialize()
 
 void GraphicDemo::Update()
 {
+	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
+	
 	Draw::StartDrawing();
-
+	
 	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
 	const mat3<float> lineNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * lineTransform.GetModelToWorld();
-	Draw::DrawShape(shader, vertices);
+	const mat3<float> quadNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * quadTransform.GetModelToWorld();
+	const mat3<float> ellipseNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * ellipseTransform.GetModelToWorld();
+	const mat3<float> triangleNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * triangleTransform.GetModelToWorld();
+	
 	shader.SendUniformVariable("ndc", ndc);
+	Draw::DrawShape(shader, vertices);
 
-	Draw::DrawShape(shader, lineVertices);
 	shader.SendUniformVariable("ndc", lineNDC);
+	Draw::DrawShape(shader, lineVertices);
+
+	shader.SendUniformVariable("ndc", quadNDC);
+	Draw::DrawShape(shader, quadVertices);
+
+	shader.SendUniformVariable("ndc", ellipseNDC);
+	Draw::DrawShape(shader, ellipseVertices);
+
+	shader.SendUniformVariable("ndc", triangleNDC);
+	Draw::DrawShape(shader, triangleVertices);
 	
 	Draw::FinishDrawing();
 	
@@ -68,8 +95,8 @@ void GraphicDemo::Update()
 
 void GraphicDemo::ShutDown()
 {
-	running = false;
-	if ((bool)glfwWindowShouldClose(window.window) != true)
+	isRunning = false;
+	if (static_cast<bool>(glfwWindowShouldClose(window.window)) != true)
 	{
 		glfwSetWindowShouldClose(window.window, GLFW_FALSE);
 	}
@@ -87,6 +114,8 @@ void GraphicDemo::HandleKeyPress(KeyboardButtons button)
 		break;
 	case KeyboardButtons::V:
 		window.ToggleVSync(!window.IsVSyncOn());
+		break;
+	default:
 		break;
 	}
 }
@@ -106,7 +135,7 @@ void GraphicDemo::HandleScrollEvent(float scroll_amount)
 {
 	const float zoomSpeed = .05f;
 	float newZoom = view.GetZoom() + (scroll_amount * zoomSpeed);
-	newZoom = std::clamp(newZoom, 0.1f, 2.0f);
+	newZoom = std::clamp(newZoom, 0.5f, 2.0f);
 	view.SetZoom(newZoom);
 }
 

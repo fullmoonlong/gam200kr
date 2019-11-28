@@ -46,9 +46,10 @@ void Application::Initialize()
 
 	//background
 	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	backgroundMesh.SetShapePattern(ShapePattern::TriangleFan);
 	backgroundVertices.InitializeWithMeshAndLayout(rectangle, layout);
-	backgroundTexture.LoadFromPath(PATH::background);
-	background.transform.SetScale({ 1000 });
+	backgroundTexture.LoadBackground();
+	background.transform.SetScale({ 1280, 720 });
 	//background
 	
 	// unit initialize
@@ -364,7 +365,9 @@ void Application::HandleResizeEvent(const int& new_width, const int& new_height)
 void Application::HandleScrollEvent(float scroll_amount)
 {
 	zoom = view.GetZoom() + (scroll_amount * 0.05f);
-	zoom = std::clamp(zoom, 0.1f, 2.0f);
+	zoom = std::clamp(zoom, 0.5f, 2.0f);
+	background.transform.SetScale({ window.GetWindowWidth() * (1.f / zoom),
+		window.GetWindowHeight() * (1.f / zoom) });
 	view.SetZoom(zoom);
 }
 

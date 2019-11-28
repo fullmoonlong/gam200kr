@@ -24,7 +24,7 @@ class GraphicDemo : public SimpleEventHandler
 {
 public:
 	GraphicDemo();
-	bool isRunning();
+	bool IsRunning() const;
 	void Initialize();
 	void Update();
 	void ShutDown();
@@ -34,20 +34,33 @@ public:
 	void HandleResizeEvent(const int& width, const int& height) override final;
 	void HandleScrollEvent(float scroll_amount) override final;
 private:
-	bool running;
+	bool isRunning;
 	Window window;
 	const int width = 1280;
 	const int height = 720;
+	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
+	Shader shader;
 
 	Camera camera;
 	CameraView view;
 	
-	Shader shader;
 	Mesh rectangle;
-	Mesh line;
 	Vertices vertices;
-	Vertices lineVertices;
 	Transform transform;
+	
+	Mesh line;
+	Vertices lineVertices;
 	Transform lineTransform;
-	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
+
+	Mesh quad;
+	Vertices quadVertices;
+	Transform quadTransform;
+
+	Mesh ellipse;
+	Vertices ellipseVertices;
+	Transform ellipseTransform;
+
+	Mesh triangle;
+	Vertices triangleVertices;
+	Transform triangleTransform;
 };

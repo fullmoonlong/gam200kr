@@ -34,11 +34,10 @@ mat3<float> Transform::GetWorldToModel() noexcept
 
 float Transform::CalculateWorldDepth() const noexcept
 {
-	float sum = 0;
-	sum = depth;
+	//const float sum = depth;
 	if (parent != nullptr)
 	{
-		return sum + parent->CalculateWorldDepth();
+		return depth + parent->CalculateWorldDepth();
 	}
-	return sum;
+	return depth;
 }

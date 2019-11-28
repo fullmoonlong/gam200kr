@@ -56,10 +56,10 @@ private:
 
 	Object background;
 	Shader backgroundShader;
-	//Mesh backgroundMesh;
+	Mesh backgroundMesh;
 	Vertices backgroundVertices;
 	Texture backgroundTexture;
-	Material backgroundMaterial;
+	//Material backgroundMaterial;
 
 	Shader fontShader;
 	BitmapFont bitmapFont;

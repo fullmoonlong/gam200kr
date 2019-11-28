@@ -14,7 +14,7 @@ int main()
 {
 	GraphicDemo demo;
 
-	while (demo.isRunning())
+	while (demo.IsRunning())
 	{
 		demo.Update();
 	}

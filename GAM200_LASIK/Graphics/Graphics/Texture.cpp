@@ -11,6 +11,7 @@
 #include "GL/glew.h"
 #include "Image.hpp"
 #include "Texture.hpp"
+#include "PATH.hpp"
 
 Texture::Texture(Image& image)
 {
@@ -45,5 +46,20 @@ bool Texture::LoadFromImage(const Image& image) noexcept
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.GetWidth(), image.GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.GetPixelPointer());
 	
+	return true;
+}
+
+bool Texture::LoadBackground() noexcept
+{
+	Image background(PATH::background);
+
+	glGenTextures(1, &textureHandle);
+	glBindTexture(GL_TEXTURE_2D, textureHandle);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, background.GetWidth(), background.GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, background.GetPixelPointer());
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 	return true;
 }

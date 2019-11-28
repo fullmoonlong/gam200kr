@@ -136,3 +136,16 @@ Mesh MESH::create_line(vec2<float> p1, vec2<float> p2, Color4f color)
 	line.AddColor(color);
 	return line;
 }
+
+Mesh MESH::create_triangle(vec2<float> p1, vec2<float> p2, vec2<float> p3, Color4f color)
+{
+	Mesh triangle;
+	triangle.SetShapePattern(ShapePattern::Triangles);
+	triangle.AddPoint(p1);
+	triangle.AddPoint(p2);
+	triangle.AddPoint(p3);
+	triangle.AddColor(color);
+	triangle.AddColor(color);
+	triangle.AddColor(color);
+	return triangle;
+}
