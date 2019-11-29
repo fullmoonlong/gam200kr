@@ -9,34 +9,17 @@
 *******************************************************/
 
 #pragma once
-
-/********************************************************
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: Demo.h
-*	
-*	Graphic demo main file
-*	
-*	Nov.28 2019
-*******************************************************/
-
-#pragma once
+#include <array>
 #include "OpenGL_Window.h"
-#include "Shader.h"
-#include "Mesh.h"
-#include "Vertices.h"
-#include "VerticesDescription.h"
-#include "Texture.hpp"
 #include "Camera.hpp"
 #include "CameraView.hpp"
-#include "Transform.hpp"
 #include "EventHandler.hpp"
-#include "ShapeDrawingDemo.h"
+#include "ShapeDrawingDemo.hpp"
 
 class Application : public SimpleEventHandler
 {
 public:
-	enum class DEMOINDEX
+	enum DEMOINDEX
 	{
 		SHAPEDRAWING
 	};
@@ -48,7 +31,10 @@ public:
 
 	bool IsRunning() const;
 
-	void HandleKeyPress(KeyboardButtons button) override;
+	void HandleKeyPress(KeyboardButton button) override;
+	void HandleScrollEvent(float scroll_amount) override;
+	void HandleResizeEvent(const int& width, const int& height) override;
+	void HandleWindowClose() override;
 private:
 	bool isRunning = false;
 protected:
@@ -58,6 +44,6 @@ protected:
 	const int width = 1280;
 	const int height = 720;
 
-	DEMOINDEX demoIndex = DEMOINDEX::SHAPEDRAWING;
-	ShapeDrawingDemo shapeDrawingDemo;
+	DEMOINDEX demoIndex = SHAPEDRAWING;
+	std::array<std::unique_ptr<Demo>, 1> demo;
 };

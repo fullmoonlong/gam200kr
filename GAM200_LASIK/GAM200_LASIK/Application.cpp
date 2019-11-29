@@ -225,20 +225,20 @@ void Application::ShutDown()
 	}
 }
 
-void Application::HandleKeyPress(KeyboardButtons button)
+void Application::HandleKeyPress(KeyboardButton button)
 {
 	switch (button)
 	{
-	case KeyboardButtons::Escape:
+	case KeyboardButton::Escape:
 		this->ShutDown();
 		break;
-	case KeyboardButtons::F:
+	case KeyboardButton::F:
 		window.ToggleFullScreen();
 		break;
-	case KeyboardButtons::V:
+	case KeyboardButton::V:
 		window.ToggleVSync(!window.IsVSyncOn());
 		break;
-	case KeyboardButtons::W:
+	case KeyboardButton::W:
 		//pressDirection.y += 
 		//	(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? -2.0f : 2.0f;
 		//object.speed.y = 0.8f;
@@ -250,7 +250,7 @@ void Application::HandleKeyPress(KeyboardButtons button)
 			}
 		}
 		break;
-	case KeyboardButtons::S:
+	case KeyboardButton::S:
 		//pressDirection.y +=
 		//	(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? 2.0f : -2.0f;
 		//object.speed.y = -0.8f;
@@ -262,7 +262,7 @@ void Application::HandleKeyPress(KeyboardButtons button)
 			}
 		}
 		break;
-	case KeyboardButtons::A:
+	case KeyboardButton::A:
 		//pressDirection.x -= 2.0f;
 		input.TakeAsInput();
 		if (input.MatchStringWithInput() == 1)
@@ -285,57 +285,57 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		}
 		//object.speed.x = -0.8f;
 		break;
-	case KeyboardButtons::D:
+	case KeyboardButton::D:
 		//pressDirection.x += 2.0f;
 		SOUNDMANAGER->PlaySound(0, 1);
 		OBJECTFACTORY->CopyObject(proKevin);
 		//object.speed.x = 0.8f;
 		break;
-	case KeyboardButtons::Z:
+	case KeyboardButton::Z:
 		//cameraAngle += 0.025f;
 		break;
-	case KeyboardButtons::X:
+	case KeyboardButton::X:
 		//cameraAngle -= 0.025f;
 		break;
 	default:;
 	}
 }
 
-void Application::HandleKeyRelease(KeyboardButtons button)
+void Application::HandleKeyRelease(KeyboardButton button)
 {
 	switch (button)
 	{
-	case KeyboardButtons::W:
+	case KeyboardButton::W:
 		pressDirection.y = 0;
 		//object.speed.y = 0.f;
 		break;
-	case KeyboardButtons::S:
+	case KeyboardButton::S:
 		pressDirection.y = 0;
 		//object.speed.y = 0.f;
 		break;
-	case KeyboardButtons::A:
+	case KeyboardButton::A:
 		pressDirection.x = 0;
 		//object.speed.x = 0.f;
 		break;
-	case KeyboardButtons::D:
+	case KeyboardButton::D:
 		pressDirection.x = 0;
 		//object.speed.x = 0.f;
 		break;
-	case KeyboardButtons::Z:
+	case KeyboardButton::Z:
 		cameraAngle = 0.0f;
 		break;
-	case KeyboardButtons::X:
+	case KeyboardButton::X:
 		cameraAngle = 0.0f;
 		break;
 	default:;
 	}
 }
 
-void Application::HandleMouseEvent(MouseButtons button)
+void Application::HandleMouseEvent(MouseButton button)
 {
 	switch (button)
 	{
-	case MouseButtons::LEFT_PRESS:
+	case MouseButton::LEFT_PRESS:
 	{
 		//mouse check
 		if (object.isCollideWithMouse(mousePosition, window.GetWindowWidth(), window.GetWindowHeight()))
@@ -345,7 +345,7 @@ void Application::HandleMouseEvent(MouseButtons button)
 		//mouse check
 		break;
 	}
-	case MouseButtons::LEFT_RELEASE:
+	case MouseButton::LEFT_RELEASE:
 		object.isMouseCollide = false;
 		break;
 	}

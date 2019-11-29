@@ -34,9 +34,9 @@ public:
 	void Update();
 	void ShutDown();
 
-	void HandleKeyPress(KeyboardButtons button) override final;
-	void HandleKeyRelease(KeyboardButtons button) override final;
-	void HandleMouseEvent(MouseButtons button) override final;
+	void HandleKeyPress(KeyboardButton button) override final;
+	void HandleKeyRelease(KeyboardButton button) override final;
+	void HandleMouseEvent(MouseButton button) override final;
 	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
 	void HandleScrollEvent(float scroll_amount) override final;
 	void HandleMousePositionEvent(float xpos, float ypos) override final;

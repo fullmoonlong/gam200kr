@@ -9,28 +9,28 @@
  *******************************************************/
 
 #pragma  once
+#include "Demo.hpp"
 #include "Shader.h"
 #include "Mesh.h"
 #include "Vertices.h"
 #include "VerticesDescription.h"
-#include "Camera.hpp"
-#include "CameraView.hpp"
 #include "Transform.hpp"
-#include "EventHandler.hpp"
 
-class ShapeDrawingDemo : public SimpleEventHandler
+class ShapeDrawingDemo : public Demo
 {
 public:
-	void Initialize();
-	void Update();
-	void ShutDown();
+	explicit ShapeDrawingDemo(Window& window) : Demo(window) { Initialize(); }
+
+	void Initialize() override final;
+	void Update() override final;
+	void ShutDown() override final;
+
+	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
+	void HandleKeyPress(KeyboardButton button) override;
 private:
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	Shader shader;
 
-	Camera camera;
-	CameraView view;
-	
 	Mesh rectangle;
 	Vertices vertices;
 	Transform transform;

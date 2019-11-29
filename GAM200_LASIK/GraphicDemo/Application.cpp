@@ -29,17 +29,17 @@ void Application::Initialize()
 	}
 	isRunning = true;
 
-	shapeDrawingDemo.Initialize();
+	demo[SHAPEDRAWING] = std::make_unique<ShapeDrawingDemo>(window);
 }
 
 void Application::Update()
 {
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
-
+	
 	switch (demoIndex)
 	{
 	case DEMOINDEX::SHAPEDRAWING:
-		shapeDrawingDemo.Update();
+		demo[demoIndex]->Update();
 		break;
 	}
 
@@ -52,17 +52,46 @@ void Application::ShutDown()
 	isRunning = false;
 }
 
-void Application::HandleKeyPress(KeyboardButtons button)
+void Application::HandleKeyPress(KeyboardButton button)
 {
+	demo[demoIndex]->HandleKeyPress(button);
 	switch (button)
 	{
-	case KeyboardButtons::Arrow_Left:
-		// previous stage
-		std::cout << "Previous Stage\n";
+	case KeyboardButton::Escape:
+		this->ShutDown();
 		break;
-	case KeyboardButtons::Arrow_Right:
-		// next stage
-		std::cout << "Next Stage\n";
+	case KeyboardButton::F:
+		window.ToggleFullScreen();
+		break;
+	case KeyboardButton::V:
+		window.ToggleVSync(!window.IsVSyncOn());
+		break;
+	case KeyboardButton::Arrow_Right:
+		std::cout << "Next\n";
+		camera.MoveRight(100);
+		break;
+	default:
 		break;
 	}
+}
+
+void Application::HandleResizeEvent(const int& new_width, const int& new_height)
+{
+	window.SetWindowWidth(new_width);
+	window.SetWindowHeight(new_height);
+
+	demo[demoIndex]->HandleResizeEvent(width, height);
+}
+
+void Application::HandleScrollEvent(float scroll_amount)
+{
+	const float zoomSpeed = .05f;
+	float newZoom = view.GetZoom() + (scroll_amount * zoomSpeed);
+	newZoom = std::clamp(newZoom, 0.5f, 2.0f);
+	view.SetZoom(newZoom);
+}
+
+void Application::HandleWindowClose()
+{
+	ShutDown();
 }

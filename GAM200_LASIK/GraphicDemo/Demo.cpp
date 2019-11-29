@@ -9,51 +9,24 @@
  *******************************************************/
 
 #include <iostream>
-#include "Demo.h"
+#include "Demo.hpp"
 
-bool Demo::IsRunning() const
-{
-	return isRunning;
-}
-
-Demo::Demo()
-{
-}
-
-void Demo::Initialize()
-{
-	//isRunning = true;
-	//
-	//shapeDrawingDemo.Initialize();
-}
-
-void Demo::Update()
-{
-
-	//switch (demoIndex)
-	//{
-	//case DEMOINDEX::SHAPEDRAWING:
-	//	shapeDrawingDemo.Update();
-	//	break;
-	//}
-}
-
-void Demo::ShutDown()
-{
-	isRunning = false;
-}
-
-void Demo::HandleKeyPress(KeyboardButtons button)
+void Demo::HandleKeyPress(KeyboardButton button)
 {
 	switch (button)
 	{
-	case KeyboardButtons::Arrow_Left:
+	case KeyboardButton::Arrow_Left:
 		// previous stage
 		std::cout << "Previous Stage\n";
 		break;
-	case KeyboardButtons::Arrow_Right:
+	case KeyboardButton::Arrow_Right:
 		// next stage
 		std::cout << "Next Stage\n";
 		break;
 	}
+}
+
+void Demo::HandleResizeEvent(const int& new_width, const int& new_height)
+{
+	view.SetViewSize(new_width, new_height);
 }

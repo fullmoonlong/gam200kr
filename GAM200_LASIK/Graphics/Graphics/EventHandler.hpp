@@ -10,7 +10,7 @@
 
 #pragma once
 
-enum class KeyboardButtons
+enum class KeyboardButton
 {
 	Escape,
 	F,
@@ -28,7 +28,7 @@ enum class KeyboardButtons
 	Arrow_Down
 };
 
-enum class MouseButtons
+enum class MouseButton
 {
 	LEFT_PRESS,
 	LEFT_RELEASE
@@ -37,23 +37,23 @@ enum class MouseButtons
 class EventHandler
 {
 public:
-	virtual void HandleKeyPress(KeyboardButtons button) = 0;
-	virtual void HandleKeyRelease(KeyboardButtons button) = 0;
+	virtual void HandleKeyPress(KeyboardButton button) = 0;
+	virtual void HandleKeyRelease(KeyboardButton button) = 0;
 	virtual void HandleResizeEvent(const int& width, const int& height) = 0;
 	virtual void HandleScrollEvent(float scroll_amount) = 0;
 	virtual void HandleMousePositionEvent(float xpos, float ypos) = 0;
-	virtual void HandleMouseEvent(MouseButtons button) = 0;
+	virtual void HandleMouseEvent(MouseButton button) = 0;
 	virtual void HandleWindowClose() = 0;
 };
 
 class SimpleEventHandler : public EventHandler
 {
 public:
-	void HandleKeyPress(KeyboardButtons /*button*/) override {}
-	void HandleKeyRelease(KeyboardButtons /*button*/) override {}
+	void HandleKeyPress(KeyboardButton /*button*/) override {}
+	void HandleKeyRelease(KeyboardButton /*button*/) override {}
 	void HandleResizeEvent(const int& /*width*/, const int& /*height*/) override {}
 	void HandleScrollEvent(float /*scroll_amount*/) override {};
 	void HandleMousePositionEvent(float /*xpos*/, float /*ypos*/) override {}
-	void HandleMouseEvent(MouseButtons /*button*/) override {}
+	void HandleMouseEvent(MouseButton /*button*/) override {}
 	void HandleWindowClose() override {}
 };

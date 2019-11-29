@@ -157,8 +157,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="Demo.h" />
-    <ClInclude Include="ShapeDrawingDemo.h" />
+    <ClInclude Include="Demo.hpp" />
+    <ClInclude Include="ShapeDrawingDemo.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Graphics\Graphics.vcxproj">
