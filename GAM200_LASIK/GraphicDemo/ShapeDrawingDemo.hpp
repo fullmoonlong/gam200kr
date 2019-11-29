@@ -27,6 +27,8 @@ public:
 
 	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
 	void HandleKeyPress(KeyboardButton button) override;
+	void HandleKeyRelease(KeyboardButton button) override;
+	void HandleFocusEvent(int focus) override;
 private:
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	Shader shader;
@@ -50,4 +52,8 @@ private:
 	Mesh triangle;
 	Vertices triangleVertices;
 	Transform triangleTransform;
+
+	float moveSpeed = 0;
+	float rotationSpeed = 0;
+	float speedMulti = 1;
 };

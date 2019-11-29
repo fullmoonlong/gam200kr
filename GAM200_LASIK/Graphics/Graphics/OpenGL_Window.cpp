@@ -69,6 +69,12 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 		case GLFW_KEY_X:
 			eventHandler->HandleKeyPress(KeyboardButton::X);
 			break;
+		case GLFW_KEY_I:
+			eventHandler->HandleKeyPress(KeyboardButton::I);
+			break;
+		case GLFW_KEY_O:
+			eventHandler->HandleKeyPress(KeyboardButton::O);
+			break;
 		case GLFW_KEY_LEFT:
 			eventHandler->HandleKeyPress(KeyboardButton::Arrow_Left);
 			break;
@@ -143,6 +149,11 @@ static void cursor_position_callback(GLFWwindow*, double xpos, double ypos)
 	eventHandler->HandleMousePositionEvent(float(xpos), float(ypos));
 }
 
+void window_focus_callback(GLFWwindow*, int focus)
+{
+	eventHandler->HandleFocusEvent(focus);
+}
+
 bool Window::CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept
 {
 	eventHandler = event_handler;
@@ -183,6 +194,7 @@ bool Window::CanCreateWindow(int width, int height, EventHandler* event_handler,
 	glfwSetScrollCallback(window, scroll_callback);
 	glfwSetCursorPosCallback(window, cursor_position_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
+	glfwSetWindowFocusCallback(window, window_focus_callback);
 
 	GLenum err = glewInit();
 	if (err != GLEW_OK)

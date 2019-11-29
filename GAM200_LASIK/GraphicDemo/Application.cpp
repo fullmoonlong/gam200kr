@@ -66,14 +66,16 @@ void Application::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::V:
 		window.ToggleVSync(!window.IsVSyncOn());
 		break;
-	case KeyboardButton::Arrow_Right:
-		std::cout << "Next\n";
-		camera.MoveRight(100);
-		break;
 	default:
 		break;
 	}
 }
+
+void Application::HandleKeyRelease(KeyboardButton button)
+{
+	demo[demoIndex]->HandleKeyRelease(button);
+}
+
 
 void Application::HandleResizeEvent(const int& new_width, const int& new_height)
 {
@@ -94,4 +96,13 @@ void Application::HandleScrollEvent(float scroll_amount)
 void Application::HandleWindowClose()
 {
 	ShutDown();
+}
+
+void Application::HandleFocusEvent(int focus)
+{
+	demo[demoIndex]->HandleFocusEvent(focus);
+	if (focus != GLFW_TRUE)
+	{
+		std::cout << "NOT FOCUSED\n";
+	}
 }

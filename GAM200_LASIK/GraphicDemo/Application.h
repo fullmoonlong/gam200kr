@@ -32,9 +32,11 @@ public:
 	bool IsRunning() const;
 
 	void HandleKeyPress(KeyboardButton button) override;
+	void HandleKeyRelease(KeyboardButton button) override;
 	void HandleScrollEvent(float scroll_amount) override;
 	void HandleResizeEvent(const int& width, const int& height) override;
 	void HandleWindowClose() override;
+	void HandleFocusEvent(int focus) override;
 private:
 	bool isRunning = false;
 protected:

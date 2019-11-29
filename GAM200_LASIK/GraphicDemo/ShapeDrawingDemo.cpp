@@ -8,6 +8,7 @@
  *	Nov.25 2019
  *******************************************************/
 
+#include <iostream>
 #include "ShapeDrawingDemo.hpp"
 #include "Draw.hpp"
 #include "PATH.hpp"
@@ -44,6 +45,8 @@ void ShapeDrawingDemo::Initialize()
 
 void ShapeDrawingDemo::Update()
 {
+	camera.Rotate(rotationSpeed);
+	
 	Draw::StartDrawing();
 	
 	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
@@ -97,9 +100,50 @@ void ShapeDrawingDemo::HandleKeyPress(KeyboardButton button)
 		camera.MoveUp(-100);
 		break;
 	case KeyboardButton::Z:
-		camera.Rotate(5);
+		rotationSpeed = 0.01f * speedMulti;
 		break;
 	case KeyboardButton::X:
-		camera.Rotate(-5);
+		rotationSpeed = -0.01f * speedMulti;
+		break;
+	case KeyboardButton::I:
+		speedMulti += 0.2f;
+		break;
+	case KeyboardButton::O:
+		speedMulti -= 0.2f;
+		break;
+	}
+}
+
+void ShapeDrawingDemo::HandleKeyRelease(KeyboardButton button)
+{
+	switch (button)
+	{
+	case KeyboardButton::Arrow_Right:
+		camera.MoveRight(100);
+		break;
+	case KeyboardButton::Arrow_Left:
+		camera.MoveRight(-100);
+		break;
+	case KeyboardButton::Arrow_Up:
+		camera.MoveUp(100);
+		break;
+	case KeyboardButton::Arrow_Down:
+		camera.MoveUp(-100);
+		break;
+	case KeyboardButton::Z:
+		rotationSpeed = 0.0f;
+		break;
+	case KeyboardButton::X:
+		rotationSpeed = 0.0f;
+		break;
+	}
+}
+
+void ShapeDrawingDemo::HandleFocusEvent(int focus)
+{
+	if (focus != GLFW_TRUE)
+	{
+		Draw::StartDrawing();
+		Draw::FinishDrawing();
 	}
 }
