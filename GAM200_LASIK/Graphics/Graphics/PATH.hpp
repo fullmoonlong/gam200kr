@@ -43,4 +43,7 @@ namespace PATH
 	const std::filesystem::path bitmapfont_png = "../assets/bitmapfont_0.png";
 
 	const std::filesystem::path background = "../assets/background.jpg";
+
+	const std::filesystem::path pepe = "../assets/pepe.png";
+	const std::filesystem::path pepepunch = "../assets/pepepunch.png";
 }

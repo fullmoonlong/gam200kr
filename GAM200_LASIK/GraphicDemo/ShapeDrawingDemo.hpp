@@ -25,6 +25,8 @@ public:
 	void Update() override final;
 	void ShutDown() override final;
 
+	void ResetCamera() override final;
+
 	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
 	void HandleKeyPress(KeyboardButton button) override;
 	void HandleKeyRelease(KeyboardButton button) override;
@@ -53,7 +55,7 @@ private:
 	Vertices triangleVertices;
 	Transform triangleTransform;
 
-	float moveSpeed = 0;
+	vec2<float> moveSpeed{ 0.f };
 	float rotationSpeed = 0;
 	float speedMulti = 1;
 };

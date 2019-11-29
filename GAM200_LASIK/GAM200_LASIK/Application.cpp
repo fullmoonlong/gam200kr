@@ -30,7 +30,7 @@ void Application::Initialize()
 	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 
 	const Color4f color{ 1.0f, 1.0f, 1.0f, 1.0f };
-	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
+	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	const Mesh& rectangle = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
 
 

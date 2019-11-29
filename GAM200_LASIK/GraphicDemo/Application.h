@@ -14,14 +14,15 @@
 #include "Camera.hpp"
 #include "CameraView.hpp"
 #include "EventHandler.hpp"
-#include "ShapeDrawingDemo.hpp"
+#include "Demo.hpp"
 
 class Application : public SimpleEventHandler
 {
 public:
 	enum DEMOINDEX
 	{
-		SHAPEDRAWING
+		SHAPEDRAWING,
+		TEXTUREDRAWING
 	};
 
 	Application();
@@ -46,6 +47,6 @@ protected:
 	const int width = 1280;
 	const int height = 720;
 
-	DEMOINDEX demoIndex = SHAPEDRAWING;
-	std::array<std::unique_ptr<Demo>, 1> demo;
+	int demoIndex = SHAPEDRAWING;
+	std::array<std::unique_ptr<Demo>, 2> demo;
 };

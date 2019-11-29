@@ -10,6 +10,8 @@
 
 #include <iostream>
 #include "Application.h"
+#include "ShapeDrawingDemo.hpp"
+#include "TextureDrawingDemo.hpp"
 
 bool Application::IsRunning() const
 {
@@ -30,18 +32,14 @@ void Application::Initialize()
 	isRunning = true;
 
 	demo[SHAPEDRAWING] = std::make_unique<ShapeDrawingDemo>(window);
+	demo[TEXTUREDRAWING] = std::make_unique<TextureDrawingDemo>(window);
 }
 
 void Application::Update()
 {
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	
-	switch (demoIndex)
-	{
-	case DEMOINDEX::SHAPEDRAWING:
-		demo[demoIndex]->Update();
-		break;
-	}
+	demo[demoIndex]->Update();
 
 	window.SwapBuffers();
 	window.PollEvents();
@@ -66,6 +64,23 @@ void Application::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::V:
 		window.ToggleVSync(!window.IsVSyncOn());
 		break;
+	case KeyboardButton::Arrow_Right:
+		demo[demoIndex]->ResetCamera();
+		++demoIndex;
+		if (demoIndex >= static_cast<int>(demo.size()))
+		{
+			demoIndex = 0;
+		}
+		break;
+	case KeyboardButton::Arrow_Left:
+		demo[demoIndex]->ResetCamera();
+		if (demoIndex == 0)
+		{
+			demoIndex = static_cast<int>(demo.size()) - 1;
+			break;
+		}
+		--demoIndex;
+		break;
 	default:
 		break;
 	}
@@ -82,7 +97,7 @@ void Application::HandleResizeEvent(const int& new_width, const int& new_height)
 	window.SetWindowWidth(new_width);
 	window.SetWindowHeight(new_height);
 
-	demo[demoIndex]->HandleResizeEvent(width, height);
+	demo[demoIndex]->HandleResizeEvent(new_width, new_height);
 }
 
 void Application::HandleScrollEvent(float scroll_amount)

@@ -17,17 +17,14 @@
 class Demo : public SimpleEventHandler
 {
 public:
-	//enum class DEMOINDEX
-	//{
-	//	SHAPEDRAWING
-	//};
-
 	explicit Demo(Window& window)
 		: width(window.GetWindowWidth()), height(window.GetWindowHeight()) {}
 	virtual void Initialize() = 0;
 	virtual void Update() = 0;
 	virtual void ShutDown() = 0;
 
+	virtual void ResetCamera() = 0;
+	
 	void HandleKeyPress(KeyboardButton button) override;
 	void HandleResizeEvent(const int& width, const int& height) override;
 protected:

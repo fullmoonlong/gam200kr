@@ -64,7 +64,7 @@ void Text::InitializeWithEmptyVertices() const noexcept
 		Mesh meshToInput;
 		Vertices verticesToInput;
 		verticesToInput.InitializeWithMeshAndLayout(meshToInput,
-			{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate });
+			{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate });
 		vertices.insert_or_assign(i, std::move(verticesToInput));
 	}
 }
@@ -144,7 +144,7 @@ void Text::BuildNewMeshesIfNeeded() const noexcept
 		for (int i = 0; i < font->GetInformation().pagesCount; i++)
 		{
 			vertices.find(i)->second.InitializeWithMeshAndLayout(meshes.at(i),
-				{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate });
+				{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate });
 		}
 	}
 }

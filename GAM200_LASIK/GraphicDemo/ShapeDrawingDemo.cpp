@@ -39,13 +39,14 @@ void ShapeDrawingDemo::Initialize()
 	triangleVertices.InitializeWithMeshAndLayout(triangle, layout);
 	triangleTransform.SetTranslation({ -100.0f, 100.0f });
 
-	camera.ResetUp();
 	view.SetViewSize(width, height);
 }
 
 void ShapeDrawingDemo::Update()
 {
 	camera.Rotate(rotationSpeed);
+	camera.MoveRight(moveSpeed.x);
+	camera.MoveUp(moveSpeed.y);
 	
 	Draw::StartDrawing();
 	
@@ -78,8 +79,14 @@ void ShapeDrawingDemo::ShutDown()
 
 }
 
-void ShapeDrawingDemo::HandleResizeEvent(const int& new_width, const int& new_height)
+void ShapeDrawingDemo::ResetCamera()
 {
+	camera.ResetUp();
+	speedMulti = 0.0f;
+}
+
+void ShapeDrawingDemo::HandleResizeEvent(const int& new_width, const int& new_height)
+{	
 	Demo::HandleResizeEvent(new_width, new_height);
 }
 
@@ -88,16 +95,16 @@ void ShapeDrawingDemo::HandleKeyPress(KeyboardButton button)
 	switch (button)
 	{
 	case KeyboardButton::Arrow_Right:
-		camera.MoveRight(100);
+		moveSpeed.x += speedMulti;
 		break;
 	case KeyboardButton::Arrow_Left:
-		camera.MoveRight(-100);
+		moveSpeed.x -= speedMulti;
 		break;
 	case KeyboardButton::Arrow_Up:
-		camera.MoveUp(100);
+		moveSpeed.y += speedMulti;
 		break;
 	case KeyboardButton::Arrow_Down:
-		camera.MoveUp(-100);
+		moveSpeed.y -= speedMulti;
 		break;
 	case KeyboardButton::Z:
 		rotationSpeed = 0.01f * speedMulti;
@@ -106,10 +113,10 @@ void ShapeDrawingDemo::HandleKeyPress(KeyboardButton button)
 		rotationSpeed = -0.01f * speedMulti;
 		break;
 	case KeyboardButton::I:
-		speedMulti += 0.2f;
+		speedMulti += 0.5f;
 		break;
 	case KeyboardButton::O:
-		speedMulti -= 0.2f;
+		speedMulti -= 0.5f;
 		break;
 	}
 }
@@ -119,16 +126,16 @@ void ShapeDrawingDemo::HandleKeyRelease(KeyboardButton button)
 	switch (button)
 	{
 	case KeyboardButton::Arrow_Right:
-		camera.MoveRight(100);
+		moveSpeed.x = 0;
 		break;
 	case KeyboardButton::Arrow_Left:
-		camera.MoveRight(-100);
+		moveSpeed.x = 0;
 		break;
 	case KeyboardButton::Arrow_Up:
-		camera.MoveUp(100);
+		moveSpeed.y = 0;
 		break;
 	case KeyboardButton::Arrow_Down:
-		camera.MoveUp(-100);
+		moveSpeed.y = 0;
 		break;
 	case KeyboardButton::Z:
 		rotationSpeed = 0.0f;

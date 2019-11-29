@@ -21,7 +21,7 @@ void VerticesDescription::AddType(Type type) noexcept
 		description.sizeInBytes = description.elementsNumber * sizeof(float);
 		description.shouldNormalize = false;
 	}
-	if (type == Type::TextCoordinate)
+	if (type == Type::TextureCoordinate)
 	{
 		description.elementsType = GL_FLOAT;
 		description.elementsNumber = 2;

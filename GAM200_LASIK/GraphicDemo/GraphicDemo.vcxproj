@@ -154,11 +154,13 @@
     <ClCompile Include="Demo.cpp" />
     <ClCompile Include="ShapeDrawingDemo.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TextureDrawingDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Demo.hpp" />
     <ClInclude Include="ShapeDrawingDemo.hpp" />
+    <ClInclude Include="TextureDrawingDemo.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Graphics\Graphics.vcxproj">

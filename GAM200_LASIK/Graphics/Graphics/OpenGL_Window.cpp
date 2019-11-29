@@ -95,6 +95,18 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 	{
 		switch (key)
 		{
+		case GLFW_KEY_ESCAPE:
+			eventHandler->HandleKeyRelease(KeyboardButton::Escape);
+			break;
+		case GLFW_KEY_F:
+			eventHandler->HandleKeyRelease(KeyboardButton::F);
+			break;
+		case GLFW_KEY_V:
+			eventHandler->HandleKeyRelease(KeyboardButton::V);
+			break;
+		case GLFW_KEY_G:
+			eventHandler->HandleKeyRelease(KeyboardButton::G);
+			break;
 		case GLFW_KEY_W:
 			eventHandler->HandleKeyRelease(KeyboardButton::W);
 			break;
@@ -112,6 +124,24 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 			break;
 		case GLFW_KEY_X:
 			eventHandler->HandleKeyRelease(KeyboardButton::X);
+			break;
+		case GLFW_KEY_I:
+			eventHandler->HandleKeyRelease(KeyboardButton::I);
+			break;
+		case GLFW_KEY_O:
+			eventHandler->HandleKeyRelease(KeyboardButton::O);
+			break;
+		case GLFW_KEY_LEFT:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Left);
+			break;
+		case GLFW_KEY_RIGHT:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Right);
+			break;
+		case GLFW_KEY_UP:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Up);
+			break;
+		case GLFW_KEY_DOWN:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Down);
 			break;
 		}
 	}

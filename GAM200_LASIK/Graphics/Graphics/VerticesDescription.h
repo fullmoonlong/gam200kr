@@ -18,7 +18,7 @@ public:
 	{
 		Point,
 		Color,
-		TextCoordinate
+		TextureCoordinate
 	};
 
 	struct TypeDescription

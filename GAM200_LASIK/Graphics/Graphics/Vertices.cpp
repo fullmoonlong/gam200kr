@@ -106,7 +106,7 @@ void Vertices::WriteMeshDataToVertexBuffer(const Mesh& mesh) const noexcept
 				memcpy(buffer + offset, &color, sizeof(color));
 				offset += sizeof(Color4f);
 				break;
-			case VerticesDescription::Type::TextCoordinate:
+			case VerticesDescription::Type::TextureCoordinate:
 				texture = mesh.GetTextureCoordinate(i);
 				memcpy(buffer + offset, &texture, sizeof(texture));
 				offset += sizeof(vec2<float>);
