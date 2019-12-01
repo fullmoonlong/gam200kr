@@ -36,6 +36,7 @@ namespace PATH
 
 	const std::filesystem::path arrow = "../assets/arrow.png";
 	const std::filesystem::path fireball = "../assets/fireball.png";
+	const std::filesystem::path tower = "../assets/tower.png";
 
 	const std::filesystem::path icon_image = "../assets/icon.png";
 

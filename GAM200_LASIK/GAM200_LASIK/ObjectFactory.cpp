@@ -87,7 +87,7 @@ void ObjectFactory::DestroyAllObjects()
 	objectIDMap.clear();
 }
 
-Object* ObjectFactory::FindObjectwithName(std::string& name)
+Object* ObjectFactory::FindObjectwithName(const std::string& name)
 {
 	for (auto object : objectIDMap)
 	{

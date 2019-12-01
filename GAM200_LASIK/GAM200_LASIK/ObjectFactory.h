@@ -28,7 +28,7 @@ public:
 
 	void DestroyAllObjects();
 
-	Object* FindObjectwithName(std::string& name);
+	Object* FindObjectwithName(const std::string& name);
 	Object* FindObjectwithID(ObjectID id);
 
 	std::map<ObjectID, Object*> GetObjecteList() { return objectIDMap; };

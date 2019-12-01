@@ -11,7 +11,7 @@
 #include "PATH.hpp"
 #include "VerticesDescription.h"
 #include "Image.hpp"
-#include "ComponentTest.h"
+#include "ComponentTower.h"
 #include "GetInput.hpp"
 #include "Application.h"
 
@@ -53,6 +53,36 @@ void Application::Initialize()
 	
 	// unit initialize
 	{
+		//tower
+		tower = new Object();
+		tower->Initialize("tower.txt");
+		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		tower->material.texture.LoadFromPath(PATH::tower);
+		tower->animation.Initialize(1, shader);
+
+		tower->SetState(State::IDLE);
+		tower->SetHealth(300);
+		tower->SetDamage(0);
+
+		OBJECTFACTORY->CopyObject(tower);
+		//tower
+
+		//lair
+		lair = new Object();
+		lair->Initialize("lair.txt");
+		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		lair->material.texture.LoadFromPath(PATH::tower);
+		lair->animation.Initialize(1, shader);
+
+		lair->SetState(State::IDLE);
+		lair->SetHealth(300);
+		lair->SetDamage(0);
+		lair->AddComponent<LairComponent>();
+		OBJECTFACTORY->CopyObject(lair);
+		//lair
+
 		//kevin
 		proKevin = new Object();
 		proKevin->Initialize("enemyPrototype.txt");
@@ -69,7 +99,7 @@ void Application::Initialize()
 
 		//knight
 		knight = new Knight();
-		knight->Initialize("knight.txt");
+		knight->Initialize("knight.txt");;
 		//knight->material.mesh = MESH::create_rectangle(0.0f, 0.0f, 1.0f, 1.0f, color);
 		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		knight->material.texture.LoadFromPath(PATH::knight_move);
@@ -191,6 +221,7 @@ void Application::Update()
 	Draw::FinishDrawing();
 	//Draw
 
+	OBJECTFACTORY->FindObjectwithName("Lair")->GetComponent<LairComponent>()->SpawnEnemy(proKevin, clock.timePassed);
 	++frameCount;
 	static int time = 0;
 	if (clock.timePassed >= 1.0f)
@@ -200,15 +231,10 @@ void Application::Update()
 		std::cout << frameCount << std::endl;
 		clock.timePassed -= 1.0f;
 		frameCount = 0;
-		OBJECTFACTORY->DamageTest(time); //test for damage
 
-		//for (auto obj : OBJECTFACTORY->GetObjecteList())
-		//{
-		//	if (obj.second->GetName() == "Archer" && time % 2 == 0)
-		//	{
-		//		obj.second->GetComponent<TestComponent>()->Attack();
-		//	}
-		//}
+		//some functions about delay
+		OBJECTFACTORY->DamageTest(time); //test for damage
+		//some functions about delay
 	}
 	window.SwapBuffers();
 	window.PollEvents();
@@ -243,7 +269,7 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		//object.speed.y = 0.8f;
 		for (auto obj : OBJECTFACTORY->GetObjecteList())
 		{
-			if (obj.second->GetType() == UnitType::Enemy)
+			if (obj.second->GetType() == UnitType::Enemy && obj.second->GetName() != "Lair")
 			{
 				OBJECTFACTORY->Destroy(obj.second);
 			}
@@ -255,7 +281,7 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		//object.speed.y = -0.8f;
 		for (auto obj : OBJECTFACTORY->GetObjecteList())
 		{
-			if (obj.second->GetType() == UnitType::Player)
+			if (obj.second->GetType() == UnitType::Player && obj.second->GetName() != "Tower")
 			{
 				OBJECTFACTORY->Destroy(obj.second);
 			}
@@ -263,7 +289,7 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		break;
 	case KeyboardButtons::A:
 		//pressDirection.x -= 2.0f;
-		input.TakeAsInput();
+		/*input.TakeAsInput();
 		if (input.MatchStringWithInput() == 1)
 		{
 			OBJECTFACTORY->CopyObject(knight);
@@ -272,16 +298,15 @@ void Application::HandleKeyPress(KeyboardButtons button)
 		else if (input.MatchStringWithInput() == 2)
 		{
 			OBJECTFACTORY->CopyObject(archer);
-			/*OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->AddComponent<TestComponent>();
-			OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->object = OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1);
-			OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->attack = &arrow;*/
 			SOUNDMANAGER->PlaySound(0, 1);
 		}
 		else if (input.MatchStringWithInput() == 3)
 		{
 			OBJECTFACTORY->CopyObject(magician);
 			SOUNDMANAGER->PlaySound(0, 1);
-		}
+		}*/
+		SOUNDMANAGER->PlaySound(0, 1);
+		OBJECTFACTORY->CopyObject(knight);
 		//object.speed.x = -0.8f;
 		break;
 	case KeyboardButtons::D:
