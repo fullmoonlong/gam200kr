@@ -26,5 +26,7 @@
     <ClInclude Include="Units.hpp" />
     <ClInclude Include="EnemyUnits.hpp" />
     <ClInclude Include="GetInput.hpp" />
+    <ClInclude Include="PlayerBase.hpp" />
+    <ClInclude Include="EnemyBase.hpp" />
   </ItemGroup>
 </Project>

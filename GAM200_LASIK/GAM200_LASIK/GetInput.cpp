@@ -4,28 +4,24 @@
 #include "Object.h"
 #include "ObjectFactory.h"
 
-void GetInput::TakeAsInput()
+void GetInput::TakeAsInput(char input)
 {
-	std::string stack;
-
-	std::cin >> stack;
-
-	input = stack;
+	string.push_back(input);
 }
 
 int GetInput::MatchStringWithInput()
 {
-	if (input == knight)
+	if (string == knight)
 	{
 		// spawn knight
 		return 1;
 	}
-	else if (input == archer)
+	else if (string == archer)
 	{
 		// spawn archer
 		return 2;
 	}
-	else if (input == magician)
+	else if (string == magician)
 	{
 		// spawn magician
 		return 3;

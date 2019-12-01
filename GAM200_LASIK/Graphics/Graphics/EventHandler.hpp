@@ -12,20 +12,14 @@
 
 enum class KeyboardButtons
 {
-	Escape,
-	F,
-	V,
-	G,
-	W,
-	A,
-	S,
-	D,
-	Z,
-	X,
+	A, B, C, D, E, F, G, H, I, J, K, L, M, N, O,
+	P, Q, R, S, T, U, V, W, X, Y, Z,
 	Arrow_Left,
 	Arrow_Right,
 	Arrow_Up,
-	Arrow_Down
+	Arrow_Down,
+	Enter,
+	Escape
 };
 
 enum class MouseButtons

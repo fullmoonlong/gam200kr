@@ -1,6 +1,6 @@
 /*
  *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *			Doyeong Yi doyoung.lee@digipen.edu
+ *			Jookyung Lee jookyung.lee@digipen.edu
  *	Application
  *	2019/07/04
  */
@@ -24,20 +24,18 @@ Application::Application()
 
 void Application::Initialize()
 {
-	window.CanCreateWindow(800, 600, this,"Lasik");
+	window.CanCreateWindow(800, 600, this, "Lasik");
 
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);	//shaders for animation
 	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	
+
 	const Color4f color{ 0.8f, 0.8f, 0.0f, 1.0f };
 	const Color4f color2{ 0.5f, 0.5f, 0.3f, 1.0f };
 	const float starting_x = 300.0f;
 	const float starting_y = 0.0f;
 	const float objectWidth = 50.0f;
 	const float objectHeight = 50.0f;
-	//rectangle = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-	//rectangle2 = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color2);
-	
+
 	float aLeft = 0.0f / 256;
 	float aBottom = 1.0f - 20.0f / 256;
 	float aTop = aBottom + 20.0f / 256;
@@ -67,14 +65,14 @@ void Application::Initialize()
 	textMesh.AddTextureCoordinate(kLeft, kTop);
 	textMesh.AddTextureCoordinate(kRight, kTop);
 	textMesh.AddTextureCoordinate(kLeft, kBottom);
-	
+
 	textMesh.AddPoint(1.5f, 0.5f);
 	textMesh.AddPoint(0.5f, -0.5f);
 	textMesh.AddPoint(1.5f, -0.5f);
 	textMesh.AddTextureCoordinate(kRight, kTop);
 	textMesh.AddTextureCoordinate(kLeft, kBottom);
 	textMesh.AddTextureCoordinate(kRight, kBottom);
-	
+
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
 	//vertices.InitializeWithMeshAndLayout(rectangle, layout);
 	//vertices2.InitializeWithMeshAndLayout(rectangle2, layout);
@@ -82,34 +80,23 @@ void Application::Initialize()
 
 	Image image2(PATH::kevin_attack);
 	Image image(PATH::kevin_move);
-	
-	//Texture t1(image);
-	//
-	//Texture t2(image2);
-	//material.vertices = vertices;
-	//material.mesh = rectangle;
-	//material.texture = t1;
-	//material2.vertices = vertices2;
-	//material2.mesh = rectangle2;
-	//material2.texture = t2;
-
 
 	//animation.Initialize(image, rectangle, 8, shader);
 	fontTexture.LoadFromPath(PATH::bitmapfont_png);
 	//animation2.Initialize(image2, rectangle2, 7, shader);
-	
+
 	//camera
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//camera
-	
+
 	//object.Initialize({ starting_x, starting_y }, objectWidth, objectHeight);
 	//object.speed.x = -150.0f;
 	//object2.Initialize({-300.0f, 0.0f }, objectWidth, objectHeight);
 	//object2.speed.x = 150.0f;
 
 	lasik.Initialize("text.txt");
-	
+
 
 	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
 
@@ -135,7 +122,7 @@ void Application::Initialize()
 
 	proKevin->SetHealth(100);
 	proKevin->SetDamage(15);
-	vec2<float> a = {1, 0};
+	vec2<float> a = { 1, 0 };
 	proKevin->SetAttackRange(a);
 
 	const Color4f color3{ 1.0f, 0.0f, 0.0f, 1.0f };
@@ -150,7 +137,7 @@ void Application::Initialize()
 	proKevin->animation.Initialize(proKevin->image, proKevin->mesh, 8, shader);
 	proKevin->SetState(State::WALK);
 
-	//knight
+	//knight initialize start
 	knight = new Knight();
 	knight->Initialize("knight.txt");
 	knight->image.LoadFrom(PATH::knight_move);
@@ -169,9 +156,9 @@ void Application::Initialize()
 
 	knight->animation.Initialize(knight->image, knight->mesh, 8, shader);
 	knight->SetState(State::WALK);
-	//knight
+	//knight initialize end
 
-	//archer
+	//archer initialize start
 	archer = new Archer();
 	archer->Initialize("archer.txt");
 	archer->image.LoadFrom(PATH::archer_move);
@@ -189,9 +176,9 @@ void Application::Initialize()
 
 	archer->animation.Initialize(archer->image, archer->mesh, 8, shader);
 	archer->SetState(State::WALK);
-	//archer
+	//archer initialize end
 
-	//magician
+	//magician initialize start
 	magician = new Magician();
 	magician->Initialize("wizard.txt");
 	magician->image.LoadFrom(PATH::wizard_move);
@@ -209,9 +196,9 @@ void Application::Initialize()
 
 	magician->animation.Initialize(magician->image, magician->mesh, 8, shader);
 	magician->SetState(State::WALK);
-	//magician
+	//magician initialize end
 
-	//sword
+	//sword initialize start
 	swordAttack = new Object();
 	swordAttack->Initialize("swordAttack.txt");
 
@@ -223,7 +210,7 @@ void Application::Initialize()
 	//swordAttack->material.texture = Texture(swordAttack->image);
 	swordAttack->material.vertices = swordAttack->vertices;
 	swordAttack->material.mesh = swordAttack->mesh;
-	//sword
+	//sword initialize end
 
 	//fireball
 	fireball = new Object();
@@ -286,12 +273,12 @@ void Application::Update()
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//Transform
-	
+
 	//Draw
 	draw.StartDrawing();
 
 
-	Text text(L"LASIK", bitmapFont);
+	//Text text(L"LASIK", bitmapFont);
 	//for (const auto& vertices_texture_pair : text.GetVerticesWithMatchingTextures())
 	//{
 	//	const Vertices& text_vertices = *vertices_texture_pair.first;
@@ -313,10 +300,10 @@ void Application::Update()
 	//const mat3<float> ndc2 = view.GetCameraToNDCTransform() * camera.WorldToCamera() * object2.transform.GetModelToWorld();
 	const mat3<float> ndc_font = view.GetCameraToNDCTransform() * camera.WorldToCamera() * lasik.transform.GetModelToWorld();
 	//const mat3<float> ndcBackground = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
-	
+
 	//Draw::draw(backgroundShader, backgroundMaterial);
 	//shader.SendUniformVariable("ndc", ndcBackground);
-	
+
 	//animation.Animate(deltaTime);
 	//shader.SendUniformVariable("ndc", ndc);
 	//Draw::draw(shader, material);
@@ -340,7 +327,7 @@ void Application::Update()
 			shader.SendUniformVariable("ndc", ndc);
 			Draw::draw(shader, obj.second->material);
 		}
-		
+
 	}
 	//dynamic test
 
@@ -352,8 +339,8 @@ void Application::Update()
 	if (clock.timePassed >= 1.0f)
 	{
 		++time;
-		std::cout << time << std::endl;
-		std::cout << frameCount << std::endl;
+		//std::cout << time << std::endl;
+		//std::cout << frameCount << std::endl;
 		clock.timePassed -= 1.0f;
 		frameCount = 0;
 		OBJECTFACTORY->DamageTest(time); //test for damage
@@ -382,82 +369,270 @@ void Application::ShutDown()
 
 void Application::HandleKeyPress(KeyboardButtons button)
 {
+	static bool isEnter = false;
 	switch (button)
 	{
-	case KeyboardButtons::Escape:
-		this->ShutDown();
-		break;
-	case KeyboardButtons::F:
-		window.ToggleFullScreen();
-		break;
-	case KeyboardButtons::V:
-		if (window.IsVSyncOn() == false)
+	case KeyboardButtons::A:
+		if (isEnter == true)
 		{
-			window.ToggleVSync(true);
+			input.TakeAsInput('a');
+			printf("a");
 			break;
 		}
-		window.ToggleVSync(false);
 		break;
-	case KeyboardButtons::W:
-		//pressDirection.y += 
-		//	(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? -2.0f : 2.0f;
-		//object.speed.y = 0.8f;
-		for (auto obj : OBJECTFACTORY->GetObjecteList())
+	case KeyboardButtons::B:
+		if (isEnter == true)
 		{
-			if (obj.second->GetType() == UnitType::Enemy)
-			{
-				OBJECTFACTORY->Destroy(obj.second);
-			}
+			input.TakeAsInput('b');
+			printf("b");
+			break;
+		}
+		break;
+	case KeyboardButtons::C:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('c');
+			printf("c");
+			break;
+		}
+		break;
+	case KeyboardButtons::D:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('d');
+			printf("d");
+			break;
+		}
+		break;
+	case KeyboardButtons::E:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('e');
+			printf("e");
+			break;
+		}
+		break;
+	case KeyboardButtons::F:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('f');
+			printf("f");
+			break;
+		}
+		else
+		{
+			window.ToggleFullScreen();
+		}
+		break;
+	case KeyboardButtons::G:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('g');
+			printf("g");
+			break;
+		}
+		break;
+	case KeyboardButtons::H:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('h');
+			printf("h");
+			break;
+		}
+		break;
+	case KeyboardButtons::I:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('i');
+			printf("i");
+			break;
+		}
+		break;
+	case KeyboardButtons::J:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('j');
+			printf("j");
+			break;
+		}
+		break;
+	case KeyboardButtons::K:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('k');
+			printf("k");
+			break;
+		}
+		break;
+	case KeyboardButtons::L:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('l');
+			printf("l");
+			break;
+		}
+		break;
+	case KeyboardButtons::M:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('m');
+			printf("m");
+			break;
+		}
+		break;
+	case KeyboardButtons::N:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('n');
+			printf("n");
+			break;
+		}
+		break;
+	case KeyboardButtons::O:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('o');
+			printf("o");
+			break;
+		}
+		break;
+	case KeyboardButtons::P:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('p');
+			printf("p");
+			break;
+		}
+		break;
+	case KeyboardButtons::Q:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('q');
+			printf("q");
+			break;
+		}
+		break;
+	case KeyboardButtons::R:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('r');
+			printf("r");
+			break;
 		}
 		break;
 	case KeyboardButtons::S:
-		//pressDirection.y +=
-		//	(view.GetFrameOfReference() == FrameOfReference::LeftHanded_OriginTopLeft) ? 2.0f : -2.0f;
-		//object.speed.y = -0.8f;
-		for (auto obj : OBJECTFACTORY->GetObjecteList())
+		if (isEnter == true)
 		{
-			if (obj.second->GetType() == UnitType::Player)
+			input.TakeAsInput('s');
+			printf("s");
+			break;
+		}
+		else
+		{
+			for (auto obj : OBJECTFACTORY->GetObjecteList())
 			{
-				OBJECTFACTORY->Destroy(obj.second);
+				if (obj.second->GetType() == UnitType::Player)
+				{
+					OBJECTFACTORY->Destroy(obj.second);
+				}
 			}
 		}
 		break;
-	case KeyboardButtons::A:
-		//pressDirection.x -= 2.0f;
-		input.TakeAsInput();
+	case KeyboardButtons::T:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('t');
+			printf("t");
+			break;
+		}
+		break;
+	case KeyboardButtons::U:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('u');
+			printf("u");
+			break;
+		}
+		break;
+	case KeyboardButtons::V:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('v');
+			printf("v");
+			break;
+		}
+		else
+		{
+			if (window.IsVSyncOn() == false)
+			{
+				window.ToggleVSync(true);
+				break;
+			}
+			window.ToggleVSync(false);
+		}
+		break;
+	case KeyboardButtons::W:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('w');
+			printf("w");
+			break;
+		}
+		break;
+	case KeyboardButtons::X:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('x');
+			printf("x");
+			break;
+		}
+		break;
+	case KeyboardButtons::Y:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('y');
+			printf("y");
+			break;
+		}
+		break;
+	case KeyboardButtons::Z:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('z');
+			printf("z");
+			break;
+		}
+		break;
+	case KeyboardButtons::Escape:
+		this->ShutDown();
+		break;
+	case KeyboardButtons::Enter:
+		if (isEnter == false)
+		{
+			isEnter = true;
+			printf("typing start\n");
+			break;
+		}
+		isEnter = false;
+		printf("typing end\n");
+		std::cout << "\n" << input.GetString();
 		if (input.MatchStringWithInput() == 1)
 		{
 			OBJECTFACTORY->CopyObject(knight);
-			SOUNDMANAGER->PlaySound(0, 1);
 		}
 		else if (input.MatchStringWithInput() == 2)
 		{
 			OBJECTFACTORY->CopyObject(archer);
-			/*OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->AddComponent<TestComponent>();
-			OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->object = OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1);
-			OBJECTFACTORY->FindObjectwithID(OBJECTFACTORY->GetLastObjectID() - 1)->GetComponent<TestComponent>()->attack = &arrow;*/
-			SOUNDMANAGER->PlaySound(0, 1);
 		}
 		else if (input.MatchStringWithInput() == 3)
 		{
 			OBJECTFACTORY->CopyObject(magician);
-			SOUNDMANAGER->PlaySound(0, 1);
 		}
-		//object.speed.x = -0.8f;
+		input.SetString("");
 		break;
-	case KeyboardButtons::D:
-		//pressDirection.x += 2.0f;
-		SOUNDMANAGER->PlaySound(0, 1);
-		OBJECTFACTORY->CopyObject(proKevin);
-		//object.speed.x = 0.8f;
+
+	default:
 		break;
-	case KeyboardButtons::Z:
-		//cameraAngle += 0.025f;
-		break;
-	case KeyboardButtons::X:
-		//cameraAngle -= 0.025f;
-		break;
-	default:;
 	}
 }
 
