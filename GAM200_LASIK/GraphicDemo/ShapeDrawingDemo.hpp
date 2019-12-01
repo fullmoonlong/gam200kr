@@ -27,17 +27,30 @@ public:
 
 	void ResetCamera() override final;
 
-	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
+	void HandleResizeEvent(const int& new_width, const int& new_height) override;
 	void HandleKeyPress(KeyboardButton button) override;
 	void HandleKeyRelease(KeyboardButton button) override;
 	void HandleFocusEvent(int focus) override;
+	void HandleMousePositionEvent(float xpos, float ypos) override;
+	void HandleMouseEvent(MouseButton button) override;
 private:
+	vec2<float> moveSpeed{ 0.f };
+	float rotationSpeed = 0;
+	float speedMulti = 1;
+	vec2<float> mousePosition;
+	bool isMouseCollide = false;
+
+	vec2<float> parentMax;
+	vec2<float> parentMin;
+	vec2<float> childMax;
+	vec2<float> childMin;
+	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	Shader shader;
 
 	Mesh rectangle;
-	Vertices vertices;
-	Transform transform;
+	Vertices rectangleVertices;
+	Transform rectangleTransform;
 	
 	Mesh line;
 	Vertices lineVertices;
@@ -55,7 +68,11 @@ private:
 	Vertices triangleVertices;
 	Transform triangleTransform;
 
-	vec2<float> moveSpeed{ 0.f };
-	float rotationSpeed = 0;
-	float speedMulti = 1;
+	Mesh parentMesh;
+	Vertices parentVertices;
+	Transform parentTransform;
+
+	Mesh childMesh;
+	Vertices childVertices;
+	Transform childTransform;
 };

@@ -91,6 +91,22 @@ void Application::HandleKeyRelease(KeyboardButton button)
 	demo[demoIndex]->HandleKeyRelease(button);
 }
 
+void Application::HandleScrollEvent(float scroll_amount)
+{
+	const float zoomSpeed = .05f;
+	float newZoom = view.GetZoom() + (scroll_amount * zoomSpeed);
+	newZoom = std::clamp(newZoom, 0.5f, 2.0f);
+	view.SetZoom(newZoom);
+}
+void Application::HandleMousePositionEvent(float xpos, float ypos)
+{
+	demo[demoIndex]->HandleMousePositionEvent(xpos, ypos);
+}
+
+void Application::HandleMouseEvent(MouseButton button)
+{
+	demo[demoIndex]->HandleMouseEvent(button);
+}
 
 void Application::HandleResizeEvent(const int& new_width, const int& new_height)
 {
@@ -98,14 +114,6 @@ void Application::HandleResizeEvent(const int& new_width, const int& new_height)
 	window.SetWindowHeight(new_height);
 
 	demo[demoIndex]->HandleResizeEvent(new_width, new_height);
-}
-
-void Application::HandleScrollEvent(float scroll_amount)
-{
-	const float zoomSpeed = .05f;
-	float newZoom = view.GetZoom() + (scroll_amount * zoomSpeed);
-	newZoom = std::clamp(newZoom, 0.5f, 2.0f);
-	view.SetZoom(newZoom);
 }
 
 void Application::HandleWindowClose()

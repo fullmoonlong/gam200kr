@@ -8,7 +8,6 @@
  *	Nov.25 2019
  *******************************************************/
 
-#include <iostream>
 #include "ShapeDrawingDemo.hpp"
 #include "Draw.hpp"
 #include "PATH.hpp"
@@ -20,24 +19,33 @@ void ShapeDrawingDemo::Initialize()
 	const Color4f lineColor{ .0f, .0f };
 
 	rectangle = MESH::create_rectangle(.0f, .0f, 50.f, 50.f, color);
-	vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	transform.SetTranslation({ 150.0f, 0.0f });
+	rectangleVertices.InitializeWithMeshAndLayout(rectangle, layout);
+	rectangleTransform.SetTranslation({ 150.0f, 150.0f });
 
-	line = MESH::create_line({ 200.0f, 200.0f }, { 0.0f, 0.0f }, lineColor);
+	line = MESH::create_line({ 50.0f, 50.0f }, { -50.0f, -50.0f }, lineColor);
 	lineVertices.InitializeWithMeshAndLayout(line, layout);
-	lineTransform.SetTranslation({ 0.0f, 0.0f });
+	lineTransform.SetTranslation({ 300.0f, 150.0f });
 
-	quad = MESH::create_quad({ -20.f, 0.f }, { -50.f, -50.f }, { 50.f, -50.f }, { 20.f, 0.f }, color);
+	quad = MESH::create_quad({ -20.f, 25.f }, { -50.f, -25.f }, { 50.f, -25.f }, { 20.f, 25.f }, color);
 	quadVertices.InitializeWithMeshAndLayout(quad, layout);
-	quadTransform.SetTranslation({ -100.f, 0.0f });
+	quadTransform.SetTranslation({ 150.f, 300.0f });
 
-	ellipse = MESH::create_ellipse(50.f, 50.f, 30, color);
+	ellipse = MESH::create_ellipse(25.0f, 25.0f, 30, color);
 	ellipseVertices.InitializeWithMeshAndLayout(ellipse, layout);
-	ellipseTransform.SetTranslation({ 0.0f, 100.0f });
+	ellipseTransform.SetTranslation({ 300.0f, 300.0f });
 
 	triangle = MESH::create_triangle({ 0.0f, 50.0f }, { -30.f, 0.0f }, { 30.f, 0.0f }, color);
 	triangleVertices.InitializeWithMeshAndLayout(triangle, layout);
-	triangleTransform.SetTranslation({ -100.0f, 100.0f });
+	triangleTransform.SetTranslation({ 150.0f, 0.0f });
+
+	parentMesh = MESH::create_rectangle(0, 50, 50, 50, color);
+	parentVertices.InitializeWithMeshAndLayout(parentMesh, layout);
+	max
+
+	childMesh = MESH::create_rectangle(0, 0, 50,50, { 0.8f, 0.f, 0.8f, 1.0f });
+	childVertices.InitializeWithMeshAndLayout(childMesh, layout);
+	childTransform.SetParent(&parentTransform);
+	//childTransform.SetScale({ 50 });
 
 	view.SetViewSize(width, height);
 }
@@ -50,14 +58,16 @@ void ShapeDrawingDemo::Update()
 	
 	Draw::StartDrawing();
 	
-	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
+	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * rectangleTransform.GetModelToWorld();
 	const mat3<float> lineNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * lineTransform.GetModelToWorld();
 	const mat3<float> quadNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * quadTransform.GetModelToWorld();
 	const mat3<float> ellipseNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * ellipseTransform.GetModelToWorld();
 	const mat3<float> triangleNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * triangleTransform.GetModelToWorld();
+	const mat3<float> parentNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * parentTransform.GetModelToWorld();
+	const mat3<float> childNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * childTransform.GetModelToWorld();
 	
 	shader.SendUniformVariable("ndc", ndc);
-	Draw::DrawShape(shader, vertices);
+	Draw::DrawShape(shader, rectangleVertices);
 
 	shader.SendUniformVariable("ndc", lineNDC);
 	Draw::DrawShape(shader, lineVertices);
@@ -70,6 +80,12 @@ void ShapeDrawingDemo::Update()
 
 	shader.SendUniformVariable("ndc", triangleNDC);
 	Draw::DrawShape(shader, triangleVertices);
+
+	shader.SendUniformVariable("ndc", parentNDC);
+	Draw::DrawShape(shader, parentVertices);
+
+	shader.SendUniformVariable("ndc", childNDC);
+	Draw::DrawShape(shader, childVertices);
 	
 	Draw::FinishDrawing();
 }
@@ -152,5 +168,29 @@ void ShapeDrawingDemo::HandleFocusEvent(int focus)
 	{
 		Draw::StartDrawing();
 		Draw::FinishDrawing();
+	}
+}
+
+void ShapeDrawingDemo::HandleMousePositionEvent(float xpos, float ypos)
+{
+	mousePosition.x = xpos - width / 2.f;
+	mousePosition.y = -ypos + height / 2.f;
+}
+
+void ShapeDrawingDemo::HandleMouseEvent(MouseButton button)
+{
+	vec2<float> t = childTransform.GetTranslation();
+	vec2<float> s = childTransform.GetScale();
+	switch (button)
+	{
+	case MouseButton::LEFT_PRESS:
+		if (!(t.x - s.x > mousePosition.x || mousePosition.x > t.x + s.x || t.y - s.y > mousePosition.y || mousePosition.y > t.y + s.y))
+		{
+			isMouseCollide = true;
+		}
+		break;
+	case MouseButton::LEFT_RELEASE:
+		isMouseCollide = false;
+		break;
 	}
 }
