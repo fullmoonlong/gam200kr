@@ -132,7 +132,7 @@ void Object::ChangeUnitAnimation()
 	{
 		if (GetState() == State::WALK && GetSpriteChangeState() == true)
 		{
-			material.texture.LoadFromPath(PATH::wizard_move);
+			material.texture.LoadFromPath(PATH::magician_move);
 			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
@@ -140,7 +140,7 @@ void Object::ChangeUnitAnimation()
 		{
 			if (GetSpriteChangeState() == true)
 			{
-				material.texture.LoadFromPath(PATH::wizard_attack);
+				material.texture.LoadFromPath(PATH::magician_attack);
 				animation.ChangeAnimation(5);
 				SetSpriteChangeState(false);
 			}

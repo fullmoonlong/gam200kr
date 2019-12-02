@@ -178,8 +178,6 @@ void Application::Initialize()
 	SOUNDMANAGER->LoadFile("hit.ogg");
 	SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
-
-	//health.Initialize(knight->GetXposition,knight->GetHealth);
 	//test sound and make object
 }
 
@@ -213,6 +211,7 @@ void Application::Update()
 			obj.second->Update(deltaTime);
 			obj.second->ChangeUnitAnimation();
 			obj.second->animation.Animate(deltaTime);
+
 			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
 			shader.SendUniformVariable("ndc", ndc);
 			Draw::draw(shader, obj.second->material);
