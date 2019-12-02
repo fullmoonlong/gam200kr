@@ -35,7 +35,7 @@ void Application::Initialize()
 
 	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
 	text.SetFont(bitmapFont);
-	text.SetString(L"LASIK");
+
 	textTransform.SetTranslation({ -300.0f, 0.0f });
 	
 	//camera
@@ -165,11 +165,12 @@ void Application::Update()
 	Draw::StartDrawing();
 
 	const mat3<float> backgroundNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
-	Draw::draw({ backgroundShader, backgroundVertices, backgroundTexture, backgroundNDC });
+	Draw::draw({ backgroundShader, backgroundVertices, backgroundNDC,  backgroundTexture });
 	
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
+	text.SetString(input.GetString());
 	Draw::DrawText(fontShader, textNDC, text);
-
+	
 	//dynamic test
 	for (auto obj : OBJECTFACTORY->GetObjecteList())
 	{
@@ -192,8 +193,6 @@ void Application::Update()
 	if (clock.timePassed >= 1.0f)
 	{
 		++time;
-		std::cout << time << std::endl;
-		std::cout << frameCount << std::endl;
 		clock.timePassed -= 1.0f;
 		frameCount = 0;
 		OBJECTFACTORY->DamageTest(time);	//test for damage
@@ -214,63 +213,270 @@ void Application::ShutDown()
 
 void Application::HandleKeyPress(KeyboardButton button)
 {
+	static bool isEnter = false;
 	switch (button)
 	{
-	case KeyboardButton::Escape:
-		this->ShutDown();
+	case KeyboardButton::A:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('a');
+			printf("a");
+			break;
+		}
+		break;
+	case KeyboardButton::B:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('b');
+			printf("b");
+			break;
+		}
+		break;
+	case KeyboardButton::C:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('c');
+			printf("c");
+			break;
+		}
+		break;
+	case KeyboardButton::D:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('d');
+			printf("d");
+			break;
+		}
+		break;
+	case KeyboardButton::E:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('e');
+			printf("e");
+			break;
+		}
 		break;
 	case KeyboardButton::F:
-		window.ToggleFullScreen();
-		HandleScrollEvent(0.0f);
-		break;
-	case KeyboardButton::V:
-		window.ToggleVSync(!window.IsVSyncOn());
-		break;
-	case KeyboardButton::W:
-		for (auto obj : OBJECTFACTORY->GetObjecteList())
+		if (isEnter == true)
 		{
-			if (obj.second->GetType() == UnitType::Enemy)
-			{
-				OBJECTFACTORY->Destroy(obj.second);
-			}
+			input.TakeAsInput('f');
+			printf("f");
+			break;
+		}
+		else
+		{
+			window.ToggleFullScreen();
+		}
+		break;
+	case KeyboardButton::G:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('g');
+			printf("g");
+			break;
+		}
+		break;
+	case KeyboardButton::H:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('h');
+			printf("h");
+			break;
+		}
+		break;
+	case KeyboardButton::I:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('i');
+			printf("i");
+			break;
+		}
+		break;
+	case KeyboardButton::J:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('j');
+			printf("j");
+			break;
+		}
+		break;
+	case KeyboardButton::K:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('k');
+			printf("k");
+			break;
+		}
+		break;
+	case KeyboardButton::L:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('l');
+			printf("l");
+			break;
+		}
+		break;
+	case KeyboardButton::M:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('m');
+			printf("m");
+			break;
+		}
+		break;
+	case KeyboardButton::N:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('n');
+			printf("n");
+			break;
+		}
+		break;
+	case KeyboardButton::O:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('o');
+			printf("o");
+			break;
+		}
+		break;
+	case KeyboardButton::P:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('p');
+			printf("p");
+			break;
+		}
+		break;
+	case KeyboardButton::Q:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('q');
+			printf("q");
+			break;
+		}
+		break;
+	case KeyboardButton::R:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('r');
+			printf("r");
+			break;
 		}
 		break;
 	case KeyboardButton::S:
-		for (auto obj : OBJECTFACTORY->GetObjecteList())
+		if (isEnter == true)
 		{
-			if (obj.second->GetType() == UnitType::Player)
+			input.TakeAsInput('s');
+			printf("s");
+			break;
+		}
+		else
+		{
+			for (auto obj : OBJECTFACTORY->GetObjecteList())
 			{
-				OBJECTFACTORY->Destroy(obj.second);
+				if (obj.second->GetType() == UnitType::Player)
+				{
+					OBJECTFACTORY->Destroy(obj.second);
+				}
 			}
 		}
 		break;
-	case KeyboardButton::A:
-		input.TakeAsInput();
+	case KeyboardButton::T:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('t');
+			printf("t");
+			break;
+		}
+		break;
+	case KeyboardButton::U:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('u');
+			printf("u");
+			break;
+		}
+		break;
+	case KeyboardButton::V:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('v');
+			printf("v");
+			break;
+		}
+		else
+		{
+			if (window.IsVSyncOn() == false)
+			{
+				window.ToggleVSync(true);
+				break;
+			}
+			window.ToggleVSync(false);
+		}
+		break;
+	case KeyboardButton::W:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('w');
+			printf("w");
+			break;
+		}
+		break;
+	case KeyboardButton::X:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('x');
+			printf("x");
+			break;
+		}
+		break;
+	case KeyboardButton::Y:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('y');
+			printf("y");
+			break;
+		}
+		break;
+	case KeyboardButton::Z:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('z');
+			printf("z");
+			break;
+		}
+		break;
+	case KeyboardButton::Escape:
+		this->ShutDown();
+		break;
+	case KeyboardButton::Enter:
+		if (isEnter == false)
+		{
+			isEnter = true;
+			printf("typing start\n");
+			break;
+		}
+		isEnter = false;
+		printf("typing end\n");
+		//std::cout << "\n" << input.GetString();
 		if (input.MatchStringWithInput() == 1)
 		{
 			OBJECTFACTORY->CopyObject(knight);
-			SOUNDMANAGER->PlaySound(0, 1);
 		}
 		else if (input.MatchStringWithInput() == 2)
 		{
 			OBJECTFACTORY->CopyObject(archer);
-			SOUNDMANAGER->PlaySound(0, 1);
 		}
 		else if (input.MatchStringWithInput() == 3)
 		{
 			OBJECTFACTORY->CopyObject(magician);
-			SOUNDMANAGER->PlaySound(0, 1);
 		}
+		input.SetString(L"");
 		break;
-	case KeyboardButton::D:
-		SOUNDMANAGER->PlaySound(0, 1);
-		OBJECTFACTORY->CopyObject(proKevin);
+
+	default:
 		break;
-	case KeyboardButton::Z:
-		break;
-	case KeyboardButton::X:
-		break;
-	default:;
 	}
 }
 

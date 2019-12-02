@@ -5,12 +5,14 @@ class GetInput
 public:
 	GetInput() {}
 
-	void TakeAsInput();
+	void TakeAsInput(char input);
 	int MatchStringWithInput();
+	void SetString(std::wstring initial) { string = initial; }
+	std::wstring GetString() { return string; }
 
 private:
-	std::string input;
-	std::string knight = "Knight";
-	std::string archer = "Archer";
-	std::string magician = "Magician";
+	std::wstring string;
+	std::wstring knight = L"knight";
+	std::wstring archer = L"archer";
+	std::wstring magician = L"magician";
 };
