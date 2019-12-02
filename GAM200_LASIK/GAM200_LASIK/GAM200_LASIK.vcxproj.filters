@@ -12,6 +12,7 @@
     <ClCompile Include="EnemyUnits.cpp" />
     <ClCompile Include="GetInput.cpp" />
     <ClCompile Include="ComponentTower.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -28,5 +29,6 @@
     <ClInclude Include="EnemyUnits.hpp" />
     <ClInclude Include="GetInput.hpp" />
     <ClInclude Include="ComponentTower.h" />
+    <ClInclude Include="UI.hpp" />
   </ItemGroup>
 </Project>

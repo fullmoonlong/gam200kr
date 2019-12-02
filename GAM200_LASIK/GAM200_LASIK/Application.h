@@ -24,7 +24,7 @@
 #include "ObjectFactory.h"
 #include "Units.hpp"
 #include "GetInput.hpp"
-
+#include "UI.hpp"
 class Application : public SimpleEventHandler
 {
 public:
