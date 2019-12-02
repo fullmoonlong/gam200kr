@@ -14,7 +14,6 @@ Creation Date : 11/14/2019
 #include "Vertices.h"
 #include "Camera.hpp"
 #include "CameraView.hpp"
-#include"Units.hpp"
 
 class HealthBar{
 public:
@@ -35,8 +34,8 @@ private:
 	Material	allyUnitMaterial, enemyMaterial;*/
 
 	float totalSizeX = 56.f;
-	int fullHP = 0;
-	int currentHP = 0;
+	float fullHP = 0;
+	float currentHP = 0;
 	vec2<float> size = { totalSizeX, 8.f};
 
 	const Color4f color{ 0.8f, 0.0f, 0.0f, 1.0f };
@@ -46,8 +45,8 @@ private:
 class SelectRespawn {
 
 public:
-	//void SelectMenu(/*vec2<float> selectPosition*/);
-	//void SelectUpdate();
+	void SelectMenu(/*vec2<float> selectPosition*/);
+	void SelectUpdate();
 
 	Material	selectMaterial, archerMaterial, knightMaterial, magicianMaterial;
 	Transform	selectTransform, archerTransform, knightTransform, magicianTransform;

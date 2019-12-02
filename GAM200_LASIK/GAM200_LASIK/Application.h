@@ -92,7 +92,6 @@ private:
 	Camera camera;
 	CameraView view;
 
-	UI::HealthBar health;
 	SoundManager soundManager;
 	//float cameraSpeed{ 80.0f };
 	float depth = 1.0f;

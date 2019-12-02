@@ -84,6 +84,7 @@ public:
 	
 	int health;
 	int damage;
+	UI::HealthBar healthBar;
 
 	vec2<float> attackRange = {0, 0};
 	vec2<float> speed;
@@ -142,6 +143,5 @@ private:
 	bool spriteChange = false;
 
 	float baseTime = 0.f;
-	UI::HealthBar healthBar;
 	std::vector <Component*>componetList;
 };
