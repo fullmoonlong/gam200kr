@@ -1,3 +1,4 @@
+#pragma once
 /*
 Name: Wonju Cho
 Creation Date : 11/14/2019

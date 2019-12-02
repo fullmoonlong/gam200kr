@@ -11,7 +11,7 @@
 #include "PATH.hpp"
 #include "Component.h"
 #include "ComponentType.h"
-
+#include"UI.hpp"
 enum UnitType {
 	Player,
 	Enemy,
@@ -142,6 +142,6 @@ private:
 	bool spriteChange = false;
 
 	float baseTime = 0.f;
-
+	UI::HealthBar healthBar;
 	std::vector <Component*>componetList;
 };

@@ -53,6 +53,8 @@ void Object::Initialize(const char* name) noexcept
 	min = { position.x - half_width, position.y - half_height };
 	max = { position.x + half_width, position.y + half_height };
 	transform.SetScale({ size.x, size.y });
+
+	healthBar.Initialize(position, GetHealth());
 }
 
 void Object::Update(float dt) noexcept
@@ -74,6 +76,7 @@ void Object::Update(float dt) noexcept
 		float half_height = size.y / 2;
 		min = { position.x - half_width, position.y - half_height };
 		max = { position.x + half_width, position.y + half_height };
+		healthBar.Update(position, GetHealth() - GetDamage());
 	}
 	if (health <= 0 && (unitType == UnitType::Player || unitType == UnitType::Enemy))
 	{

@@ -24,7 +24,7 @@
 #include "ObjectFactory.h"
 #include "Units.hpp"
 #include "GetInput.hpp"
-
+#include "UI.hpp"
 class Application : public SimpleEventHandler
 {
 public:
@@ -92,6 +92,7 @@ private:
 	Camera camera;
 	CameraView view;
 
+	UI::HealthBar health;
 	SoundManager soundManager;
 	//float cameraSpeed{ 80.0f };
 	float depth = 1.0f;

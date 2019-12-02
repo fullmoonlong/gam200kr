@@ -178,6 +178,8 @@ void Application::Initialize()
 	SOUNDMANAGER->LoadFile("hit.ogg");
 	SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
+
+	//health.Initialize(knight->GetXposition,knight->GetHealth);
 	//test sound and make object
 }
 
@@ -239,6 +241,8 @@ void Application::Update()
 	window.SwapBuffers();
 	window.PollEvents();
 	deltaTime = clock.GetTimeFromLastUpdate();
+
+	
 }
 
 void Application::ShutDown()
