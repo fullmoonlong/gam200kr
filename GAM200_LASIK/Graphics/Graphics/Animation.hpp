@@ -9,9 +9,6 @@
  */
 
 #pragma once
-#include <filesystem>
-#include "Mesh.h"
-#include "Texture.hpp"
 #include "Shader.h"
 
 class Animation
@@ -19,12 +16,10 @@ class Animation
 public:
 	Animation() = default;
 
-	void Initialize(Image& new_sprite, Mesh& new_shape, int new_count, Shader& new_shader);
+	void Initialize(int new_count, Shader& new_shader);
 	void Animate(float dt);
-	void ChangeAnimation(const std::filesystem::path& new_sprite, int new_count);
-	Texture spriteSheet;
+	void ChangeAnimation(int new_count);
 private:
-	Mesh shape;
 	Shader shader;
 	int frameCount;
 	int frameIndex = 0;

@@ -53,6 +53,8 @@ void Object::Initialize(const char* name) noexcept
 	min = { position.x - half_width, position.y - half_height };
 	max = { position.x + half_width, position.y + half_height };
 	transform.SetScale({ size.x, size.y });
+
+	healthBar.Initialize(transform.GetTranslation(), GetHealth());
 }
 
 void Object::Update(float dt) noexcept
@@ -75,6 +77,7 @@ void Object::Update(float dt) noexcept
 		min = { position.x - half_width, position.y - half_height };
 		max = { position.x + half_width, position.y + half_height };
 	}
+	healthBar.Update(transform.GetTranslation(), GetHealth());
 	if (health <= 0 && (unitType == UnitType::Player || unitType == UnitType::Enemy))
 	{
 		OBJECTFACTORY->Destroy(this);
@@ -92,14 +95,16 @@ void Object::ChangeUnitAnimation()
 	{
 		if (GetState() == State::WALK && GetSpriteChangeState() == true)
 		{
-			animation.ChangeAnimation(PATH::knight_move, 8);
+			material.texture.LoadFromPath(PATH::knight_move);
+			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
 		else if (GetState() == State::ATTACK)
 		{
 			if (GetSpriteChangeState() == true && GetAttackState() == true)
 			{
-				animation.ChangeAnimation(PATH::knight_attack, 8);
+				material.texture.LoadFromPath(PATH::knight_attack);
+				animation.ChangeAnimation(8);
 				SetSpriteChangeState(false);
 			}
 		}
@@ -109,14 +114,16 @@ void Object::ChangeUnitAnimation()
 	{
 		if (GetState() == State::WALK && GetSpriteChangeState() == true)
 		{
-			animation.ChangeAnimation(PATH::archer_move, 8);
+			material.texture.LoadFromPath(PATH::archer_move);
+			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
 		else if (GetState() == State::ATTACK)
 		{
 			if (GetSpriteChangeState() == true)
 			{
-				animation.ChangeAnimation(PATH::archer_attack, 8);
+				material.texture.LoadFromPath(PATH::archer_attack);
+				animation.ChangeAnimation(8);
 				SetSpriteChangeState(false);
 			}
 		}
@@ -125,14 +132,16 @@ void Object::ChangeUnitAnimation()
 	{
 		if (GetState() == State::WALK && GetSpriteChangeState() == true)
 		{
-			animation.ChangeAnimation(PATH::wizard_move, 8);
+			material.texture.LoadFromPath(PATH::wizard_move);
+			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
 		else if (GetState() == State::ATTACK)
 		{
 			if (GetSpriteChangeState() == true)
 			{
-				animation.ChangeAnimation(PATH::wizard_attack, 5);
+				material.texture.LoadFromPath(PATH::wizard_attack);
+				animation.ChangeAnimation(5);
 				SetSpriteChangeState(false);
 			}
 		}

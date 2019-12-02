@@ -2,6 +2,7 @@
 #include <string>
 #include "vec2.hpp"
 #include "Image.hpp"
+#include "Texture.hpp"
 #include "Transform.hpp"
 #include "Vertices.h"
 #include "Mesh.h"
@@ -10,7 +11,7 @@
 #include "PATH.hpp"
 #include "Component.h"
 #include "ComponentType.h"
-
+#include"UI.hpp"
 enum UnitType {
 	Player,
 	Enemy,
@@ -41,6 +42,8 @@ public:
 
 	ObjectID GetObjectID(){	return objectID;}
 	void SetObjectID(ObjectID objID){ objectID = objID;}
+
+	int GetObjectCopyID() { return objectCopyId; }
 
 	std::string GetName() const{return objectName;}
 	void SetName(const std::string& name){objectName = name;}
@@ -73,11 +76,7 @@ public:
 
 	Transform transform;
 	Material material;
-	Mesh mesh;
-	Vertices vertices;
 	Animation animation;
-	Image image;
-
 
 	// Collision
 	vec2<float> min;
@@ -85,6 +84,7 @@ public:
 	
 	int health;
 	int damage;
+	UI::HealthBar healthBar;
 
 	vec2<float> attackRange = {0, 0};
 	vec2<float> speed;
@@ -131,6 +131,7 @@ public:
 	}
 private:
 	ObjectID objectID;
+	int objectCopyId = 0;
 	std::string objectName = "";
 
 	vec2<float> position;
@@ -142,6 +143,5 @@ private:
 	bool spriteChange = false;
 
 	float baseTime = 0.f;
-
 	std::vector <Component*>componetList;
 };

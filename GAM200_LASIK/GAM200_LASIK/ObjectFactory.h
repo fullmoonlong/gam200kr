@@ -28,7 +28,7 @@ public:
 
 	void DestroyAllObjects();
 
-	Object* FindObjectwithName(std::string& name);
+	Object* FindObjectwithName(const std::string& name);
 	Object* FindObjectwithID(ObjectID id);
 
 	std::map<ObjectID, Object*> GetObjecteList() { return objectIDMap; };
@@ -41,6 +41,9 @@ public:
 
 private:
 	std::map<ObjectID, Object*> objectIDMap;
+
+	std::vector<Object*> PlayerUnits;
+	std::vector<Object*> EnemyUnits;
 
 	std::vector<Object*> objectsToBeDeleted;
 

@@ -11,8 +11,6 @@
 #include <string>
 #include <unordered_map>
 
-class CameraView;
-class Transform;
 class BitmapFont;
 
 class [[nodiscard]] Text

@@ -16,6 +16,7 @@
 #include "Animation.hpp"
 #include "Draw.hpp"
 #include "BitmapFont.hpp"
+#include "Text.hpp"
 #include "Object.h"
 #include "ObjectFactory.h"
 #include "Util/Clock.hpp"
@@ -23,7 +24,7 @@
 #include "ObjectFactory.h"
 #include "Units.hpp"
 #include "GetInput.hpp"
-
+#include "UI.hpp"
 class Application : public SimpleEventHandler
 {
 public:
@@ -47,26 +48,23 @@ private:
 	int frameCount = 0;
 	float deltaTime = 0;
 	GetInput input;
-	
+
 	Draw draw;
 	ObjectFactory objectFactory;
 	Object* proKevin;
 	Object* objectTest1;
-	
+
 	Object background;
 	Shader backgroundShader;
-	Mesh backgroundMesh;
+	//Mesh backgroundMesh;
 	Vertices backgroundVertices;
 	Texture backgroundTexture;
 	Material backgroundMaterial;
-	
-	BitmapFont bitmapFont;
+
 	Shader fontShader;
-	Object lasik;
-	Mesh textMesh;
-	Vertices textVertices;
-	Texture fontTexture;
-	//Text text;
+	BitmapFont bitmapFont;
+	Text text;
+	Transform textTransform;
 
 	Shader shader;
 	Object object;

@@ -119,11 +119,11 @@ void Text::BuildNewMeshesIfNeeded() const noexcept
 				float top = bottom + ch.height;
 
 				float textureLeft = ch.x / float(chDesc.imageWidth);
-				float textureTop = ch.y / float(chDesc.imageHeight);
+				float textureTop = 1.0f - ch.y / float(chDesc.imageHeight);
 				float textureRight = (ch.x + ch.width) / float(chDesc.imageWidth);
-				float textureBottom = (ch.y + ch.height) / float(chDesc.imageHeight);
+				float textureBottom = 1.0f - (ch.y + ch.height) / float(chDesc.imageHeight);
 
-				meshes.at(ch.page).SetShapePattern(ShapePattern::Triangle);
+				meshes.at(ch.page).SetShapePattern(ShapePattern::Triangles);
 				meshes.at(ch.page).AddPoint({ left, top });
 				meshes.at(ch.page).AddPoint({ right, top });
 				meshes.at(ch.page).AddPoint({ left, bottom });
@@ -137,7 +137,7 @@ void Text::BuildNewMeshesIfNeeded() const noexcept
 				meshes.at(ch.page).AddTextureCoordinate({ textureRight, textureTop });
 				meshes.at(ch.page).AddTextureCoordinate({ textureLeft, textureBottom });
 				meshes.at(ch.page).AddTextureCoordinate({ textureRight, textureBottom });
-
+				
 				cursor.x += ch.xAdvance;
 			}
 		}

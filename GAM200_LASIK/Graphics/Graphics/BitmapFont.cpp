@@ -20,7 +20,7 @@ bool BitmapFont::LoadFromFile(const std::filesystem::path& filename) noexcept
 	for (int i = 0; i < details.pagesCount; ++i)
 	{
 		Texture input;
-		std::wstring inputPath = L"assets/";
+		std::wstring inputPath = L"../assets/";
 		details.pageNames.at(i).pop_back();		// last "
 		details.pageNames.at(i) = details.pageNames.at(i).substr(1);	// first "
 		inputPath.append(details.pageNames.at(i));

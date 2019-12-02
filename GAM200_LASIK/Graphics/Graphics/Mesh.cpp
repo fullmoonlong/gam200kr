@@ -38,7 +38,7 @@ void Mesh::AddTextureCoordinate(float u, float v)
 }
 
 
-void Mesh::SetShapePattern(::ShapePattern new_pattern) noexcept
+void Mesh::SetShapePattern(ShapePattern new_pattern) noexcept
 {
 	pattern = new_pattern;
 }
@@ -78,7 +78,7 @@ Mesh MESH::create_ellipse(float rx, float ry, int pointsNum, Color4f color)
 	for (int i = 0; i <= pointsNum; ++i)
 	{
 		circle.AddPoint({ rx * static_cast<float>(cos((float)i * angle)),
-			ry * static_cast<float>(sin((float)i * angle)) });
+						ry * static_cast<float>(sin((float)i * angle)) });
 		circle.AddColor(color);
 	}
 
@@ -108,4 +108,31 @@ Mesh MESH::create_rectangle(float xPos, float yPos, float width, float height, C
 	rectangle.AddTextureCoordinate({ 1.f, 0.f });
 
 	return rectangle;
+}
+
+Mesh MESH::create_quad(vec2<float> p1, vec2<float> p2, vec2<float> p3, vec2<float> p4, Color4f color)
+{
+	Mesh quad;
+	quad.SetShapePattern(ShapePattern::Quads);
+	quad.AddPoint(p1);
+	quad.AddPoint(p2);
+	quad.AddPoint(p3);
+	quad.AddPoint(p4);
+	quad.AddColor(color);
+	quad.AddColor(color);
+	quad.AddColor(color);
+	quad.AddColor(color);
+	// maybe texture coordinate
+	return quad;
+}
+
+Mesh MESH::create_line(vec2<float> p1, vec2<float> p2, Color4f color)
+{
+	Mesh line;
+	line.SetShapePattern(ShapePattern::Line);
+	line.AddPoint(p1);
+	line.AddPoint(p2);
+	line.AddColor(color);
+	line.AddColor(color);
+	return line;
 }
