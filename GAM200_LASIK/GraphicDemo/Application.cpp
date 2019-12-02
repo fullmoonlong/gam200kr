@@ -1,17 +1,18 @@
 /********************************************************
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: Application.cpp
-*	
-*	Graphic demo main file
-*	
-*	Nov.29 2019
-*******************************************************/
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *	
+ *	File_name: Application.cpp
+ *	
+ *	Graphic demo main file
+ *	
+ *	Nov.29 2019
+ *******************************************************/
 
 #include <iostream>
 #include "Application.h"
 #include "ShapeDrawingDemo.hpp"
 #include "TextureDrawingDemo.hpp"
+#include "HierarchyDemo.hpp"
 
 bool Application::IsRunning() const
 {
@@ -33,13 +34,14 @@ void Application::Initialize()
 
 	demo[SHAPEDRAWING] = std::make_unique<ShapeDrawingDemo>(window);
 	demo[TEXTUREDRAWING] = std::make_unique<TextureDrawingDemo>(window);
+	demo[HIERARCHY] = std::make_unique<HierarchyDemo>(window);
 }
 
-void Application::Update()
+void Application::Update(float dt)
 {
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	
-	demo[demoIndex]->Update();
+	demo[demoIndex]->Update(dt);
 
 	window.SwapBuffers();
 	window.PollEvents();

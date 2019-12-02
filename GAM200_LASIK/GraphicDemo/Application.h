@@ -1,12 +1,12 @@
 /********************************************************
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: Application.h
-*	
-*	Graphic demo main file
-*	
-*	Nov.29 2019
-*******************************************************/
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *	
+ *	File_name: Application.h
+ *	
+ *	Graphic demo main file
+ *	
+ *	Nov.29 2019
+ *******************************************************/
 
 #pragma once
 #include <array>
@@ -22,12 +22,13 @@ public:
 	enum DEMOINDEX
 	{
 		SHAPEDRAWING,
-		TEXTUREDRAWING
+		TEXTUREDRAWING,
+		HIERARCHY
 	};
 
 	Application();
 	void Initialize();
-	void Update();
+	void Update(float dt);
 	void ShutDown();
 
 	bool IsRunning() const;
@@ -50,5 +51,5 @@ protected:
 	const int height = 720;
 
 	int demoIndex = SHAPEDRAWING;
-	std::array<std::unique_ptr<Demo>, 2> demo;
+	std::array<std::unique_ptr<Demo>, 3> demo;
 };

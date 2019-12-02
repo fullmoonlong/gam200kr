@@ -68,7 +68,7 @@ size_t Mesh::GetPointsCount() const noexcept
 	return points.size();
 }
 
-Mesh MESH::create_ellipse(float rx, float ry, int pointsNum, Color4f color)
+Mesh MESH::create_ellipse(vec2<float> pos, vec2<float> radius, int pointsNum, Color4f color)
 {
 	Mesh circle;
 	
@@ -77,27 +77,27 @@ Mesh MESH::create_ellipse(float rx, float ry, int pointsNum, Color4f color)
 
 	for (int i = 0; i <= pointsNum; ++i)
 	{
-		circle.AddPoint({ rx * static_cast<float>(cos((float)i * angle)),
-						ry * static_cast<float>(sin((float)i * angle)) });
+		circle.AddPoint({ pos.x + radius.x * static_cast<float>(cos((float)i * angle)),
+						pos.y + radius.y * static_cast<float>(sin((float)i * angle)) });
 		circle.AddColor(color);
 	}
 
 	return circle;
 }
 
-Mesh MESH::create_rectangle(float xPos, float yPos, float width, float height, Color4f color)
+Mesh MESH::create_rectangle(vec2<float> pos, vec2<float> size, Color4f color)
 {
 	Mesh rectangle;
 
 	rectangle.SetShapePattern(ShapePattern::TriangleFan);
 
-	float xHalf = width / 2.0f;
-	float yHalf = height / 2.0f;
+	float xHalf = size.x / 2.0f;
+	float yHalf = size.y / 2.0f;
 	
-	rectangle.AddPoint({ -xHalf + xPos, -yHalf + yPos });
-	rectangle.AddPoint({ -xHalf + xPos, yHalf + yPos });
-	rectangle.AddPoint({ xHalf + xPos, yHalf + yPos});
-	rectangle.AddPoint({ xHalf + xPos, -yHalf + yPos });
+	rectangle.AddPoint({ -xHalf + pos.x, -yHalf + pos.y });
+	rectangle.AddPoint({ -xHalf + pos.x, yHalf + pos.y });
+	rectangle.AddPoint({ xHalf + pos.x, yHalf + pos.y });
+	rectangle.AddPoint({ xHalf + pos.x, -yHalf + pos.y });
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
 	rectangle.AddColor(color);
@@ -106,44 +106,42 @@ Mesh MESH::create_rectangle(float xPos, float yPos, float width, float height, C
 	rectangle.AddTextureCoordinate({ 0.f, 1.f });
 	rectangle.AddTextureCoordinate({ 1.f, 1.f });
 	rectangle.AddTextureCoordinate({ 1.f, 0.f });
-
 	return rectangle;
 }
 
-Mesh MESH::create_quad(vec2<float> p1, vec2<float> p2, vec2<float> p3, vec2<float> p4, Color4f color)
+Mesh MESH::create_quad(vec2<float> pos, vec2<float> p1, vec2<float> p2, vec2<float> p3, vec2<float> p4, Color4f color)
 {
 	Mesh quad;
 	quad.SetShapePattern(ShapePattern::Quads);
-	quad.AddPoint(p1);
-	quad.AddPoint(p2);
-	quad.AddPoint(p3);
-	quad.AddPoint(p4);
+	quad.AddPoint(pos + p1);
+	quad.AddPoint(pos + p2);
+	quad.AddPoint(pos + p3);
+	quad.AddPoint(pos + p4);
 	quad.AddColor(color);
 	quad.AddColor(color);
 	quad.AddColor(color);
 	quad.AddColor(color);
-	// maybe texture coordinate
 	return quad;
 }
 
-Mesh MESH::create_line(vec2<float> p1, vec2<float> p2, Color4f color)
+Mesh MESH::create_line(vec2<float> pos, vec2<float> p1, vec2<float> p2, Color4f color)
 {
 	Mesh line;
 	line.SetShapePattern(ShapePattern::Line);
-	line.AddPoint(p1);
-	line.AddPoint(p2);
+	line.AddPoint(pos + p1);
+	line.AddPoint(pos + p2);
 	line.AddColor(color);
 	line.AddColor(color);
 	return line;
 }
 
-Mesh MESH::create_triangle(vec2<float> p1, vec2<float> p2, vec2<float> p3, Color4f color)
+Mesh MESH::create_triangle(vec2<float> pos, vec2<float> p1, vec2<float> p2, vec2<float> p3, Color4f color)
 {
 	Mesh triangle;
 	triangle.SetShapePattern(ShapePattern::Triangles);
-	triangle.AddPoint(p1);
-	triangle.AddPoint(p2);
-	triangle.AddPoint(p3);
+	triangle.AddPoint(pos + p1);
+	triangle.AddPoint(pos + p2);
+	triangle.AddPoint(pos + p3);
 	triangle.AddColor(color);
 	triangle.AddColor(color);
 	triangle.AddColor(color);

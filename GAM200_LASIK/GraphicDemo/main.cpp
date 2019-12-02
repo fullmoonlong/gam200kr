@@ -9,18 +9,19 @@
  *******************************************************/
 
 #include "Application.h"
+#include "../GAM200_LASIK/Util/Clock.hpp"
 
 int main()
 {
-	//ShapeDrawingDemo demo;
-
 	Application app;
+	Clock clock;
+	float dt = 0.0f;
 	
-	//demo.Initialize();
-
 	while (app.IsRunning())
 	{
-		app.Update();
+		clock.UpdateClock();
+		app.Update(dt);
+		dt = clock.GetTimeFromLastUpdate();
 	}
 
 	return 0;

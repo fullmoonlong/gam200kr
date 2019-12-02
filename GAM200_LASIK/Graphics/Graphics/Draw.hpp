@@ -16,8 +16,10 @@
 
 struct Material
 {
+	Shader shader;
 	Vertices vertices;
 	Texture texture;
+	mat3<float> ndc;
 };
 
 class Draw
@@ -25,9 +27,9 @@ class Draw
 public:
 	static void StartDrawing();
 	static void FinishDrawing();
-	static void draw(const Shader& shader, const Material& material);
-	static void DrawShape(const Shader& shader, const Vertices& vertices);
-	static void DrawText(const Shader& shader, const Text& text);
+	static void draw(const Material& material);
+	static void DrawShape(const Material& material);
+	static void DrawText(const Shader& shader, const mat3<float>& ndc, const Text& text);
 private:
 };
 

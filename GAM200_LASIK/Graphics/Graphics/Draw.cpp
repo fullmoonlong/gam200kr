@@ -22,27 +22,29 @@ void Draw::FinishDrawing()
 	glFinish();
 }
 
-void Draw::draw(const Shader& shader, const Material& material)
+void Draw::draw(const Material& material)
 {
 	glBindTexture(GL_TEXTURE_2D, material.texture.GetTexturehandle());
-	Shader::UseShader(shader);
+	Shader::UseShader(material.shader);
+	material.shader.SendUniformVariable("ndc", material.ndc);
 	Vertices::SelectVAO(material.vertices);
 	glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
 }
 
-void Draw::DrawShape(const Shader& shader, const Vertices& vertices)
+void Draw::DrawShape(const Material& material)
 {
-	Shader::UseShader(shader);
-	Vertices::SelectVAO(vertices);
-	glDrawArrays(vertices.GetPattern(), 0, vertices.GetVerticesCount());
+	Shader::UseShader(material.shader);
+	material.shader.SendUniformVariable("ndc", material.ndc);
+	Vertices::SelectVAO(material.vertices);
+	glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
 }
 
-void Draw::DrawText(const Shader& shader, const Text& text)
+void Draw::DrawText(const Shader& shader, const mat3<float>& ndc, const Text& text)
 {
 	for (const auto& vertices_texture : text.GetVerticesWithMatchingTextures())
 	{
 		const Vertices& textVertices = *vertices_texture.first;
 		const Texture*  textTexture  = vertices_texture.second;
-		draw(shader, { textVertices, *textTexture });
+		draw({ shader, textVertices, *textTexture, ndc });
 	}
 }

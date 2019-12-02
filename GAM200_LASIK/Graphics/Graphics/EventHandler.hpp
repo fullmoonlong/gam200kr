@@ -24,6 +24,8 @@ enum class KeyboardButton
 	X,
 	I,
 	O,
+	T,
+	Y,
 	Arrow_Left,
 	Arrow_Right,
 	Arrow_Up,

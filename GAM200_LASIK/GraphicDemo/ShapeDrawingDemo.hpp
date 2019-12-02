@@ -22,7 +22,7 @@ public:
 	explicit ShapeDrawingDemo(Window& window) : Demo(window) { Initialize(); }
 
 	void Initialize() override final;
-	void Update() override final;
+	void Update(float dt) override final;
 	void ShutDown() override final;
 
 	void ResetCamera() override final;
@@ -31,19 +31,10 @@ public:
 	void HandleKeyPress(KeyboardButton button) override;
 	void HandleKeyRelease(KeyboardButton button) override;
 	void HandleFocusEvent(int focus) override;
-	void HandleMousePositionEvent(float xpos, float ypos) override;
-	void HandleMouseEvent(MouseButton button) override;
 private:
 	vec2<float> moveSpeed{ 0.f };
 	float rotationSpeed = 0;
 	float speedMulti = 1;
-	vec2<float> mousePosition;
-	bool isMouseCollide = false;
-
-	vec2<float> parentMax;
-	vec2<float> parentMin;
-	vec2<float> childMax;
-	vec2<float> childMin;
 	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	Shader shader;
@@ -60,19 +51,15 @@ private:
 	Vertices quadVertices;
 	Transform quadTransform;
 
-	Mesh ellipse;
-	Vertices ellipseVertices;
-	Transform ellipseTransform;
-
 	Mesh triangle;
 	Vertices triangleVertices;
 	Transform triangleTransform;
 
-	Mesh parentMesh;
-	Vertices parentVertices;
-	Transform parentTransform;
+	Mesh circle;
+	Vertices circleVertices;
+	Transform circleTransform;
 
-	Mesh childMesh;
-	Vertices childVertices;
-	Transform childTransform;
+	Mesh ellipse;
+	Vertices ellipseVertices;
+	Transform ellipseTransform;
 };

@@ -75,6 +75,12 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 		case GLFW_KEY_O:
 			eventHandler->HandleKeyPress(KeyboardButton::O);
 			break;
+		case GLFW_KEY_T:
+			eventHandler->HandleKeyPress(KeyboardButton::T);
+			break;
+		case GLFW_KEY_Y:
+			eventHandler->HandleKeyPress(KeyboardButton::Y);
+			break;
 		case GLFW_KEY_LEFT:
 			eventHandler->HandleKeyPress(KeyboardButton::Arrow_Left);
 			break;

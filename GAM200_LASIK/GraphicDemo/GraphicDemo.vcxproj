@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Demo.cpp" />
+    <ClCompile Include="HierarchyDemo.cpp" />
     <ClCompile Include="ShapeDrawingDemo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="TextureDrawingDemo.cpp" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Demo.hpp" />
+    <ClInclude Include="HierarchyDemo.hpp" />
     <ClInclude Include="ShapeDrawingDemo.hpp" />
     <ClInclude Include="TextureDrawingDemo.hpp" />
   </ItemGroup>

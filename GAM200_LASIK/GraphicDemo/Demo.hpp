@@ -20,7 +20,7 @@ public:
 	explicit Demo(Window& window)
 		: width(window.GetWindowWidth()), height(window.GetWindowHeight()) {}
 	virtual void Initialize() = 0;
-	virtual void Update() = 0;
+	virtual void Update(float dt) = 0;
 	virtual void ShutDown() = 0;
 
 	virtual void ResetCamera() = 0;

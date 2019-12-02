@@ -16,22 +16,22 @@ void TextureDrawingDemo::Initialize()
 {
 	shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 
-	mesh = MESH::create_rectangle(0.0f, 0.0f, 100.0f, 100.0f, { 0.f });
+	mesh = MESH::create_rectangle({ 0.0f }, { 100.0f, 100.0f }, { 0.0f });
 	vertices.InitializeWithMeshAndLayout(mesh, layout);
-	texture.LoadFromPath(PATH::pepe);
-	transform.SetScale({ 5.f });
+	pepe.LoadFromPath(PATH::pepe);
+	transform.SetScale({ 7.5f });
 
 	view.SetViewSize(width, height);
 }
 
-void TextureDrawingDemo::Update()
+void TextureDrawingDemo::Update(float /*dt*/)
 {
 	Draw::StartDrawing();
 
 	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
-	Draw::draw(shader, { vertices, texture });
+	Draw::draw(shader, { vertices, pepe });
 	shader.SendUniformVariable("ndc", ndc);
-	
+		
 	Draw::FinishDrawing();
 }
 

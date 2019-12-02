@@ -16,27 +16,25 @@
 #include "VerticesDescription.h"
 #include "Texture.hpp"
 #include "Transform.hpp"
+#include "Animation.hpp"
 
 class TextureDrawingDemo : public Demo
 {
 public:
 	explicit TextureDrawingDemo(Window& window) : Demo(window) { Initialize(); }
 	void Initialize() override final;
-	void Update() override final;
+	void Update(float dt) override final;
 	void ShutDown() override final;
 
 	void ResetCamera() override final;
 
 	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
-	//void HandleKeyPress(KeyboardButton button) override;
-	//void HandleKeyRelease(KeyboardButton button) override;
 	void HandleFocusEvent(int focus) override;
 private:
+	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	Shader shader;
-
 	Mesh mesh;
 	Vertices vertices;
-	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
-	Texture texture;
+	Texture pepe;
 	Transform transform;
 };

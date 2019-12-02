@@ -15,14 +15,19 @@ class Animation
 {
 public:
 	Animation() = default;
+	
+	struct SpriteSheet
+	{
+		int frameCount;
+		float animateSpeed;
+	};
 
-	void Initialize(int new_count, Shader& new_shader);
+	void Initialize(SpriteSheet new_sheet, const Shader& new_shader);
 	void Animate(float dt);
 	void ChangeAnimation(int new_count);
 private:
 	Shader shader;
-	int frameCount;
+	SpriteSheet spriteSheet;
 	int frameIndex = 0;
-	float animateSpeed;
 	float baseTime = 0.0f;
 };
