@@ -32,10 +32,26 @@ void ObjectFactory::Update()
 		auto objID = objectIDMap.find(object->objectID);
 		if (object->GetType() == UnitType::Player)
 		{
+			for (std::vector<Object*>::iterator it = PlayerUnits.begin(); it != PlayerUnits.end(); it++)
+			{
+				if (*it == object)
+				{
+					PlayerUnits.erase(it);
+					break;
+				}
+			}
 			playerAmounts--;
 		}
 		else if (object->GetType() == UnitType::Enemy)
 		{
+			for (std::vector<Object*>::iterator it = EnemyUnits.begin(); it != EnemyUnits.end(); it++)
+			{
+				if (*it == object)
+				{
+					EnemyUnits.erase(it);
+					break;
+				}
+			}
 			enemyAmounts--;
 		}
 
@@ -109,20 +125,21 @@ Object* ObjectFactory::FindObjectwithID(ObjectID id)
 
 void ObjectFactory::CopyObject(Object* object)
 {
-	Object* newObject = new Object();
-	newObject = object->Clone();
+	Object* newObject = object->Clone();
 
 	//GiveObjectID(newObject);
 	newObject->objectID = lastObjectID;
-	objectIDMap[lastObjectID] = newObject;
+	objectIDMap.emplace(lastObjectID, newObject);
 	lastObjectID++;
 	if (newObject->GetType() == UnitType::Player)
 	{
 		playerAmounts++;
+		PlayerUnits.push_back(newObject);
 	}
 	else if (newObject->GetType() == UnitType::Enemy)
 	{
 		enemyAmounts++;
+		EnemyUnits.push_back(newObject);
 	}
 }
 

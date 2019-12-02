@@ -214,6 +214,10 @@ void Application::Update()
 			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
 			shader.SendUniformVariable("ndc", ndc);
 			Draw::draw(shader, obj.second->material);
+			if (obj.second->GetName() == "Lair")
+			{
+				obj.second->GetComponent<LairComponent>()->SpawnEnemy(proKevin, clock.timePassed);
+			}
 		}
 	}
 	//dynamic test
@@ -221,7 +225,6 @@ void Application::Update()
 	Draw::FinishDrawing();
 	//Draw
 
-	OBJECTFACTORY->FindObjectwithName("Lair")->GetComponent<LairComponent>()->SpawnEnemy(proKevin, clock.timePassed);
 	++frameCount;
 	static int time = 0;
 	if (clock.timePassed >= 1.0f)

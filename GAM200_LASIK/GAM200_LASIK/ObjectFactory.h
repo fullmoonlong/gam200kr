@@ -42,6 +42,9 @@ public:
 private:
 	std::map<ObjectID, Object*> objectIDMap;
 
+	std::vector<Object*> PlayerUnits;
+	std::vector<Object*> EnemyUnits;
+
 	std::vector<Object*> objectsToBeDeleted;
 
 	int playerAmounts = 0;
