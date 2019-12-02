@@ -14,7 +14,7 @@ void HierarchyDemo::Initialize()
 {
 }
 
-void HierarchyDemo::Update(float dt)
+void HierarchyDemo::Update(float /*dt*/)
 {
 }
 
@@ -25,5 +25,5 @@ void HierarchyDemo::ShutDown()
 void HierarchyDemo::ResetCamera()
 {
 	camera.ResetUp();
-	speedMulti = 0.0f;
+	//speedMulti = 0.0f;
 }

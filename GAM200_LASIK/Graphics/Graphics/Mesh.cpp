@@ -21,7 +21,6 @@ void Mesh::AddPoint(float x, float y)
 	points.push_back({ x, y });
 }
 
-
 void Mesh::AddColor(Color4f color)
 {
 	colors.push_back(color);

@@ -45,6 +45,6 @@ void Draw::DrawText(const Shader& shader, const mat3<float>& ndc, const Text& te
 	{
 		const Vertices& textVertices = *vertices_texture.first;
 		const Texture*  textTexture  = vertices_texture.second;
-		draw({ shader, textVertices, *textTexture, ndc });
+		draw({ shader, textVertices, ndc, *textTexture });
 	}
 }

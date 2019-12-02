@@ -29,8 +29,7 @@ void TextureDrawingDemo::Update(float /*dt*/)
 	Draw::StartDrawing();
 
 	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
-	Draw::draw(shader, { vertices, pepe });
-	shader.SendUniformVariable("ndc", ndc);
+	Draw::draw({ shader, vertices, ndc, pepe });
 		
 	Draw::FinishDrawing();
 }

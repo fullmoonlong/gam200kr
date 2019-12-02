@@ -18,8 +18,8 @@ struct Material
 {
 	Shader shader;
 	Vertices vertices;
-	Texture texture;
 	mat3<float> ndc;
+	Texture texture;
 };
 
 class Draw
