@@ -1,6 +1,6 @@
 /*
  *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *			Doyeong Yi doyoung.lee@digipen.edu
+ *			Jookyung Lee jookyung.lee@digipen.edu
  *	Application
  *	2019/07/04
  */
@@ -11,7 +11,7 @@
 #include "PATH.hpp"
 #include "VerticesDescription.h"
 #include "Image.hpp"
-#include "ComponentTest.h"
+#include "ComponentTower.h"
 #include "GetInput.hpp"
 #include "Application.h"
 
@@ -53,18 +53,48 @@ void Application::Initialize()
 	
 	// unit initialize
 	{
+		//tower
+		tower = new Object();
+		tower->SetState(State::IDLE);
+		tower->SetHealth(300);
+		tower->SetDamage(0);
+		tower->Initialize("tower.txt");
+		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		tower->material.texture.LoadFromPath(PATH::tower);
+		tower->animation.Initialize(1, shader);
+
+
+		OBJECTFACTORY->CopyObject(tower);
+		//tower
+
+		//lair
+		lair = new Object();
+		lair->SetState(State::IDLE);
+		lair->SetHealth(300);
+		lair->SetDamage(0);
+		lair->Initialize("lair.txt");
+		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		lair->material.texture.LoadFromPath(PATH::tower);
+		lair->animation.Initialize(1, shader);
+
+		lair->AddComponent<LairComponent>();
+		OBJECTFACTORY->CopyObject(lair);
+		//lair
+
 		//kevin
 		proKevin = new Object();
+		proKevin->SetState(State::WALK);
+		proKevin->SetHealth(100);
+		proKevin->SetDamage(15);
+		proKevin->SetAttackRange({ 1.0f, 0.0f });
 		proKevin->Initialize("enemyPrototype.txt");
 		proKevin->material.shader = shader;
 		proKevin->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		proKevin->material.texture.LoadFromPath(PATH::kevin_move);
 		proKevin->animation.Initialize({ 8, 10.0f }, shader);
 
-		proKevin->SetState(State::WALK);
-		proKevin->SetHealth(100);
-		proKevin->SetDamage(15);
-		proKevin->SetAttackRange({ 1.0f, 0.0f });
 		//kevin
 
 		//knight
@@ -75,9 +105,6 @@ void Application::Initialize()
 		knight->material.texture.LoadFromPath(PATH::knight_move);
 		knight->animation.Initialize({ 8, 10.0f }, shader);
 
-		knight->SetState(State::WALK);
-		knight->SetHealth(knight->GetKnightHealth());
-		knight->SetDamage(knight->GetKnightDamage());
 		//knight
 
 		//archer
@@ -88,24 +115,20 @@ void Application::Initialize()
 		archer->material.texture.LoadFromPath(PATH::archer_move);
 		archer->animation.Initialize({ 8, 10.0f }, shader);
 
-		archer->SetState(State::WALK);
-		archer->SetHealth(archer->GetArcherHealth());
-		archer->SetDamage(archer->GetArcherDamage());
-		archer->SetAttackRange(archer->GetArcherAttackRange());
 		//archer
 
 		//magician
 		magician = new Magician();
+		magician->SetState(State::WALK);
+		magician->SetHealth(magician->GetMagicianHealth());
+		magician->SetDamage(magician->GetMagicianDamage());
+		magician->SetAttackRange(magician->GetMagicianAttackRange());
 		magician->Initialize("wizard.txt");
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadFromPath(PATH::wizard_move);
 		magician->animation.Initialize({ 8, 10.0f }, shader);
 
-		magician->SetState(State::WALK);
-		magician->SetHealth(magician->GetMagicianHealth());
-		magician->SetDamage(magician->GetMagicianDamage());
-		magician->SetAttackRange(magician->GetMagicianAttackRange());
 		//magician
 
 		//sword attack
@@ -161,7 +184,8 @@ void Application::Update()
 	view.SetViewSize(window.GetWindowWidth(), window.GetWindowHeight());
 	view.SetZoom(zoom);
 	//Transform
-	
+
+	//Draw
 	Draw::StartDrawing();
 
 	const mat3<float> backgroundNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
@@ -179,9 +203,19 @@ void Application::Update()
 			obj.second->Update(deltaTime);
 			obj.second->ChangeUnitAnimation();
 			obj.second->animation.Animate(deltaTime);
+
 			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
 			obj.second->material.ndc = ndc;
 			Draw::draw(obj.second->material);
+
+			const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->healthBar.transform.GetModelToWorld();
+			shader.SendUniformVariable("ndc", ndcHP);
+			Draw::draw(shader, obj.second->healthBar.material);
+		
+			if (obj.second->GetName() == "Lair")
+			{
+				obj.second->GetComponent<LairComponent>()->SpawnEnemy(proKevin, clock.timePassed);
+			}
 		}
 	}
 	//dynamic test
@@ -200,6 +234,8 @@ void Application::Update()
 	window.SwapBuffers();
 	window.PollEvents();
 	deltaTime = clock.GetTimeFromLastUpdate();
+
+	
 }
 
 void Application::ShutDown()
