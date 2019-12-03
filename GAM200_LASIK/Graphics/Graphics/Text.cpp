@@ -147,4 +147,5 @@ void Text::BuildNewMeshesIfNeeded() const noexcept
 				{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate });
 		}
 	}
+	needNewMeshes = false;
 }
