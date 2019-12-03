@@ -3,7 +3,7 @@
  *	
  *	File_name: TextureDrawingDemo.hpp
  *	
- *	Graphic demo main file
+ *	Simple Texture Drawing Demo
  *	
  *	Nov.29 2019
  *******************************************************/

@@ -23,7 +23,7 @@ public:
 	{
 		SHAPEDRAWING,
 		TEXTUREDRAWING,
-		HIERARCHY
+		SOLARSYSTEM
 	};
 
 	Application();
@@ -50,6 +50,6 @@ protected:
 	const int width = 1280;
 	const int height = 720;
 
-	int demoIndex = SHAPEDRAWING;
+	int demoIndex = SOLARSYSTEM;
 	std::array<std::unique_ptr<Demo>, 3> demo;
 };

@@ -12,7 +12,7 @@
 #include "Application.h"
 #include "ShapeDrawingDemo.hpp"
 #include "TextureDrawingDemo.hpp"
-#include "HierarchyDemo.hpp"
+#include "SolarSystemDemo.hpp"
 
 bool Application::IsRunning() const
 {
@@ -34,7 +34,7 @@ void Application::Initialize()
 
 	demo[SHAPEDRAWING] = std::make_unique<ShapeDrawingDemo>(window);
 	demo[TEXTUREDRAWING] = std::make_unique<TextureDrawingDemo>(window);
-	demo[HIERARCHY] = std::make_unique<HierarchyDemo>(window);
+	demo[SOLARSYSTEM] = std::make_unique<SolarSystemDemo>(window);
 }
 
 void Application::Update(float dt)
@@ -99,6 +99,7 @@ void Application::HandleScrollEvent(float scroll_amount)
 	float newZoom = view.GetZoom() + (scroll_amount * zoomSpeed);
 	newZoom = std::clamp(newZoom, 0.5f, 2.0f);
 	view.SetZoom(newZoom);
+	demo[demoIndex]->HandleScrollEvent(scroll_amount);
 }
 void Application::HandleMousePositionEvent(float xpos, float ypos)
 {

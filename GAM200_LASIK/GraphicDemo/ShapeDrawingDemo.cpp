@@ -3,10 +3,17 @@
  *	
  *	File_name: ShapeDrawingDemo.cpp
  *	
- *	Graphic demo main file
+ *	Simple Shape Drawing Demo
  *	
  *	Nov.25 2019
  *******************************************************/
+
+//=======================================================
+//	Author: JeongHak Kim	junghak.kim@digipen.edu
+//	File name: ShapeDrawingDemo.cpp
+//	Simple Shape Drawing Demo
+//	Nov.25 2019
+//=======================================================
 
 #include "ShapeDrawingDemo.hpp"
 #include "Draw.hpp"
@@ -30,10 +37,10 @@ void ShapeDrawingDemo::Initialize()
 	triangle = MESH::create_triangle({ 100.0f }, { 0.0f, 50.0f }, { -30.f, 0.0f }, { 30.f, 0.0f }, color);
 	triangleVertices.InitializeWithMeshAndLayout(triangle, layout);
 
-	circle = MESH::create_ellipse({ 200.0f, 25.0f }, { 25.0f, 25.0f }, 30, color);
+	circle = MESH::create_ellipse({ 200.0f, 25.0f }, size, 30, color);
 	circleVertices.InitializeWithMeshAndLayout(circle, layout);
 
-	ellipse = MESH::create_ellipse({ -200.0f, 25.0f }, { 25.0f, 15.f }, 30, color);
+	ellipse = MESH::create_ellipse({ -200.0f, 25.0f }, { 50.0f, 30.f }, 30, color);
 	ellipseVertices.InitializeWithMeshAndLayout(ellipse, layout);
 
 	view.SetViewSize(width, height);
@@ -55,27 +62,12 @@ void ShapeDrawingDemo::Update(float /*dt*/)
 	const mat3<float> circleNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * circleTransform.GetModelToWorld();
 
 	shader.SendUniformVariable("ndc", ndc);
-	//Draw::DrawShape(shader, rectangleVertices);
-	//Material material;
-	//material.shader = shader;
-	//material.vertices = rectangleVertices;
-	//material.ndc = ndc;
 	Draw::DrawShape({ shader, rectangleVertices, ndc });
-
-	//shader.SendUniformVariable("ndc", lineNDC);
-	//Draw::DrawShape(shader, lineVertices);
-
-	//shader.SendUniformVariable("ndc", quadNDC);
-	//Draw::DrawShape(shader, quadVertices);
-
-	//shader.SendUniformVariable("ndc", triangleNDC);
-	//Draw::DrawShape(shader, triangleVertices);
-
-	//shader.SendUniformVariable("ndc", circleNDC);
-	//Draw::DrawShape(shader, circleVertices);
-
-	//shader.SendUniformVariable("ndc", ellipseNDC);
-	//Draw::DrawShape(shader, ellipseVertices);
+	Draw::DrawShape({ shader, lineVertices, ndc });
+	Draw::DrawShape({ shader, quadVertices, ndc });
+	Draw::DrawShape({ shader, triangleVertices, ndc });
+	Draw::DrawShape({ shader, circleVertices, ndc });
+	Draw::DrawShape({ shader, ellipseVertices, ndc });
 	
 	Draw::FinishDrawing();
 }
