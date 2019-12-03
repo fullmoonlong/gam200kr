@@ -23,7 +23,8 @@ public:
 	{
 		SHAPEDRAWING,
 		TEXTUREDRAWING,
-		SOLARSYSTEM
+		SOLARSYSTEM,
+		ANIMATION
 	};
 
 	Application();
@@ -50,6 +51,6 @@ protected:
 	const int width = 1280;
 	const int height = 720;
 
-	int demoIndex = SOLARSYSTEM;
-	std::array<std::unique_ptr<Demo>, 3> demo;
+	int demoIndex = ANIMATION;
+	std::array<std::unique_ptr<Demo>, 4> demo;
 };

@@ -13,6 +13,7 @@
 #include "ShapeDrawingDemo.hpp"
 #include "TextureDrawingDemo.hpp"
 #include "SolarSystemDemo.hpp"
+#include "AnimationDemo.hpp"
 
 bool Application::IsRunning() const
 {
@@ -35,6 +36,7 @@ void Application::Initialize()
 	demo[SHAPEDRAWING] = std::make_unique<ShapeDrawingDemo>(window);
 	demo[TEXTUREDRAWING] = std::make_unique<TextureDrawingDemo>(window);
 	demo[SOLARSYSTEM] = std::make_unique<SolarSystemDemo>(window);
+	demo[ANIMATION] = std::make_unique<AnimationDemo>(window);
 }
 
 void Application::Update(float dt)

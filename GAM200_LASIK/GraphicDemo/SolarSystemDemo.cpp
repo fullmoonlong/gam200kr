@@ -15,6 +15,8 @@
 
 const std::filesystem::path& sun_jpg = "../assets/sun.jpg";
 const std::filesystem::path& jupiter_png = "../assets/jupiter.png";
+const std::filesystem::path& ganymede_png = "../assets/ganymede.png";
+const std::filesystem::path& europa_png = "../assets/europa.png";
 
 void SolarSystemDemo::Initialize()
 {
@@ -31,6 +33,20 @@ void SolarSystemDemo::Initialize()
 	jupiter.vertices.InitializeWithMeshAndLayout(jupiter.mesh, layout);
 	jupiter.texture.LoadFromPath(jupiter_png);
 
+	ganymede.mesh = rectangle;
+	ganymede.vertices.InitializeWithMeshAndLayout(ganymede.mesh, layout);
+	ganymede.texture.LoadFromPath(ganymede_png);
+	ganymede.transform.SetTranslation({ 100.0f, 0.0f });
+	ganymede.transform.SetScale({ 1 / 5.f });
+	ganymede.transform.SetParent(&jupiter.transform);
+
+	europa.mesh = rectangle;
+	europa.vertices.InitializeWithMeshAndLayout(europa.mesh, layout);
+	europa.texture.LoadFromPath(europa_png);
+	europa.transform.SetTranslation({ -100.0f, 0.0f });
+	europa.transform.SetScale({ 1 / 5.f });
+	europa.transform.SetParent(&jupiter.transform);
+	
 	view.SetViewSize(width, height);
 }
 
@@ -47,10 +63,14 @@ void SolarSystemDemo::Update(float dt)
 	const mat3<float> jupiterNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * jupiter.transform.GetModelToWorld();
 	Draw::draw({ shader, jupiter.vertices, jupiterNDC, jupiter.texture });
 
-	jupiter.transform.SetTranslation({ 1000.0f * cos(rotation), 1000.0f * sin(rotation) });
-	jupiter.transform.SetRotation(cos(rotation));
+	const mat3<float> ganymedeNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * ganymede.transform.GetModelToWorld();
+	Draw::draw({ shader, ganymede.vertices, ganymedeNDC, ganymede.texture });
 
-	//sun.transform.SetRotation(rotation);
+	const mat3<float> europaNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * europa.transform.GetModelToWorld();
+	Draw::draw({ shader, europa.vertices, europaNDC, europa.texture });
+	
+	jupiter.transform.SetTranslation({ 1500.0f * cos(rotation) - 1000.0f, 1500.0f * sin(rotation) });
+	jupiter.transform.SetRotation(rotation * 5.f);
 
 	Draw::FinishDrawing();
 }
@@ -90,9 +110,5 @@ void SolarSystemDemo::HandleFocusEvent(int focus)
 
 void SolarSystemDemo::HandleScrollEvent(float scroll_amount)
 {
-	//const float zoomSpeed = .05f;
-	//float newZoom = view.GetZoom() + (scroll_amount * zoomSpeed);
-	//newZoom = std::clamp(newZoom, 0.5f, 2.0f);
-	//view.SetZoom(newZoom);
 	Demo::HandleScrollEvent(scroll_amount);
 }

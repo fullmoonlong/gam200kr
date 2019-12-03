@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimationDemo.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Demo.cpp" />
     <ClCompile Include="ShapeDrawingDemo.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="TextureDrawingDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimationDemo.hpp" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Demo.hpp" />
     <ClInclude Include="ShapeDrawingDemo.hpp" />

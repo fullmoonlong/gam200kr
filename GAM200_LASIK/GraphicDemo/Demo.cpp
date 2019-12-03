@@ -35,6 +35,6 @@ void Demo::HandleScrollEvent(float scroll_amount)
 {
 	const float zoomSpeed = .05f;
 	float newZoom = view.GetZoom() + (scroll_amount * zoomSpeed);
-	newZoom = std::clamp(newZoom, 0.5f, 2.0f);
+	newZoom = std::clamp(newZoom, 0.1f, 2.0f);
 	view.SetZoom(newZoom);
 }

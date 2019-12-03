@@ -48,4 +48,6 @@ private:
 
 	Orb sun;
 	Orb jupiter;
+	Orb ganymede;
+	Orb europa;
 };
