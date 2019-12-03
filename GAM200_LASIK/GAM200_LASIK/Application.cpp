@@ -27,7 +27,6 @@ void Application::Initialize()
 
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);	//shaders for animation
 	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 
 	const Color4f color{ 1.0f, 1.0f, 1.0f, 1.0f };
 	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
@@ -59,10 +58,11 @@ void Application::Initialize()
 		tower->SetHealth(300);
 		tower->SetDamage(0);
 		tower->Initialize("tower.txt");
+		tower->material.shader = shader;
 		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadFromPath(PATH::tower);
-		tower->animation.Initialize(1, shader);
+		tower->animation.Initialize({ 1, 10.0f }, shader);
 
 
 		OBJECTFACTORY->CopyObject(tower);
@@ -74,10 +74,11 @@ void Application::Initialize()
 		lair->SetHealth(300);
 		lair->SetDamage(0);
 		lair->Initialize("lair.txt");
+		lair->material.shader = shader;
 		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadFromPath(PATH::tower);
-		lair->animation.Initialize(1, shader);
+		lair->animation.Initialize({ 1, 10.0f }, shader);
 
 		lair->AddComponent<LairComponent>();
 		OBJECTFACTORY->CopyObject(lair);
@@ -99,6 +100,9 @@ void Application::Initialize()
 
 		//knight
 		knight = new Knight();
+		knight->SetState(State::WALK);
+		knight->SetHealth(knight->GetKnightHealth());
+		knight->SetDamage(knight->GetKnightDamage());
 		knight->Initialize("knight.txt");
 		knight->material.shader = shader;
 		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -109,6 +113,10 @@ void Application::Initialize()
 
 		//archer
 		archer = new Archer();
+		archer->SetState(State::WALK);
+		archer->SetHealth(archer->GetArcherHealth());
+		archer->SetDamage(archer->GetArcherDamage());
+		archer->SetAttackRange(archer->GetArcherAttackRange());
 		archer->Initialize("archer.txt");
 		archer->material.shader = shader;
 		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -126,7 +134,7 @@ void Application::Initialize()
 		magician->Initialize("wizard.txt");
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		magician->material.texture.LoadFromPath(PATH::wizard_move);
+		magician->material.texture.LoadFromPath(PATH::magician_move);
 		magician->animation.Initialize({ 8, 10.0f }, shader);
 
 		//magician
@@ -208,9 +216,10 @@ void Application::Update()
 			obj.second->material.ndc = ndc;
 			Draw::draw(obj.second->material);
 
+			obj.second->healthBar.material.shader = fontShader; //texture shader
 			const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->healthBar.transform.GetModelToWorld();
-			shader.SendUniformVariable("ndc", ndcHP);
-			Draw::draw(shader, obj.second->healthBar.material);
+			obj.second->healthBar.material.ndc = ndcHP;
+			Draw::draw(obj.second->healthBar.material);
 		
 			if (obj.second->GetName() == "Lair")
 			{
@@ -411,9 +420,12 @@ void Application::HandleKeyPress(KeyboardButton button)
 		{
 			for (auto obj : OBJECTFACTORY->GetObjecteList())
 			{
-				if (obj.second->GetType() == UnitType::Player)
+				if (obj.second->GetName() != "Tower")
 				{
-					OBJECTFACTORY->Destroy(obj.second);
+					if (obj.second->GetType() == UnitType::Player)
+					{
+						OBJECTFACTORY->Destroy(obj.second);
+					}
 				}
 			}
 		}
@@ -457,6 +469,19 @@ void Application::HandleKeyPress(KeyboardButton button)
 			input.TakeAsInput('w');
 			printf("w");
 			break;
+		}
+		else
+		{
+			for (auto obj : OBJECTFACTORY->GetObjecteList())
+			{
+				if (obj.second->GetName() != "Lair")
+				{
+					if (obj.second->GetType() == UnitType::Enemy)
+					{
+						OBJECTFACTORY->Destroy(obj.second);
+					}
+				}
+			}
 		}
 		break;
 	case KeyboardButton::X:

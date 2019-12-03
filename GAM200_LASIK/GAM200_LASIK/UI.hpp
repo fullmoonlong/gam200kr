@@ -39,7 +39,7 @@ private:
 	vec2<float> size = { totalSizeX, 8.f};
 
 	const Color4f color{ 0.8f, 0.0f, 0.0f, 1.0f };
-	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
+	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 };
 
 class SelectRespawn {
@@ -63,7 +63,7 @@ private:
 	
 	const Color4f color{ 0.0f, 0.0f, 1.0f, 1.0f };
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
-	VerticesDescription texturelayout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextCoordinate };
+	VerticesDescription texturelayout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	
 	//Application::view view;
 	Camera			camera;
