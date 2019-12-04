@@ -20,10 +20,10 @@ void Animation::Animate(float dt)
 {
 	Shader::UseShader(shader);
 	shader.SendUniformVariable("frameX", spriteSheet.frameX);
+	shader.SendUniformVariable("frameY", spriteSheet.frameY);
 	shader.SendUniformVariable("frameIndex", frameIndex);
-	shader.SendUniformVariable("correction", 0.003f);
 	
-	frameIndex = int(baseTime) % spriteSheet.frameX;
+	frameIndex = int(baseTime) % 15;
 	baseTime += spriteSheet.animateSpeed * dt;
 }
 
