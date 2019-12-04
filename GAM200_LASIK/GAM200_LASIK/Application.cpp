@@ -62,7 +62,7 @@ void Application::Initialize()
 		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadFromPath(PATH::tower);
-		tower->animation.Initialize({ 1, 10.0f }, shader);
+		tower->animation.Initialize({ 1, 1, 10.0f }, shader);
 
 
 		OBJECTFACTORY->CopyObject(tower);
@@ -78,7 +78,7 @@ void Application::Initialize()
 		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadFromPath(PATH::tower);
-		lair->animation.Initialize({ 1, 10.0f }, shader);
+		lair->animation.Initialize({ 1, 1, 10.0f }, shader);
 
 		lair->AddComponent<LairComponent>();
 		OBJECTFACTORY->CopyObject(lair);
@@ -94,7 +94,7 @@ void Application::Initialize()
 		proKevin->material.shader = shader;
 		proKevin->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		proKevin->material.texture.LoadFromPath(PATH::kevin_move);
-		proKevin->animation.Initialize({ 8, 10.0f }, shader);
+		proKevin->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//kevin
 
@@ -107,7 +107,7 @@ void Application::Initialize()
 		knight->material.shader = shader;
 		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		knight->material.texture.LoadFromPath(PATH::knight_move);
-		knight->animation.Initialize({ 8, 10.0f }, shader);
+		knight->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//knight
 
@@ -121,7 +121,7 @@ void Application::Initialize()
 		archer->material.shader = shader;
 		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		archer->material.texture.LoadFromPath(PATH::archer_move);
-		archer->animation.Initialize({ 8, 10.0f }, shader);
+		archer->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//archer
 
@@ -135,7 +135,7 @@ void Application::Initialize()
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadFromPath(PATH::magician_move);
-		magician->animation.Initialize({ 8, 10.0f }, shader);
+		magician->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//magician
 
@@ -154,7 +154,7 @@ void Application::Initialize()
 		fireball->material.shader = shader;
 		fireball->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		fireball->material.texture.LoadFromPath(PATH::fireball);
-		fireball->animation.Initialize({ 3, 5.0f }, shader);
+		fireball->animation.Initialize({ 3, 1, 5.0f }, shader);
 
 		fireball->SetState(State::WALK);
 		fireball->SetDamage(magician->GetMagicianDamage());
@@ -165,7 +165,7 @@ void Application::Initialize()
 		arrow.material.shader = shader;
 		arrow.material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		arrow.material.texture.LoadFromPath(PATH::arrow);
-		arrow.animation.Initialize({1, 5.0f}, shader);
+		arrow.animation.Initialize({1, 1, 5.0f}, shader);
 
 		arrow.SetState(State::WALK);
 		arrow.SetDamage(archer->GetArcherDamage());

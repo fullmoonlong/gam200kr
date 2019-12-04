@@ -70,7 +70,7 @@ void SolarSystemDemo::Update(float dt)
 	Draw::draw({ shader, europa.vertices, europaNDC, europa.texture });
 	
 	jupiter.transform.SetTranslation({ 1500.0f * cos(rotation) - 1000.0f, 1500.0f * sin(rotation) });
-	jupiter.transform.SetRotation(rotation * 5.f);
+	jupiter.transform.SetRotation(rotation);
 
 	Draw::FinishDrawing();
 }
