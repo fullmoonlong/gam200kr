@@ -51,6 +51,6 @@ protected:
 	const int width = 1280;
 	const int height = 720;
 
-	int demoIndex = ANIMATION;
+	int demoIndex = SHAPEDRAWING;
 	std::array<std::unique_ptr<Demo>, 4> demo;
 };

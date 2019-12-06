@@ -54,8 +54,7 @@ void SolarSystemDemo::Update(float dt)
 {
 	static float rotation = 0.0f;
 	rotation += dt / 8.f;
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	Draw::StartDrawing({ 0.0f });
 
 	const mat3<float> sunNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * sun.transform.GetModelToWorld();
 	Draw::draw({ shader, sun.vertices, sunNDC, sun.texture });

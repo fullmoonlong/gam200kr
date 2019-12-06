@@ -14,6 +14,7 @@
 #include "ComponentTower.h"
 #include "GetInput.hpp"
 #include "Application.h"
+#include "Screenshot.hpp"
 
 Application::Application()
 {

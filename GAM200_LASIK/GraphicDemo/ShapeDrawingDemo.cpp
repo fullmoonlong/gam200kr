@@ -15,9 +15,11 @@
 //	Nov.25 2019
 //=======================================================
 
+#include <iostream>
 #include "ShapeDrawingDemo.hpp"
 #include "Draw.hpp"
 #include "PATH.hpp"
+#include "Screenshot.hpp"
 
 void ShapeDrawingDemo::Initialize()
 {
@@ -46,7 +48,7 @@ void ShapeDrawingDemo::Initialize()
 	view.SetViewSize(width, height);
 }
 
-void ShapeDrawingDemo::Update(float /*dt*/)
+void ShapeDrawingDemo::Update(float dt)
 {
 	camera.Rotate(rotationSpeed);
 	camera.MoveRight(moveSpeed.x);
@@ -69,6 +71,8 @@ void ShapeDrawingDemo::Update(float /*dt*/)
 	Draw::DrawShape({ shader, circleVertices, ndc });
 	Draw::DrawShape({ shader, ellipseVertices, ndc });
 	
+	std::cout << "\r" << dt;
+
 	Draw::FinishDrawing();
 }
 
@@ -115,6 +119,10 @@ void ShapeDrawingDemo::HandleKeyPress(KeyboardButton button)
 		break;
 	case KeyboardButton::O:
 		speedMulti -= 0.5f;
+		break;
+	case KeyboardButton::A:
+		auto screenshot = ScreenShot(width, height);
+		screenshot.SaveToPNG("../ScreenshotTest.png");
 		break;
 	}
 }

@@ -29,7 +29,7 @@ public:
 	void ResetCamera() override final;
 
 	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
-	void HandleFocusEvent(int focus) override;
+	void HandleFocusEvent(int focus) override final;
 private:
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	Shader shader;

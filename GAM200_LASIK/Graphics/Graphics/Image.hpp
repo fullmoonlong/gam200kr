@@ -15,23 +15,25 @@
 #include "Color4f.hpp"
 #include "ColorInChar.hpp"
 
-class [[nodiscard]]Image
+class [[nodiscard]] Image
 {
-public:	
+public:
 	Image() = default;
-	Image(const std::filesystem::path& source) noexcept;
+	Image(const std::filesystem::path & source) noexcept;
 
 	void ResizePixelSize(int image_width, int image_height) noexcept;
-	bool LoadFrom(const std::filesystem::path& source) noexcept;
+	bool LoadFrom(const std::filesystem::path & source) noexcept;
+	void SaveToPNG(const std::filesystem::path & file_path) const noexcept;
 
 	int GetWidth() const noexcept;
 	int GetHeight() const noexcept;
 
 	ColorInChar* GetPixelPointer() noexcept;
 	const ColorInChar* GetPixelPointer() const noexcept;
-	
-private:
+	int GetPixelsBufferBytesSize() const noexcept;
 
+	void FlipVertically() noexcept;
+private:
 	int width, height;
 	std::vector<ColorInChar> pixels{};
 };

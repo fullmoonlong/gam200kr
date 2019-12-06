@@ -89,14 +89,15 @@ constexpr vec2<T> operator*(T scale, const vec2<T>& v) noexcept
 template <typename T>
 constexpr vec2<T> operator/(const vec2<T>& v, T divisor) noexcept
 {
-	assert(divisor != 0 || divisor != 0.0f);
+	assert(divisor != 0);
 	return vec2<T>{ v.x / divisor, v.y / divisor };
 }
 
 template <typename T>
 constexpr bool operator==(const vec2<T>& v1, const vec2<T>& v2) noexcept
 {
-	if (abs(v1.x - v2.y) <= std::numeric_limits<T>::epsilon() && abs(v1.y - v2.y) <= std::numeric_limits<T>::epsilon())
+	const vec2<T>& v = v1 - v2;
+	if (abs(v.x) <= std::numeric_limits<T>::epsilon() && abs(v.y) <= std::numeric_limits<T>::epsilon())
 	{
 		return true;
 	}
@@ -135,6 +136,7 @@ template <typename T>
 constexpr T distance_between(vec2<T> v1, vec2<T> v2) noexcept
 {
 	return sqrt(magnitude_squared(v1 - v2));
+	//return magnitude(v1 - v2);
 }
 
 template <typename T>
@@ -153,7 +155,7 @@ constexpr vec2<T> rotate_by(float angle_in_radians, vec2<T> v) noexcept
 }
 
 template <typename T>
-constexpr vec2<T> normalize(vec2<T>& v) noexcept
+constexpr vec2<T> normalize(vec2<T> v) noexcept
 {
 	T mag = magnitude(v);
 	assert(mag != 0);

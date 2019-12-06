@@ -1,10 +1,10 @@
 /********************************************************
  *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
+ *
  *	File_name: TextureDrawingDemo.cpp
- *	
+ *
  *	Simple Texture Drawing Demo
- *	
+ *
  *	Nov.29 2019
  *******************************************************/
 
@@ -30,7 +30,7 @@ void TextureDrawingDemo::Update(float /*dt*/)
 
 	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
 	Draw::draw({ shader, vertices, ndc, pepe });
-		
+
 	Draw::FinishDrawing();
 }
 

@@ -21,9 +21,9 @@ void AnimationDemo::Initialize()
 	mesh = MESH::create_rectangle({ 0.0f }, { 1.0f }, { 0.0f });
 	vertices.InitializeWithMeshAndLayout(mesh, layout);
 	texture.LoadFromPath(explosion_path);
-	transform.SetScale({ 180.0f });
+	transform.SetScale({ 300.0f });
 	
-	explosion.Initialize({ 5, 3, 15.0f }, shader);
+	explosion.Initialize({ 5, 5, 25.0f }, shader);
 	view.SetViewSize(width, height);
 }
 

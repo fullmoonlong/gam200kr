@@ -175,6 +175,7 @@
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\OpenGL_Window.h" />
     <ClInclude Include="Graphics\PATH.hpp" />
+    <ClInclude Include="Graphics\Screenshot.hpp" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\Text.hpp" />
     <ClInclude Include="Graphics\Texture.hpp" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Graphics\Image.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\OpenGL_Window.cpp" />
+    <ClCompile Include="Graphics\Screenshot.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\Text.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />

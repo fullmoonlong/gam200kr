@@ -17,6 +17,12 @@ void Draw::StartDrawing()
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
+void Draw::StartDrawing(const Color4f& color)
+{
+	glClearColor(color.r, color.g, color.b, color.a);
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
 void Draw::FinishDrawing()
 {
 	glFinish();
