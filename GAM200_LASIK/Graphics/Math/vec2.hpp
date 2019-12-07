@@ -42,14 +42,14 @@ constexpr void operator-=(vec2<T>& v, const vec2<T>& subtracting_vector) noexcep
 }
 
 template <typename T>
-constexpr void operator*=(vec2<T>& v, T scale) noexcept
+constexpr void operator*=(vec2<T>& v, const T& scale) noexcept
 {
 	v.x *= scale;
 	v.y *= scale;
 }
 
 template <typename T>
-constexpr void operator/=(vec2<T>& v, T divisor) noexcept
+constexpr void operator/=(vec2<T>& v, const T& divisor) noexcept
 {
 	assert(divisor != 0.f);
 	v.x /= divisor;
@@ -75,19 +75,19 @@ constexpr vec2<T> operator-(const vec2<T>& v1, const vec2<T>& v2) noexcept
 }
 
 template <typename T>
-constexpr vec2<T> operator*(const vec2<T>& v, T scale) noexcept
+constexpr vec2<T> operator*(const vec2<T>& v, const T& scale) noexcept
 {
 	return vec2<T>{ v.x* scale, v.y* scale };
 }
 
 template <typename T>
-constexpr vec2<T> operator*(T scale, const vec2<T>& v) noexcept
+constexpr vec2<T> operator*(const T& scale, const vec2<T>& v) noexcept
 {
 	return v * scale;
 }
 
 template <typename T>
-constexpr vec2<T> operator/(const vec2<T>& v, T divisor) noexcept
+constexpr vec2<T> operator/(const vec2<T>& v, const T& divisor) noexcept
 {
 	assert(divisor != 0);
 	return vec2<T>{ v.x / divisor, v.y / divisor };
@@ -115,39 +115,39 @@ constexpr bool operator!=(const vec2<T>& v1, const vec2<T>& v2) noexcept
 }
 
 template <typename T>
-constexpr T dot_product(vec2<T> v1, vec2<T> v2) noexcept
+constexpr T dot_product(const vec2<T>& v1, const vec2<T>& v2) noexcept
 {
 	return v1.x * v2.x + v1.y * v2.y;
 }
 
 template <typename T>
-constexpr T magnitude_squared(vec2<T> v) noexcept
+constexpr T magnitude_squared(const vec2<T>& v) noexcept
 {
 	return dot_product(v, v);
 }
 
 template <typename T>
-constexpr T magnitude(vec2<T> v) noexcept
+constexpr T magnitude(const vec2<T>& v) noexcept
 {
 	return (T)sqrt(magnitude_squared(v));
 }
 
 template <typename T>
-constexpr T distance_between(vec2<T> v1, vec2<T> v2) noexcept
+constexpr T distance_between(const vec2<T>& v1, const vec2<T>& v2) noexcept
 {
 	return sqrt(magnitude_squared(v1 - v2));
 	//return magnitude(v1 - v2);
 }
 
 template <typename T>
-constexpr T angle_between(vec2<T> v1, vec2<T> v2) noexcept
+constexpr T angle_between(const vec2<T>& v1, const vec2<T>& v2) noexcept
 {
 	assert(magnitude(v1) != 0 && magnitude(v2) != 0);
 	return acos(dot_product(v1, v2) / magnitude(v1) * magnitude(v2));
 }
 
 template <typename T>
-constexpr vec2<T> rotate_by(float angle_in_radians, vec2<T> v) noexcept
+constexpr vec2<T> rotate_by(const float& angle_in_radians, const vec2<T>& v) noexcept
 {
 	float cos_value = cos(angle_in_radians);
 	float sin_value = sin(angle_in_radians);
@@ -155,7 +155,7 @@ constexpr vec2<T> rotate_by(float angle_in_radians, vec2<T> v) noexcept
 }
 
 template <typename T>
-constexpr vec2<T> normalize(vec2<T> v) noexcept
+constexpr vec2<T> normalize(const vec2<T>& v) noexcept
 {
 	T mag = magnitude(v);
 	assert(mag != 0);

@@ -18,5 +18,11 @@
     <ClCompile Include="Vec2UnitTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Vec3UnitTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Graphics\Mat3UnitTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

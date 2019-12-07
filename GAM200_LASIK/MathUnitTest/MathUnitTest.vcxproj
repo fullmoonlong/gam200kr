@@ -146,7 +146,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Graphics\Mat3UnitTest.cpp" />
     <ClCompile Include="Vec2UnitTest.cpp" />
+    <ClCompile Include="Vec3UnitTest.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
