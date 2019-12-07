@@ -18,6 +18,8 @@ void main()
     vec3 ndc_position = ndc * vec3(aPos, 1.0);
     gl_Position = vec4(ndc_position.xy, 0.0, 1.0);
 
-    TexCoord.x = (aTexCoord.x * unitWidth + unitWidth * (frameIndex % frameX));
-    TexCoord.y = (aTexCoord.y * unitHeight + unitHeight * (frameY - 1 - frameIndex / frameX));
+    int indexX = frameIndex % frameX;
+    int indexY = frameIndex / frameX;
+    TexCoord.x = (aTexCoord.x * unitWidth + unitWidth * indexX);
+    TexCoord.y = (aTexCoord.y * unitHeight + unitHeight * (frameY - 1 - indexY));
 }

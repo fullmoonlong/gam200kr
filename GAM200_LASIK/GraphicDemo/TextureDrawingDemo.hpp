@@ -16,7 +16,6 @@
 #include "VerticesDescription.h"
 #include "Texture.hpp"
 #include "Transform.hpp"
-#include "Animation.hpp"
 
 class TextureDrawingDemo : public Demo
 {
@@ -31,10 +30,12 @@ public:
 	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
 	void HandleFocusEvent(int focus) override final;
 private:
+	const std::filesystem::path& image = "../assets/slash1.png";
+	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	Shader shader;
 	Mesh mesh;
 	Vertices vertices;
-	Texture pepe;
+	Texture sword;
 	Transform transform;
 };

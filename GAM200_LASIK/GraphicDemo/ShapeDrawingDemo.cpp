@@ -8,13 +8,6 @@
  *	Nov.25 2019
  *******************************************************/
 
-//=======================================================
-//	Author: JeongHak Kim	junghak.kim@digipen.edu
-//	File name: ShapeDrawingDemo.cpp
-//	Simple Shape Drawing Demo
-//	Nov.25 2019
-//=======================================================
-
 #include <iostream>
 #include "ShapeDrawingDemo.hpp"
 #include "Draw.hpp"
@@ -50,6 +43,7 @@ void ShapeDrawingDemo::Initialize()
 
 void ShapeDrawingDemo::Update(float dt)
 {
+	std::cout << "\r" << dt;
 	camera.Rotate(rotationSpeed);
 	camera.MoveRight(moveSpeed.x);
 	camera.MoveUp(moveSpeed.y);
@@ -65,13 +59,12 @@ void ShapeDrawingDemo::Update(float dt)
 
 	shader.SendUniformVariable("ndc", ndc);
 	Draw::DrawShape({ shader, rectangleVertices, ndc });
-	Draw::DrawShape({ shader, lineVertices, ndc });
-	Draw::DrawShape({ shader, quadVertices, ndc });
-	Draw::DrawShape({ shader, triangleVertices, ndc });
-	Draw::DrawShape({ shader, circleVertices, ndc });
-	Draw::DrawShape({ shader, ellipseVertices, ndc });
+	Draw::DrawShape({ shader, lineVertices, lineNDC });
+	Draw::DrawShape({ shader, quadVertices, quadNDC });
+	Draw::DrawShape({ shader, triangleVertices, ellipseNDC });
+	Draw::DrawShape({ shader, circleVertices, triangleNDC });
+	Draw::DrawShape({ shader, ellipseVertices, circleNDC });
 	
-	std::cout << "\r" << dt;
 
 	Draw::FinishDrawing();
 }
@@ -84,7 +77,6 @@ void ShapeDrawingDemo::ShutDown()
 void ShapeDrawingDemo::ResetCamera()
 {
 	camera.ResetUp();
-	speedMulti = 0.0f;
 }
 
 void ShapeDrawingDemo::HandleResizeEvent(const int& new_width, const int& new_height)
@@ -97,30 +89,24 @@ void ShapeDrawingDemo::HandleKeyPress(KeyboardButton button)
 	switch (button)
 	{
 	case KeyboardButton::Arrow_Right:
-		moveSpeed.x += speedMulti;
+		moveSpeed.x = 2.0f;
 		break;
 	case KeyboardButton::Arrow_Left:
-		moveSpeed.x -= speedMulti;
+		moveSpeed.x = -2.0f;
 		break;
 	case KeyboardButton::Arrow_Up:
-		moveSpeed.y += speedMulti;
+		moveSpeed.y = 2.0f;
 		break;
 	case KeyboardButton::Arrow_Down:
-		moveSpeed.y -= speedMulti;
+		moveSpeed.y = -2.0f;
 		break;
 	case KeyboardButton::Z:
-		rotationSpeed = 0.01f * speedMulti;
+		rotationSpeed = 0.1f;
 		break;
 	case KeyboardButton::X:
-		rotationSpeed = -0.01f * speedMulti;
+		rotationSpeed = -0.1f;
 		break;
-	case KeyboardButton::I:
-		speedMulti += 0.5f;
-		break;
-	case KeyboardButton::O:
-		speedMulti -= 0.5f;
-		break;
-	case KeyboardButton::A:
+	case KeyboardButton::Enter:
 		auto screenshot = ScreenShot(width, height);
 		screenshot.SaveToPNG("../ScreenshotTest.png");
 		break;
@@ -132,16 +118,16 @@ void ShapeDrawingDemo::HandleKeyRelease(KeyboardButton button)
 	switch (button)
 	{
 	case KeyboardButton::Arrow_Right:
-		moveSpeed.x = 0;
+		moveSpeed.x = 0.0f;
 		break;
 	case KeyboardButton::Arrow_Left:
-		moveSpeed.x = 0;
+		moveSpeed.x = 0.0f;
 		break;
 	case KeyboardButton::Arrow_Up:
-		moveSpeed.y = 0;
+		moveSpeed.y = 0.0f;
 		break;
 	case KeyboardButton::Arrow_Down:
-		moveSpeed.y = 0;
+		moveSpeed.y = 0.0f;
 		break;
 	case KeyboardButton::Z:
 		rotationSpeed = 0.0f;

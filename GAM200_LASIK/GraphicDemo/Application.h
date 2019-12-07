@@ -23,8 +23,9 @@ public:
 	{
 		SHAPEDRAWING,
 		TEXTUREDRAWING,
-		SOLARSYSTEM,
-		ANIMATION
+		ANIMATION,
+		TRANSFORMPARENTDEMO,
+		DEMOSIZE
 	};
 
 	Application();
@@ -51,6 +52,6 @@ protected:
 	const int width = 1280;
 	const int height = 720;
 
-	int demoIndex = SHAPEDRAWING;
-	std::array<std::unique_ptr<Demo>, 4> demo;
+	int demoIndex = ANIMATION;
+	std::array<std::unique_ptr<Demo>, DEMOSIZE> demo;
 };

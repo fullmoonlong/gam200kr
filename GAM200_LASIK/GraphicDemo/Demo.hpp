@@ -33,7 +33,4 @@ protected:
 	CameraView view;
 	int width;
 	int height;
-	
-	//DEMOINDEX demoIndex = DEMOINDEX::SHAPEDRAWING;
-	//ShapeDrawingDemo shapeDrawingDemo;
 };

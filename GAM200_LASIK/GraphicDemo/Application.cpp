@@ -12,8 +12,8 @@
 #include "Application.h"
 #include "ShapeDrawingDemo.hpp"
 #include "TextureDrawingDemo.hpp"
-#include "SolarSystemDemo.hpp"
 #include "AnimationDemo.hpp"
+#include "TransformParentDemo.hpp"
 
 bool Application::IsRunning() const
 {
@@ -35,8 +35,8 @@ void Application::Initialize()
 
 	demo[SHAPEDRAWING] = std::make_unique<ShapeDrawingDemo>(window);
 	demo[TEXTUREDRAWING] = std::make_unique<TextureDrawingDemo>(window);
-	demo[SOLARSYSTEM] = std::make_unique<SolarSystemDemo>(window);
 	demo[ANIMATION] = std::make_unique<AnimationDemo>(window);
+	demo[TRANSFORMPARENTDEMO] = std::make_unique<TransformParentDemo>(window);
 }
 
 void Application::Update(float dt)
@@ -68,7 +68,7 @@ void Application::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::V:
 		window.ToggleVSync(!window.IsVSyncOn());
 		break;
-	case KeyboardButton::Arrow_Right:
+	case KeyboardButton::Page_Up:
 		demo[demoIndex]->ResetCamera();
 		++demoIndex;
 		if (demoIndex >= static_cast<int>(demo.size()))
@@ -76,7 +76,7 @@ void Application::HandleKeyPress(KeyboardButton button)
 			demoIndex = 0;
 		}
 		break;
-	case KeyboardButton::Arrow_Left:
+	case KeyboardButton::Page_Down:
 		demo[demoIndex]->ResetCamera();
 		if (demoIndex == 0)
 		{

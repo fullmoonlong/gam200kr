@@ -34,7 +34,6 @@ public:
 private:
 	vec2<float> moveSpeed{ 0.f };
 	float rotationSpeed = 0;
-	float speedMulti = 1;
 	
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	Shader shader;

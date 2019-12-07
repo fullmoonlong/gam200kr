@@ -130,6 +130,12 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 		case GLFW_KEY_DOWN:
 			eventHandler->HandleKeyPress(KeyboardButton::Arrow_Down);
 			break;
+		case GLFW_KEY_PAGE_DOWN:
+			eventHandler->HandleKeyPress(KeyboardButton::Page_Down);
+			break;
+		case GLFW_KEY_PAGE_UP:
+			eventHandler->HandleKeyPress(KeyboardButton::Page_Up);
+			break;
 		case GLFW_KEY_ENTER:
 			eventHandler->HandleKeyPress(KeyboardButton::Enter);
 			break;
@@ -161,6 +167,18 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 			break;
 		case GLFW_KEY_X:
 			eventHandler->HandleKeyRelease(KeyboardButton::X);
+			break;
+		case GLFW_KEY_LEFT:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Left);
+			break;
+		case GLFW_KEY_RIGHT:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Right);
+			break;
+		case GLFW_KEY_UP:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Up);
+			break;
+		case GLFW_KEY_DOWN:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Down);
 			break;
 		}
 	}

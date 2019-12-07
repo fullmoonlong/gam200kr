@@ -8,6 +8,7 @@
  *	Nov.29 2019
  *******************************************************/
 
+#include <iostream>
 #include "TextureDrawingDemo.hpp"
 #include "Draw.hpp"
 #include "PATH.hpp"
@@ -18,18 +19,18 @@ void TextureDrawingDemo::Initialize()
 
 	mesh = MESH::create_rectangle({ 0.0f }, { 100.0f, 100.0f }, { 0.0f });
 	vertices.InitializeWithMeshAndLayout(mesh, layout);
-	pepe.LoadFromPath(PATH::pepe);
-	transform.SetScale({ 7.5f });
+	sword.LoadFromPath(image);
 
 	view.SetViewSize(width, height);
 }
 
-void TextureDrawingDemo::Update(float /*dt*/)
+void TextureDrawingDemo::Update(float dt)
 {
+	std::cout << "\r" << dt;
 	Draw::StartDrawing();
 
 	const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
-	Draw::draw({ shader, vertices, ndc, pepe });
+	Draw::draw({ shader, vertices, ndc, sword });
 
 	Draw::FinishDrawing();
 }

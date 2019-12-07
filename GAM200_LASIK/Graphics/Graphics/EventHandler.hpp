@@ -18,6 +18,8 @@ enum class KeyboardButton
 	Arrow_Right,
 	Arrow_Up,
 	Arrow_Down,
+	Page_Down,
+	Page_Up,
 	Enter,
 	Escape,
 	Backspace
@@ -34,7 +36,7 @@ class EventHandler
 public:
 	virtual void HandleKeyPress(KeyboardButton button) = 0;
 	virtual void HandleKeyRelease(KeyboardButton button) = 0;
-	virtual void HandleResizeEvent(const int& width, const int& height) = 0;
+	virtual void HandleResizeEvent(const int& new_width, const int& new_height) = 0;
 	virtual void HandleScrollEvent(float scroll_amount) = 0;
 	virtual void HandleMousePositionEvent(float xpos, float ypos) = 0;
 	virtual void HandleMouseEvent(MouseButton button) = 0;

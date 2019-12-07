@@ -1,27 +1,26 @@
 /********************************************************
  *	Author: JeongHak Kim	junghak.kim@digipen.edu
  *	
- *	File_name: AnimationDemo.hpp
+ *	File_name: TransformParentDemo.hpp
  *	
- *	Animation Displaying
+ *	Transform Set Parent Test
  *	
- *	Dec.03 2019
+ *	Dec.07 2019
  *******************************************************/
 
 #pragma once
 #include "Demo.hpp"
-#include "Animation.hpp"
+#include "Shader.h"
 #include "Mesh.h"
-#include "Vertices.h"
 #include "VerticesDescription.h"
-#include "Texture.hpp"
 #include "Transform.hpp"
 #include "Draw.hpp"
 
-class AnimationDemo : public Demo
+class TransformParentDemo : public Demo
 {
 public:
-	explicit AnimationDemo(Window& window) : Demo(window) { Initialize(); }
+	explicit TransformParentDemo(Window& window) : Demo(window) { Initialize(); }
+
 	void Initialize() override final;
 	void Update(float dt) override final;
 	void ShutDown() override final;
@@ -29,21 +28,24 @@ public:
 	void ResetCamera() override final;
 
 	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
-	void HandleFocusEvent(int focus) override;
+	void HandleMousePositionEvent(float xpos, float ypos) override final;
+	void HandleMouseEvent(MouseButton button) override;
 private:
+	bool isClicked = false;
 	mat3<float> cameraToNDC;
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	Shader shader;
 
-	Material fire;
-	Material blueFire;
-	Transform fireTransform;
-	Transform blueFireTransform;
+	vec2<float> mousePosition;
 
-	Mesh mesh;
-	Vertices vertices;
-	Texture texture;
-	Animation fireAnimation;
-	Animation blueFireAnimation;
+	Material sword1;
+	Transform sword1Transform;
+
+	float slashRotation = 0.0f;
+	Material slash1;
+	Transform slash1Transform;
+
+	Material slash2;
+	Transform slash2Transform;
 };
 
