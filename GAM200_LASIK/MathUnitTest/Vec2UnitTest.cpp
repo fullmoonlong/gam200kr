@@ -12,7 +12,7 @@
 #include <limits>
 #include <catch.hpp>
 #include <vec2.hpp>
-#include <ANGLE.hpp>
+#include <Angle.hpp>
 
 namespace
 {

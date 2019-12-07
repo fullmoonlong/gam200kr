@@ -10,7 +10,7 @@
 #pragma once
 #include <complex>	// cos, sin
 #include <cassert>	// assert
-#include "vec3.hpp"
+#include <vec3.hpp>
 
 template <typename T>
 class mat3
