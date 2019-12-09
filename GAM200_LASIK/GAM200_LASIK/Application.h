@@ -62,8 +62,8 @@ private:
 	//Material backgroundMaterial;
 
 	Shader fontShader;
-	BitmapFont bitmapFont;
 	Text text;
+	BitmapFont bitmapFont;
 	Transform textTransform;
 
 	Shader shader;
@@ -92,6 +92,7 @@ private:
 	Camera camera;
 	CameraView view;
 
+	UI::SelectSpawn selectMenu;
 	SoundManager soundManager;
 	//float cameraSpeed{ 80.0f };
 	float depth = 1.0f;

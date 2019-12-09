@@ -180,6 +180,9 @@ void Application::Initialize()
 	SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
+
+	selectMenu.SelectMenu();
+	//selectMenu.SetFont(bitmapFont);
 }
 
 void Application::Update()
@@ -229,6 +232,7 @@ void Application::Update()
 	}
 	//dynamic test
 
+	selectMenu.SelectUpdate(camera, view);
 	Draw::FinishDrawing();
 
 	++frameCount;
@@ -244,7 +248,6 @@ void Application::Update()
 	window.PollEvents();
 	deltaTime = clock.GetTimeFromLastUpdate();
 
-	
 }
 
 void Application::ShutDown()
