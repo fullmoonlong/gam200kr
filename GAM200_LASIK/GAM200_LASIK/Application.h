@@ -67,6 +67,7 @@ private:
 	Transform textTransform;
 
 	Shader shader;
+	Shader shapeShader;
 	Object object;
 	Object object2;
 	//Units

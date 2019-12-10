@@ -12,6 +12,7 @@
 #include "Component.h"
 #include "ComponentType.h"
 #include"UI.hpp"
+
 enum UnitType {
 	Player,
 	Enemy,
@@ -127,8 +128,8 @@ public:
 				return dynamic_cast<ComponentType*>(list);
 		}
 		return nullptr;
-
 	}
+
 private:
 	ObjectID objectID;
 	int objectCopyId = 0;

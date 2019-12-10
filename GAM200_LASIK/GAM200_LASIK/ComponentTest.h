@@ -7,12 +7,13 @@
 class TestComponent : public Component
 {
 public:
-	TestComponent() : Component(ComponentType::TEST), object(){};
+	TestComponent() : Component(ComponentType::TEST) {};
 	~TestComponent() override;
 	virtual void Initialize() override;
-	virtual void Update(float dt) override;
+	virtual void Update(float time_) override;
 	//void Attack();
 
-	Object* object;
+	//Object* object;
 	Object* attack;
+	float time = 0;
 };

@@ -11,6 +11,7 @@
 #include "PATH.hpp"
 #include "VerticesDescription.h"
 #include "Image.hpp"
+#include "ComponentTest.h"
 #include "ComponentTower.h"
 #include "GetInput.hpp"
 #include "Application.h"
@@ -58,11 +59,10 @@ void Application::Initialize()
 		tower->SetHealth(300);
 		tower->SetDamage(0);
 		tower->Initialize("tower.txt");
-		tower->material.shader = shader;
+		tower->material.shader = fontShader;
 		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadFromPath(PATH::tower);
-		tower->animation.Initialize({ 1, 10.0f }, shader);
 
 
 		OBJECTFACTORY->CopyObject(tower);
@@ -74,11 +74,10 @@ void Application::Initialize()
 		lair->SetHealth(300);
 		lair->SetDamage(0);
 		lair->Initialize("lair.txt");
-		lair->material.shader = shader;
+		lair->material.shader = fontShader;
 		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadFromPath(PATH::tower);
-		lair->animation.Initialize({ 1, 10.0f }, shader);
 
 		lair->AddComponent<LairComponent>();
 		OBJECTFACTORY->CopyObject(lair);
@@ -141,11 +140,13 @@ void Application::Initialize()
 
 		//sword attack
 		swordAttack = new Object();
+		swordAttack->SetHealth(0);
 		swordAttack->Initialize("swordAttack.txt");
 		swordAttack->material.shader = shader;
 		swordAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-
 		swordAttack->SetDamage(knight->GetKnightDamage());
+
+		knight->GetComponent<TestComponent>()->attack = swordAttack;
 		//sword attack
 
 		//fireball
@@ -158,17 +159,20 @@ void Application::Initialize()
 
 		fireball->SetState(State::WALK);
 		fireball->SetDamage(magician->GetMagicianDamage());
+
+		magician->GetComponent<TestComponent>()->attack = fireball;
 		//fireball
 
 		//arrow
 		arrow.Initialize("arrow.txt");
-		arrow.material.shader = shader;
+		arrow.material.shader = fontShader;
 		arrow.material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		arrow.material.texture.LoadFromPath(PATH::arrow);
-		arrow.animation.Initialize({1, 5.0f}, shader);
 
 		arrow.SetState(State::WALK);
 		arrow.SetDamage(archer->GetArcherDamage());
+
+		archer->GetComponent<TestComponent>()->attack = &arrow;
 		//arrow
 	}
 	
@@ -177,7 +181,7 @@ void Application::Initialize()
 	SOUNDMANAGER->LoadFile("sound.mp3");
 	SOUNDMANAGER->LoadFile("beep.wav");
 	SOUNDMANAGER->LoadFile("hit.ogg");
-	SOUNDMANAGER->PlaySound(1, 0);
+	//SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
 }
@@ -208,19 +212,26 @@ void Application::Update()
 	{
 		if (obj.second != nullptr)
 		{
-			obj.second->Update(deltaTime);
 			obj.second->ChangeUnitAnimation();
+
+			obj.second->Update(deltaTime);
 			obj.second->animation.Animate(deltaTime);
 
 			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
 			obj.second->material.ndc = ndc;
 			Draw::draw(obj.second->material);
 
-			obj.second->healthBar.material.shader = fontShader; //texture shader
-			const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->healthBar.transform.GetModelToWorld();
-			obj.second->healthBar.material.ndc = ndcHP;
-			Draw::draw(obj.second->healthBar.material);
-		
+
+			//hpbar
+			if (obj.second->GetType() == UnitType::Player || obj.second->GetType() == UnitType::Enemy)
+			{
+				obj.second->healthBar.material.shader = fontShader; //texture shader
+				const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->healthBar.transform.GetModelToWorld();
+				obj.second->healthBar.material.ndc = ndcHP;
+				Draw::draw(obj.second->healthBar.material);
+			}
+			//hpbar
+
 			if (obj.second->GetName() == "Lair")
 			{
 				obj.second->GetComponent<LairComponent>()->SpawnEnemy(proKevin, clock.timePassed);
@@ -238,7 +249,7 @@ void Application::Update()
 		++time;
 		clock.timePassed -= 1.0f;
 		frameCount = 0;
-		OBJECTFACTORY->DamageTest(time);	//test for damage
+		//OBJECTFACTORY->DamageTest(time);	//test for damage
 	}
 	window.SwapBuffers();
 	window.PollEvents();
@@ -268,6 +279,10 @@ void Application::HandleKeyPress(KeyboardButton button)
 			printf("a");
 			break;
 		}
+		else
+		{
+			OBJECTFACTORY->CopyObject(proKevin);
+		}
 		break;
 	case KeyboardButton::B:
 		if (isEnter == true)
@@ -291,6 +306,10 @@ void Application::HandleKeyPress(KeyboardButton button)
 			input.TakeAsInput('d');
 			printf("d");
 			break;
+		}
+		else
+		{
+			OBJECTFACTORY->CopyObject(knight);
 		}
 		break;
 	case KeyboardButton::E:

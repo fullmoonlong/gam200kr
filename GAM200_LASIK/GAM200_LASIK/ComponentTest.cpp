@@ -12,12 +12,6 @@ void TestComponent::Initialize()
 	std::cout << "Test Sucessful" << std::endl;
 }
 
-void TestComponent::Update(float /*delta_time*/)
+void TestComponent::Update(float /*time_*/)
 {
 }
-//
-//void TestComponent::Attack()
-//{
-//	attack->transform.SetTranslation(object->transform.GetTranslation());
-//	OBJECTFACTORY->CopyObject(attack);
-//}

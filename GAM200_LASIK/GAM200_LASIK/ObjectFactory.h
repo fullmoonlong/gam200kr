@@ -47,9 +47,6 @@ private:
 
 	std::vector<Object*> objectsToBeDeleted;
 
-	int playerAmounts = 0;
-	int enemyAmounts = 0;
-
 	ObjectID lastObjectID = 0;
 };
 

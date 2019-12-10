@@ -1,6 +1,6 @@
 0
 0
-8
+16
 32
 0
 ProjectilesPlayer

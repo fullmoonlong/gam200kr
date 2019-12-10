@@ -55,6 +55,8 @@ void Object::Initialize(const char* name) noexcept
 	transform.SetScale({ size.x, size.y });
 
 	healthBar.Initialize(transform.GetTranslation(), GetHealth());
+
+	AddComponent<TestComponent>();
 }
 
 void Object::Update(float dt) noexcept
@@ -70,8 +72,8 @@ void Object::Update(float dt) noexcept
 		float dx = transform.GetTranslation().x + decision_x;
 		float dy = transform.GetTranslation().y + decision_y;
 		transform.SetTranslation({ dx, dy });
-		position.x += decision_x;
-		position.y += decision_y;
+		position.x = dx;
+		position.y = dy;
 		float half_width = size.x / 2;
 		float half_height = size.y / 2;
 		min = { position.x - half_width, position.y - half_height };
@@ -82,6 +84,60 @@ void Object::Update(float dt) noexcept
 	{
 		OBJECTFACTORY->Destroy(this);
 	}
+
+	/*if (this->GetName() == "Knight")
+	{
+		if (this->GetState() == State::ATTACK)
+		{
+			this->GetComponent<TestComponent>()->time += dt;
+			if (this->GetComponent<TestComponent>()->time > 0.6f)
+			{
+				vec2<float> a = { transform.GetTranslation().x + 48.f, transform.GetTranslation().y };
+				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+
+				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
+				this->GetComponent<TestComponent>()->time = 0;
+			}
+		}
+	}
+	else*/ if (this->GetName() == "Archer")
+	{
+		if (this->GetState() == State::ATTACK)
+		{
+			this->GetComponent<TestComponent>()->time += dt;
+			if (this->GetComponent<TestComponent>()->time > 0.7f)
+			{
+				vec2<float> a = transform.GetTranslation();
+				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+
+				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
+				this->GetComponent<TestComponent>()->time = 0;
+			}
+		}
+	}
+	else if (this->GetName() == "Magician")
+	{
+		if (this->GetState() == State::ATTACK)
+		{
+			this->GetComponent<TestComponent>()->time += dt;
+			if (this->GetComponent<TestComponent>()->time > 1.5f)
+			{
+				vec2<float> a = transform.GetTranslation();
+				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+
+				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
+				this->GetComponent<TestComponent>()->time = 0;
+			}
+		}
+	}/*
+	else if (this->GetName() == "swordAttack")
+	{
+		health += dt;
+		if (health < 0)
+		{
+			OBJECTFACTORY->Destroy(this);
+		}
+	}*/
 }
 
 Object* Object::Clone()
@@ -99,14 +155,11 @@ void Object::ChangeUnitAnimation()
 			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
-		else if (GetState() == State::ATTACK)
+		else if (GetState() == State::ATTACK && GetSpriteChangeState() == true)
 		{
-			if (GetSpriteChangeState() == true && GetAttackState() == true)
-			{
-				material.texture.LoadFromPath(PATH::knight_attack);
-				animation.ChangeAnimation(8);
-				SetSpriteChangeState(false);
-			}
+			material.texture.LoadFromPath(PATH::knight_attack);
+			animation.ChangeAnimation(8);
+			SetSpriteChangeState(false);
 		}
 
 	}
@@ -118,14 +171,11 @@ void Object::ChangeUnitAnimation()
 			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
-		else if (GetState() == State::ATTACK)
+		else if (GetState() == State::ATTACK && GetSpriteChangeState() == true)
 		{
-			if (GetSpriteChangeState() == true)
-			{
-				material.texture.LoadFromPath(PATH::archer_attack);
-				animation.ChangeAnimation(8);
-				SetSpriteChangeState(false);
-			}
+			material.texture.LoadFromPath(PATH::archer_attack);
+			animation.ChangeAnimation(8);
+			SetSpriteChangeState(false);
 		}
 	}
 	else if (GetName() == "Magician")
@@ -136,14 +186,11 @@ void Object::ChangeUnitAnimation()
 			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
-		else if (GetState() == State::ATTACK)
+		else if (GetState() == State::ATTACK && GetSpriteChangeState() == true)
 		{
-			if (GetSpriteChangeState() == true)
-			{
-				material.texture.LoadFromPath(PATH::magician_attack);
-				animation.ChangeAnimation(5);
-				SetSpriteChangeState(false);
-			}
+			material.texture.LoadFromPath(PATH::magician_attack);
+			animation.ChangeAnimation(5);
+			SetSpriteChangeState(false);
 		}
 	}
 }
@@ -157,7 +204,6 @@ bool Object::isObjectInAttackRange(Object& object) noexcept
 {
 	return !(max.x + attackRange.x < object.min.x || object.max.x < min.x - attackRange.x || max.y + attackRange.y < object.min.y || object.max.y < min.y - attackRange.y);
 }
-
 
 bool Object::isCollideWithMouse(vec2<float>& mouse_position, int width, int height) noexcept
 {
