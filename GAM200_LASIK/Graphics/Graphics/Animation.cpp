@@ -23,8 +23,6 @@ void Animation::Animate(float dt)
 	shader.SendUniformVariable("frameY", spriteSheet.frameY);
 	shader.SendUniformVariable("frameIndex", frameIndex);
 
-	float test = 1.0f / spriteSheet.frameX;
-	test;
 	frameIndex = int(baseTime) % (spriteSheet.frameX * spriteSheet.frameY);
 	baseTime += spriteSheet.animateSpeed * dt;
 }

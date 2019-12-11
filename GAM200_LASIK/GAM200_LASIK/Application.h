@@ -6,7 +6,7 @@
  */
 
 #pragma once
-#include "OpenGL_Window.h"
+#include "OpenGLWindow.hpp"
 #include "EventHandler.hpp"
 #include "Camera.hpp"
 #include "CameraView.hpp"
@@ -25,6 +25,7 @@
 #include "Units.hpp"
 #include "GetInput.hpp"
 #include "UI.hpp"
+
 class Application : public SimpleEventHandler
 {
 public:
@@ -86,7 +87,7 @@ private:
 	Object* lair;
 	//tower
 
-	Window window;
+	OpenGLWindow window;
 	Clock clock;
 	
 	Camera camera;

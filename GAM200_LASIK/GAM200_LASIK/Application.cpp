@@ -47,7 +47,7 @@ void Application::Initialize()
 	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	backgroundMesh.SetShapePattern(ShapePattern::TriangleFan);
 	backgroundVertices.InitializeWithMeshAndLayout(rectangle, layout);
-	backgroundTexture.LoadBackground();
+	backgroundTexture.LoadFromPath(PATH::background);
 	background.transform.SetScale({ 1280, 720 });
 	//background
 	
@@ -244,17 +244,12 @@ void Application::Update()
 	window.SwapBuffers();
 	window.PollEvents();
 	deltaTime = clock.GetTimeFromLastUpdate();
-
-	
 }
 
 void Application::ShutDown()
 {
 	isRunning = false;
-	if ((bool)glfwWindowShouldClose(window.window) != true)
-	{
-		glfwSetWindowShouldClose(window.window, GLFW_FALSE);
-	}
+	window.CleanUpWindow();
 }
 
 void Application::HandleKeyPress(KeyboardButton button)

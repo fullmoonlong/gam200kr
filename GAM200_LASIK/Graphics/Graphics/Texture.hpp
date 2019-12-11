@@ -24,7 +24,6 @@ public:
 
 	bool LoadFromPath(const std::filesystem::path& image_path) noexcept;
 	bool LoadFromImage(const Image& image) noexcept;
-	bool LoadBackground() noexcept;
 private:
 	unsigned int textureHandle;
 	
