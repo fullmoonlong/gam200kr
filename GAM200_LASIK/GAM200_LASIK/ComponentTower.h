@@ -13,5 +13,5 @@ public:
 	virtual void SpawnEnemy(Object* obj, float dt);
 
 	Object* object;
-	int time;
+	float time;
 };

@@ -1,5 +1,6 @@
 #include "ComponentTower.h"
 #include "ObjectFactory.h"
+#include <iostream>
 
 LairComponent::~LairComponent()
 {
@@ -11,14 +12,12 @@ void LairComponent::Initialize()
 
 void LairComponent::SpawnEnemy(Object* obj, float dt)
 {
-	if (dt >= 1.0f)
+	time += dt;
+
+	if (time > 6.0f)
 	{
-		time++;
-	}
-	
-	if (time == 6)
-	{
+		std::cout << "¾¾¹ß" << std::endl;
 		OBJECTFACTORY->CopyObject(obj);
-		time = 0;
+		time = 0.f;
 	}
 }

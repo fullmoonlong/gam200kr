@@ -1,36 +1,160 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="ObjectFactory.cpp" />
-    <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="FileLoadAndSave.cpp" />
-    <ClCompile Include="Units.cpp" />
-    <ClCompile Include="EnemyUnits.cpp" />
-    <ClCompile Include="GetInput.cpp" />
-    <ClCompile Include="ComponentTower.cpp" />
-    <ClCompile Include="UI.cpp" />
+    <ClCompile Include="StateManager.cpp">
+      <Filter>LevelState</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectFactory.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="FileLoadAndSave.cpp">
+      <Filter>DataDriven</Filter>
+    </ClCompile>
+    <ClCompile Include="GetInput.cpp">
+      <Filter>TextInput</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTest.cpp">
+      <Filter>Component\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentTower.cpp">
+      <Filter>Component\Tower</Filter>
+    </ClCompile>
+    <ClCompile Include="Units.cpp">
+      <Filter>Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyUnits.cpp">
+      <Filter>Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelTest1.cpp">
+      <Filter>LevelState\LevelTest1</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>System\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>System\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>System\Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
-    <ClInclude Include="Util\Clock.hpp" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="ComponentTest.h" />
-    <ClInclude Include="ComponentType.h" />
-    <ClInclude Include="Object.h" />
-    <ClInclude Include="ObjectFactory.h" />
-    <ClInclude Include="System.h" />
-    <ClInclude Include="Sound.hpp" />
-    <ClInclude Include="FileLoadAndSave.hpp" />
-    <ClInclude Include="Units.hpp" />
-    <ClInclude Include="EnemyUnits.hpp" />
-    <ClInclude Include="GetInput.hpp" />
-    <ClInclude Include="ComponentTower.h" />
-    <ClInclude Include="UI.hpp" />
-    <ClInclude Include="PlayerBase.hpp" />
-    <ClInclude Include="EnemyBase.hpp" />
+    <ClInclude Include="Util\Clock.hpp">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelSystem.h">
+      <Filter>LevelState</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>LevelState</Filter>
+    </ClInclude>
+    <ClInclude Include="System.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectFactory.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentType.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="FileLoadAndSave.hpp">
+      <Filter>DataDriven</Filter>
+    </ClInclude>
+    <ClInclude Include="GetInput.hpp">
+      <Filter>TextInput</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentTest.h">
+      <Filter>Component\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentTower.h">
+      <Filter>Component\Tower</Filter>
+    </ClInclude>
+    <ClInclude Include="Units.hpp">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBase.hpp">
+      <Filter>Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyUnits.hpp">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBase.hpp">
+      <Filter>Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.hpp">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelTest1.h">
+      <Filter>LevelState\LevelTest1</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.hpp">
+      <Filter>System\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>System\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>System\Application</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="System">
+      <UniqueIdentifier>{094b3817-503c-441a-bb6d-954c6fa0d4c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelState">
+      <UniqueIdentifier>{576427ee-db17-470a-9815-9d06cf1cbb89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{ca4c61e6-983c-4489-aa76-c3d153f83f9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{953944e4-f181-4978-bca6-7661262d2012}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataDriven">
+      <UniqueIdentifier>{3454905e-6382-474e-ba46-f13ba19e0934}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TextInput">
+      <UniqueIdentifier>{d57dea40-b325-4c0d-9100-d74a46921671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Tower">
+      <UniqueIdentifier>{c7486c0e-78ae-462d-839e-a31fa7db8fdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Units">
+      <UniqueIdentifier>{1572fa00-5719-4e02-b15a-f6391795c81b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Player">
+      <UniqueIdentifier>{fece983e-3d6a-4837-98e8-b2c02963be97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Enemy">
+      <UniqueIdentifier>{5728ce30-0300-47f6-ae03-6164ea35ce92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\UI">
+      <UniqueIdentifier>{6b8ed017-0050-49c3-8589-024d7044305e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelState\LevelTest1">
+      <UniqueIdentifier>{5e08382d-0242-4045-84cc-fe233360f37f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Sound">
+      <UniqueIdentifier>{695beb66-4649-4ed1-82e2-bf9f66e24409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Engine">
+      <UniqueIdentifier>{b5c8ad37-ced5-4c4c-b29f-fd382de52206}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Application">
+      <UniqueIdentifier>{e08893cc-fe0b-4b05-a451-c13743cc2a12}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

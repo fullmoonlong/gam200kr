@@ -1,0 +1,594 @@
+#include "LevelTest1.h"
+#include <iostream>
+
+#include "Application.h"
+#include "ObjectFactory.h"
+#include "VerticesDescription.h"
+#include "Image.hpp"
+#include "ComponentTest.h"
+#include "ComponentTower.h"
+
+LevelTest1::LevelTest1(Window* window)
+{
+	windowPoint = window;
+	std::cout << "Add LevelTest1 Sucessful" << std::endl;
+}
+
+LevelTest1::~LevelTest1()
+{
+	std::cout << "Close LevelTest1 Sucessful" << std::endl;
+}
+
+void LevelTest1::Initialize()
+{
+	std::cout << "Load LevelTest1 Sucessful" << std::endl;
+
+	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);	//shaders for animation
+	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+
+	const Color4f color{ 1.0f, 1.0f, 1.0f, 1.0f };
+	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
+	const Mesh& rectangle = MESH::create_rectangle({ 0.0f }, { 1.0f }, color);
+
+	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
+	text.SetFont(bitmapFont);
+
+	textTransform.SetTranslation({ -300.0f, 0.0f });
+
+	//camera
+	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
+	view.SetZoom(zoom);
+	//camera
+
+	//background
+	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	backgroundMesh.SetShapePattern(ShapePattern::TriangleFan);
+	backgroundVertices.InitializeWithMeshAndLayout(rectangle, layout);
+	backgroundTexture.LoadBackground();
+	background.transform.SetScale({ 1280, 720 });
+	//background
+
+	// unit initialize
+	{
+		//tower
+		tower = new Object();
+		tower->SetState(State::IDLE);
+		tower->SetHealth(300);
+		tower->SetDamage(0);
+		tower->Initialize("tower.txt");
+		tower->material.shader = fontShader;
+		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		tower->material.texture.LoadFromPath(PATH::tower);
+
+
+		OBJECTFACTORY->CopyObject(tower);
+		//tower
+
+		//lair
+		lair = new Object();
+		lair->SetState(State::IDLE);
+		lair->SetHealth(300);
+		lair->SetDamage(0);
+		lair->Initialize("lair.txt");
+		lair->material.shader = fontShader;
+		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
+		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		lair->material.texture.LoadFromPath(PATH::tower);
+
+		lair->AddComponent<LairComponent>();
+		OBJECTFACTORY->CopyObject(lair);
+		//lair
+
+		//kevin
+		proKevin = new Object();
+		proKevin->SetState(State::WALK);
+		proKevin->SetHealth(100);
+		proKevin->SetDamage(15);
+		proKevin->SetAttackRange({ 1.0f, 0.0f });
+		proKevin->Initialize("enemyPrototype.txt");
+		proKevin->material.shader = shader;
+		proKevin->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		proKevin->material.texture.LoadFromPath(PATH::kevin_move);
+		proKevin->animation.Initialize({ 8, 10.0f }, shader);
+
+		//kevin
+
+		//knight
+		knight = new Knight();
+		knight->SetState(State::WALK);
+		knight->SetHealth(knight->GetKnightHealth());
+		knight->SetDamage(knight->GetKnightDamage());
+		knight->Initialize("knight.txt");
+		knight->material.shader = shader;
+		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		knight->material.texture.LoadFromPath(PATH::knight_move);
+		knight->animation.Initialize({ 8, 10.0f }, shader);
+
+		//knight
+
+		//archer
+		archer = new Archer();
+		archer->SetState(State::WALK);
+		archer->SetHealth(archer->GetArcherHealth());
+		archer->SetDamage(archer->GetArcherDamage());
+		archer->SetAttackRange(archer->GetArcherAttackRange());
+		archer->Initialize("archer.txt");
+		archer->material.shader = shader;
+		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		archer->material.texture.LoadFromPath(PATH::archer_move);
+		archer->animation.Initialize({ 8, 10.0f }, shader);
+
+		//archer
+
+		//magician
+		magician = new Magician();
+		magician->SetState(State::WALK);
+		magician->SetHealth(magician->GetMagicianHealth());
+		magician->SetDamage(magician->GetMagicianDamage());
+		magician->SetAttackRange(magician->GetMagicianAttackRange());
+		magician->Initialize("wizard.txt");
+		magician->material.shader = shader;
+		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		magician->material.texture.LoadFromPath(PATH::magician_move);
+		magician->animation.Initialize({ 8, 10.0f }, shader);
+
+		//magician
+
+		//sword attack
+		swordAttack = new Object();
+		swordAttack->SetHealth(0);
+		swordAttack->Initialize("swordAttack.txt");
+		swordAttack->material.shader = shader;
+		swordAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		swordAttack->SetDamage(knight->GetKnightDamage());
+
+		knight->GetComponent<TestComponent>()->attack = swordAttack;
+		//sword attack
+
+		//fireball
+		fireball = new Object();
+		fireball->Initialize("fireball.txt");
+		fireball->material.shader = shader;
+		fireball->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		fireball->material.texture.LoadFromPath(PATH::fireball);
+		fireball->animation.Initialize({ 3, 5.0f }, shader);
+
+		fireball->SetState(State::WALK);
+		fireball->SetDamage(magician->GetMagicianDamage());
+
+		magician->GetComponent<TestComponent>()->attack = fireball;
+		//fireball
+
+		//arrow
+		arrow.Initialize("arrow.txt");
+		arrow.material.shader = fontShader;
+		arrow.material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		arrow.material.texture.LoadFromPath(PATH::arrow);
+
+		arrow.SetState(State::WALK);
+		arrow.SetDamage(archer->GetArcherDamage());
+
+		archer->GetComponent<TestComponent>()->attack = &arrow;
+		//arrow
+	}
+
+	//test sound and make object
+	SOUNDMANAGER->Initialize();
+	SOUNDMANAGER->LoadFile("sound.mp3");
+	SOUNDMANAGER->LoadFile("beep.wav");
+	SOUNDMANAGER->LoadFile("hit.ogg");
+	SOUNDMANAGER->PlaySound(1, 0);
+	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
+	//test sound and make object
+}
+
+void LevelTest1::Update(float dt)
+{
+	OBJECTFACTORY->Update();
+	//Transform
+	camera.Rotate(cameraAngle);
+	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
+	view.SetZoom(zoom);
+	//Transform
+
+	//Draw
+	Draw::StartDrawing();
+
+	const mat3<float> backgroundNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
+	Draw::draw({ backgroundShader, backgroundVertices, backgroundNDC,  backgroundTexture });
+
+	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
+	text.SetString(input.GetString());
+	Draw::DrawText(fontShader, textNDC, text);
+
+	//dynamic test
+	for (auto obj : OBJECTFACTORY->GetObjecteList())
+	{
+		if (obj.second != nullptr)
+		{
+			obj.second->ChangeUnitAnimation();
+
+			obj.second->Update(dt);
+			obj.second->animation.Animate(dt);
+
+			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
+			obj.second->material.ndc = ndc;
+			Draw::draw(obj.second->material);
+
+			//hpbar
+			if (obj.second->GetType() == UnitType::Player || obj.second->GetType() == UnitType::Enemy)
+			{
+				obj.second->healthBar.material.shader = fontShader; //texture shader
+				const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->healthBar.transform.GetModelToWorld();
+				obj.second->healthBar.material.ndc = ndcHP;
+				Draw::draw(obj.second->healthBar.material);
+			}
+			//hpbar
+
+			if (obj.second->GetName() == "Lair")
+			{
+				obj.second->GetComponent<LairComponent>()->SpawnEnemy(proKevin, dt);
+			}
+		}
+	}
+	//dynamic test
+
+	Draw::FinishDrawing();
+
+	windowPoint->PollEvents();
+}
+
+void LevelTest1::Shutdown()
+{
+	OBJECTFACTORY->DestroyAllObjects();
+}
+
+//void LevelTest1::HandleKeyPress(KeyboardButton button)
+//{
+//	bool isEnter = false;
+//	switch (button)
+//	{
+//	case KeyboardButton::A:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('a');
+//			printf("a");
+//			break;
+//		}
+//		else
+//		{
+//			OBJECTFACTORY->CopyObject(proKevin);
+//		}
+//		break;
+//	case KeyboardButton::B:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('b');
+//			printf("b");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::C:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('c');
+//			printf("c");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::D:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('d');
+//			printf("d");
+//			break;
+//		}
+//		else
+//		{
+//			OBJECTFACTORY->CopyObject(knight);
+//		}
+//		break;
+//	case KeyboardButton::E:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('e');
+//			printf("e");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::F:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('f');
+//			printf("f");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::G:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('g');
+//			printf("g");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::H:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('h');
+//			printf("h");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::I:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('i');
+//			printf("i");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::J:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('j');
+//			printf("j");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::K:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('k');
+//			printf("k");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::L:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('l');
+//			printf("l");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::M:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('m');
+//			printf("m");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::N:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('n');
+//			printf("n");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::O:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('o');
+//			printf("o");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::P:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('p');
+//			printf("p");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::Q:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('q');
+//			printf("q");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::R:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('r');
+//			printf("r");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::S:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('s');
+//			printf("s");
+//			break;
+//		}
+//		else
+//		{
+//			for (auto obj : OBJECTFACTORY->GetObjecteList())
+//			{
+//				if (obj.second->GetName() != "Tower")
+//				{
+//					if (obj.second->GetType() == UnitType::Player)
+//					{
+//						OBJECTFACTORY->Destroy(obj.second);
+//					}
+//				}
+//			}
+//		}
+//		break;
+//	case KeyboardButton::T:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('t');
+//			printf("t");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::U:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('u');
+//			printf("u");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::V:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('v');
+//			printf("v");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::W:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('w');
+//			printf("w");
+//			break;
+//		}
+//		else
+//		{
+//			for (auto obj : OBJECTFACTORY->GetObjecteList())
+//			{
+//				if (obj.second->GetName() != "Lair")
+//				{
+//					if (obj.second->GetType() == UnitType::Enemy)
+//					{
+//						OBJECTFACTORY->Destroy(obj.second);
+//					}
+//				}
+//			}
+//		}
+//		break;
+//	case KeyboardButton::X:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('x');
+//			printf("x");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::Y:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('y');
+//			printf("y");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::Z:
+//		if (isEnter == true)
+//		{
+//			input.TakeAsInput('z');
+//			printf("z");
+//			break;
+//		}
+//		break;
+//	case KeyboardButton::Enter:
+//		if (isEnter == false)
+//		{
+//			isEnter = true;
+//			printf("typing start\n");
+//			break;
+//		}
+//		isEnter = false;
+//		printf("typing end\n");
+//		//std::cout << "\n" << input.GetString();
+//		if (input.MatchStringWithInput() == 1)
+//		{
+//			OBJECTFACTORY->CopyObject(knight);
+//		}
+//		else if (input.MatchStringWithInput() == 2)
+//		{
+//			OBJECTFACTORY->CopyObject(archer);
+//		}
+//		else if (input.MatchStringWithInput() == 3)
+//		{
+//			OBJECTFACTORY->CopyObject(magician);
+//		}
+//		input.SetString(L"");
+//		break;
+//
+//	default:
+//		break;
+//	}
+//}
+//
+//void LevelTest1::HandleKeyRelease(KeyboardButton button)
+//{
+//	switch (button)
+//	{
+//	case KeyboardButton::W:
+//		pressDirection.y = 0;
+//		break;
+//	case KeyboardButton::S:
+//		pressDirection.y = 0;
+//		break;
+//	case KeyboardButton::A:
+//		pressDirection.x = 0;
+//		break;
+//	case KeyboardButton::D:
+//		pressDirection.x = 0;
+//		break;
+//	case KeyboardButton::Z:
+//		cameraAngle = 0.0f;
+//		break;
+//	case KeyboardButton::X:
+//		cameraAngle = 0.0f;
+//		break;
+//	default:;
+//	}
+//}
+//
+//void LevelTest1::HandleMouseEvent(MouseButton button)
+//{
+//	switch (button)
+//	{
+//	case MouseButton::LEFT_PRESS:
+//	{
+//		//mouse check
+//		if (object.isCollideWithMouse(mousePosition, windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight()))
+//		{
+//			object.isMouseCollide = true;
+//		}
+//		//mouse check
+//		break;
+//	}
+//	case MouseButton::LEFT_RELEASE:
+//		object.isMouseCollide = false;
+//		break;
+//	}
+//}
+
+void LevelTest1::HandleResizeEvent(const int& new_width, const int& new_height)
+{
+	//camera
+	view.SetViewSize(new_width, new_height);
+	view.SetZoom(zoom);
+	//camera
+}
+
+void LevelTest1::HandleScrollEvent(float scroll_amount)
+{
+	zoom = view.GetZoom() + (scroll_amount * 0.05f);
+	zoom = std::clamp(zoom, 0.5f, 2.0f);
+	background.transform.SetScale({ windowPoint->GetWindowWidth() * (1.f / zoom),
+		windowPoint->GetWindowHeight() * (1.f / zoom) });
+	view.SetZoom(zoom);
+}
+
+//void LevelTest1::HandleMousePositionEvent(float xpos, float ypos)
+//{
+//	mousePosition = { xpos, ypos };
+//}
+//
+//void LevelTest1::HandleWindowClose()
+//{
+//}

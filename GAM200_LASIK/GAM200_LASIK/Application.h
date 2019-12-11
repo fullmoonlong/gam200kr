@@ -6,26 +6,12 @@
  */
 
 #pragma once
+#include "System.h"
 #include "OpenGL_Window.h"
 #include "EventHandler.hpp"
-#include "Camera.hpp"
-#include "CameraView.hpp"
-#include "Shader.h"
-#include "Vertices.h"
-#include "Mesh.h"
-#include "Animation.hpp"
-#include "Draw.hpp"
-#include "BitmapFont.hpp"
-#include "Text.hpp"
-#include "Object.h"
-#include "ObjectFactory.h"
 #include "Util/Clock.hpp"
-#include "Sound.hpp"
-#include "ObjectFactory.h"
-#include "Units.hpp"
-#include "GetInput.hpp"
-#include "UI.hpp"
-class Application : public SimpleEventHandler
+
+class Application : public System, public SimpleEventHandler
 {
 public:
 	Application();
@@ -34,70 +20,23 @@ public:
 	void Update();
 	void ShutDown();
 
-	void HandleKeyPress(KeyboardButton button) override final;
-	void HandleKeyRelease(KeyboardButton button) override final;
-	void HandleMouseEvent(MouseButton button) override final;
-	void HandleResizeEvent(const int& new_width, const int& new_height) override final;
-	void HandleScrollEvent(float scroll_amount) override final;
-	void HandleMousePositionEvent(float xpos, float ypos) override final;
-	void HandleWindowClose() override final;
+	void HandleKeyPress(KeyboardButton button) override;
+	void HandleKeyRelease(KeyboardButton button) override;
+	void HandleMouseEvent(MouseButton button) override;
+	//void HandleResizeEvent(const int& new_width, const int& new_height) override;
+	//void HandleScrollEvent(float scroll_amount) override;
+	void HandleMousePositionEvent(float xpos, float ypos) override;
+	void HandleWindowClose() override;
+
+	Window* GetWindow() { return &window; }
+	float* GetDeltaTime() { return &deltaTime; }
 
 	bool isRunning = false;
 
 private:
 	int frameCount = 0;
 	float deltaTime = 0;
-	GetInput input;
-
-	Draw draw;
-	ObjectFactory objectFactory;
-	Object* proKevin;
-	Object* objectTest1;
-
-	Object background;
-	Shader backgroundShader;
-	Mesh backgroundMesh;
-	Vertices backgroundVertices;
-	Texture backgroundTexture;
-	//Material backgroundMaterial;
-
-	Shader fontShader;
-	BitmapFont bitmapFont;
-	Text text;
-	Transform textTransform;
-
-	Shader shader;
-	Shader shapeShader;
-	Object object;
-	Object object2;
-	//Units
-	Knight* knight;
-	Magician* magician;
-	Archer* archer;
-	//Units
-
-	//projectiles
-	Object* swordAttack;
-	Object arrow;
-	Object* fireball;
-	//projectiles
-
-	//tower
-	Object* tower;
-	Object* lair;
-	//tower
 
 	Window window;
 	Clock clock;
-	
-	Camera camera;
-	CameraView view;
-
-	SoundManager soundManager;
-	//float cameraSpeed{ 80.0f };
-	float depth = 1.0f;
-	float zoom = 1.0f;
-	float cameraAngle = 0.0f;
-	vec2<float> pressDirection{ 0.f, 0.f };
-	vec2<float> mousePosition{ 0.f, 0.f };
 };

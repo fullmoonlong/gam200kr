@@ -1,25 +1,28 @@
 /*
 *	Author: JeongHak Kim	junghak.kim@digipen.edu
 			Doyeong Yi		doyoung.lee@digipen.edu
-*	
+*
 *	File_name: main.cpp
-*	
+*
 *	main loop
-*	
+*
 *	2019/07/04
 */
 
-#include "Application.h"
+#include "Engine.h"
 
 int main()
 {
-	Application app;
+	//Application app;
 
-	while (app.isRunning)
-	{
-		app.Update();
-	}
-	
+	//while (app.isRunning)
+	//{
+	//	app.Update();
+	//}
+
+	Engine* ENGINE = new Engine();
+	ENGINE->Run();
+
 	return 0;
 }
 

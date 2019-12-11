@@ -92,9 +92,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Graphics\OpenGL_Window.cpp">
-      <Filter>Graphics\Window</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\Camera.cpp">
       <Filter>Graphics\Camera</Filter>
     </ClCompile>
@@ -136,6 +133,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\Transform.cpp">
       <Filter>Graphics\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\OpenGL_Window.cpp">
+      <Filter>Graphics\Window</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
