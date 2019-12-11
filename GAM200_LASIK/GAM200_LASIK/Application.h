@@ -39,4 +39,5 @@ private:
 
 	Window window;
 	Clock clock;
+	UI::SelectSpawn selectMenu;
 };

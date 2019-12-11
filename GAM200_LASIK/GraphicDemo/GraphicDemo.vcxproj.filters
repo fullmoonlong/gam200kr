@@ -30,7 +30,10 @@
     <ClCompile Include="TextureDrawingDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HierarchyDemo.cpp">
+    <ClCompile Include="SolarSystemDemo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationDemo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +50,10 @@
     <ClInclude Include="TextureDrawingDemo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HierarchyDemo.hpp">
+    <ClInclude Include="SolarSystemDemo.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationDemo.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

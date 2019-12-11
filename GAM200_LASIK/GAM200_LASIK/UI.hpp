@@ -14,8 +14,10 @@ Creation Date : 11/14/2019
 #include "Vertices.h" 
 #include "Camera.hpp"
 #include "CameraView.hpp"
-
-class HealthBar{
+#include "Text.hpp"
+#include "GetInput.hpp"
+#include "BitmapFont.hpp"
+class HealthBar {
 public:
 	void Initialize(vec2<float> position_, int health);
 	void Update(vec2<float> position_, int health);
@@ -23,54 +25,49 @@ public:
 	Material material;
 	Transform transform;
 	Mesh mesh;
-	
+
 private:
-	/*int			hp = 50;
-	Draw		allyDraw, enemyDraw;
-	Object		allyUnit, enemy;
-	Mesh		allyUnitMesh, enemyMesh;
-	Shader		allyUnitShader, enemyShader;
-	Vertices	allyUnitVertices, enemyVertices;
-	Material	allyUnitMaterial, enemyMaterial;*/
 
 	float totalSizeX = 56.f;
 	float fullHP = 0;
 	float currentHP = 0;
-	vec2<float> size = { totalSizeX, 8.f};
+	vec2<float> size = { totalSizeX, 8.f };
 
 	const Color4f color{ 0.8f, 0.0f, 0.0f, 1.0f };
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 };
 
-class SelectRespawn {
+class SelectSpawn {
 
 public:
-	void SelectMenu(/*vec2<float> selectPosition*/);
-	void SelectUpdate();
+	void SelectMenu();
+	void SelectUpdate(Camera& camera_, CameraView& view_);
+	void SetFont(const BitmapFont& font);
+	//bool MouseCollide(vec2<float>& mouse_position, Transform transform_/*, int width, int height*/);
 
-	Material	selectMaterial, archerMaterial, knightMaterial, magicianMaterial;
-	Transform	selectTransform, archerTransform, knightTransform, magicianTransform;
-	Texture		archerTexture, knightTexture, magicianTexture;
-	Shader		selectShader, archerShader, knightShader, magicianShader;
 private:
+	Text m_text;
+	BitmapFont bitmapfont;
 	vec2<float> selectSize = { 2500.0f, 400.0f };
-	vec2<float> archerSize = { 100.0f, 100.0f };
-	
-	vec2<float> archerPosition =   { -1000.0f, -500.0f };
-	vec2<float> knightPosition =   { -600.0f, -500.0f };
-	vec2<float> magicianPosition = { -200.0f, -500.0f };
-	
-	
+	vec2<float> archerSize = { 200.0f, 200.0f };
+	vec2<float> fontSize = { 2.0f };
+
+	vec2<float> archerPosition = { -400.0f, -400.0f };
+	vec2<float> knightPosition = { 0.0f, -400.0f };
+	vec2<float> magicianPosition = { 400.0f, -400.0f };
+	vec2<float> fontPosition = { -600.0f, -600.0f };
+
+
 	const Color4f color{ 0.0f, 0.0f, 1.0f, 1.0f };
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	VerticesDescription texturelayout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	
-	//Application::view view;
-	Camera			camera;
-	CameraView		view;
-	Mesh		selectMesh, archerMesh, knightMesh, magicianMesh;
+	Shader		shader;
+	Material	selectMaterial, archerMaterial, knightMaterial, magicianMaterial, fontMaterial;
+	Transform	selectTransform, archerTransform, knightTransform, magicianTransform, fontTransform;
+	Mesh		selectMesh, archerMesh, knightMesh, magicianMesh, fontMesh;
 
 };
 
-class UI :public SelectRespawn, public HealthBar {
+class UI :public SelectSpawn, public HealthBar {
 };

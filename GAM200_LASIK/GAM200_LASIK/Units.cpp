@@ -13,13 +13,3 @@ void Units::Initialize()
 	GetMagicianDamage();
 	GetMagicianHealth();
 }
-
-//bool Archer::ArcherCollideWith(Object& object)
-//{
-//	return !(max.x + archerAttackRange < object.min.x || object.max.x < min.x + archerAttackRange || max.y + archerAttackRange < object.min.y || object.max.y < min.y + archerAttackRange);
-//}
-//
-//bool Magician::MagicianCollideWith(Object& object)
-//{
-//	return !(max.x + magicianAttackRange < object.min.x || object.max.x < min.x + magicianAttackRange || max.y + magicianAttackRange < object.min.y || object.max.y < min.y + magicianAttackRange);
-//}

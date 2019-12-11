@@ -27,6 +27,7 @@ public:
 	
 	void HandleKeyPress(KeyboardButton button) override;
 	void HandleResizeEvent(const int& width, const int& height) override;
+	void HandleScrollEvent(float scroll_amount) override;
 protected:
 	Camera camera;
 	CameraView view;

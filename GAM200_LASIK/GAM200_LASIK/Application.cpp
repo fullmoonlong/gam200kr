@@ -25,12 +25,14 @@ Application::Application()
 void Application::Initialize()
 {
 	window.CanCreateWindow(1280, 720, this, "Lasik");
+	selectMenu.SelectMenu();
 }
 
 void Application::Update()
 {
 	clock.UpdateClock();
 
+	selectMenu.SelectUpdate(camera, view);
 	++frameCount;
 	static int time = 0;
 	if (clock.timePassed >= 1.0f)

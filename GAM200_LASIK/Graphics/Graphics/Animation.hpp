@@ -18,7 +18,8 @@ public:
 	
 	struct SpriteSheet
 	{
-		int frameCount;
+		int frameX;
+		int frameY;
 		float animateSpeed;
 	};
 

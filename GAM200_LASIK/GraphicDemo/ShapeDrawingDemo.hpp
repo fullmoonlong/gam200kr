@@ -3,7 +3,7 @@
  *	
  *	File_name: ShapeDrawingDemo.h
  *	
- *	Graphic demo main file
+ *	Simple Shape Drawing Demo
  *	
  *	Nov.25 2019
  *******************************************************/
