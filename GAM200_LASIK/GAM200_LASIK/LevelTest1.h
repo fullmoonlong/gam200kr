@@ -20,7 +20,7 @@
 
 #include "Sound.hpp"
 
-class LevelTest1 : public LevelSystem, public SimpleEventHandler
+class LevelTest1 : public LevelSystem
 {
 public:
 	LevelTest1(Window* window);
@@ -29,17 +29,17 @@ public:
 	void Update(float dt) override;
 	void Shutdown() override;
 
-	//void HandleKeyPress(KeyboardButton button) override final;
-	//void HandleKeyRelease(KeyboardButton button) override final;
-	//void HandleMouseEvent(MouseButton button) override final;
+	void HandleKeyPress(KeyboardButton button) override final;
+	void HandleKeyRelease(KeyboardButton button) override final;
+	void HandleMouseEvent(MouseButton button) override final;
 	void HandleResizeEvent(const int& new_width, const int& new_height) override;
 	void HandleScrollEvent(float scroll_amount) override;
-	//void HandleMousePositionEvent(float xpos, float ypos) override final;
-	//void HandleWindowClose() override final;
+	void HandleMousePositionEvent(float xpos, float ypos) override final;
+	/*void HandleWindowClose() override final;*/
 
 private:
-	int frameCount = 0;
-	float deltaTime = 0;
+	bool isEnter = false;
+
 	GetInput input;
 
 	Window* windowPoint;

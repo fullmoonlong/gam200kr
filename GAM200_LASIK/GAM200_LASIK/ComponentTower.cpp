@@ -16,7 +16,6 @@ void LairComponent::SpawnEnemy(Object* obj, float dt)
 
 	if (time > 6.0f)
 	{
-		std::cout << "¾¾¹ß" << std::endl;
 		OBJECTFACTORY->CopyObject(obj);
 		time = 0.f;
 	}

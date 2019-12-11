@@ -178,7 +178,7 @@ void LevelTest1::Initialize()
 	SOUNDMANAGER->LoadFile("sound.mp3");
 	SOUNDMANAGER->LoadFile("beep.wav");
 	SOUNDMANAGER->LoadFile("hit.ogg");
-	SOUNDMANAGER->PlaySound(1, 0);
+	//SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
 }
@@ -235,8 +235,6 @@ void LevelTest1::Update(float dt)
 	//dynamic test
 
 	Draw::FinishDrawing();
-
-	windowPoint->PollEvents();
 }
 
 void LevelTest1::Shutdown()
@@ -244,335 +242,332 @@ void LevelTest1::Shutdown()
 	OBJECTFACTORY->DestroyAllObjects();
 }
 
-//void LevelTest1::HandleKeyPress(KeyboardButton button)
-//{
-//	bool isEnter = false;
-//	switch (button)
-//	{
-//	case KeyboardButton::A:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('a');
-//			printf("a");
-//			break;
-//		}
-//		else
-//		{
-//			OBJECTFACTORY->CopyObject(proKevin);
-//		}
-//		break;
-//	case KeyboardButton::B:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('b');
-//			printf("b");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::C:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('c');
-//			printf("c");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::D:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('d');
-//			printf("d");
-//			break;
-//		}
-//		else
-//		{
-//			OBJECTFACTORY->CopyObject(knight);
-//		}
-//		break;
-//	case KeyboardButton::E:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('e');
-//			printf("e");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::F:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('f');
-//			printf("f");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::G:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('g');
-//			printf("g");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::H:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('h');
-//			printf("h");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::I:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('i');
-//			printf("i");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::J:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('j');
-//			printf("j");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::K:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('k');
-//			printf("k");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::L:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('l');
-//			printf("l");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::M:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('m');
-//			printf("m");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::N:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('n');
-//			printf("n");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::O:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('o');
-//			printf("o");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::P:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('p');
-//			printf("p");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::Q:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('q');
-//			printf("q");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::R:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('r');
-//			printf("r");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::S:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('s');
-//			printf("s");
-//			break;
-//		}
-//		else
-//		{
-//			for (auto obj : OBJECTFACTORY->GetObjecteList())
-//			{
-//				if (obj.second->GetName() != "Tower")
-//				{
-//					if (obj.second->GetType() == UnitType::Player)
-//					{
-//						OBJECTFACTORY->Destroy(obj.second);
-//					}
-//				}
-//			}
-//		}
-//		break;
-//	case KeyboardButton::T:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('t');
-//			printf("t");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::U:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('u');
-//			printf("u");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::V:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('v');
-//			printf("v");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::W:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('w');
-//			printf("w");
-//			break;
-//		}
-//		else
-//		{
-//			for (auto obj : OBJECTFACTORY->GetObjecteList())
-//			{
-//				if (obj.second->GetName() != "Lair")
-//				{
-//					if (obj.second->GetType() == UnitType::Enemy)
-//					{
-//						OBJECTFACTORY->Destroy(obj.second);
-//					}
-//				}
-//			}
-//		}
-//		break;
-//	case KeyboardButton::X:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('x');
-//			printf("x");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::Y:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('y');
-//			printf("y");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::Z:
-//		if (isEnter == true)
-//		{
-//			input.TakeAsInput('z');
-//			printf("z");
-//			break;
-//		}
-//		break;
-//	case KeyboardButton::Enter:
-//		if (isEnter == false)
-//		{
-//			isEnter = true;
-//			printf("typing start\n");
-//			break;
-//		}
-//		isEnter = false;
-//		printf("typing end\n");
-//		//std::cout << "\n" << input.GetString();
-//		if (input.MatchStringWithInput() == 1)
-//		{
-//			OBJECTFACTORY->CopyObject(knight);
-//		}
-//		else if (input.MatchStringWithInput() == 2)
-//		{
-//			OBJECTFACTORY->CopyObject(archer);
-//		}
-//		else if (input.MatchStringWithInput() == 3)
-//		{
-//			OBJECTFACTORY->CopyObject(magician);
-//		}
-//		input.SetString(L"");
-//		break;
-//
-//	default:
-//		break;
-//	}
-//}
-//
-//void LevelTest1::HandleKeyRelease(KeyboardButton button)
-//{
-//	switch (button)
-//	{
-//	case KeyboardButton::W:
-//		pressDirection.y = 0;
-//		break;
-//	case KeyboardButton::S:
-//		pressDirection.y = 0;
-//		break;
-//	case KeyboardButton::A:
-//		pressDirection.x = 0;
-//		break;
-//	case KeyboardButton::D:
-//		pressDirection.x = 0;
-//		break;
-//	case KeyboardButton::Z:
-//		cameraAngle = 0.0f;
-//		break;
-//	case KeyboardButton::X:
-//		cameraAngle = 0.0f;
-//		break;
-//	default:;
-//	}
-//}
-//
-//void LevelTest1::HandleMouseEvent(MouseButton button)
-//{
-//	switch (button)
-//	{
-//	case MouseButton::LEFT_PRESS:
-//	{
-//		//mouse check
-//		if (object.isCollideWithMouse(mousePosition, windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight()))
-//		{
-//			object.isMouseCollide = true;
-//		}
-//		//mouse check
-//		break;
-//	}
-//	case MouseButton::LEFT_RELEASE:
-//		object.isMouseCollide = false;
-//		break;
-//	}
-//}
+void LevelTest1::HandleKeyPress(KeyboardButton button)
+{
+	switch (button)
+	{
+	case KeyboardButton::A:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('a');
+			printf("a");
+			break;
+		}
+		else
+		{
+			OBJECTFACTORY->CopyObject(proKevin);
+		}
+		break;
+	case KeyboardButton::B:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('b');
+			printf("b");
+			break;
+		}
+		break;
+	case KeyboardButton::C:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('c');
+			printf("c");
+			break;
+		}
+		break;
+	case KeyboardButton::D:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('d');
+			printf("d");
+			break;
+		}
+		else
+		{
+			OBJECTFACTORY->CopyObject(knight);
+		}
+		break;
+	case KeyboardButton::E:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('e');
+			printf("e");
+			break;
+		}
+		break;
+	case KeyboardButton::F:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('f');
+			printf("f");
+			break;
+		}
+		break;
+	case KeyboardButton::G:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('g');
+			printf("g");
+			break;
+		}
+		break;
+	case KeyboardButton::H:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('h');
+			printf("h");
+			break;
+		}
+		break;
+	case KeyboardButton::I:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('i');
+			printf("i");
+			break;
+		}
+		break;
+	case KeyboardButton::J:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('j');
+			printf("j");
+			break;
+		}
+		break;
+	case KeyboardButton::K:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('k');
+			printf("k");
+			break;
+		}
+		break;
+	case KeyboardButton::L:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('l');
+			printf("l");
+			break;
+		}
+		break;
+	case KeyboardButton::M:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('m');
+			printf("m");
+			break;
+		}
+		break;
+	case KeyboardButton::N:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('n');
+			printf("n");
+			break;
+		}
+		break;
+	case KeyboardButton::O:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('o');
+			printf("o");
+			break;
+		}
+		break;
+	case KeyboardButton::P:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('p');
+			printf("p");
+			break;
+		}
+		break;
+	case KeyboardButton::Q:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('q');
+			printf("q");
+			break;
+		}
+		break;
+	case KeyboardButton::R:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('r');
+			printf("r");
+			break;
+		}
+		break;
+	case KeyboardButton::S:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('s');
+			printf("s");
+			break;
+		}
+		else
+		{
+			for (auto obj : OBJECTFACTORY->GetObjecteList())
+			{
+				if (obj.second->GetName() != "Tower")
+				{
+					if (obj.second->GetType() == UnitType::Player)
+					{
+						OBJECTFACTORY->Destroy(obj.second);
+					}
+				}
+			}
+		}
+		break;
+	case KeyboardButton::T:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('t');
+			printf("t");
+			break;
+		}
+		break;
+	case KeyboardButton::U:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('u');
+			printf("u");
+			break;
+		}
+		break;
+	case KeyboardButton::V:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('v');
+			printf("v");
+			break;
+		}
+		break;
+	case KeyboardButton::W:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('w');
+			printf("w");
+			break;
+		}
+		else
+		{
+			for (auto obj : OBJECTFACTORY->GetObjecteList())
+			{
+				if (obj.second->GetName() != "Lair")
+				{
+					if (obj.second->GetType() == UnitType::Enemy)
+					{
+						OBJECTFACTORY->Destroy(obj.second);
+					}
+				}
+			}
+		}
+		break;
+	case KeyboardButton::X:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('x');
+			printf("x");
+			break;
+		}
+		break;
+	case KeyboardButton::Y:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('y');
+			printf("y");
+			break;
+		}
+		break;
+	case KeyboardButton::Z:
+		if (isEnter == true)
+		{
+			input.TakeAsInput('z');
+			printf("z");
+			break;
+		}
+		break;
+	case KeyboardButton::Enter:
+		if (isEnter == false)
+		{
+			isEnter = true;
+			printf("typing start\n");
+			break;
+		}
+		isEnter = false;
+		printf("typing end\n");
+		//std::cout << "\n" << input.GetString();
+		if (input.MatchStringWithInput() == 1)
+		{
+			OBJECTFACTORY->CopyObject(knight);
+		}
+		else if (input.MatchStringWithInput() == 2)
+		{
+			OBJECTFACTORY->CopyObject(archer);
+		}
+		else if (input.MatchStringWithInput() == 3)
+		{
+			OBJECTFACTORY->CopyObject(magician);
+		}
+		input.SetString(L"");
+		break;
+
+	default:
+		break;
+	}
+}
+
+void LevelTest1::HandleKeyRelease(KeyboardButton button)
+{
+	switch (button)
+	{
+	case KeyboardButton::W:
+		pressDirection.y = 0;
+		break;
+	case KeyboardButton::S:
+		pressDirection.y = 0;
+		break;
+	case KeyboardButton::A:
+		pressDirection.x = 0;
+		break;
+	case KeyboardButton::D:
+		pressDirection.x = 0;
+		break;
+	case KeyboardButton::Z:
+		cameraAngle = 0.0f;
+		break;
+	case KeyboardButton::X:
+		cameraAngle = 0.0f;
+		break;
+	default:;
+	}
+}
+
+void LevelTest1::HandleMouseEvent(MouseButton button)
+{
+	switch (button)
+	{
+	case MouseButton::LEFT_PRESS:
+	{
+		//mouse check
+		if (object.isCollideWithMouse(mousePosition, windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight()))
+		{
+			object.isMouseCollide = true;
+		}
+		//mouse check
+		break;
+	}
+	case MouseButton::LEFT_RELEASE:
+		object.isMouseCollide = false;
+		break;
+	}
+}
 
 void LevelTest1::HandleResizeEvent(const int& new_width, const int& new_height)
 {
-	//camera
 	view.SetViewSize(new_width, new_height);
 	view.SetZoom(zoom);
-	//camera
 }
 
 void LevelTest1::HandleScrollEvent(float scroll_amount)
@@ -584,10 +579,10 @@ void LevelTest1::HandleScrollEvent(float scroll_amount)
 	view.SetZoom(zoom);
 }
 
-//void LevelTest1::HandleMousePositionEvent(float xpos, float ypos)
-//{
-//	mousePosition = { xpos, ypos };
-//}
+void LevelTest1::HandleMousePositionEvent(float xpos, float ypos)
+{
+	mousePosition = { xpos, ypos };
+}
 //
 //void LevelTest1::HandleWindowClose()
 //{

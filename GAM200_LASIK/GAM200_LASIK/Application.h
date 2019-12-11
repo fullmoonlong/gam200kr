@@ -23,8 +23,8 @@ public:
 	void HandleKeyPress(KeyboardButton button) override;
 	void HandleKeyRelease(KeyboardButton button) override;
 	void HandleMouseEvent(MouseButton button) override;
-	//void HandleResizeEvent(const int& new_width, const int& new_height) override;
-	//void HandleScrollEvent(float scroll_amount) override;
+	void HandleResizeEvent(const int& new_width, const int& new_height) override;
+	void HandleScrollEvent(float scroll_amount) override;
 	void HandleMousePositionEvent(float xpos, float ypos) override;
 	void HandleWindowClose() override;
 

@@ -15,6 +15,7 @@
 #include "ComponentTest.h"
 #include "ComponentTower.h"
 #include "GetInput.hpp"
+#include "StateManager.h"
 
 Application::Application()
 {
@@ -40,6 +41,7 @@ void Application::Update()
 	}
 	window.SwapBuffers();
 	window.PollEvents();
+	deltaTime = clock.GetTimeFromLastUpdate();
 }
 
 void Application::ShutDown()
@@ -53,7 +55,7 @@ void Application::ShutDown()
 
 void Application::HandleKeyPress(KeyboardButton button)
 {
-	bool isEnter = false;
+	//bool isEnter = false;
 	//if (isEnter != false)
 	{
 		switch (button)
@@ -71,7 +73,7 @@ void Application::HandleKeyPress(KeyboardButton button)
 			break;
 		case KeyboardButton::Escape:
 			this->ShutDown();
-			break;
+			break;/*
 		case KeyboardButton::Enter:
 			if (isEnter == false)
 			{
@@ -79,33 +81,40 @@ void Application::HandleKeyPress(KeyboardButton button)
 				break;
 			}
 			isEnter = false;
-			break;
+			break;*/
 		default:
 			break;
 		}
 	}
+	STATEMANAGER->GetCurrentLevel()->HandleKeyPress(button);
 }
 
-void Application::HandleKeyRelease(KeyboardButton /*button*/)
+void Application::HandleKeyRelease(KeyboardButton button)
 {
+	STATEMANAGER->GetCurrentLevel()->HandleKeyRelease(button);
 }
 
-void Application::HandleMouseEvent(MouseButton /*button*/)
+void Application::HandleMouseEvent(MouseButton button)
 {
+	STATEMANAGER->GetCurrentLevel()->HandleMouseEvent(button);
 }
 
-//void Application::HandleResizeEvent(const int& new_width, const int& new_height)
-//{
-//	window.SetWindowWidth(new_width);
-//	window.SetWindowHeight(new_height);
-//}
-//
-//void Application::HandleScrollEvent(float /*scroll_amount*/)
-//{
-//}
-
-void Application::HandleMousePositionEvent(float /*xpos*/, float /*ypos*/)
+void Application::HandleResizeEvent(const int& new_width, const int& new_height)
 {
+	window.SetWindowWidth(new_width);
+	window.SetWindowHeight(new_height);
+
+	STATEMANAGER->GetCurrentLevel()->HandleResizeEvent(new_width, new_height);
+}
+
+void Application::HandleScrollEvent(float scroll_amount)
+{
+	STATEMANAGER->GetCurrentLevel()->HandleScrollEvent(scroll_amount);
+}
+
+void Application::HandleMousePositionEvent(float xpos, float ypos)
+{
+	STATEMANAGER->GetCurrentLevel()->HandleMousePositionEvent(xpos, ypos);
 }
 
 void Application::HandleWindowClose()
