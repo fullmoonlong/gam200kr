@@ -10,7 +10,7 @@
 #pragma once
 #include <complex>	// cos, sin
 #include <cassert>	// assert
-#include "vec3.hpp"
+#include <vec3.hpp>
 
 template <typename T>
 class mat3
@@ -52,24 +52,38 @@ public:
 		column[2].y = column2_row1;
 		column[2].z = column2_row2;
 	}
+	constexpr mat3(T repeated_value) noexcept
+	{
+		column[0].x = repeated_value;
+		column[0].y = repeated_value;
+		column[0].z = repeated_value;
+
+		column[1].x = repeated_value;
+		column[1].y = repeated_value;
+		column[1].z = repeated_value;
+
+		column[2].x = repeated_value;
+		column[2].y = repeated_value;
+		column[2].z = repeated_value;
+	}
 
 	union
 	{
 		T elements[3][3];
 		vec3<T> column[3];
 	};
-	constexpr T operator() (int column, int row) const noexcept
+	constexpr T operator() (int col, int row) const noexcept
 	{
-		assert(0 <= column && column <= 2);
+		assert(0 <= col && col <= 2);
 		assert(0 <= row && row <= 2);
-		return elements[column][row];
+		return elements[col][row];
 	}
 
-	constexpr T& operator() (int column, int row) noexcept
+	constexpr T& operator() (int col, int row) noexcept
 	{
-		assert(0 <= column && column <= 2);
+		assert(0 <= col && col <= 2);
 		assert(0 <= row && row <= 2);
-		return elements[column][row];
+		return elements[col][row];
 	}
 };
 

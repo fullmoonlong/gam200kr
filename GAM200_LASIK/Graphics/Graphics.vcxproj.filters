@@ -16,11 +16,20 @@
     <Filter Include="Graphics\Text">
       <UniqueIdentifier>{7db63649-64cb-466f-bf13-1a924e3b63e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Texture">
-      <UniqueIdentifier>{9dfb79eb-223a-40dd-927f-a99e447fe2a4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Graphics\Drawing">
       <UniqueIdentifier>{278cb8bc-d112-4e2a-9e44-05d9295e1247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Image">
+      <UniqueIdentifier>{bb80f615-583e-4a15-81b4-b08892b28577}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Image\Texture">
+      <UniqueIdentifier>{9dfb79eb-223a-40dd-927f-a99e447fe2a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Animation">
+      <UniqueIdentifier>{e7717414-b5c3-4016-86d5-5aff4ce15e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Shader">
+      <UniqueIdentifier>{97e108a0-36b9-410a-9ebc-2adc10f860b5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,14 +42,8 @@
     <ClInclude Include="Math\vec3.hpp">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="Math\ANGLE.hpp">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\PATH.hpp">
       <Filter>Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\OpenGL_Window.h">
-      <Filter>Graphics\Window</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\EventHandler.hpp">
       <Filter>Graphics\Window</Filter>
@@ -57,28 +60,13 @@
     <ClInclude Include="Graphics\Text.hpp">
       <Filter>Graphics\Text</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\Color4f.hpp">
-      <Filter>Graphics\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\ColorInChar.hpp">
-      <Filter>Graphics\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Image.hpp">
-      <Filter>Graphics\Texture</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\Texture.hpp">
-      <Filter>Graphics\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Animation.hpp">
-      <Filter>Graphics\Drawing</Filter>
+      <Filter>Graphics\Image\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Draw.hpp">
       <Filter>Graphics\Drawing</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Mesh.h">
-      <Filter>Graphics\Drawing</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Shader.h">
       <Filter>Graphics\Drawing</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Vertices.h">
@@ -89,6 +77,33 @@
     </ClInclude>
     <ClInclude Include="Graphics\Transform.hpp">
       <Filter>Graphics\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Color4f.hpp">
+      <Filter>Graphics\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\ColorInChar.hpp">
+      <Filter>Graphics\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Image.hpp">
+      <Filter>Graphics\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Screenshot.hpp">
+      <Filter>Graphics\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Math\Angle.hpp">
+      <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\PlatformWindowGLFW.hpp">
+      <Filter>Graphics\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\OpenGLWindow.hpp">
+      <Filter>Graphics\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Animation.hpp">
+      <Filter>Graphics\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Shader.h">
+      <Filter>Graphics\Shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -104,25 +119,13 @@
     <ClCompile Include="Graphics\Text.cpp">
       <Filter>Graphics\Text</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\Color.cpp">
-      <Filter>Graphics\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Image.cpp">
-      <Filter>Graphics\Texture</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\Texture.cpp">
-      <Filter>Graphics\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Animation.cpp">
-      <Filter>Graphics\Drawing</Filter>
+      <Filter>Graphics\Image\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Draw.cpp">
       <Filter>Graphics\Drawing</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Mesh.cpp">
-      <Filter>Graphics\Drawing</Filter>
-    </ClCompile>
-    <ClCompile Include="Graphics\Shader.cpp">
       <Filter>Graphics\Drawing</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Vertices.cpp">
@@ -134,8 +137,26 @@
     <ClCompile Include="Graphics\Transform.cpp">
       <Filter>Graphics\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="Graphics\OpenGL_Window.cpp">
+    <ClCompile Include="Graphics\Color.cpp">
+      <Filter>Graphics\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Image.cpp">
+      <Filter>Graphics\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Screenshot.cpp">
+      <Filter>Graphics\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\PlatformWindowGLFW.cpp">
       <Filter>Graphics\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\OpenGLWindowGLFW.cpp">
+      <Filter>Graphics\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Animation.cpp">
+      <Filter>Graphics\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\Shader.cpp">
+      <Filter>Graphics\Shader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

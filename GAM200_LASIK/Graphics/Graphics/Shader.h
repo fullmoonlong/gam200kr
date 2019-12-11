@@ -18,8 +18,6 @@ public:
 	Shader() noexcept = default;
 	Shader(const std::filesystem::path& vertex_source,
 		const std::filesystem::path& fragment_source) noexcept;
-	bool LoadShaderFrom(const std::filesystem::path& vertex_source,
-		const std::filesystem::path& fragment_source) noexcept;
 	unsigned GetHandleToShader() const noexcept;
 
 	static void UseShader(const Shader& shader);
@@ -28,6 +26,13 @@ public:
 	void SendUniformVariable(const char* variable_name, const int& variable) const noexcept;
 	void SendUniformVariable(const char* variable_name, const float& variable) const noexcept;
 	void SendUniformVariable(const char* variable_name, const mat3<float>& matrix) const noexcept;
+
+	bool LoadShapeShader() noexcept;
+	bool LoadTextureShader() noexcept;
+	bool LoadAnimationShader() noexcept;
+private:
+	bool LoadShaderFrom(const std::filesystem::path& vertex_source,
+		const std::filesystem::path& fragment_source) noexcept;
 private:
 	unsigned int handleToShader = 0;
 };

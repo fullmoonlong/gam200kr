@@ -17,6 +17,13 @@ void Draw::StartDrawing()
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
+/* Background will be cleared with parameter */
+void Draw::StartDrawing(const Color4f& background_color)
+{
+	glClearColor(background_color.r, background_color.g, background_color.b, background_color.a);
+	glClear(GL_COLOR_BUFFER_BIT);
+}
+
 void Draw::FinishDrawing()
 {
 	glFinish();

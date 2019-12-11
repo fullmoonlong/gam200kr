@@ -72,23 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\lib\Graphics\$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>..\temp\Graphics\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\lib\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>..\temp\Graphics\$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>..\lib\Graphics\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\lib\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IntDir>..\temp\Graphics\$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>..\lib\Graphics\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\lib\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IntDir>..\temp\Graphics\$(Platform)\$(Configuration)\</IntDir>
-    <OutDir>..\lib\Graphics\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>..\temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\lib\$(ProjectName)\$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -173,15 +173,17 @@
     <ClInclude Include="Graphics\EventHandler.hpp" />
     <ClInclude Include="Graphics\Image.hpp" />
     <ClInclude Include="Graphics\Mesh.h" />
-    <ClInclude Include="Graphics\OpenGL_Window.h" />
+    <ClInclude Include="Graphics\OpenGLWindow.hpp" />
     <ClInclude Include="Graphics\PATH.hpp" />
+    <ClInclude Include="Graphics\PlatformWindowGLFW.hpp" />
+    <ClInclude Include="Graphics\Screenshot.hpp" />
     <ClInclude Include="Graphics\Shader.h" />
     <ClInclude Include="Graphics\Text.hpp" />
     <ClInclude Include="Graphics\Texture.hpp" />
     <ClInclude Include="Graphics\Transform.hpp" />
     <ClInclude Include="Graphics\Vertices.h" />
     <ClInclude Include="Graphics\VerticesDescription.h" />
-    <ClInclude Include="Math\ANGLE.hpp" />
+    <ClInclude Include="Math\Angle.hpp" />
     <ClInclude Include="Math\mat3.hpp" />
     <ClInclude Include="Math\vec2.hpp" />
     <ClInclude Include="Math\vec3.hpp" />
@@ -195,7 +197,9 @@
     <ClCompile Include="Graphics\Color.cpp" />
     <ClCompile Include="Graphics\Image.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
-    <ClCompile Include="Graphics\OpenGL_Window.cpp" />
+    <ClCompile Include="Graphics\OpenGLWindowGLFW.cpp" />
+    <ClCompile Include="Graphics\PlatformWindowGLFW.cpp" />
+    <ClCompile Include="Graphics\Screenshot.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
     <ClCompile Include="Graphics\Text.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />

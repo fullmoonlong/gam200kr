@@ -76,21 +76,25 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\lib\Demo\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\temp\Demo\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>KeyboardWarrior</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\lib\Demo\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\temp\Demo\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>KeyboardWarrior</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>..\lib\Demo\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>..\temp\Demo\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>KeyboardWarrior</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>..\temp\Demo\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>..\lib\Demo\$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>KeyboardWarrior</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

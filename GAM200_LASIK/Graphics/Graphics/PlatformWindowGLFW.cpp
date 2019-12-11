@@ -12,7 +12,7 @@
 
 #include <iostream>
 #include "GL/glew.h"
-#include "OpenGL_Window.h"
+#include "PlatformWindowGLFW.hpp"
 #include "PATH.hpp"
 #include "EventHandler.hpp"
 #include <stb_image.h>
@@ -130,6 +130,12 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 		case GLFW_KEY_DOWN:
 			eventHandler->HandleKeyPress(KeyboardButton::Arrow_Down);
 			break;
+		case GLFW_KEY_PAGE_DOWN:
+			eventHandler->HandleKeyPress(KeyboardButton::Page_Down);
+			break;
+		case GLFW_KEY_PAGE_UP:
+			eventHandler->HandleKeyPress(KeyboardButton::Page_Up);
+			break;
 		case GLFW_KEY_ENTER:
 			eventHandler->HandleKeyPress(KeyboardButton::Enter);
 			break;
@@ -161,6 +167,18 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 			break;
 		case GLFW_KEY_X:
 			eventHandler->HandleKeyRelease(KeyboardButton::X);
+			break;
+		case GLFW_KEY_LEFT:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Left);
+			break;
+		case GLFW_KEY_RIGHT:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Right);
+			break;
+		case GLFW_KEY_UP:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Up);
+			break;
+		case GLFW_KEY_DOWN:
+			eventHandler->HandleKeyRelease(KeyboardButton::Arrow_Down);
 			break;
 		}
 	}
@@ -200,15 +218,22 @@ static void cursor_position_callback(GLFWwindow*, double xpos, double ypos)
 
 void window_focus_callback(GLFWwindow*, int focus)
 {
-	eventHandler->HandleFocusEvent(focus);
+	if (focus != GLFW_TRUE)
+	{
+		eventHandler->HandleFocusEvent(false);
+	}
+	else
+	{
+		eventHandler->HandleFocusEvent(true);
+	}
 }
 
-bool Window::CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept
+bool PlatformWindow::CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept
 {
 	eventHandler = event_handler;
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	
+
 	if (!glfwInit())
 	{
 		glfwTerminate();
@@ -222,7 +247,7 @@ bool Window::CanCreateWindow(int width, int height, EventHandler* event_handler,
 
 	GLFWmonitor* monitor = nullptr;
 	GLFWwindow* shareWindow = nullptr;
-	
+
 	window = glfwCreateWindow(width, height, title, monitor, shareWindow);
 
 	if (!window)
@@ -253,37 +278,45 @@ bool Window::CanCreateWindow(int width, int height, EventHandler* event_handler,
 	}
 
 	SetWindowIcon();
-	
+
 	return true;
 }
 
-bool Window::IsVSyncOn() noexcept
+void PlatformWindow::CleanUpWindow() noexcept
+{
+	if ((bool)glfwWindowShouldClose(window) != true)
+	{
+		glfwSetWindowShouldClose(window, GLFW_FALSE);
+	}
+}
+
+bool PlatformWindow::IsVSyncOn() noexcept
 {
 	return isVSyncOn;
 }
 
-void Window::ToggleVSync(bool status) noexcept
+void PlatformWindow::ToggleVSync(bool status) noexcept
 {
 	isVSyncOn = status;
 	glfwSwapInterval(isVSyncOn);
 }
 
-void Window::SwapBuffers() noexcept
+void PlatformWindow::SwapBuffers() noexcept
 {
 	glfwSwapBuffers(window);
 }
 
-void Window::PollEvents() noexcept
+void PlatformWindow::PollEvents() noexcept
 {
 	glfwPollEvents();
 }
 
-bool Window::IsFullScreen() noexcept
+bool PlatformWindow::IsFullScreen() noexcept
 {
 	return isFullScreen;
 }
 
-void Window::ToggleFullScreen() noexcept
+void PlatformWindow::ToggleFullScreen() noexcept
 {
 	isFullScreen = !isFullScreen;
 	if (!IsFullScreen())
@@ -301,12 +334,12 @@ void Window::ToggleFullScreen() noexcept
 	}
 }
 
-void Window::SetWindowTitle(const char* title) const noexcept
+void PlatformWindow::SetWindowTitle(const char* title) const noexcept
 {
 	glfwSetWindowTitle(window, title);
 }
 
-void Window::SetWindowIcon() const noexcept
+void PlatformWindow::SetWindowIcon() const noexcept
 {
 	GLFWimage icon;
 	icon.pixels = stbi_load(PATH::icon_image.generic_string().c_str() , &icon.width, &icon.height, 0, STBI_rgb_alpha);
@@ -314,22 +347,22 @@ void Window::SetWindowIcon() const noexcept
 	stbi_image_free(icon.pixels);
 }
 
-int Window::GetWindowWidth() const noexcept
+int PlatformWindow::GetWindowWidth() const noexcept
 {
 	return windowSize[0];
 }
 
-int Window::GetWindowHeight() const noexcept
+int PlatformWindow::GetWindowHeight() const noexcept
 {
 	return windowSize[1];
 }
 
-void Window::SetWindowWidth(int new_width) noexcept
+void PlatformWindow::SetWindowWidth(int new_width) noexcept
 {
 	windowSize[0] = new_width;
 }
 
-void Window::SetWindowHeight(int new_height) noexcept
+void PlatformWindow::SetWindowHeight(int new_height) noexcept
 {
 	windowSize[1] = new_height;
 }

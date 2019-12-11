@@ -26,6 +26,7 @@ class Draw
 {
 public:
 	static void StartDrawing();
+	static void StartDrawing(const Color4f& background_color);
 	static void FinishDrawing();
 	static void draw(const Material& material);
 	static void DrawShape(const Material& material);
