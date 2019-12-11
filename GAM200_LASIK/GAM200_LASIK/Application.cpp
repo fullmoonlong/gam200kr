@@ -26,24 +26,12 @@ Application::Application()
 void Application::Initialize()
 {
 	window.CanCreateWindow(1280, 720, this, "Lasik");
-	selectMenu.SelectMenu();
-		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		tower->animation.Initialize({ 1, 1, 10.0f }, shader);
-		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
-		lair->animation.Initialize({ 1, 1, 10.0f }, shader);
-		proKevin->animation.Initialize({ 8, 1, 10.0f }, shader);
-		knight->animation.Initialize({ 8, 1, 10.0f }, shader);
-		archer->animation.Initialize({ 8, 1, 10.0f }, shader);
-		magician->animation.Initialize({ 8, 1, 10.0f }, shader);
-		fireball->animation.Initialize({ 3, 1, 5.0f }, shader);
-		arrow.animation.Initialize({1, 1, 5.0f}, shader);
 }
 
 void Application::Update()
 {
 	clock.UpdateClock();
 
-	selectMenu.SelectUpdate(camera, view);
 	++frameCount;
 	static int time = 0;
 	if (clock.timePassed >= 1.0f)

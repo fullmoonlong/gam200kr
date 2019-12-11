@@ -1,7 +1,7 @@
 #pragma once
 #include "LevelSystem.h"
 #include "EventHandler.hpp"
-#include "OpenGL_Window.h"
+#include "OpenGLWindow.hpp"
 
 #include "Object.h"
 #include "Util/Clock.hpp"
@@ -23,7 +23,7 @@
 class LevelTest1 : public LevelSystem
 {
 public:
-	LevelTest1(Window* window);
+	LevelTest1(OpenGLWindow* window);
 	~LevelTest1();
 	void Initialize() override;
 	void Update(float dt) override;
@@ -42,7 +42,7 @@ private:
 
 	GetInput input;
 
-	Window* windowPoint;
+	OpenGLWindow* windowPoint;
 
 	Draw draw;
 	Object* proKevin;
@@ -85,6 +85,7 @@ private:
 	Camera camera;
 	CameraView view;
 
+	UI::SelectSpawn selectMenu;
 	SoundManager soundManager;
 	//float cameraSpeed{ 80.0f };
 	float depth = 1.0f;

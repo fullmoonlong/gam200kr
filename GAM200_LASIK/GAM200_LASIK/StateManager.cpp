@@ -4,7 +4,7 @@
 
 StateManager* STATEMANAGER = nullptr;
 
-StateManager::StateManager(Window* window, float* dt)
+StateManager::StateManager(OpenGLWindow* window, float* dt)
 {
 	STATEMANAGER = this;
 	windowPoint = window;

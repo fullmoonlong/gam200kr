@@ -7,7 +7,7 @@
 
 #pragma once
 #include "System.h"
-#include "OpenGL_Window.h"
+#include "OpenGLWindow.hpp"
 #include "EventHandler.hpp"
 #include "Util/Clock.hpp"
 
@@ -28,7 +28,7 @@ public:
 	void HandleMousePositionEvent(float xpos, float ypos) override;
 	void HandleWindowClose() override;
 
-	Window* GetWindow() { return &window; }
+	OpenGLWindow* GetWindow() { return &window; }
 	float* GetDeltaTime() { return &deltaTime; }
 
 	bool isRunning = false;
@@ -37,7 +37,6 @@ private:
 	int frameCount = 0;
 	float deltaTime = 0;
 
-	Window window;
+	OpenGLWindow window;
 	Clock clock;
-	UI::SelectSpawn selectMenu;
 };

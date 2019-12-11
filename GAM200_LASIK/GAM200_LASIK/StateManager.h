@@ -1,7 +1,7 @@
 #pragma once
 #include "System.h"
 #include "LevelSystem.h"
-#include "OpenGL_Window.h"
+#include "OpenGLWindow.hpp"
 #include <vector>
 #include "EventHandler.hpp"
 
@@ -13,7 +13,7 @@ enum GameLevels {
 class StateManager : public System, public SimpleEventHandler
 {
 public:
-	StateManager(Window* window, float* dt);
+	StateManager(OpenGLWindow* window, float* dt);
 	~StateManager();
 	void Initialize() override;
 	void Update() override;
@@ -24,7 +24,7 @@ public:
 
 	std::vector<LevelSystem*> levels;
 
-	Window* windowPoint;
+	OpenGLWindow* windowPoint;
 	float* deltaTime;
 };
 extern StateManager* STATEMANAGER;

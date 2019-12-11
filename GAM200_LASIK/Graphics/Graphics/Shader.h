@@ -30,7 +30,6 @@ public:
 	bool LoadShapeShader() noexcept;
 	bool LoadTextureShader() noexcept;
 	bool LoadAnimationShader() noexcept;
-private:
 	bool LoadShaderFrom(const std::filesystem::path& vertex_source,
 		const std::filesystem::path& fragment_source) noexcept;
 private:

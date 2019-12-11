@@ -8,7 +8,7 @@
 #include "ComponentTest.h"
 #include "ComponentTower.h"
 
-LevelTest1::LevelTest1(Window* window)
+LevelTest1::LevelTest1(OpenGLWindow* window)
 {
 	windowPoint = window;
 	std::cout << "Add LevelTest1 Sucessful" << std::endl;
@@ -44,7 +44,7 @@ void LevelTest1::Initialize()
 	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	backgroundMesh.SetShapePattern(ShapePattern::TriangleFan);
 	backgroundVertices.InitializeWithMeshAndLayout(rectangle, layout);
-	backgroundTexture.LoadBackground();
+	backgroundTexture.LoadFromPath(PATH::background);
 	background.transform.SetScale({ 1280, 720 });
 	//background
 
@@ -90,7 +90,7 @@ void LevelTest1::Initialize()
 		proKevin->material.shader = shader;
 		proKevin->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		proKevin->material.texture.LoadFromPath(PATH::kevin_move);
-		proKevin->animation.Initialize({ 8, 10.0f }, shader);
+		proKevin->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//kevin
 
@@ -103,7 +103,7 @@ void LevelTest1::Initialize()
 		knight->material.shader = shader;
 		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		knight->material.texture.LoadFromPath(PATH::knight_move);
-		knight->animation.Initialize({ 8, 10.0f }, shader);
+		knight->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//knight
 
@@ -117,7 +117,7 @@ void LevelTest1::Initialize()
 		archer->material.shader = shader;
 		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		archer->material.texture.LoadFromPath(PATH::archer_move);
-		archer->animation.Initialize({ 8, 10.0f }, shader);
+		archer->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//archer
 
@@ -131,7 +131,7 @@ void LevelTest1::Initialize()
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadFromPath(PATH::magician_move);
-		magician->animation.Initialize({ 8, 10.0f }, shader);
+		magician->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//magician
 
@@ -152,7 +152,7 @@ void LevelTest1::Initialize()
 		fireball->material.shader = shader;
 		fireball->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		fireball->material.texture.LoadFromPath(PATH::fireball);
-		fireball->animation.Initialize({ 3, 5.0f }, shader);
+		fireball->animation.Initialize({ 3, 1, 5.0f }, shader);
 
 		fireball->SetState(State::WALK);
 		fireball->SetDamage(magician->GetMagicianDamage());
@@ -181,6 +181,7 @@ void LevelTest1::Initialize()
 	//SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
+	selectMenu.SelectMenu();
 }
 
 void LevelTest1::Update(float dt)
@@ -233,7 +234,7 @@ void LevelTest1::Update(float dt)
 		}
 	}
 	//dynamic test
-
+	selectMenu.SelectUpdate(camera, view);
 	Draw::FinishDrawing();
 }
 
