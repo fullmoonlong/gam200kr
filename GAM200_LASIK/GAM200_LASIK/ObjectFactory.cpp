@@ -158,14 +158,18 @@ void ObjectFactory::CheckCollision()
 	}
 	for (auto player : PlayerUnits)
 	{
+		bool pl = false;
+		bool en = false;
 		for (auto enemy : EnemyUnits)
 		{
 			if (player->isObjectInAttackRange(*enemy))
 			{
 				player->SetState(State::ATTACK);
+				pl = true;
 				if (player->GetAttackState() == false)
 				{
 					player->SetAttackState(true);
+					enemy->SetAttackState(true);
 					player->SetSpriteChangeState(true);
 				}
 			}
@@ -173,12 +177,20 @@ void ObjectFactory::CheckCollision()
 			if (enemy->isObjectInAttackRange(*player))
 			{
 				enemy->SetState(State::ATTACK);
+				en = true;
 				if (enemy->GetAttackState() == false)
 				{
+					player->SetAttackState(true);
 					enemy->SetAttackState(true);
 					enemy->SetSpriteChangeState(true);
 				}
 			}
+		}
+		if (pl == false && player->GetAttackState() == true)
+		{
+			player->SetSpriteChangeState(true);
+			player->SetAttackState(false);
+			player->SetState(State::WALK);
 		}
 	}
 }

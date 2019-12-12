@@ -4,3 +4,4 @@
 64
 -150
 Enemy
+Skeleton

@@ -1,6 +1,7 @@
 #pragma once
 typedef enum {
 	TEST = 0,
-	LAIR
+	LAIR,
+	MATERIAL
 	//Add here component type
 }ComponentType;

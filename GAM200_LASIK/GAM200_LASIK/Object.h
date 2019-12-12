@@ -35,11 +35,12 @@ public:
 	friend class ObjectFactory;
 	
 	Object();
+	Object(const Object& rhs);
 	~Object() = default;
 
 	void Initialize(const char* name) noexcept;
 	void Update(float dt) noexcept;
-	Object* Clone();
+	Object* Clone() const;
 
 	ObjectID GetObjectID(){	return objectID;}
 	void SetObjectID(ObjectID objID){ objectID = objID;}
@@ -83,8 +84,8 @@ public:
 	vec2<float> min;
 	vec2<float> max;
 	
-	int health;
-	int damage;
+	int health = 0;
+	int damage = 0;
 	UI::HealthBar healthBar;
 
 	vec2<float> attackRange = {0, 0};

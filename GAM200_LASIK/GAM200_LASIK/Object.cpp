@@ -9,9 +9,21 @@
 #include "ObjectFactory.h"
 #include <iostream>
 #include "ComponentTest.h"
+#include "ObjectMaterial.h"
+
 
 Object::Object()
 	: objectID(0), position(0) {}
+
+Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.material), animation(rhs.animation)
+, min(rhs.min), max(rhs.max), health(rhs.health), damage(rhs.damage), healthBar(rhs.healthBar), attackRange(rhs.attackRange)
+, speed(rhs.speed), objectName(rhs.objectName), position(rhs.position), size(rhs.size), unitType(rhs.unitType)
+, state(rhs.state), componetList(rhs.componetList)
+{
+	AddComponent<MaterialComponent>();
+	GetComponent<MaterialComponent>()->material.shader = material.shader;
+	GetComponent<MaterialComponent>()->material.vertices = material.vertices;
+}
 
 void Object::Initialize(const char* name) noexcept
 {
@@ -61,10 +73,6 @@ void Object::Initialize(const char* name) noexcept
 
 void Object::Update(float dt) noexcept
 {
-	for (auto com : componetList)
-	{
-		com->Update(dt);
-	}
 	if (state == State::WALK)
 	{
 		float decision_x = speed.x * dt;
@@ -79,13 +87,23 @@ void Object::Update(float dt) noexcept
 		min = { position.x - half_width, position.y - half_height };
 		max = { position.x + half_width, position.y + half_height };
 	}
+
+	else
+	{
+		position.x = transform.GetTranslation().x;
+		position.y = transform.GetTranslation().y;
+		float half_width = size.x / 2;
+		float half_height = size.y / 2;
+		min = { position.x - half_width, position.y - half_height };
+		max = { position.x + half_width, position.y + half_height };
+	}
 	healthBar.Update(transform.GetTranslation(), GetHealth());
 	if (health <= 0 && (unitType == UnitType::Player || unitType == UnitType::Enemy))
 	{
 		OBJECTFACTORY->Destroy(this);
 	}
 
-	/*if (this->GetName() == "Knight")
+	if (this->GetName() == "Knight")
 	{
 		if (this->GetState() == State::ATTACK)
 		{
@@ -100,7 +118,7 @@ void Object::Update(float dt) noexcept
 			}
 		}
 	}
-	else*/ if (this->GetName() == "Archer")
+	else if (this->GetName() == "Archer")
 	{
 		if (this->GetState() == State::ATTACK)
 		{
@@ -120,7 +138,7 @@ void Object::Update(float dt) noexcept
 		if (this->GetState() == State::ATTACK)
 		{
 			this->GetComponent<TestComponent>()->time += dt;
-			if (this->GetComponent<TestComponent>()->time > 1.5f)
+			if (this->GetComponent<TestComponent>()->time > 2.4f)
 			{
 				vec2<float> a = transform.GetTranslation();
 				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
@@ -129,18 +147,63 @@ void Object::Update(float dt) noexcept
 				this->GetComponent<TestComponent>()->time = 0;
 			}
 		}
-	}/*
-	else if (this->GetName() == "swordAttack")
+	}
+	else if (this->GetName() == "Skeleton")
 	{
-		health += dt;
-		if (health < 0)
+		if (this->GetState() == State::ATTACK)
+		{
+			this->GetComponent<TestComponent>()->time += dt;
+			if (this->GetComponent<TestComponent>()->time > 0.6f)
+			{
+				vec2<float> a = { transform.GetTranslation().x - 48.f, transform.GetTranslation().y };
+				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+
+				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
+				this->GetComponent<TestComponent>()->time = 0;
+			}
+		}
+	}
+	else if (this->GetName() == "Lich")
+	{
+		if (this->GetState() == State::ATTACK)
+		{
+			this->GetComponent<TestComponent>()->time += dt;
+			if (this->GetComponent<TestComponent>()->time > 3.0f)
+			{
+				vec2<float> a = { transform.GetTranslation().x, transform.GetTranslation().y };
+				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+
+				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
+				this->GetComponent<TestComponent>()->time = 0;
+			}
+		}
+	}
+	else if (this->GetName() == "Golem")
+	{
+		if (this->GetState() == State::ATTACK)
+		{
+			this->GetComponent<TestComponent>()->time += dt;
+			if (this->GetComponent<TestComponent>()->time > 1.5f)
+			{
+				vec2<float> a = { transform.GetTranslation().x - 256.f, transform.GetTranslation().y - 128 };
+				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+
+				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
+				this->GetComponent<TestComponent>()->time = 0;
+			}
+		}
+	}
+	else if (this->GetName() == "swordAttack" || this->GetName() == "enemyAttack")
+	{
+		this->GetComponent<TestComponent>()->time += dt;
+		if (this->GetComponent<TestComponent>()->time > 0.4f)
 		{
 			OBJECTFACTORY->Destroy(this);
 		}
-	}*/
+	}
 }
 
-Object* Object::Clone()
+Object* Object::Clone() const
 {
 	return new Object(*this);
 }
@@ -149,17 +212,17 @@ void Object::ChangeUnitAnimation()
 {
 	if (GetName() == "Knight")
 	{
-		if (GetState() == State::WALK && GetSpriteChangeState() == true)
+		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
 		{
-			material.texture.LoadFromPath(PATH::knight_move);
-			animation.ChangeAnimation(8);
-			SetSpriteChangeState(false);
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::knight_move);
+			this->animation.ChangeAnimation(8);
+			this->SetSpriteChangeState(false);
 		}
-		else if (GetState() == State::ATTACK && GetSpriteChangeState() == true)
+		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
 		{
-			material.texture.LoadFromPath(PATH::knight_attack);
-			animation.ChangeAnimation(8);
-			SetSpriteChangeState(false);
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::knight_attack);
+			this->animation.ChangeAnimation(8);
+			this->SetSpriteChangeState(false);
 		}
 
 	}
@@ -167,13 +230,13 @@ void Object::ChangeUnitAnimation()
 	{
 		if (GetState() == State::WALK && GetSpriteChangeState() == true)
 		{
-			material.texture.LoadFromPath(PATH::archer_move);
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::archer_move);
 			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
 		else if (GetState() == State::ATTACK && GetSpriteChangeState() == true)
 		{
-			material.texture.LoadFromPath(PATH::archer_attack);
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::archer_attack);
 			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
@@ -182,16 +245,68 @@ void Object::ChangeUnitAnimation()
 	{
 		if (GetState() == State::WALK && GetSpriteChangeState() == true)
 		{
-			material.texture.LoadFromPath(PATH::magician_move);
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::magician_move);
 			animation.ChangeAnimation(8);
 			SetSpriteChangeState(false);
 		}
 		else if (GetState() == State::ATTACK && GetSpriteChangeState() == true)
 		{
-			material.texture.LoadFromPath(PATH::magician_attack);
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::magician_attack);
 			animation.ChangeAnimation(5);
 			SetSpriteChangeState(false);
 		}
+	}
+	else if (GetName() == "Skeleton")
+	{
+		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
+		{
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::skeleton_move);
+			this->animation.ChangeAnimation(4);
+			this->SetSpriteChangeState(false);
+		}
+		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
+		{
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::skeleton_attack);
+			this->animation.ChangeAnimation(7);
+			this->SetSpriteChangeState(false);
+		}
+
+	}
+	else if (GetName() == "Lich")
+	{
+		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
+		{
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::lich_move);
+			this->animation.ChangeAnimation(8);
+			this->SetSpriteChangeState(false);
+		}
+		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
+		{
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::lich_attack);
+			this->animation.ChangeAnimation(1);
+			this->SetSpriteChangeState(false);
+		}
+
+	}
+	else if (GetName() == "Golem")
+	{
+		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
+		{
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::golem_move);
+			this->animation.ChangeAnimation(4);
+			this->SetSpriteChangeState(false);
+		}
+		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
+		{
+			GetComponent<MaterialComponent>()->material.texture.LoadFromPath(PATH::golem_attack);
+			this->animation.ChangeAnimation(18);
+			this->SetSpriteChangeState(false);
+		}
+
+	}
+	else
+	{
+		GetComponent<MaterialComponent>()->material.texture = material.texture;
 	}
 }
 

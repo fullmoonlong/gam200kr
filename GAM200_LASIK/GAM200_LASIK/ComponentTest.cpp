@@ -11,7 +11,4 @@ void TestComponent::Initialize()
 {
 	std::cout << "Test Sucessful" << std::endl;
 }
-
-void TestComponent::Update(float /*time_*/)
-{
-}
+

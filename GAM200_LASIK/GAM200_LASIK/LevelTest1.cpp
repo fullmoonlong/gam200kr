@@ -7,6 +7,7 @@
 #include "Image.hpp"
 #include "ComponentTest.h"
 #include "ComponentTower.h"
+#include "ObjectMaterial.h"
 
 LevelTest1::LevelTest1(OpenGLWindow* window)
 {
@@ -57,7 +58,6 @@ void LevelTest1::Initialize()
 		tower->SetDamage(0);
 		tower->Initialize("tower.txt");
 		tower->material.shader = fontShader;
-		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadFromPath(PATH::tower);
 
@@ -72,27 +72,45 @@ void LevelTest1::Initialize()
 		lair->SetDamage(0);
 		lair->Initialize("lair.txt");
 		lair->material.shader = fontShader;
-		//proKevin->material.mesh = MESH::create_rectangle(0.f, 0.f, 1.0f, 1.0f, color);
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		lair->material.texture.LoadFromPath(PATH::tower);
+		lair->material.texture.LoadFromPath(PATH::lair);
 
 		lair->AddComponent<LairComponent>();
 		OBJECTFACTORY->CopyObject(lair);
 		//lair
 
-		//kevin
-		proKevin = new Object();
-		proKevin->SetState(State::WALK);
-		proKevin->SetHealth(100);
-		proKevin->SetDamage(15);
-		proKevin->SetAttackRange({ 1.0f, 0.0f });
-		proKevin->Initialize("enemyPrototype.txt");
-		proKevin->material.shader = shader;
-		proKevin->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		proKevin->material.texture.LoadFromPath(PATH::kevin_move);
-		proKevin->animation.Initialize({ 8, 1, 10.0f }, shader);
+		skeleton = new Skeleton();
+		skeleton->SetState(State::WALK);
+		skeleton->SetHealth(skeleton->GetSkeletionHealth());
+		skeleton->SetDamage(skeleton->GetSkeletionDamage());
+		skeleton->SetAttackRange({ 1.0f, 0.0f });
+		skeleton->Initialize("skeleton.txt");
+		skeleton->material.shader = shader;
+		skeleton->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		skeleton->material.texture.LoadFromPath(PATH::skeleton_move);
+		skeleton->animation.Initialize({ 4, 1,	10.0f }, shader);
 
-		//kevin
+		golem = new Golem();
+		golem->SetState(State::WALK);
+		golem->SetHealth(golem->GetGolemHealth());
+		golem->SetDamage(golem->GetGolemHealth());
+		golem->SetAttackRange({ 1.0f, 0.0f });
+		golem->Initialize("golem.txt");
+		golem->material.shader = shader;
+		golem->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		golem->material.texture.LoadFromPath(PATH::golem_move);
+		golem->animation.Initialize({ 4, 1,	10.0f }, shader);
+
+		lich = new Lich();
+		lich->SetState(State::WALK);
+		lich->SetHealth(lich->GetLichHealth());
+		lich->SetDamage(lich->GetLichDamage());
+		lich->SetAttackRange(lich->GetLichAttackRange());
+		lich->Initialize("lich.txt");
+		lich->material.shader = shader;
+		lich->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		lich->material.texture.LoadFromPath(PATH::lich_move);
+		lich->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//knight
 		knight = new Knight();
@@ -139,12 +157,29 @@ void LevelTest1::Initialize()
 		swordAttack = new Object();
 		swordAttack->SetHealth(0);
 		swordAttack->Initialize("swordAttack.txt");
+		swordAttack->SetState(State::WALK);
 		swordAttack->material.shader = shader;
 		swordAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		swordAttack->SetDamage(knight->GetKnightDamage());
 
 		knight->GetComponent<TestComponent>()->attack = swordAttack;
 		//sword attack
+
+		//sword attack
+		enemyAttack = new Object();
+		enemyAttack->SetHealth(0);
+		enemyAttack->Initialize("enemyAttack.txt");
+		enemyAttack->SetState(State::WALK);
+		enemyAttack->material.shader = shader;
+		enemyAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		
+		enemyAttack->SetDamage(skeleton->GetSkeletionDamage());
+		skeleton->GetComponent<TestComponent>()->attack = enemyAttack;
+		
+		enemyAttack->SetDamage(golem->GetGolemDamage());
+		golem->GetComponent<TestComponent>()->attack = enemyAttack;
+		//sword attack
+
 
 		//fireball
 		fireball = new Object();
@@ -158,6 +193,20 @@ void LevelTest1::Initialize()
 		fireball->SetDamage(magician->GetMagicianDamage());
 
 		magician->GetComponent<TestComponent>()->attack = fireball;
+		//fireball
+
+		//fireball
+		fireballEnemy = new Object();
+		fireballEnemy->Initialize("fireballEnemy.txt");
+		fireballEnemy->material.shader = shader;
+		fireballEnemy->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		fireballEnemy->material.texture.LoadFromPath(PATH::fireball);
+		fireballEnemy->animation.Initialize({ 3, 1, 5.0f }, shader);
+
+		fireballEnemy->SetState(State::WALK);
+		fireballEnemy->SetDamage(lich->GetLichDamage());
+
+		lich->GetComponent<TestComponent>()->attack = fireballEnemy;
 		//fireball
 
 		//arrow
@@ -182,6 +231,7 @@ void LevelTest1::Initialize()
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
 	selectMenu.SelectMenu();
+	windowPoint->SwapBuffers();
 }
 
 void LevelTest1::Update(float dt)
@@ -208,14 +258,14 @@ void LevelTest1::Update(float dt)
 	{
 		if (obj.second != nullptr)
 		{
+
+			obj.second->animation.Animate(dt);
+			obj.second->Update(dt);
 			obj.second->ChangeUnitAnimation();
 
-			obj.second->Update(dt);
-			obj.second->animation.Animate(dt);
-
 			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
-			obj.second->material.ndc = ndc;
-			Draw::draw(obj.second->material);
+			obj.second->GetComponent<MaterialComponent>()->material.ndc = ndc;
+			Draw::draw(obj.second->GetComponent<MaterialComponent>()->material);
 
 			//hpbar
 			if (obj.second->GetType() == UnitType::Player || obj.second->GetType() == UnitType::Enemy)
@@ -229,7 +279,7 @@ void LevelTest1::Update(float dt)
 
 			if (obj.second->GetName() == "Lair")
 			{
-				obj.second->GetComponent<LairComponent>()->SpawnEnemy(proKevin, dt);
+				obj.second->GetComponent<LairComponent>()->SpawnEnemy(skeleton, dt);
 			}
 		}
 	}
@@ -256,7 +306,7 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 		}
 		else
 		{
-			OBJECTFACTORY->CopyObject(proKevin);
+			OBJECTFACTORY->CopyObject(lich);
 		}
 		break;
 	case KeyboardButton::B:
@@ -284,7 +334,7 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 		}
 		else
 		{
-			OBJECTFACTORY->CopyObject(knight);
+			OBJECTFACTORY->CopyObject(skeleton);
 		}
 		break;
 	case KeyboardButton::E:
@@ -571,9 +621,9 @@ void LevelTest1::HandleResizeEvent(const int& new_width, const int& new_height)
 	view.SetZoom(zoom);
 }
 
-void LevelTest1::HandleScrollEvent(float scroll_amount)
+void LevelTest1::HandleScrollEvent(float /*scroll_amount*/)
 {
-	zoom = view.GetZoom() + (scroll_amount * 0.05f);
+	//zoom = view.GetZoom() + (scroll_amount * 0.05f);
 	zoom = std::clamp(zoom, 0.5f, 2.0f);
 	background.transform.SetScale({ windowPoint->GetWindowWidth() * (1.f / zoom),
 		windowPoint->GetWindowHeight() * (1.f / zoom) });

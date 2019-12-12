@@ -2,6 +2,6 @@
 0
 32
 16
-300
+-300
 ProjectilesPlayer
 Fireball

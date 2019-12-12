@@ -25,6 +25,15 @@ namespace PATH
 	const std::filesystem::path kevin_move   = "../assets/kevin_move.png";
 	const std::filesystem::path kevin_attack = "../assets/kevin_attack.png";
 
+	const std::filesystem::path skeleton_move = "../assets/skeleton_move.png";
+	const std::filesystem::path skeleton_attack = "../assets/skeleton_attack.png";
+
+	const std::filesystem::path golem_move = "../assets/golem_move.png";
+	const std::filesystem::path golem_attack = "../assets/golem_attack.png";
+
+	const std::filesystem::path lich_move = "../assets/lich_move.png";
+	const std::filesystem::path lich_attack = "../assets/lich_attack.png";
+
 	const std::filesystem::path knight_move = "../assets/knight_move.png";
 	const std::filesystem::path knight_attack = "../assets/knight_attack.png";
 	const std::filesystem::path knight_menu = "../assets/knight.png";
@@ -40,6 +49,7 @@ namespace PATH
 	const std::filesystem::path arrow = "../assets/arrow.png";
 	const std::filesystem::path fireball = "../assets/fireball.png";
 	const std::filesystem::path tower = "../assets/tower.png";
+	const std::filesystem::path lair = "../assets/lair.png";
 	const std::filesystem::path hpBar = "../assets/hpBar.png";
 
 	const std::filesystem::path icon_image = "../assets/icon.png";

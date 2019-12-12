@@ -10,7 +10,6 @@ public:
 	TestComponent() : Component(ComponentType::TEST) {};
 	~TestComponent() override;
 	virtual void Initialize() override;
-	virtual void Update(float time_) override;
 	//void Attack();
 
 	//Object* object;

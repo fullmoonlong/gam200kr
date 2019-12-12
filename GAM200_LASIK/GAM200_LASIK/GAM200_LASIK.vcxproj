@@ -192,6 +192,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
+    <ClCompile Include="ObjectMaterial.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="UI.cpp" />
@@ -199,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTower.h" />
     <ClInclude Include="EnemyBase.hpp" />
     <ClInclude Include="EnemyUnits.hpp" />
@@ -207,13 +209,13 @@
     <ClInclude Include="GetInput.hpp" />
     <ClInclude Include="LevelSystem.h" />
     <ClInclude Include="LevelTest1.h" />
+    <ClInclude Include="ObjectMaterial.h" />
     <ClInclude Include="PlayerBase.hpp" />
     <ClInclude Include="Sound.hpp" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="UI.hpp" />
     <ClInclude Include="Units.hpp" />
     <ClInclude Include="Util\Clock.hpp" />
-    <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTest.h" />
     <ClInclude Include="ComponentType.h" />
     <ClInclude Include="Object.h" />

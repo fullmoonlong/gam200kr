@@ -6,6 +6,7 @@
 #include "Object.h"
 #include "Util/Clock.hpp"
 #include "Units.hpp"
+#include "EnemyUnits.hpp"
 #include "GetInput.hpp"
 #include "UI.hpp"
 
@@ -45,7 +46,6 @@ private:
 	OpenGLWindow* windowPoint;
 
 	Draw draw;
-	Object* proKevin;
 	Object* objectTest1;
 
 	Object background;
@@ -68,12 +68,17 @@ private:
 	Knight* knight;
 	Magician* magician;
 	Archer* archer;
+	Skeleton* skeleton;
+	Lich* lich;
+	Golem* golem;
 	//Units
 
 	//projectiles
 	Object* swordAttack;
+	Object* enemyAttack;
 	Object arrow;
 	Object* fireball;
+	Object* fireballEnemy;
 	//projectiles
 
 	//tower

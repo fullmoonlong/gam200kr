@@ -11,7 +11,6 @@ public:
 	virtual ~Component() { };
 
 	virtual void Initialize() {};
-	virtual void Update(float dt) = 0;
 
 	Object * GetOwner() const { return pOwner; }
 	void SetOwner(Object * owner) { pOwner = owner; }

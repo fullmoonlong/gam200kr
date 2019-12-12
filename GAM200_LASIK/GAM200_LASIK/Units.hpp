@@ -50,8 +50,8 @@ public:
 	//bool MagicianCollideWith(Object& object);
 private:
 	int         magicianHealth		= 100;
-	int         magicianDamage		=  30;
-	vec2<float>	magicianAttackRange = { 64, 0};
+	int         magicianDamage		=  50;
+	vec2<float>	magicianAttackRange = { 196, 0};
 	vec2<float> magicianSpeed;
 };
 

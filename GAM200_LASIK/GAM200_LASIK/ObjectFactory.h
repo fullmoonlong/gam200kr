@@ -32,6 +32,8 @@ public:
 	Object* FindObjectwithID(ObjectID id);
 
 	std::map<ObjectID, Object*> GetObjecteList() { return objectIDMap; };
+	std::vector<Object*> GetPlayerObjecteList() { return PlayerUnits; };
+	std::vector<Object*> GetEnemyObjecteList() { return EnemyUnits; };
 
 	void CopyObject(Object* object);
 

@@ -9,7 +9,6 @@ public:
 	LairComponent() : Component(ComponentType::LAIR), object(), time(0){};
 	~LairComponent() override;
 	virtual void Initialize() override;
-	virtual void Update(float /*dt*/) override {};
 	virtual void SpawnEnemy(Object* obj, float dt);
 
 	Object* object;
