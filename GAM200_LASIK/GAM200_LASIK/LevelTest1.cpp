@@ -231,6 +231,7 @@ void LevelTest1::Initialize()
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
 	selectMenu.SelectMenu();
+	coolTime.Initialize(camera, view);
 	windowPoint->SwapBuffers();
 }
 
@@ -252,6 +253,8 @@ void LevelTest1::Update(float dt)
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());
 	Draw::DrawText(fontShader, textNDC, text);
+
+	coolTime.CoolDownUpdate(dt);
 
 	//dynamic test
 	for (auto obj : OBJECTFACTORY->GetObjecteList())
@@ -552,14 +555,17 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 		if (input.MatchStringWithInput() == 1)
 		{
 			OBJECTFACTORY->CopyObject(knight);
+			coolTime.SetKnightCoolDown();
 		}
 		else if (input.MatchStringWithInput() == 2)
 		{
 			OBJECTFACTORY->CopyObject(archer);
+			coolTime.SetArcherCoolDown();
 		}
 		else if (input.MatchStringWithInput() == 3)
 		{
 			OBJECTFACTORY->CopyObject(magician);
+			coolTime.SetMagicianCoolDown();
 		}
 		input.SetString(L"");
 		break;

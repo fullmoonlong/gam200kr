@@ -18,7 +18,7 @@
 #include "Animation.hpp"
 #include "Draw.hpp"
 #include "BitmapFont.hpp"
-
+#include "CoolDown.hpp"
 #include "Sound.hpp"
 
 class LevelTest1 : public LevelSystem
@@ -89,6 +89,7 @@ private:
 
 	Camera camera;
 	CameraView view;
+	CoolDown coolTime;
 
 	UI::SelectSpawn selectMenu;
 	SoundManager soundManager;
