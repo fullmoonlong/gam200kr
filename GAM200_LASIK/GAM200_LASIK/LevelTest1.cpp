@@ -9,6 +9,7 @@
 #include "ComponentTower.h"
 #include "ObjectMaterial.h"
 
+
 LevelTest1::LevelTest1(OpenGLWindow* window)
 {
 	windowPoint = window;
@@ -23,7 +24,7 @@ LevelTest1::~LevelTest1()
 void LevelTest1::Initialize()
 {
 	std::cout << "Load LevelTest1 Sucessful" << std::endl;
-
+	isWin = false;
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);	//shaders for animation
 	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 
@@ -41,6 +42,16 @@ void LevelTest1::Initialize()
 	view.SetZoom(zoom);
 	//camera
 
+	//win
+	winpic = new Object();
+	winpic->transform.SetTranslation({ 0.f, 0.f });
+	winpic->transform.SetScale({ 640, 360 });
+	winpic->material.shader = fontShader;
+	winpic->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+	winpic->material.texture.LoadFromPath(PATH::winpic);
+	winpic->material.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * winpic->transform.GetModelToWorld();
+
+
 	//background
 	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	backgroundMesh.SetShapePattern(ShapePattern::TriangleFan);
@@ -48,6 +59,14 @@ void LevelTest1::Initialize()
 	backgroundTexture.LoadFromPath(PATH::background);
 	background.transform.SetScale({ 1280, 720 });
 	//background
+
+	//ui
+	//ui.material.shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	//ui.material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+	//ui.material.texture.LoadFromPath("../assets/UI.png");
+	//ui.transform.SetTranslation({0, -420});
+	//ui.transform.SetScale({ 1280, 240 });
+	//ui
 
 	// unit initialize
 	{
@@ -60,7 +79,7 @@ void LevelTest1::Initialize()
 		tower->material.shader = fontShader;
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadFromPath(PATH::tower);
-
+		tower->animation.Initialize({ 1,1, 1.f }, tower->material.shader);
 
 		OBJECTFACTORY->CopyObject(tower);
 		//tower
@@ -136,8 +155,8 @@ void LevelTest1::Initialize()
 		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		archer->material.texture.LoadFromPath(PATH::archer_move);
 		archer->animation.Initialize({ 8, 1, 10.0f }, shader);
-
 		//archer
+
 
 		//magician
 		magician = new Magician();
@@ -150,7 +169,6 @@ void LevelTest1::Initialize()
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadFromPath(PATH::magician_move);
 		magician->animation.Initialize({ 8, 1, 10.0f }, shader);
-
 		//magician
 
 		//sword attack
@@ -224,10 +242,10 @@ void LevelTest1::Initialize()
 
 	//test sound and make object
 	SOUNDMANAGER->Initialize();
-	SOUNDMANAGER->LoadFile("sound.mp3");
-	SOUNDMANAGER->LoadFile("beep.wav");
-	SOUNDMANAGER->LoadFile("hit.ogg");
-	//SOUNDMANAGER->PlaySound(1, 0);
+	SOUNDMANAGER->LoadFile("awesomeness(bgm).wav");
+	SOUNDMANAGER->LoadFile("Fire impact 1.wav");
+	SOUNDMANAGER->LoadFile("shoot.ogg");
+	SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
 	selectMenu.SelectMenu();
@@ -237,7 +255,7 @@ void LevelTest1::Initialize()
 
 void LevelTest1::Update(float dt)
 {
-	OBJECTFACTORY->Update();
+	OBJECTFACTORY->Update(dt);
 	//Transform
 	camera.Rotate(cameraAngle);
 	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
@@ -250,6 +268,10 @@ void LevelTest1::Update(float dt)
 	const mat3<float> backgroundNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
 	Draw::draw({ backgroundShader, backgroundVertices, backgroundNDC,  backgroundTexture });
 
+	const mat3<float> uiNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * ui.transform.GetModelToWorld();
+	ui.material.ndc = uiNDC;
+	Draw::draw({ ui.material });
+
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());
 	Draw::DrawText(fontShader, textNDC, text);
@@ -257,14 +279,14 @@ void LevelTest1::Update(float dt)
 	coolTime.CoolDownUpdate(dt);
 
 	//dynamic test
-	for (auto obj : OBJECTFACTORY->GetObjecteList())
+	for (const auto& obj : OBJECTFACTORY->GetObjecteList())
 	{
 		if (obj.second != nullptr)
 		{
-
-			obj.second->animation.Animate(dt);
-			obj.second->Update(dt);
-			obj.second->ChangeUnitAnimation();
+			const auto something = obj.second;
+			something->animation.Animate(dt);
+			something->Update(dt);
+			something->ChangeUnitAnimation();
 
 			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
 			obj.second->GetComponent<MaterialComponent>()->material.ndc = ndc;
@@ -283,12 +305,35 @@ void LevelTest1::Update(float dt)
 			if (obj.second->GetName() == "Lair")
 			{
 				obj.second->GetComponent<LairComponent>()->SpawnEnemy(skeleton, dt);
+				if (obj.second->GetHealth() <= 0)
+				{
+					isWin = true;
+				}
+					
 			}
+			Win(obj.second);
 		}
 	}
 	//dynamic test
 	selectMenu.SelectUpdate(camera, view);
 	Draw::FinishDrawing();
+}
+
+void LevelTest1::Win(Object* obj)
+{
+	std::cout << obj->GetHealth() << std::endl;
+	if (isWin)
+	{
+		Draw::draw(winpic->material);
+		if (obj->GetType() == UnitType::Player)
+		{
+			OBJECTFACTORY->Destroy(obj);
+		}
+		if (obj->GetType() == UnitType::Enemy)
+		{
+			OBJECTFACTORY->Destroy(obj);
+		}
+	}
 }
 
 void LevelTest1::Shutdown()
@@ -459,19 +504,6 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 			printf("s");
 			break;
 		}
-		else
-		{
-			for (auto obj : OBJECTFACTORY->GetObjecteList())
-			{
-				if (obj.second->GetName() != "Tower")
-				{
-					if (obj.second->GetType() == UnitType::Player)
-					{
-						OBJECTFACTORY->Destroy(obj.second);
-					}
-				}
-			}
-		}
 		break;
 	case KeyboardButton::T:
 		if (isEnter == true)
@@ -503,19 +535,6 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 			input.TakeAsInput('w');
 			printf("w");
 			break;
-		}
-		else
-		{
-			for (auto obj : OBJECTFACTORY->GetObjecteList())
-			{
-				if (obj.second->GetName() != "Lair")
-				{
-					if (obj.second->GetType() == UnitType::Enemy)
-					{
-						OBJECTFACTORY->Destroy(obj.second);
-					}
-				}
-			}
 		}
 		break;
 	case KeyboardButton::X:
@@ -569,7 +588,9 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 		}
 		input.SetString(L"");
 		break;
-
+	case KeyboardButton::Backspace:
+		input.Erasing();
+		break;
 	default:
 		break;
 	}
@@ -625,14 +646,17 @@ void LevelTest1::HandleResizeEvent(const int& new_width, const int& new_height)
 {
 	view.SetViewSize(new_width, new_height);
 	view.SetZoom(zoom);
-}
-
-void LevelTest1::HandleScrollEvent(float /*scroll_amount*/)
-{
-	//zoom = view.GetZoom() + (scroll_amount * 0.05f);
-	zoom = std::clamp(zoom, 0.5f, 2.0f);
 	background.transform.SetScale({ windowPoint->GetWindowWidth() * (1.f / zoom),
 		windowPoint->GetWindowHeight() * (1.f / zoom) });
+}
+
+void LevelTest1::HandleScrollEvent(float scroll_amount)
+{
+	zoom = view.GetZoom() + (scroll_amount * 0.05f);
+	zoom = std::clamp(zoom, 0.5f, 2.0f);
+	background.transform.SetScale({ windowPoint->GetWindowWidth() * (1.f / zoom),
+		windowPoint->GetWindowHeight() * (1.f / zoom) });/*
+	ui.transform.SetTranslation()*/
 	view.SetZoom(zoom);
 }
 

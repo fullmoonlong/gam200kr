@@ -125,6 +125,7 @@ void Object::Update(float dt) noexcept
 			this->GetComponent<TestComponent>()->time += dt;
 			if (this->GetComponent<TestComponent>()->time > 0.7f)
 			{
+				SOUNDMANAGER->PlaySound(0, 2);
 				vec2<float> a = transform.GetTranslation();
 				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
 
@@ -140,6 +141,7 @@ void Object::Update(float dt) noexcept
 			this->GetComponent<TestComponent>()->time += dt;
 			if (this->GetComponent<TestComponent>()->time > 2.4f)
 			{
+				SOUNDMANAGER->PlaySound(0, 1);
 				vec2<float> a = transform.GetTranslation();
 				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
 

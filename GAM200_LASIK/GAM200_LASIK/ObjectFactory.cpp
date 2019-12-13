@@ -21,7 +21,7 @@ ObjectFactory::~ObjectFactory()
 {
 }
 
-void ObjectFactory::Update()
+void ObjectFactory::Update(float /*dt*/)
 {
 	for (auto object : objectsToBeDeleted)
 	{
@@ -185,13 +185,13 @@ void ObjectFactory::CheckCollision()
 					enemy->SetSpriteChangeState(true);
 				}
 			}
-		}
+		}/*
 		if (pl == false && player->GetAttackState() == true)
 		{
 			player->SetSpriteChangeState(true);
 			player->SetAttackState(false);
 			player->SetState(State::WALK);
-		}
+		}*/
 	}
 }
 

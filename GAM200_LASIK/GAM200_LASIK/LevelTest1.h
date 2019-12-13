@@ -18,8 +18,8 @@
 #include "Animation.hpp"
 #include "Draw.hpp"
 #include "BitmapFont.hpp"
-#include "CoolDown.hpp"
 #include "Sound.hpp"
+#include "CoolDown.hpp"
 
 class LevelTest1 : public LevelSystem
 {
@@ -29,7 +29,7 @@ public:
 	void Initialize() override;
 	void Update(float dt) override;
 	void Shutdown() override;
-
+	void Win(Object*);
 	void HandleKeyPress(KeyboardButton button) override final;
 	void HandleKeyRelease(KeyboardButton button) override final;
 	void HandleMouseEvent(MouseButton button) override final;
@@ -40,6 +40,9 @@ public:
 
 private:
 	bool isEnter = false;
+	bool isWin;
+
+	float time;
 
 	GetInput input;
 
@@ -54,6 +57,7 @@ private:
 	Vertices backgroundVertices;
 	Texture backgroundTexture;
 	//Material backgroundMaterial;
+	Object ui;
 
 	Shader fontShader;
 	BitmapFont bitmapFont;
@@ -86,6 +90,8 @@ private:
 	Object* lair;
 	//tower
 	Clock clock;
+
+	Object* winpic;
 
 	Camera camera;
 	CameraView view;

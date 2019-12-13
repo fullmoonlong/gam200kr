@@ -17,6 +17,7 @@
 #include "GetInput.hpp"
 #include "Screenshot.hpp"
 #include "StateManager.h"
+#include "Engine.h"
 
 Application::Application()
 {
@@ -28,7 +29,7 @@ void Application::Initialize()
 	window.CanCreateWindow(1280, 720, this, "Lasik");
 }
 
-void Application::Update()
+void Application::Update(float /*dt*/)
 {
 	clock.UpdateClock();
 
@@ -48,6 +49,7 @@ void Application::Update()
 void Application::ShutDown()
 {
 	isRunning = false;
+	gameEngine->Shutdown();
 	window.CleanUpWindow();
 }
 
@@ -59,7 +61,8 @@ void Application::HandleKeyPress(KeyboardButton button)
 		switch (button)
 		{
 		case KeyboardButton::F:
-			window.ToggleFullScreen();
+			//window.ToggleFullScreen();
+			//STATEMANAGER->GetCurrentLevel()->HandleResizeEvent(window.GetWindowWidth(), window.GetWindowHeight());
 			break;
 		case KeyboardButton::V:
 			if (window.IsVSyncOn() == false)

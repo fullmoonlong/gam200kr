@@ -176,8 +176,8 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\glfw3\lib\$(Platform)\;$(SolutionDir)external\glew\lib\$(Platform)\;$(SolutionDir)lib\Graphics\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;Graphics.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\glfw3\lib\$(Platform)\;$(SolutionDir)external\glew\lib\$(Platform)\;$(SolutionDir)lib\Graphics\$(Platform)\$(Configuration)\;$(SolutionDir)external\FMOD\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;Graphics.lib;fmod_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -191,6 +191,7 @@
     <ClCompile Include="GetInput.cpp" />
     <ClCompile Include="LevelTest1.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectMaterial.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="GetInput.hpp" />
     <ClInclude Include="LevelSystem.h" />
     <ClInclude Include="LevelTest1.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ObjectMaterial.h" />
     <ClInclude Include="PlayerBase.hpp" />
     <ClInclude Include="Sound.hpp" />

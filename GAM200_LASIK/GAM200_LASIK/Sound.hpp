@@ -17,7 +17,7 @@ public:
 	~SoundManager();
 
 	void Initialize() override;
-	void Update() override;
+	void Update(float dt) override;
 	void Shutdown();
 	void ErrorCheck(FMOD_RESULT result);
 

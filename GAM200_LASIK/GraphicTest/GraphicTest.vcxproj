@@ -155,7 +155,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)external\glfw3\lib\$(Platform)\;$(SolutionDir)external\glew\lib\$(Platform)\;$(SolutionDir)lib\Graphics\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;Graphics.lib;</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glew32s.lib;opengl32.lib;Graphics.lib;%(AdditionalLibraryDirectories)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -17,7 +17,7 @@ public:
 	Application();
 	~Application() = default;
 	void Initialize();
-	void Update();
+	void Update(float dt);
 	void ShutDown();
 
 	void HandleKeyPress(KeyboardButton button) override;

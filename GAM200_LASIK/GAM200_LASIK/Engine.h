@@ -5,6 +5,7 @@
 */
 #pragma once
 #include <vector>
+#include "Util/Clock.hpp"
 
 enum class GameState { PLAY, EXIT }; //enum for gamestate
 class System;
@@ -25,6 +26,8 @@ public:
 private:
 	std::vector<System*> systems;
 	GameState gamestate;
+	Clock clock;
+	float deltaTime = 0;
 };
 
 extern Engine* gameEngine;

@@ -50,6 +50,9 @@
     <ClCompile Include="CoolDown.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>LevelState\MainMenu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">
@@ -121,6 +124,9 @@
     <ClInclude Include="CoolDown.hpp">
       <Filter>Object\UI</Filter>
     </ClInclude>
+    <ClInclude Include="MainMenu.h">
+      <Filter>LevelState\MainMenu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">
@@ -167,6 +173,9 @@
     </Filter>
     <Filter Include="System\Application">
       <UniqueIdentifier>{e08893cc-fe0b-4b05-a451-c13743cc2a12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelState\MainMenu">
+      <UniqueIdentifier>{f057dfdc-0f8e-499a-924f-58a5ca2ddd8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

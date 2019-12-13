@@ -49,12 +49,12 @@ private:
 	Text m_text;
 	BitmapFont bitmapfont;
 	vec2<float> selectSize = { 2500.0f, 400.0f };
-	vec2<float> archerSize = { 200.0f, 200.0f };
+	vec2<float> archerSize = { 128.0f, 128.0f };
 	vec2<float> fontSize = { 2.0f };
 
-	vec2<float> archerPosition = { -400.0f, -400.0f };
-	vec2<float> knightPosition = { 0.0f, -400.0f };
-	vec2<float> magicianPosition = { 400.0f, -400.0f };
+	vec2<float> archerPosition = { -220.0f, -250.0f };
+	vec2<float> knightPosition = { 20.0f, -250.0f };
+	vec2<float> magicianPosition = { 250.0f, -270.0f };
 	vec2<float> fontPosition = { -600.0f, -600.0f };
 
 

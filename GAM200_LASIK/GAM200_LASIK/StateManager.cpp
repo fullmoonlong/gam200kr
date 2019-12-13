@@ -1,4 +1,5 @@
 #include "StateManager.h"
+#include "MainMenu.h"
 #include "LevelTest1.h"
 #include <iostream>
 
@@ -18,14 +19,15 @@ StateManager::~StateManager()
 
 void StateManager::Initialize()
 {
-	currentLevel = GameLevels::LVTest1;
+	currentLevel = GameLevels::MAINMENU;
+	levels.push_back(new MainMenu(windowPoint));
 	levels.push_back(new LevelTest1(windowPoint));
 	levels.at(currentLevel)->Initialize();
 }
 
-void StateManager::Update()
+void StateManager::Update(float dt)
 {
-	levels.at(currentLevel)->Update(*deltaTime);
+	levels.at(currentLevel)->Update(dt);
 }
 
 void StateManager::SetCurrentLevel(GameLevels changeLevel)

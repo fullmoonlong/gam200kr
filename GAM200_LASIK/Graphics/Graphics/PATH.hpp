@@ -54,6 +54,7 @@ namespace PATH
 	const std::filesystem::path twocountdown = "../assets/twocountdown.png";
 	const std::filesystem::path threecountdown = "../assets/threecountdown.png";
 	const std::filesystem::path fourcountdown = "../assets/fourcountdown.png";
+	const std::filesystem::path winpic = "../assets/winpic.png";
 
 	const std::filesystem::path icon_image = "../assets/icon.png";
 

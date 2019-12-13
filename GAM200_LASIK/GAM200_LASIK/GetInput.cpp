@@ -9,6 +9,14 @@ void GetInput::TakeAsInput(char input)
 	string.push_back(input);
 }
 
+void GetInput::Erasing()
+{
+	if (string.size() > 0)
+	{
+		string.pop_back();
+	}
+}
+
 int GetInput::MatchStringWithInput()
 {
 	if (string == knight)

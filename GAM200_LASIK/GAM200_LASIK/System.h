@@ -9,6 +9,6 @@ class System
 {
 public:
 	virtual void Initialize() {};
-	virtual void Update() = 0;
+	virtual void Update(float dt) = 0;
 	virtual ~System() {};
 };

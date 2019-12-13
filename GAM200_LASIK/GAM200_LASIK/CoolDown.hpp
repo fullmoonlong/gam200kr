@@ -41,9 +41,9 @@ private:
 	Material knightCoolMaterial, magicianCoolMaterial, archerCoolMaterial;
 
 	vec2<float> size = { 50.0f, 50.0f };
-	vec2<float> coolKnightPosition		= {    70.f, -300.f };
-	vec2<float> coolArcherPosition		= { -300.f, -300.f };
-	vec2<float> coolMagicianPosition	= {  500.f, -300.f };
+	vec2<float> coolKnightPosition		= {    70.f, -225.f };
+	vec2<float> coolArcherPosition		= { -150.f, -225.f };
+	vec2<float> coolMagicianPosition	= {  300.f, -225.f };
 	vec2<float> coolTimeBarPosition		= { -400.f ,-200.f };
 };
 

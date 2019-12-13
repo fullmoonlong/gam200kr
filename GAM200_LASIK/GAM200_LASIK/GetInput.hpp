@@ -7,6 +7,7 @@ public:
 
 	void TakeAsInput(char input);
 	int MatchStringWithInput();
+	void Erasing();
 	void SetString(std::wstring initial) { string = initial; }
 	std::wstring GetString() { return string; }
 

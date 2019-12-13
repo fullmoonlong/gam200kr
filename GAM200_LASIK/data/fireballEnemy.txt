@@ -3,5 +3,5 @@
 32
 16
 -300
-ProjectilesPlayer
+ProjectilesEnemy
 Fireball

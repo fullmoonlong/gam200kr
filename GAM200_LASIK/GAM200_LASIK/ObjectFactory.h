@@ -15,7 +15,7 @@ public:
 	~ObjectFactory();
 
 	void Initialize() override {}
-	void Update() override;
+	void Update(float dt) override;
 
 	void Destroy(Object* object);
 

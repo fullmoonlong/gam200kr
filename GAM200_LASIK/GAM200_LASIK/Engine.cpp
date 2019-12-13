@@ -8,6 +8,7 @@
 #include "ObjectFactory.h"
 #include "StateManager.h"
 
+
 Engine* gameEngine = nullptr;
 
 Engine::Engine()
@@ -40,11 +41,14 @@ void Engine::Update()
 {
 	while (gamestate != GameState::EXIT)
 	{
+		clock.UpdateClock();
 		for (auto sys : systems)
 		{
-			sys->Update();
+			sys->Update(deltaTime);
 		}
+		deltaTime = clock.GetTimeFromLastUpdate();
 	}
+
 	Shutdown();
 }
 

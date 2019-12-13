@@ -23,7 +23,7 @@ void SoundManager::Initialize()
 	ErrorCheck(result_);
 }
 
-void SoundManager::Update()
+void SoundManager::Update(float /*dt*/)
 {
 	if (soundState == true)
 	{

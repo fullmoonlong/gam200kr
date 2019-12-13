@@ -139,6 +139,9 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 		case GLFW_KEY_ENTER:
 			eventHandler->HandleKeyPress(KeyboardButton::Enter);
 			break;
+		case GLFW_KEY_BACKSPACE:
+			eventHandler->HandleKeyPress(KeyboardButton::Backspace);
+			break;
 		case GLFW_KEY_ESCAPE:
 			eventHandler->HandleKeyPress(KeyboardButton::Escape);
 			break;

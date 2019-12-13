@@ -6,6 +6,7 @@
 #include "EventHandler.hpp"
 
 enum GameLevels {
+	MAINMENU,
 	LVTest1,
 	LVTest2
 };
@@ -16,7 +17,7 @@ public:
 	StateManager(OpenGLWindow* window, float* dt);
 	~StateManager();
 	void Initialize() override;
-	void Update() override;
+	void Update(float dt) override;
 
 	LevelSystem* GetCurrentLevel() { return levels.at(currentLevel); }
 	void SetCurrentLevel(GameLevels currentLevel);
