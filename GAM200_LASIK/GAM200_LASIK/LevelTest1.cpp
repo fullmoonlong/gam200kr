@@ -48,7 +48,7 @@ void LevelTest1::Initialize()
 	winpic->transform.SetScale({ 640, 360 });
 	winpic->material.shader = fontShader;
 	winpic->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	winpic->material.texture.LoadFromPath(PATH::winpic);
+	winpic->material.texture.LoadTextureFrom(PATH::winpic);
 	winpic->material.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * winpic->transform.GetModelToWorld();
 
 
@@ -56,14 +56,14 @@ void LevelTest1::Initialize()
 	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	backgroundMesh.SetShapePattern(ShapePattern::TriangleFan);
 	backgroundVertices.InitializeWithMeshAndLayout(rectangle, layout);
-	backgroundTexture.LoadFromPath(PATH::background);
+	backgroundTexture.LoadTextureFrom(PATH::background);
 	background.transform.SetScale({ 1280, 720 });
 	//background
 
 	//ui
 	//ui.material.shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	//ui.material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	//ui.material.texture.LoadFromPath("../assets/UI.png");
+	//ui.material.texture.LoadTextureFrom("../assets/UI.png");
 	//ui.transform.SetTranslation({0, -420});
 	//ui.transform.SetScale({ 1280, 240 });
 	//ui
@@ -78,7 +78,7 @@ void LevelTest1::Initialize()
 		tower->Initialize("tower.txt");
 		tower->material.shader = fontShader;
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		tower->material.texture.LoadFromPath(PATH::tower);
+		tower->material.texture.LoadTextureFrom(PATH::tower);
 		tower->animation.Initialize({ 1,1, 1.f }, tower->material.shader);
 
 		OBJECTFACTORY->CopyObject(tower);
@@ -92,7 +92,7 @@ void LevelTest1::Initialize()
 		lair->Initialize("lair.txt");
 		lair->material.shader = fontShader;
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		lair->material.texture.LoadFromPath(PATH::lair);
+		lair->material.texture.LoadTextureFrom(PATH::lair);
 
 		lair->AddComponent<LairComponent>();
 		OBJECTFACTORY->CopyObject(lair);
@@ -106,7 +106,7 @@ void LevelTest1::Initialize()
 		skeleton->Initialize("skeleton.txt");
 		skeleton->material.shader = shader;
 		skeleton->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		skeleton->material.texture.LoadFromPath(PATH::skeleton_move);
+		skeleton->material.texture.LoadTextureFrom(PATH::skeleton_move);
 		skeleton->animation.Initialize({ 4, 1,	10.0f }, shader);
 
 		golem = new Golem();
@@ -117,7 +117,7 @@ void LevelTest1::Initialize()
 		golem->Initialize("golem.txt");
 		golem->material.shader = shader;
 		golem->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		golem->material.texture.LoadFromPath(PATH::golem_move);
+		golem->material.texture.LoadTextureFrom(PATH::golem_move);
 		golem->animation.Initialize({ 4, 1,	10.0f }, shader);
 
 		lich = new Lich();
@@ -128,7 +128,7 @@ void LevelTest1::Initialize()
 		lich->Initialize("lich.txt");
 		lich->material.shader = shader;
 		lich->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		lich->material.texture.LoadFromPath(PATH::lich_move);
+		lich->material.texture.LoadTextureFrom(PATH::lich_move);
 		lich->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//knight
@@ -139,7 +139,7 @@ void LevelTest1::Initialize()
 		knight->Initialize("knight.txt");
 		knight->material.shader = shader;
 		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		knight->material.texture.LoadFromPath(PATH::knight_move);
+		knight->material.texture.LoadTextureFrom(PATH::knight_move);
 		knight->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//knight
@@ -153,7 +153,7 @@ void LevelTest1::Initialize()
 		archer->Initialize("archer.txt");
 		archer->material.shader = shader;
 		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		archer->material.texture.LoadFromPath(PATH::archer_move);
+		archer->material.texture.LoadTextureFrom(PATH::archer_move);
 		archer->animation.Initialize({ 8, 1, 10.0f }, shader);
 		//archer
 
@@ -167,7 +167,7 @@ void LevelTest1::Initialize()
 		magician->Initialize("wizard.txt");
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		magician->material.texture.LoadFromPath(PATH::magician_move);
+		magician->material.texture.LoadTextureFrom(PATH::magician_move);
 		magician->animation.Initialize({ 8, 1, 10.0f }, shader);
 		//magician
 
@@ -204,7 +204,7 @@ void LevelTest1::Initialize()
 		fireball->Initialize("fireball.txt");
 		fireball->material.shader = shader;
 		fireball->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		fireball->material.texture.LoadFromPath(PATH::fireball);
+		fireball->material.texture.LoadTextureFrom(PATH::fireball);
 		fireball->animation.Initialize({ 3, 1, 5.0f }, shader);
 
 		fireball->SetState(State::WALK);
@@ -218,7 +218,7 @@ void LevelTest1::Initialize()
 		fireballEnemy->Initialize("fireballEnemy.txt");
 		fireballEnemy->material.shader = shader;
 		fireballEnemy->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		fireballEnemy->material.texture.LoadFromPath(PATH::fireball);
+		fireballEnemy->material.texture.LoadTextureFrom(PATH::fireball);
 		fireballEnemy->animation.Initialize({ 3, 1, 5.0f }, shader);
 
 		fireballEnemy->SetState(State::WALK);
@@ -231,7 +231,7 @@ void LevelTest1::Initialize()
 		arrow.Initialize("arrow.txt");
 		arrow.material.shader = fontShader;
 		arrow.material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		arrow.material.texture.LoadFromPath(PATH::arrow);
+		arrow.material.texture.LoadTextureFrom(PATH::arrow);
 
 		arrow.SetState(State::WALK);
 		arrow.SetDamage(archer->GetArcherDamage());

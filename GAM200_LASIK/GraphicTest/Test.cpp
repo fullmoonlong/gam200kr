@@ -1,20 +1,20 @@
-
-
 #include "Test.hpp"
 #include "PATH.hpp"
 
 void Test::Initialize()
 {
-	window.CanCreateWindow(width, height, this, "Test");
+	if (!window.CanCreateWindow(width, height, this, "Test")) {
+		return;
+	}
+	view.SetViewSize(width, height);
 
 	const Mesh& mesh = MESH::create_rectangle({ 0.0f }, { 1.0f });
 
 	material.shader.LoadTextureShader();
 	material.vertices.InitializeWithMeshAndLayout(mesh, layout);
-	material.texture.LoadFromPath(PATH::knight_menu);
+	material.texture.LoadTextureFrom(PATH::knight_menu);
 	transform.SetScale({ 100.0f });
 	
-	view.SetViewSize(width, height);
 	material.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
 }
 

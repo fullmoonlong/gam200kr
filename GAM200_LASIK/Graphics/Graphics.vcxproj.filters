@@ -105,6 +105,12 @@
     <ClInclude Include="Graphics\Shader.h">
       <Filter>Graphics\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\Material.hpp">
+      <Filter>Graphics\Drawing</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\VerticesDescriptionLayout.hpp">
+      <Filter>Graphics\Drawing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\Camera.cpp">

@@ -22,8 +22,8 @@ public:
 
 	unsigned int GetTexturehandle() const noexcept { return textureHandle; }
 
-	bool LoadFromPath(const std::filesystem::path& image_path) noexcept;
-	bool LoadFromImage(const Image& image) noexcept;
+	bool LoadTextureFrom(const std::filesystem::path& image_path) noexcept;
+	bool LoadTextureFrom(const Image& image) noexcept;
 private:
 	unsigned int textureHandle;
 	
