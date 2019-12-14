@@ -1,6 +1,6 @@
 /**************************************************************************************
  *	File Name        : LevelTest1.cpp
- *	Project Name     : Keyboard Warrior
+ *	Project Name     : Keyboard Warriors
  *	Primary Author   : Jookyung Lee
  *	Secondary Author : Wonju Cho
  *	Copyright Information :

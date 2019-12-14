@@ -1,6 +1,6 @@
 /**************************************************************************************
  *	File Name        : Text.cpp
- *	Project Name     : Keyboard Warrior
+ *	Project Name     : Keyboard Warriors
  *	Primary Author   : JeongHak Kim
  *	Secondary Author : 
  *	Copyright Information :

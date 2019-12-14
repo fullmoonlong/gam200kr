@@ -1,6 +1,6 @@
 /**************************************************************************************
  *	File Name        : main.cpp
- *	Project Name     : Keyboard Warrior
+ *	Project Name     : Keyboard Warriors
  *	Primary Author   : Jeonghak Kim
  *	Secondary Author : Doyeong Yi
  *	Copyright Information :

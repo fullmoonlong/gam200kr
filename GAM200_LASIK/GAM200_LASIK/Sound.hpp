@@ -1,6 +1,6 @@
 /**************************************************************************************
  *	File Name        : Sound.hpp
- *	Project Name     : Keyboard Warrior
+ *	Project Name     : Keyboard Warriors
  *	Primary Author   : Doyeong Yi
  *	Secondary Author :
  *	Copyright Information :

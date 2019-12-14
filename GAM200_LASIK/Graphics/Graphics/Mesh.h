@@ -1,6 +1,6 @@
 /**************************************************************************************
- *	File Name        : Material.h
- *	Project Name     : Keyboard Warrior
+ *	File Name        : Mesh.h
+ *	Project Name     : Keyboard Warriors
  *	Primary Author   : JeongHak Kim
  *	Secondary Author : 
  *	Copyright Information :

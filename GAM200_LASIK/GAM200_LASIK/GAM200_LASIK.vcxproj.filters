@@ -122,7 +122,10 @@
       <Filter>LevelState\Logo</Filter>
     </ClInclude>
     <ClInclude Include="LevelTest1.h">
-      <Filter>LevelState\Logo</Filter>
+      <Filter>LevelState\LevelTest1</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>System\StateManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

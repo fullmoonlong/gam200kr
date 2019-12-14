@@ -1,6 +1,6 @@
 /**************************************************************************************
  *	File Name        : Clock.hpp
- *	Project Name     : Keyboard Warrior
+ *	Project Name     : Keyboard Warriors
  *	Primary Author   : Jeonghak Kim
  *	Secondary Author :
  *	Copyright Information :

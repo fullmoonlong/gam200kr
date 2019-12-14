@@ -1,6 +1,6 @@
 /**************************************************************************************
- *	File Name        : VerticesDescription.cpp
- *	Project Name     : Keyboard Warrior
+ *	File Name        : VerticesDescription.h
+ *	Project Name     : Keyboard Warriors
  *	Primary Author   : JeongHak Kim
  *	Secondary Author : 
  *	Copyright Information :

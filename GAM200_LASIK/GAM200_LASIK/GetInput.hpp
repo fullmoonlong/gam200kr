@@ -1,6 +1,6 @@
 /**************************************************************************************
  *	File Name        : GetInput.hpp
- *	Project Name     : Keyboard Warrior
+ *	Project Name     : Keyboard Warriors
  *	Primary Author   : Jookyung Lee
  *	Secondary Author :
  *	Copyright Information :

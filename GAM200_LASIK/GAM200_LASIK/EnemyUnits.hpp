@@ -1,6 +1,6 @@
 /**************************************************************************************
  *	File Name        : EnemyUnits.hpp
- *	Project Name     : Keyboard Warrior
+ *	Project Name     : Keyboard Warriors
  *	Primary Author   : Wonju Cho
  *	Secondary Author :
  *	Copyright Information :

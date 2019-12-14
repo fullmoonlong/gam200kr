@@ -1,6 +1,6 @@
 /**************************************************************************************
  *	File Name        : MainMenu.h
- *	Project Name     : Keyboard Warrior
+ *	Project Name     : Keyboard Warriors
  *	Primary Author   : JeongHak Kim
  *	Secondary Author : Jookyung Lee
  *	Copyright Information :

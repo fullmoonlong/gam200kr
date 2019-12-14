@@ -1,6 +1,6 @@
 /**************************************************************************************
  *	File Name        : Application.h
- *	Project Name     : Keyboard Warrior
+ *	Project Name     : Keyboard Warriors
  *	Primary Author   : Jookyung Lee
  *	Secondary Author : Wonju Cho
  *	Copyright Information :
