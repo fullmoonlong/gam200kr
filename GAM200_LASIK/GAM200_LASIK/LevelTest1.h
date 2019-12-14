@@ -1,3 +1,11 @@
+/*
+*	Author: Doyeong Yi doyoung.lee@digipen.edu
+			Junghak Kim
+			Jookyung Lee
+			Wonju Cho
+*	GAM200 Engine Prototype
+*	2019/12/11
+*/
 #pragma once
 #include "LevelSystem.h"
 #include "EventHandler.hpp"

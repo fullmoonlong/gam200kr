@@ -1,3 +1,8 @@
+/*
+*	Author: Doyeong Yi doyoung.lee@digipen.edu
+*	GAM200 Engine Prototype
+*	2019/12/05
+*/
 #include "ComponentTower.h"
 #include "ObjectFactory.h"
 #include <iostream>

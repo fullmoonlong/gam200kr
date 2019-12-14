@@ -1,3 +1,8 @@
+/*
+*	Author: Doyeong Yi doyoung.lee@digipen.edu
+*	GAM200 Engine Prototype
+*	2019/11/20
+*/
 #pragma once
 #ifndef FILE_H
 #define FILE_H

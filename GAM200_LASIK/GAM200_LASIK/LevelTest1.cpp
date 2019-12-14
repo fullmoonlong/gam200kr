@@ -1,3 +1,11 @@
+/*
+*	Author: Doyeong Yi doyoung.lee@digipen.edu
+*			Junghak Kim
+*			Jookyung Lee
+*			Wonju Cho
+*	GAM200 Engine Prototype
+*	2019/12/11
+*/
 #include "LevelTest1.h"
 #include <iostream>
 
@@ -180,7 +188,7 @@ void LevelTest1::Initialize()
 		swordAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		swordAttack->SetDamage(knight->GetKnightDamage());
 
-		knight->GetComponent<TestComponent>()->attack = swordAttack;
+		knight->GetComponent<ObjectAttackComponent>()->attack = swordAttack;
 		//sword attack
 
 		//sword attack
@@ -192,10 +200,10 @@ void LevelTest1::Initialize()
 		enemyAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		
 		enemyAttack->SetDamage(skeleton->GetSkeletionDamage());
-		skeleton->GetComponent<TestComponent>()->attack = enemyAttack;
+		skeleton->GetComponent<ObjectAttackComponent>()->attack = enemyAttack;
 		
 		enemyAttack->SetDamage(golem->GetGolemDamage());
-		golem->GetComponent<TestComponent>()->attack = enemyAttack;
+		golem->GetComponent<ObjectAttackComponent>()->attack = enemyAttack;
 		//sword attack
 
 
@@ -210,7 +218,7 @@ void LevelTest1::Initialize()
 		fireball->SetState(State::WALK);
 		fireball->SetDamage(magician->GetMagicianDamage());
 
-		magician->GetComponent<TestComponent>()->attack = fireball;
+		magician->GetComponent<ObjectAttackComponent>()->attack = fireball;
 		//fireball
 
 		//fireball
@@ -224,7 +232,7 @@ void LevelTest1::Initialize()
 		fireballEnemy->SetState(State::WALK);
 		fireballEnemy->SetDamage(lich->GetLichDamage());
 
-		lich->GetComponent<TestComponent>()->attack = fireballEnemy;
+		lich->GetComponent<ObjectAttackComponent>()->attack = fireballEnemy;
 		//fireball
 
 		//arrow
@@ -236,7 +244,7 @@ void LevelTest1::Initialize()
 		arrow.SetState(State::WALK);
 		arrow.SetDamage(archer->GetArcherDamage());
 
-		archer->GetComponent<TestComponent>()->attack = &arrow;
+		archer->GetComponent<ObjectAttackComponent>()->attack = &arrow;
 		//arrow
 	}
 

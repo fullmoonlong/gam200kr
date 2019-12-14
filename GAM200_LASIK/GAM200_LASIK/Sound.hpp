@@ -1,3 +1,8 @@
+/*
+*	Author: Doyeong Yi doyoung.lee@digipen.edu
+*	GAM200 Engine Prototype
+*	2019/11/08
+*/
 #pragma once
 #ifndef BG_SOUNDMANAGER_H
 #define BG_SOUNDMANAGER_H

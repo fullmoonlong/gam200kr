@@ -91,13 +91,7 @@
     <ClInclude Include="Units.hpp">
       <Filter>Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerBase.hpp">
-      <Filter>Object\Player</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyUnits.hpp">
-      <Filter>Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyBase.hpp">
       <Filter>Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="UI.hpp">
@@ -156,9 +150,6 @@
     <Filter Include="Component\Tower">
       <UniqueIdentifier>{c7486c0e-78ae-462d-839e-a31fa7db8fdb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component\Units">
-      <UniqueIdentifier>{1572fa00-5719-4e02-b15a-f6391795c81b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Object\Player">
       <UniqueIdentifier>{fece983e-3d6a-4837-98e8-b2c02963be97}</UniqueIdentifier>
     </Filter>
@@ -188,6 +179,9 @@
     </Filter>
     <Filter Include="System\SoundManager">
       <UniqueIdentifier>{695beb66-4649-4ed1-82e2-bf9f66e24409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component\Units">
+      <UniqueIdentifier>{1572fa00-5719-4e02-b15a-f6391795c81b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,3 +1,9 @@
+/*
+*	Author: Doyeong Yi doyoung.lee@digipen.edu
+*			JeongHak Kim	junghak.kim@digipen.edu
+*	GAM200 Engine Prototype
+*	2019/09/25
+*/
 #pragma once
 #include <string>
 #include "vec2.hpp"

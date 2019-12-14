@@ -1,3 +1,8 @@
+/*
+*	Author: Doyeong Yi doyoung.lee@digipen.edu
+*	GAM200 Engine Prototype
+*	2019/12/13
+*/
 #pragma once
 #include "Component.h"
 #include "ComponentType.h"
@@ -11,7 +16,6 @@ public:
 	MaterialComponent() : Component(ComponentType::MATERIAL) {};
 	~MaterialComponent() override;
 	virtual void Initialize() override;
-	//void Attack();
 
 	Material material;
 };

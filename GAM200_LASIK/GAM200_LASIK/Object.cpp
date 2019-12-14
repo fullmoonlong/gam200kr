@@ -1,5 +1,6 @@
 /*
 *	Author: Doyeong Yi doyoung.lee@digipen.edu
+*			JeongHak Kim	junghak.kim@digipen.edu
 *	GAM200 Engine Prototype
 *	2019/09/25
 */
@@ -68,7 +69,7 @@ void Object::Initialize(const char* name) noexcept
 
 	healthBar.Initialize(transform.GetTranslation(), GetHealth());
 
-	AddComponent<TestComponent>();
+	AddComponent<ObjectAttackComponent>();
 }
 
 void Object::Update(float dt) noexcept
@@ -107,14 +108,14 @@ void Object::Update(float dt) noexcept
 	{
 		if (this->GetState() == State::ATTACK)
 		{
-			this->GetComponent<TestComponent>()->time += dt;
-			if (this->GetComponent<TestComponent>()->time > 0.6f)
+			this->GetComponent<ObjectAttackComponent>()->time += dt;
+			if (this->GetComponent<ObjectAttackComponent>()->time > 0.6f)
 			{
 				vec2<float> a = { transform.GetTranslation().x + 48.f, transform.GetTranslation().y };
-				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
-				this->GetComponent<TestComponent>()->time = 0;
+				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}
 	}
@@ -122,15 +123,15 @@ void Object::Update(float dt) noexcept
 	{
 		if (this->GetState() == State::ATTACK)
 		{
-			this->GetComponent<TestComponent>()->time += dt;
-			if (this->GetComponent<TestComponent>()->time > 0.7f)
+			this->GetComponent<ObjectAttackComponent>()->time += dt;
+			if (this->GetComponent<ObjectAttackComponent>()->time > 0.7f)
 			{
 				SOUNDMANAGER->PlaySound(0, 2);
 				vec2<float> a = transform.GetTranslation();
-				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
-				this->GetComponent<TestComponent>()->time = 0;
+				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}
 	}
@@ -138,15 +139,15 @@ void Object::Update(float dt) noexcept
 	{
 		if (this->GetState() == State::ATTACK)
 		{
-			this->GetComponent<TestComponent>()->time += dt;
-			if (this->GetComponent<TestComponent>()->time > 2.4f)
+			this->GetComponent<ObjectAttackComponent>()->time += dt;
+			if (this->GetComponent<ObjectAttackComponent>()->time > 2.4f)
 			{
 				SOUNDMANAGER->PlaySound(0, 1);
 				vec2<float> a = transform.GetTranslation();
-				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
-				this->GetComponent<TestComponent>()->time = 0;
+				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}
 	}
@@ -154,14 +155,14 @@ void Object::Update(float dt) noexcept
 	{
 		if (this->GetState() == State::ATTACK)
 		{
-			this->GetComponent<TestComponent>()->time += dt;
-			if (this->GetComponent<TestComponent>()->time > 0.6f)
+			this->GetComponent<ObjectAttackComponent>()->time += dt;
+			if (this->GetComponent<ObjectAttackComponent>()->time > 0.6f)
 			{
 				vec2<float> a = { transform.GetTranslation().x - 48.f, transform.GetTranslation().y };
-				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
-				this->GetComponent<TestComponent>()->time = 0;
+				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}
 	}
@@ -169,14 +170,14 @@ void Object::Update(float dt) noexcept
 	{
 		if (this->GetState() == State::ATTACK)
 		{
-			this->GetComponent<TestComponent>()->time += dt;
-			if (this->GetComponent<TestComponent>()->time > 3.0f)
+			this->GetComponent<ObjectAttackComponent>()->time += dt;
+			if (this->GetComponent<ObjectAttackComponent>()->time > 3.0f)
 			{
 				vec2<float> a = { transform.GetTranslation().x, transform.GetTranslation().y };
-				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
-				this->GetComponent<TestComponent>()->time = 0;
+				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}
 	}
@@ -184,21 +185,21 @@ void Object::Update(float dt) noexcept
 	{
 		if (this->GetState() == State::ATTACK)
 		{
-			this->GetComponent<TestComponent>()->time += dt;
-			if (this->GetComponent<TestComponent>()->time > 1.5f)
+			this->GetComponent<ObjectAttackComponent>()->time += dt;
+			if (this->GetComponent<ObjectAttackComponent>()->time > 1.5f)
 			{
 				vec2<float> a = { transform.GetTranslation().x - 256.f, transform.GetTranslation().y - 128 };
-				this->GetComponent<TestComponent>()->attack->transform.SetTranslation(a);
+				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<TestComponent>()->attack);
-				this->GetComponent<TestComponent>()->time = 0;
+				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}
 	}
 	else if (this->GetName() == "swordAttack" || this->GetName() == "enemyAttack")
 	{
-		this->GetComponent<TestComponent>()->time += dt;
-		if (this->GetComponent<TestComponent>()->time > 0.4f)
+		this->GetComponent<ObjectAttackComponent>()->time += dt;
+		if (this->GetComponent<ObjectAttackComponent>()->time > 0.4f)
 		{
 			OBJECTFACTORY->Destroy(this);
 		}

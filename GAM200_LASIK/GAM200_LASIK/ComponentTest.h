@@ -1,18 +1,21 @@
+/*
+*	Author: Doyeong Yi doyoung.lee@digipen.edu
+*	GAM200 Engine Prototype
+*	2019/10/12
+*/
 #pragma once
 #include "Component.h"
 #include "ComponentType.h"
 #include "Object.h"
 #include "Sound.hpp"
 
-class TestComponent : public Component
+class ObjectAttackComponent : public Component
 {
 public:
-	TestComponent() : Component(ComponentType::TEST) {};
-	~TestComponent() override;
+	ObjectAttackComponent() : Component(ComponentType::ATTACKCOM) {};
+	~ObjectAttackComponent() override;
 	virtual void Initialize() override;
-	//void Attack();
 
-	//Object* object;
 	Object* attack;
 	float time = 0;
 };

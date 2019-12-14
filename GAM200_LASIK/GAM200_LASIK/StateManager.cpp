@@ -1,3 +1,8 @@
+/*
+*	Author: Doyeong Yi doyoung.lee@digipen.edu
+*	GAM200 Engine Prototype
+*	2019/10/02
+*/
 #include <iostream>
 #include "StateManager.h"
 #include "Logo.h"

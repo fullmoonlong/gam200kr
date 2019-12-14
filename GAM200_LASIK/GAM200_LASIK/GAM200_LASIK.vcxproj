@@ -206,7 +206,6 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTower.h" />
     <ClInclude Include="CoolDown.hpp" />
-    <ClInclude Include="EnemyBase.hpp" />
     <ClInclude Include="EnemyUnits.hpp" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FileLoadAndSave.hpp" />
@@ -216,7 +215,6 @@
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ObjectMaterial.h" />
-    <ClInclude Include="PlayerBase.hpp" />
     <ClInclude Include="Sound.hpp" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="UI.hpp" />
