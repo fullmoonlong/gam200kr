@@ -27,7 +27,6 @@ public:
 		Exit
 	};
 	MainMenu(OpenGLWindow* window);
-	~MainMenu();
 	void Initialize() override;
 	void Update(float dt) override;
 	void Shutdown() override;
@@ -37,7 +36,6 @@ private:
 	OpenGLWindow* windowPoint;
 	Camera camera;
 	CameraView view;
-	Draw draw;
 	int selectedMenu = Start;
 	mat3<float> worldToNDC;
 private:

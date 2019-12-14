@@ -164,5 +164,8 @@
     <ClCompile Include="Graphics\Shader.cpp">
       <Filter>Graphics\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\Material.cpp">
+      <Filter>Graphics\Drawing</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

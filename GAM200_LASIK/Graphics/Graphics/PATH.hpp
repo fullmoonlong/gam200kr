@@ -61,5 +61,5 @@ namespace PATH
 	const std::filesystem::path bitmapfont_fnt = "../assets/bitmapfont.fnt";
 	const std::filesystem::path bitmapfont_png = "../assets/bitmapfont_0.png";
 
-	const std::filesystem::path background = "../assets/background.jpg";
+	const std::filesystem::path background = "../assets/background.png";
 }

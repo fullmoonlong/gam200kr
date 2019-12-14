@@ -190,6 +190,7 @@
     <ClCompile Include="FileLoadAndSave.cpp" />
     <ClCompile Include="GetInput.cpp" />
     <ClCompile Include="LevelTest1.cpp" />
+    <ClCompile Include="Logo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Object.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="GetInput.hpp" />
     <ClInclude Include="LevelSystem.h" />
     <ClInclude Include="LevelTest1.h" />
+    <ClInclude Include="Logo.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ObjectMaterial.h" />
     <ClInclude Include="PlayerBase.hpp" />

@@ -11,7 +11,7 @@
 #include <iostream>
 #include "MainMenu.h"
 #include "StateManager.h"
- //#include "VerticesDescriptionLayout.hpp"
+//#include "VerticesDescriptionLayout.hpp"
 
 MainMenu::MainMenu(OpenGLWindow* window)
 {
@@ -55,14 +55,9 @@ void MainMenu::Initialize()
 	exitButton.material.ndc = worldToNDC * exitButton.transform.GetModelToWorld();
 }
 
-void MainMenu::Update(float dt)
+void MainMenu::Update(float /*dt*/)
 {
-	dt;
 	Draw::StartDrawing();
-
-	//startButton.material.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * startButton.transform.GetModelToWorld();
-	//exitButton.material.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * exitButton.transform.GetModelToWorld();
-	//selectedArrow.material.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * selectedArrow.transform.GetModelToWorld();
 
 	selectedArrow.transform.SetTranslation({ -220.0f, -selectedMenu * 2 * 120.0f + 120.0f });
 	selectedArrow.material.ndc = worldToNDC * selectedArrow.transform.GetModelToWorld();

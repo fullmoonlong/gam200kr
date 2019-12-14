@@ -8,14 +8,12 @@ void Test::Initialize()
 	}
 	view.SetViewSize(width, height);
 
-	const Mesh& mesh = MESH::create_rectangle({ 0.0f }, { 1.0f });
+	Shader textureShader;
+	textureShader.LoadTextureShader();
 
-	material.shader.LoadTextureShader();
-	material.vertices.InitializeWithMeshAndLayout(mesh, layout);
-	material.texture.LoadTextureFrom(PATH::knight_menu);
 	transform.SetScale({ 100.0f });
-	
-	material.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
+	const mat3<float>& ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
+	material.CreateSprite(textureShader, PATH::knight_menu, ndc);
 }
 
 void Test::Update()
@@ -46,4 +44,9 @@ void Test::HandleKeyPress(KeyboardButton button)
 	{
 		ShutDown();
 	}
+}
+
+void Test::HandleWindowClose()
+{
+	isRunning = false;
 }

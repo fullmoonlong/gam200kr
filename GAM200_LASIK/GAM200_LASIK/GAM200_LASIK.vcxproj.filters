@@ -53,6 +53,9 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>LevelState\MainMenu</Filter>
     </ClCompile>
+    <ClCompile Include="Logo.cpp">
+      <Filter>LevelState\Logo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">
@@ -127,6 +130,9 @@
     <ClInclude Include="MainMenu.h">
       <Filter>LevelState\MainMenu</Filter>
     </ClInclude>
+    <ClInclude Include="Logo.h">
+      <Filter>LevelState\Logo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">
@@ -176,6 +182,9 @@
     </Filter>
     <Filter Include="LevelState\MainMenu">
       <UniqueIdentifier>{f057dfdc-0f8e-499a-924f-58a5ca2ddd8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelState\Logo">
+      <UniqueIdentifier>{7b7c9a07-32b7-4812-9239-5b7a040c4f8a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

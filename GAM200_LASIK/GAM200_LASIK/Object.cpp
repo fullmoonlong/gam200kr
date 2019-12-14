@@ -217,13 +217,13 @@ void Object::ChangeUnitAnimation()
 		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::knight_move);
-			this->animation.ChangeAnimation(8);
+			this->animation.ChangeAnimation(8, 1);
 			this->SetSpriteChangeState(false);
 		}
 		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::knight_attack);
-			this->animation.ChangeAnimation(8);
+			this->animation.ChangeAnimation(8, 1);
 			this->SetSpriteChangeState(false);
 		}
 
@@ -233,13 +233,13 @@ void Object::ChangeUnitAnimation()
 		if (GetState() == State::WALK && GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::archer_move);
-			animation.ChangeAnimation(8);
+			animation.ChangeAnimation(8, 1);
 			SetSpriteChangeState(false);
 		}
 		else if (GetState() == State::ATTACK && GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::archer_attack);
-			animation.ChangeAnimation(8);
+			animation.ChangeAnimation(8, 1);
 			SetSpriteChangeState(false);
 		}
 	}
@@ -248,13 +248,13 @@ void Object::ChangeUnitAnimation()
 		if (GetState() == State::WALK && GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::magician_move);
-			animation.ChangeAnimation(8);
+			animation.ChangeAnimation(8, 1);
 			SetSpriteChangeState(false);
 		}
 		else if (GetState() == State::ATTACK && GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::magician_attack);
-			animation.ChangeAnimation(5);
+			animation.ChangeAnimation(5, 1);
 			SetSpriteChangeState(false);
 		}
 	}
@@ -263,13 +263,13 @@ void Object::ChangeUnitAnimation()
 		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::skeleton_move);
-			this->animation.ChangeAnimation(4);
+			this->animation.ChangeAnimation(4, 1);
 			this->SetSpriteChangeState(false);
 		}
 		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::skeleton_attack);
-			this->animation.ChangeAnimation(7);
+			this->animation.ChangeAnimation(7, 1);
 			this->SetSpriteChangeState(false);
 		}
 
@@ -279,13 +279,13 @@ void Object::ChangeUnitAnimation()
 		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::lich_move);
-			this->animation.ChangeAnimation(8);
+			this->animation.ChangeAnimation(8, 1);
 			this->SetSpriteChangeState(false);
 		}
 		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::lich_attack);
-			this->animation.ChangeAnimation(1);
+			this->animation.ChangeAnimation(1, 1);
 			this->SetSpriteChangeState(false);
 		}
 
@@ -295,13 +295,13 @@ void Object::ChangeUnitAnimation()
 		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::golem_move);
-			this->animation.ChangeAnimation(4);
+			this->animation.ChangeAnimation(4, 1);
 			this->SetSpriteChangeState(false);
 		}
 		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::golem_attack);
-			this->animation.ChangeAnimation(18);
+			this->animation.ChangeAnimation(18, 1);
 			this->SetSpriteChangeState(false);
 		}
 

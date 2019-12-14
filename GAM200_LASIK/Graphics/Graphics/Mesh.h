@@ -22,7 +22,7 @@ enum class ShapePattern
 	Quads
 };
 
-class [[nodiscard]]Mesh
+class [[nodiscard]] Mesh
 {
 public:
 	void AddPoint(vec2<float> point);
@@ -52,4 +52,5 @@ namespace MESH
 	Mesh create_quad(vec2<float> pos, vec2<float> p1, vec2<float> p2, vec2<float> p3, vec2<float> p4, Color4f color = { 0.0f });
 	Mesh create_line(vec2<float> pos, vec2<float> p1, vec2<float> p2, Color4f color = { 0.0f });
 	Mesh create_triangle(vec2<float> pos, vec2<float> p1, vec2<float> p2, vec2<float> p3, Color4f color = { 0.0f });
+	Mesh create_sprite_box();
 };

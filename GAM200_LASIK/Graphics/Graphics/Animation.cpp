@@ -10,10 +10,16 @@
 
 #include "Animation.hpp"
 
-void Animation::Initialize(SpriteSheet new_sheet, const Shader& new_shader)
+void Animation::Initialize(SpriteSheet new_sprite_sheet, const Shader& new_shader)
 {
-	spriteSheet = new_sheet;
-	shader = new_shader;
+	this->shader = new_shader;
+	this->spriteSheet = new_sprite_sheet;
+}
+
+void Animation::Initialize(int column, int row, float animation_speed, const Shader& new_shader)
+{
+	this->shader = new_shader;
+	spriteSheet = { column, row, animation_speed };
 }
 
 void Animation::Animate(float dt)
@@ -27,7 +33,18 @@ void Animation::Animate(float dt)
 	baseTime += spriteSheet.animateSpeed * dt;
 }
 
-void Animation::ChangeAnimation(int new_count)
+void Animation::ChangeAnimation(SpriteSheet new_sprite_sheet)
 {
-	spriteSheet.frameX = new_count;
+	spriteSheet = new_sprite_sheet;
+}
+
+void Animation::ChangeAnimation(int new_column, int new_row)
+{
+	spriteSheet.frameX = new_column;
+	spriteSheet.frameY = new_row;
+}
+
+void Animation::ChangeAnimation(int new_column, int new_row, float new_animation_speed)
+{
+	spriteSheet = { new_column, new_row, new_animation_speed };
 }

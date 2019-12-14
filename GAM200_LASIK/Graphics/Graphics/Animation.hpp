@@ -23,9 +23,12 @@ public:
 		float animateSpeed;
 	};
 
-	void Initialize(SpriteSheet new_sheet, const Shader& new_shader);
+	void Initialize(SpriteSheet sprite_sheet, const Shader& shader);
+	void Initialize(int column, int row, float animation_speed, const Shader& shader);
 	void Animate(float dt);
-	void ChangeAnimation(int new_count);
+	void ChangeAnimation(SpriteSheet new_sprite_sheet);
+	void ChangeAnimation(int new_column, int new_row);
+	void ChangeAnimation(int new_column, int new_row, float new_animation_speed);
 private:
 	Shader shader;
 	SpriteSheet spriteSheet;
