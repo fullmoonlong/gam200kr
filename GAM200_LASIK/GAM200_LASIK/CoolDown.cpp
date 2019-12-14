@@ -1,11 +1,12 @@
 /**************************************************************************************
- *	File Name        : Units.cpp
+ *	File Name        : CoolDown.cpp
  *	Project Name     : Keyboard Warriors
  *	Primary Author   : Wonju Cho
  *	Secondary Author :
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
+
 #include "CoolDown.hpp"
 #include "PATH.hpp"
 

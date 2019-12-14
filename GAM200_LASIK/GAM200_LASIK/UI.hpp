@@ -1,5 +1,5 @@
 /**************************************************************************************
- *	File Name        : Units.cpp
+ *	File Name        : UI.hpp
  *	Project Name     : Keyboard Warriors
  *	Primary Author   : Wonju Cho
  *	Secondary Author :
