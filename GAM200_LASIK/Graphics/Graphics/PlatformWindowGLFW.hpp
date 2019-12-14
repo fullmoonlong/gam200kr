@@ -20,7 +20,6 @@ public:
 	GLFWwindow* window;
 
 	bool CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept;
-	void CleanUpWindow() noexcept;
 	bool IsVSyncOn() noexcept;
 	void ToggleVSync(bool status) noexcept;
 	void SwapBuffers() noexcept;

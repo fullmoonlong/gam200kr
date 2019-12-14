@@ -23,7 +23,6 @@ public:
 	~OpenGLWindow() noexcept;
 
 	bool CanCreateWindow(int width, int height, EventHandler* event_handler, const char* title) noexcept;
-	void CleanUpWindow() noexcept;
 	void SwapBuffers() noexcept;
 	void PollEvents() noexcept;
 

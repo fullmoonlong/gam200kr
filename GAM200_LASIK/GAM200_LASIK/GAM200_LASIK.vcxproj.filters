@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="StateManager.cpp">
-      <Filter>LevelState</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectFactory.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -36,7 +33,7 @@
       <Filter>LevelState\LevelTest1</Filter>
     </ClCompile>
     <ClCompile Include="Sound.cpp">
-      <Filter>System\Sound</Filter>
+      <Filter>System\SoundManager</Filter>
     </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>System\Engine</Filter>
@@ -56,15 +53,15 @@
     <ClCompile Include="Logo.cpp">
       <Filter>LevelState\Logo</Filter>
     </ClCompile>
+    <ClCompile Include="StateManager.cpp">
+      <Filter>System\StateManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="LevelSystem.h">
-      <Filter>LevelState</Filter>
-    </ClInclude>
-    <ClInclude Include="StateManager.h">
       <Filter>LevelState</Filter>
     </ClInclude>
     <ClInclude Include="System.h">
@@ -110,7 +107,7 @@
       <Filter>LevelState\LevelTest1</Filter>
     </ClInclude>
     <ClInclude Include="Sound.hpp">
-      <Filter>System\Sound</Filter>
+      <Filter>System\SoundManager</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
       <Filter>System\Engine</Filter>
@@ -132,6 +129,9 @@
     </ClInclude>
     <ClInclude Include="Logo.h">
       <Filter>LevelState\Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>System\StateManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +171,6 @@
     <Filter Include="LevelState\LevelTest1">
       <UniqueIdentifier>{5e08382d-0242-4045-84cc-fe233360f37f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System\Sound">
-      <UniqueIdentifier>{695beb66-4649-4ed1-82e2-bf9f66e24409}</UniqueIdentifier>
-    </Filter>
     <Filter Include="System\Engine">
       <UniqueIdentifier>{b5c8ad37-ced5-4c4c-b29f-fd382de52206}</UniqueIdentifier>
     </Filter>
@@ -185,6 +182,12 @@
     </Filter>
     <Filter Include="LevelState\Logo">
       <UniqueIdentifier>{7b7c9a07-32b7-4812-9239-5b7a040c4f8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\StateManager">
+      <UniqueIdentifier>{3c7b823f-f3dd-4e38-93db-92b1fd805cdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\SoundManager">
+      <UniqueIdentifier>{695beb66-4649-4ed1-82e2-bf9f66e24409}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

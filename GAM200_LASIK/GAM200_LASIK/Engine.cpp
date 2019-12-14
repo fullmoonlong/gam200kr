@@ -48,7 +48,6 @@ void Engine::Update()
 		}
 		deltaTime = clock.GetTimeFromLastUpdate();
 	}
-
 	Shutdown();
 }
 

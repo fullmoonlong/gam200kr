@@ -11,7 +11,7 @@
 #include <iostream>
 #include "MainMenu.h"
 #include "StateManager.h"
-//#include "VerticesDescriptionLayout.hpp"
+#include "Engine.h"
 
 MainMenu::MainMenu(OpenGLWindow* window)
 {
@@ -71,6 +71,7 @@ void MainMenu::Update(float /*dt*/)
 
 void MainMenu::Shutdown()
 {
+	gameEngine->Shutdown();
 }
 
 void MainMenu::HandleKeyPress(KeyboardButton button)
@@ -97,6 +98,7 @@ void MainMenu::HandleKeyPress(KeyboardButton button)
 		}
 		else if (selectedMenu == 1)
 		{
+			Shutdown();
 		}
 	}
 }

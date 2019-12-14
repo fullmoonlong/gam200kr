@@ -285,14 +285,6 @@ bool PlatformWindow::CanCreateWindow(int width, int height, EventHandler* event_
 	return true;
 }
 
-void PlatformWindow::CleanUpWindow() noexcept
-{
-	if ((bool)glfwWindowShouldClose(window) != true)
-	{
-		glfwSetWindowShouldClose(window, GLFW_FALSE);
-	}
-}
-
 bool PlatformWindow::IsVSyncOn() noexcept
 {
 	return isVSyncOn;

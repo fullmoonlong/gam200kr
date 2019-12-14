@@ -24,11 +24,6 @@ bool OpenGLWindow::CanCreateWindow(int width, int height, EventHandler* event_ha
 	return platformWindow->CanCreateWindow(width, height, event_handler, title);
 }
 
-void OpenGLWindow::CleanUpWindow() noexcept
-{
-	platformWindow->CleanUpWindow();
-}
-
 void OpenGLWindow::SwapBuffers() noexcept
 {
 	platformWindow->SwapBuffers();

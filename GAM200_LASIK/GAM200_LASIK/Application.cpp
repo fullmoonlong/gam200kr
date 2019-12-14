@@ -50,7 +50,6 @@ void Application::ShutDown()
 {
 	isRunning = false;
 	gameEngine->Shutdown();
-	window.CleanUpWindow();
 }
 
 void Application::HandleKeyPress(KeyboardButton button)
