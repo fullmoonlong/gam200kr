@@ -1,8 +1,11 @@
-/*
- * Rudy Castan
- * Graphics Library
- * CS230
- */
+/****************************************************
+ *	Author: JeongHak Kim	junghak.kim@digipen.edu
+ *	
+ *	File_name: Material.hpp
+ *	
+ *	Creation Date: Dec.14 2019
+ ***************************************************/
+
 #pragma once
 #include "Shader.h"
 #include "Vertices.h"
@@ -49,13 +52,4 @@ struct Material {
 	Texture texture;
 	Animation animation;
 	Color4f textColor;
-};
-
-struct [[nodiscard]] material
-{
-	Shader * shader = nullptr;
-	std::map<std::string, mat3<float>>         matrix3Uniforms{};
-	std::map<std::string, Color4f>         color4fUniforms{};
-	std::map<std::string, float>           floatUniforms{};
-	std::map<std::string, texture_uniform> textureUniforms{};
 };

@@ -1,18 +1,19 @@
-
-
 #include "Test.hpp"
 #include "PATH.hpp"
 
 void Test::Initialize()
 {
-	window.CanCreateWindow(width, height, this, "Test");
+	if (!window.CanCreateWindow(width, height, this, "Test")) {
+		return;
+	}
+	view.SetViewSize(width, height);
 
 	Shader textureShader;
 	textureShader.LoadTextureShader();
 
 	material.shader.LoadTextureShader();
 	material.vertices.InitializeWithMeshAndLayout(mesh, layout);
-	material.texture.LoadTextureFrom(PATH::knight_menu);
+	material.texture.LoadFromPath(PATH::knight_menu);
 	transform.SetScale({ 100.0f });
 	const mat3<float>& ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
 	material.CreateSprite(textureShader, PATH::knight_menu, ndc);

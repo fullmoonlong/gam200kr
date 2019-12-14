@@ -1,4 +1,3 @@
-
 #pragma once
 #include "OpenGLWindow.hpp"
 #include "EventHandler.hpp"
@@ -9,8 +8,7 @@
 #include "Draw.hpp"
 #include "Material.hpp"
 
-class Test : public SimpleEventHandler
-{
+class Test : public SimpleEventHandler {
 public:
 	void Initialize();
 	void Update();

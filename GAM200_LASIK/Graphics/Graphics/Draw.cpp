@@ -1,12 +1,10 @@
-/*
+/****************************************************
  *	Author: JeongHak Kim	junghak.kim@digipen.edu
  *	
  *	File_name: Draw.cpp
  *	
- *	Draw
- *	
- *	2019/11/02
- */
+ *	Creation Date: 2019/11/02
+ ***************************************************/
 
 #include <GL/glew.h>
 #include "Draw.hpp"

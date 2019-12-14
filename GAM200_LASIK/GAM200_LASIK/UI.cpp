@@ -9,7 +9,7 @@ void HealthBar::Initialize(vec2<float> position_, int health)
 {
 	mesh = MESH::create_rectangle({ 0.0f }, { 1.0f }, color);
 	material.vertices.InitializeWithMeshAndLayout(mesh, layout);
-	material.texture.LoadFromPath(PATH::hpBar);
+	material.texture.LoadTextureFrom(PATH::hpBar);
 
 	vec2<float> hpBarPosition = { position_.x, position_.y + 40.f };
 	transform.SetTranslation(hpBarPosition);
@@ -38,19 +38,19 @@ void SelectSpawn::SelectMenu()
 
 	archerMaterial.shader = shader;
 	archerMaterial.vertices.InitializeWithMeshAndLayout(archerMesh, texturelayout);
-	archerMaterial.texture.LoadFromPath(PATH::archer_menu);
+	archerMaterial.texture.LoadTextureFrom(PATH::archer_menu);
 	archerTransform.SetTranslation(archerPosition);
 	archerTransform.SetScale(archerSize);
 
 	knightMaterial.shader = shader;
 	knightMaterial.vertices.InitializeWithMeshAndLayout(knightMesh, texturelayout);
-	knightMaterial.texture.LoadFromPath(PATH::knight_menu);
+	knightMaterial.texture.LoadTextureFrom(PATH::knight_menu);
 	knightTransform.SetTranslation(knightPosition);
 	knightTransform.SetScale(archerSize);
 
 	magicianMaterial.shader = shader;
 	magicianMaterial.vertices.InitializeWithMeshAndLayout(magicianMesh, texturelayout);
-	magicianMaterial.texture.LoadFromPath(PATH::magician_menu);
+	magicianMaterial.texture.LoadTextureFrom(PATH::magician_menu);
 	magicianTransform.SetTranslation(magicianPosition);
 	magicianTransform.SetScale(archerSize);
 

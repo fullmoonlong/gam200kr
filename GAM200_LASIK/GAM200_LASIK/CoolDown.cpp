@@ -13,21 +13,21 @@
 //
 //	knightCoolMaterial.shader = animationShader;
 //	knightCoolMaterial.vertices.InitializeWithMeshAndLayout(knightCoolMesh, texturelayout);
-//	knightCoolMaterial.texture.LoadFromPath(PATH::two);
+//	knightCoolMaterial.texture.LoadTextureFrom(PATH::two);
 //	knightCoolTransform.SetTranslation(coolKnightPosition);
 //	knightCoolTransform.SetScale(size);
 //
 //
 //	magicianCoolMaterial.shader = animationShader;
 //	magicianCoolMaterial.vertices.InitializeWithMeshAndLayout(magicianCoolMesh, texturelayout);
-//	magicianCoolMaterial.texture.LoadFromPath(PATH::four);
+//	magicianCoolMaterial.texture.LoadTextureFrom(PATH::four);
 //	magicianCoolTransform.SetTranslation(coolMagicianPosition);
 //	magicianCoolTransform.SetScale(size);
 //
 //
 //	archerCoolMaterial.shader = animationShader;
 //	archerCoolMaterial.vertices.InitializeWithMeshAndLayout(archerCoolMesh, texturelayout);
-//	archerCoolMaterial.texture.LoadFromPath(PATH::three);
+//	archerCoolMaterial.texture.LoadTextureFrom(PATH::three);
 //	archerCoolTransform.SetTranslation(coolArcherPosition);
 //	archerCoolTransform.SetScale(size);
 //
@@ -49,9 +49,9 @@ void CoolDown::Initialize(const Camera& camera_, const CameraView& view_) {
 	archerCoolMaterial.vertices.InitializeWithMeshAndLayout(archerCoolMesh, texturelayout);
 	magicianCoolMaterial.vertices.InitializeWithMeshAndLayout(magicianCoolMesh, texturelayout);
 
-	knightCoolMaterial.texture.LoadFromPath(PATH::twocountdown);
-	archerCoolMaterial.texture.LoadFromPath(PATH::threecountdown);
-	magicianCoolMaterial.texture.LoadFromPath(PATH::fourcountdown);
+	knightCoolMaterial.texture.LoadTextureFrom(PATH::twocountdown);
+	archerCoolMaterial.texture.LoadTextureFrom(PATH::threecountdown);
+	magicianCoolMaterial.texture.LoadTextureFrom(PATH::fourcountdown);
 
 	knightCoolTransform.SetTranslation(coolKnightPosition);
 	knightCoolTransform.SetScale(size);

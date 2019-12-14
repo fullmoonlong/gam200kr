@@ -45,9 +45,9 @@ void MainMenu::Initialize()
 	exitButton.material.vertices.InitializeWithMeshAndLayout(spriteBox, layout);
 	selectedArrow.material.vertices.InitializeWithMeshAndLayout(spriteBox, layout);
 
-	startButton.material.texture.LoadFromPath("../assets/StartButton.png");
-	exitButton.material.texture.LoadFromPath("../assets/ExitButton.png");
-	selectedArrow.material.texture.LoadFromPath("../assets/SelectArrowLeft.png");
+	startButton.material.texture.LoadTextureFrom("../assets/StartButton.png");
+	exitButton.material.texture.LoadTextureFrom("../assets/ExitButton.png");
+	selectedArrow.material.texture.LoadTextureFrom("../assets/SelectArrowLeft.png");
 
 	worldToNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera();
 

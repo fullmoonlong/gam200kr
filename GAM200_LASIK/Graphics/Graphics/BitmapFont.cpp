@@ -24,7 +24,7 @@ bool BitmapFont::LoadFromFile(const std::filesystem::path& filename) noexcept
 		details.pageNames.at(i).pop_back();		// last "
 		details.pageNames.at(i) = details.pageNames.at(i).substr(1);	// first "
 		inputPath.append(details.pageNames.at(i));
-		input.LoadFromPath(inputPath);
+		input.LoadTextureFrom(inputPath);
 		pageTextures.push_back(std::move(input));
 	}
 	return true;

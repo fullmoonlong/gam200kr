@@ -173,6 +173,7 @@
     <ClInclude Include="Graphics\ColorInChar.hpp" />
     <ClInclude Include="Graphics\EventHandler.hpp" />
     <ClInclude Include="Graphics\Image.hpp" />
+    <ClInclude Include="Graphics\Material.hpp" />
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\OpenGLWindow.hpp" />
     <ClInclude Include="Graphics\PATH.hpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Graphics\Transform.hpp" />
     <ClInclude Include="Graphics\Vertices.h" />
     <ClInclude Include="Graphics\VerticesDescription.h" />
+    <ClInclude Include="Graphics\VerticesDescriptionLayout.hpp" />
     <ClInclude Include="Math\Angle.hpp" />
     <ClInclude Include="Math\mat3.hpp" />
     <ClInclude Include="Math\vec2.hpp" />
