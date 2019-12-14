@@ -1,12 +1,11 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *
- *	File_name: MainMenu.h
- *
- *	MainMenu
- *
- *	Dec.13 2019
- */
+/**************************************************************************************
+ *	File Name        : MainMenu.h
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : Jookyung Lee
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #pragma once
 #include "LevelSystem.h"

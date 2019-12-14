@@ -1,11 +1,11 @@
-/*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*
-*	File_name: vec2.h
-*
-*	Custom math library
-*	2019/09/20
-*/
+/**************************************************************************************
+ *	File Name        : vec2.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #pragma once
 #include <cassert>

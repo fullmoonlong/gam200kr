@@ -1,10 +1,11 @@
-/****************************************************
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
- *	File_name: Draw.cpp
- *	
- *	Creation Date: 2019/11/02
- ***************************************************/
+/**************************************************************************************
+ *	File Name        : Draw.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #include <GL/glew.h>
 #include "Draw.hpp"
@@ -46,7 +47,7 @@ void Draw::DrawShape(const Material& material)
 
 void Draw::DrawText(const Shader& shader, const mat3<float>& ndc, const Text& text)
 {
-	for (const auto& vertices_texture : text.GetVerticesWithMatchingTextures())
+	for (const auto& vertices_texture : text.GetPairOfVerticesAndTextures())
 	{
 		const Vertices& textVertices = *vertices_texture.first;
 		const Texture*  textTexture  = vertices_texture.second;

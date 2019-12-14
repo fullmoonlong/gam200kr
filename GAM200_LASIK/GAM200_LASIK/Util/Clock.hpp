@@ -1,12 +1,11 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
- *	File_name: Clock.hpp
- *	
- *	Clock class that helps calculate time
- *	
- *	2019/10/31
- */
+/**************************************************************************************
+ *	File Name        : Clock.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Jeonghak Kim
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #pragma once
 #include <chrono>
@@ -33,5 +32,4 @@ public:
 	float timePassed;
 private:
 	time::time_point timeStamp;
-	//float timePassed;
 };

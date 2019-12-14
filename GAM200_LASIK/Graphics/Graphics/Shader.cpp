@@ -1,12 +1,11 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
- *	File_name: Shader.cpp
- *	
- *	Implementing shader
- *	
- *	2019/09/25
- */
+/**************************************************************************************
+ *	File Name        : Shader.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #include <iostream>
 #include <string>

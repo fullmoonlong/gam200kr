@@ -1,3 +1,12 @@
+/**************************************************************************************
+ *	File Name        : Transform.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #pragma once
 #include "vec2.hpp"
 #include "mat3.hpp"

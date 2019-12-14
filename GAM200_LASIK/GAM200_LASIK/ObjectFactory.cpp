@@ -1,8 +1,12 @@
-/*
-*	Author: Doyeong Yi doyoung.lee@digipen.edu
-*	GAM200 Engine Prototype
-*	2019/09/26
-*/
+/**************************************************************************************
+ *	File Name        : ObjectFactory.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Doyeong Yi
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #include "Sound.hpp"
 #include "ObjectFactory.h"
 #include "Object.h"
@@ -123,7 +127,6 @@ void ObjectFactory::CopyObject(Object* object)
 {
 	Object* newObject = object->Clone();
 
-	//GiveObjectID(newObject);
 	newObject->objectID = lastObjectID;
 	objectIDMap.emplace(lastObjectID, newObject);
 	lastObjectID++;
@@ -185,13 +188,7 @@ void ObjectFactory::CheckCollision()
 					enemy->SetSpriteChangeState(true);
 				}
 			}
-		}/*
-		if (pl == false && player->GetAttackState() == true)
-		{
-			player->SetSpriteChangeState(true);
-			player->SetAttackState(false);
-			player->SetState(State::WALK);
-		}*/
+		}
 	}
 }
 

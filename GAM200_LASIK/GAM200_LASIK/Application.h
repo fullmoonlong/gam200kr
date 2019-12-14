@@ -1,9 +1,11 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *			Doyeong Yi doyoung.lee@digipen.edu
- *	Application
- *	2019/07/04
- */
+/**************************************************************************************
+ *	File Name        : Application.h
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Jookyung Lee
+ *	Secondary Author : Wonju Cho
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #pragma once
 #include "System.h"

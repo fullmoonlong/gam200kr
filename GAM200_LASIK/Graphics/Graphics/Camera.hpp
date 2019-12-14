@@ -1,18 +1,17 @@
-/*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*	
-*	File_name: Camera.hpp
-*	
-*	Implementing camera
-*	
-*	2019/10/10
-*/
+/**************************************************************************************
+ *	File Name        : Camera.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #pragma once
 #include "vec2.hpp"
 #include "mat3.hpp"
 
-class [[nodiscard]]Camera
+class [[nodiscard]] Camera
 {
 public:
 	constexpr Camera() noexcept = default;

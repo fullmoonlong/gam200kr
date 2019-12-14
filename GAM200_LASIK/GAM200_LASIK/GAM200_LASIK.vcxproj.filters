@@ -97,9 +97,6 @@
     <ClInclude Include="UI.hpp">
       <Filter>Object\UI</Filter>
     </ClInclude>
-    <ClInclude Include="LevelTest1.h">
-      <Filter>LevelState\LevelTest1</Filter>
-    </ClInclude>
     <ClInclude Include="Sound.hpp">
       <Filter>System\SoundManager</Filter>
     </ClInclude>
@@ -124,8 +121,8 @@
     <ClInclude Include="Logo.h">
       <Filter>LevelState\Logo</Filter>
     </ClInclude>
-    <ClInclude Include="StateManager.h">
-      <Filter>System\StateManager</Filter>
+    <ClInclude Include="LevelTest1.h">
+      <Filter>LevelState\Logo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

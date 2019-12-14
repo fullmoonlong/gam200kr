@@ -1,7 +1,12 @@
-/*
-Name: Wonju Cho
-Creation Date : 11/14/2019
-*/
+/**************************************************************************************
+ *	File Name        : EnemyUnits.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Wonju Cho
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #include "Units.hpp"
 #include "EnemyUnits.hpp"
 

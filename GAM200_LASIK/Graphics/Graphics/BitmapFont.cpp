@@ -1,8 +1,18 @@
-/*
- *	Jeonghak Kim	junghak.kim@digipen.edu
- *	CS230 Text Assignment
- *	2019 Spring
- */
+/**************************************************************************************
+ *	File Name        : BitmapFont.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
+#include <filesystem>
+#include <fstream>
+#include <sstream>
+#include <cassert>
+#include <Graphics/BitmapFont.hpp>
+#include <Graphics/Texture.hpp>
 
 #include <filesystem>
 #include <fstream>
@@ -30,15 +40,6 @@ bool BitmapFont::LoadFromFile(const std::filesystem::path& filename) noexcept
 	return true;
 }
 
-bool BitmapFont::LoadDefinition(const std::wstring& font_definition, std::vector<Texture> page_textures) noexcept
-{
-	std::wistringstream stream(font_definition);
-	if (!CanParseStream(stream))
-		return false;
-	pageTextures = std::move(page_textures);
-	return pageTextures.size() == details.pagesCount;
-}
-
 const BitmapFont::information& BitmapFont::GetInformation() const noexcept
 {
 	return details;
@@ -51,11 +52,6 @@ BitmapFont::character BitmapFont::GetCharacter(wchar_t character_id) const noexc
 		return characters.find(character_id)->second;
 	}
 	return character();
-}
-
-unsigned short BitmapFont::GetLineHeight() const noexcept
-{
-	return details.lineHeight;
 }
 
 const Texture& BitmapFont::GetTexture(int page_index) const noexcept

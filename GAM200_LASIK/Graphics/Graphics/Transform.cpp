@@ -1,3 +1,12 @@
+/**************************************************************************************
+ *	File Name        : Transform.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #include "Transform.hpp"
 
 mat3<float> Transform::GetModelToWorld() noexcept

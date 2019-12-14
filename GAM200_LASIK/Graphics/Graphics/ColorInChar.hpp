@@ -1,16 +1,15 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
- *	File_name: Mesh.cpp
- *	
- *	Implement Mesh class
- *	
- *	2019/10/13
- */
+/**************************************************************************************
+ *	File Name        : ColorInChar.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #pragma once
 
-class [[nodiscard]]ColorInChar
+class [[nodiscard]] ColorInChar
 {
 public:
 	ColorInChar()

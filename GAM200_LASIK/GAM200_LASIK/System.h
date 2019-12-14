@@ -1,8 +1,12 @@
-/*
-*	Author: Doyeong Yi doyoung.lee@digipen.edu
-*	GAM200 Engine Prototype
-*	2019/09/25
-*/
+/**************************************************************************************
+ *	File Name        : System.h
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Doyeong Yi
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #pragma once
 
 class System

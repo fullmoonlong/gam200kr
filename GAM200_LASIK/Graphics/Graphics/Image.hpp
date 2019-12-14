@@ -1,13 +1,11 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
- *	File_name: Image.hpp
- *	
- *	Image class that load from image file
- *	
- *	2019/10/07
- */
-
+/**************************************************************************************
+ *	File Name        : Image.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #pragma once
 #include <vector>

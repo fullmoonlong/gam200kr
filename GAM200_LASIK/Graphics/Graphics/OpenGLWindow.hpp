@@ -1,14 +1,11 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
- *	File_name: OpenGL_Window.cpp
- *	
- *	Implementing of openGL window functions
- *	
- *	2019/09/21
- *	
- *	DoYoung Implemented fullscreen functions
- */
+/**************************************************************************************
+ *	File Name        : OpenGLWindow.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #pragma once
 #include <memory>

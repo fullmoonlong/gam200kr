@@ -1,10 +1,11 @@
-/****************************************************
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
- *	File_name: Material.cpp
- *	
- *	Creation Date: Dec.14 2019
- ***************************************************/
+/**************************************************************************************
+ *	File Name        : Material.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #include "Mesh.h"
 #include "Material.hpp"

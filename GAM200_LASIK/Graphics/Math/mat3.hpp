@@ -1,11 +1,11 @@
-/*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-*
-*	File_name: mat3.h
-*
-*	Custom math library
-*	2019/09/20
-*/
+/**************************************************************************************
+ *	File Name        : mat3.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #pragma once
 #include <complex>	// cos, sin

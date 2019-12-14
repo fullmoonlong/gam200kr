@@ -1,12 +1,13 @@
+/**************************************************************************************
+ *	File Name        : Units.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Wonju Cho
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 #pragma once
-/*
-Name: Wonju Cho
-Creation Date : 11/14/2019
-*/
 
-//#include"Object.h"
-//#include"Units.hpp"
-//#include"ObjectFactory.h"
 
 #include "Mesh.h"
 #include "Draw.hpp"

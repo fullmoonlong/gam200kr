@@ -1,12 +1,11 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
- *	File_name: Vertices.h
- *	
- *	Information about the vertices
- *	
- *	2019/10/31
- */
+/**************************************************************************************
+ *	File Name        : Vertices.h
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #pragma once
 #include "VerticesDescription.h"

@@ -1,38 +1,19 @@
-/*
-*	Author: JeongHak Kim	junghak.kim@digipen.edu
-			Doyeong Yi		doyoung.lee@digipen.edu
-*
-*	File_name: main.cpp
-*
-*	main loop
-*
-*	2019/07/04
-*/
+/**************************************************************************************
+ *	File Name        : main.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Jeonghak Kim
+ *	Secondary Author : Doyeong Yi
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #include "Engine.h"
 
 int main()
 {
-	//Application app;
-
-	//while (app.isRunning)
-	//{
-	//	app.Update();
-	//}
 
 	Engine* ENGINE = new Engine();
 	ENGINE->Run();
 
 	return 0;
 }
-
-
-//#include <Windows.h>
-//
-//int WINAPI wWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, PWSTR /*pCmdLine*/, int /*nCmdShow*/)
-//{
-//	Engine* ENGINE = new Engine();
-//	ENGINE->Run();
-//
-//	return 0;
-//}

@@ -1,3 +1,12 @@
+/**************************************************************************************
+ *	File Name        : GetInput.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Jookyung Lee
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #include <iostream>
 #include <string>
 #include "GetInput.hpp"

@@ -1,37 +1,13 @@
-
+/**************************************************************************************
+ *	File Name        : Units.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Wonju Cho
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 #include "CoolDown.hpp"
 #include "PATH.hpp"
-
-//void CoolDown::Initialize()
-//{
-//	textureShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-//
-//	const Mesh mesh = MESH::create_rectangle({ 0.0f }, { 1.0f });
-//	knightCoolMesh = mesh;
-//	magicianCoolMesh = mesh;
-//	archerCoolMesh = mesh;
-//
-//	knightCoolMaterial.shader = animationShader;
-//	knightCoolMaterial.vertices.InitializeWithMeshAndLayout(knightCoolMesh, texturelayout);
-//	knightCoolMaterial.texture.LoadTextureFrom(PATH::two);
-//	knightCoolTransform.SetTranslation(coolKnightPosition);
-//	knightCoolTransform.SetScale(size);
-//
-//
-//	magicianCoolMaterial.shader = animationShader;
-//	magicianCoolMaterial.vertices.InitializeWithMeshAndLayout(magicianCoolMesh, texturelayout);
-//	magicianCoolMaterial.texture.LoadTextureFrom(PATH::four);
-//	magicianCoolTransform.SetTranslation(coolMagicianPosition);
-//	magicianCoolTransform.SetScale(size);
-//
-//
-//	archerCoolMaterial.shader = animationShader;
-//	archerCoolMaterial.vertices.InitializeWithMeshAndLayout(archerCoolMesh, texturelayout);
-//	archerCoolMaterial.texture.LoadTextureFrom(PATH::three);
-//	archerCoolTransform.SetTranslation(coolArcherPosition);
-//	archerCoolTransform.SetScale(size);
-//
-//}
 
 void CoolDown::Initialize(const Camera& camera_, const CameraView& view_) {
 	animationShader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);

@@ -1,7 +1,11 @@
-/*
-Name: Wonju Cho
-Creation Date : 11/14/2019
-*/
+/**************************************************************************************
+ *	File Name        : EnemyUnits.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Wonju Cho
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #include"Object.h"
 #include<vec2.hpp>
@@ -10,9 +14,6 @@ class Skeleton :public Object {
 public:
 	int GetSkeletionHealth() { return SkeletionHealth; }
 	int GetSkeletionDamage() { return SkeletionDamage; }
-
-	//void SetSkeletionHealth(int damage) { SkeletionHealth -= damage; }
-	//void SetKnightDamage() { knightDamage = 15; }
 private:
 
 	int         SkeletionHealth = 100;
@@ -26,8 +27,6 @@ public:
 	int GetLichDamage() { return LichDamage; }
 	vec2<float> GetLichAttackRange() { return LichAttackRange; }
 
-	//void SetSkeletionHealth(int damage) { SkeletionHealth -= damage; }
-	//void SetKnightDamage() { knightDamage = 15; }
 private:
 
 	int         LichHealth = 50;
@@ -41,8 +40,6 @@ public:
 	int GetGolemHealth() { return GolemHealth; }
 	int GetGolemDamage() { return GolemDamage; }
 
-	//void SetSkeletionHealth(int damage) { SkeletionHealth -= damage; }
-	//void SetKnightDamage() { knightDamage = 15; }
 private:
 
 	int         GolemHealth = 350;

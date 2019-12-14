@@ -1,12 +1,11 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
- *	File_name: Animation.cpp
- *	
- *	Animation class
- *	
- *	2019/11/01
- */
+/**************************************************************************************
+ *	File Name        : Animation.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #include "Animation.hpp"
 

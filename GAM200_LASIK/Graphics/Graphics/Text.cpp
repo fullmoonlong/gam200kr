@@ -1,8 +1,11 @@
-/*
- *	Jeonghak Kim	junghak.kim@digipen.edu
- *	CS230 Text Assignment
- *	2019 Spring
- */
+/**************************************************************************************
+ *	File Name        : Text.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #include <Graphics/Text.hpp>
 
@@ -13,7 +16,7 @@ Text::Text(std::wstring text_string, const BitmapFont& text_font) noexcept
 	InitializeWithEmptyVertices();
 }
 
-std::vector<std::pair<const Vertices*, const Texture*>> Text::GetVerticesWithMatchingTextures() const noexcept
+std::vector<std::pair<const Vertices*, const Texture*>> Text::GetPairOfVerticesAndTextures() const noexcept
 {
 	std::vector<std::pair<const Vertices*, const Texture*>> pairs;
 
@@ -31,11 +34,6 @@ std::vector<std::pair<const Vertices*, const Texture*>> Text::GetVerticesWithMat
 	return pairs;
 }
 
-std::wstring Text::GetString() const noexcept
-{
-	return string;
-}
-
 void Text::SetString(const std::wstring& text_string) noexcept
 {
 	if (text_string != string)
@@ -43,11 +41,6 @@ void Text::SetString(const std::wstring& text_string) noexcept
 		needNewMeshes = true;
 		string = text_string;
 	}
-}
-
-const BitmapFont* Text::GetFont() const noexcept
-{
-	return font;
 }
 
 void Text::SetFont(const BitmapFont& text_font) noexcept

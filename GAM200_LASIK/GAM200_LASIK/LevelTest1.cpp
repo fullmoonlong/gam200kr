@@ -1,11 +1,12 @@
-/*
-*	Author: Doyeong Yi doyoung.lee@digipen.edu
-*			Junghak Kim
-*			Jookyung Lee
-*			Wonju Cho
-*	GAM200 Engine Prototype
-*	2019/12/11
-*/
+/**************************************************************************************
+ *	File Name        : LevelTest1.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Jookyung Lee
+ *	Secondary Author : Wonju Cho
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #include "LevelTest1.h"
 #include <iostream>
 
@@ -68,14 +69,6 @@ void LevelTest1::Initialize()
 	background.transform.SetScale({ 1280, 720 });
 	//background
 
-	//ui
-	//ui.material.shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	//ui.material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	//ui.material.texture.LoadTextureFrom("../assets/UI.png");
-	//ui.transform.SetTranslation({0, -420});
-	//ui.transform.SetScale({ 1280, 240 });
-	//ui
-
 	// unit initialize
 	{
 		//tower
@@ -88,7 +81,6 @@ void LevelTest1::Initialize()
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadTextureFrom(PATH::tower);
 		tower->animation.Initialize({ 1,1, 1.f }, tower->material.shader);
-
 		OBJECTFACTORY->CopyObject(tower);
 		//tower
 
@@ -101,7 +93,6 @@ void LevelTest1::Initialize()
 		lair->material.shader = fontShader;
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadTextureFrom(PATH::lair);
-
 		lair->AddComponent<LairComponent>();
 		OBJECTFACTORY->CopyObject(lair);
 		//lair
@@ -149,7 +140,6 @@ void LevelTest1::Initialize()
 		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		knight->material.texture.LoadTextureFrom(PATH::knight_move);
 		knight->animation.Initialize({ 8, 1, 10.0f }, shader);
-
 		//knight
 
 		//archer
@@ -164,7 +154,6 @@ void LevelTest1::Initialize()
 		archer->material.texture.LoadTextureFrom(PATH::archer_move);
 		archer->animation.Initialize({ 8, 1, 10.0f }, shader);
 		//archer
-
 
 		//magician
 		magician = new Magician();
@@ -216,7 +205,6 @@ void LevelTest1::Initialize()
 		fireball->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		fireball->material.texture.LoadTextureFrom(PATH::fireball);
 		fireball->animation.Initialize({ 3, 1, 5.0f }, shader);
-
 		fireball->SetState(State::WALK);
 		fireball->SetDamage(magician->GetMagicianDamage());
 
@@ -230,7 +218,6 @@ void LevelTest1::Initialize()
 		fireballEnemy->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		fireballEnemy->material.texture.LoadTextureFrom(PATH::fireball);
 		fireballEnemy->animation.Initialize({ 3, 1, 5.0f }, shader);
-
 		fireballEnemy->SetState(State::WALK);
 		fireballEnemy->SetDamage(lich->GetLichDamage());
 
@@ -334,7 +321,6 @@ void LevelTest1::Update(float dt)
 
 void LevelTest1::Win(Object* obj)
 {
-	std::cout << obj->GetHealth() << std::endl;
 	if (isWin)
 	{
 		Draw::draw(winpic->material);
@@ -583,7 +569,7 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 		}
 		isEnter = false;
 		printf("typing end\n");
-		//std::cout << "\n" << input.GetString();
+
 		if (input.MatchStringWithInput() == 1)
 		{
 			OBJECTFACTORY->CopyObject(knight);
@@ -677,7 +663,3 @@ void LevelTest1::HandleMousePositionEvent(float xpos, float ypos)
 {
 	mousePosition = { xpos, ypos };
 }
-//
-//void LevelTest1::HandleWindowClose()
-//{
-//}

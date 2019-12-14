@@ -1,12 +1,11 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
- *	File_name: Screenshot.cpp
- *	
- *	Screenshot the window
- *	
- *	Dec.05 2019
- */
+/**************************************************************************************
+ *	File Name        : Screenshot.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #include "Screenshot.hpp"
 #include <GL/glew.h>

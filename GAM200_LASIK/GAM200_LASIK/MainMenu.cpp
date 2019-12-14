@@ -1,19 +1,18 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *
- *	File_name: MainMenu.h
- *
- *	MainMenu
- *
- *	Dec.13 2019
- */
+/**************************************************************************************
+ *	File Name        : MainMenu.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : Jookyung Lee
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 
 #include <iostream>
 #include "MainMenu.h"
 #include "StateManager.h"
 #include "Engine.h"
 #include "Sound.hpp"
-//#include "VerticesDescriptionLayout.hpp"
 
 MainMenu::MainMenu(OpenGLWindow* window)
 {
@@ -41,7 +40,6 @@ void MainMenu::Initialize()
 	exitButton.material.shader    = shader;
 	selectedArrow.material.shader = shader;
 
-	//const Mesh& spriteBox = MESH::create_sprite_box();
 	const Mesh& spriteBox = MESH::create_rectangle({ 0.0f }, { 1.0f });
 	startButton.material.vertices.InitializeWithMeshAndLayout(spriteBox, layout);
 	exitButton.material.vertices.InitializeWithMeshAndLayout(spriteBox, layout);

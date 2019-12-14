@@ -1,3 +1,12 @@
+/**************************************************************************************
+ *	File Name        : shape.vert
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #version 330
 layout (location = 0) in vec2 position;
 layout (location = 1) in vec4 color;

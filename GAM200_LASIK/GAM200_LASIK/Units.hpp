@@ -1,9 +1,13 @@
-#pragma once
-/*
-Name: Wonju Cho
-Creation Date : 11/14/2019
-*/
+/**************************************************************************************
+ *	File Name        : Units.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Wonju Cho
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
+#pragma once
 #include"Object.h"
 #include<vec2.hpp>
 
@@ -12,8 +16,6 @@ public:
 	
 	int GetKnightHealth() { return knightHealth; }
 	int GetKnightDamage() { return knightDamage; }
-	//void SetKnightHealth(int damage) { knightHealth -= damage; }
-	//void SetKnightDamage() { knightDamage = 15; }
 
 private:
 	int         knightHealth = 200;

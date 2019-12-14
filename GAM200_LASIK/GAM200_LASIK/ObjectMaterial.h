@@ -1,8 +1,12 @@
-/*
-*	Author: Doyeong Yi doyoung.lee@digipen.edu
-*	GAM200 Engine Prototype
-*	2019/12/13
-*/
+/**************************************************************************************
+ *	File Name        : ObjectMaterial.h
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Doyeong Yi
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #pragma once
 #include "Component.h"
 #include "ComponentType.h"

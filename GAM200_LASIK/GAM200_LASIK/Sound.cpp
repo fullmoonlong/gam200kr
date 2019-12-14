@@ -1,8 +1,12 @@
-/*
-*	Author: Doyeong Yi doyoung.lee@digipen.edu
-*	GAM200 Engine Prototype
-*	2019/11/08
-*/
+/**************************************************************************************
+ *	File Name        : Sound.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Doyeong Yi
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #include "Sound.hpp"
 
 
@@ -42,7 +46,6 @@ void SoundManager::Shutdown()
 
 void SoundManager::ErrorCheck(FMOD_RESULT /*result*/)
 {
-	//assert(result == FMOD_OK);
 }
 
 void SoundManager::LoadFile(std::string filename)
@@ -58,7 +61,6 @@ void SoundManager::LoadFile(std::string filename)
 	Volume.push_back((float)volume_);
 
 	result_ = system->createSound(path.c_str(), FMOD_2D, 0, &Sounds[soundID]);
-	//added = true;
 	soundID++;
 	ErrorCheck(result_);
 }

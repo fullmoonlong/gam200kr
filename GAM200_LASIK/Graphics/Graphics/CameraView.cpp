@@ -1,3 +1,12 @@
+/**************************************************************************************
+ *	File Name        : CameraView.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #include "CameraView.hpp"
 
 mat3<float> BuildToNDC(CameraView* camera, vec2<float> windowSize)

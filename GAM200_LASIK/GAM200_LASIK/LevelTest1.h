@@ -1,11 +1,12 @@
-/*
-*	Author: Doyeong Yi doyoung.lee@digipen.edu
-			Junghak Kim
-			Jookyung Lee
-			Wonju Cho
-*	GAM200 Engine Prototype
-*	2019/12/11
-*/
+/**************************************************************************************
+ *	File Name        : LevelTest1.h
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Jookyung Lee
+ *	Secondary Author : Wonju Cho
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #pragma once
 #include "LevelSystem.h"
 #include "EventHandler.hpp"

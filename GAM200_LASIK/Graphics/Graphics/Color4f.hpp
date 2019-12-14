@@ -1,17 +1,16 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *	
- *	File_name: Mesh.cpp
- *	
- *	Implement Mesh class
- *	
- *	2019/10/11
- */
+/**************************************************************************************
+ *	File Name        : Color4f.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #pragma once
 #include <algorithm>
 
-class [[nodiscard]]Color4f
+class [[nodiscard]] Color4f
 {
 public:
 	Color4f()

@@ -1,9 +1,11 @@
-/*
- *	Author: JeongHak Kim	junghak.kim@digipen.edu
- *			Jookyung Lee jookyung.lee@digipen.edu
- *	Application
- *	2019/07/04
- */
+/**************************************************************************************
+ *	File Name        : Application.cpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : Jookyung Lee
+ *	Secondary Author : Wonju Cho
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 
 #include <iostream>
 #include <fstream>
@@ -55,14 +57,10 @@ void Application::ShutDown()
 
 void Application::HandleKeyPress(KeyboardButton button)
 {
-	//bool isEnter = false;
-	//if (isEnter != false)
 	{
 		switch (button)
 		{
 		case KeyboardButton::F:
-			//window.ToggleFullScreen();
-			//STATEMANAGER->GetCurrentLevel()->HandleResizeEvent(window.GetWindowWidth(), window.GetWindowHeight());
 			break;
 		case KeyboardButton::V:
 			if (window.IsVSyncOn() == false)
@@ -74,15 +72,7 @@ void Application::HandleKeyPress(KeyboardButton button)
 			break;
 		case KeyboardButton::Escape:
 			this->ShutDown();
-			break;/*
-		case KeyboardButton::Enter:
-			if (isEnter == false)
-			{
-				isEnter = true;
-				break;
-			}
-			isEnter = false;
-			break;*/
+			break;
 		default:
 			break;
 		}

@@ -1,61 +1,58 @@
-/*
- * Rudy Castan
- * Graphics Library
- * CS230
- */
+/**************************************************************************************
+ *	File Name        : BitmapFont.hpp
+ *	Project Name     : Keyboard Warrior
+ *	Primary Author   : JeongHak Kim
+ *	Secondary Author : 
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
+
 #pragma once
 #include "Texture.hpp"
-#include <filesystem>
+#include <vector>
 #include <string>
 #include <unordered_map>
-#include <vector>
-
+#include <filesystem>
 
 class [[nodiscard]] BitmapFont
 {
 public:
 	struct [[nodiscard]] character
 	{
-		wchar_t        id = wchar_t(-1); // The character id.
-		unsigned short x = 0;           // The left position of the character image in the texture.
-		unsigned short y = 0;           // The top position of the character image in the texture.
-		unsigned short width = 0;           // The width of the character image in the texture.
-		unsigned short height = 0;           // The height of the character image in the texture.
-		short xOffset = 0; // How much the current position should be offset when copying the image from the texture
-						   // to the screen.
-		short yOffset = 0; // How much the current position should be offset when copying the image from the texture
-						   // to the screen.
-		short         xAdvance = 0; // How much the current position should be advanced after drawing the character.
-		unsigned char page = 0; // The texture page where the character image is found.
+		wchar_t id = wchar_t(-1);
+		unsigned short x = 0;
+		unsigned short y = 0;
+		unsigned short width = 0;
+		unsigned short height = 0;
+		short xOffset = 0;
+		short yOffset = 0;
+		short xAdvance = 0;
+		unsigned char page = 0;
 	};
 
 	struct [[nodiscard]] information
 	{
-		short          fontSize = 0;
-		std::wstring   fontName{};
-		unsigned short lineHeight = 0; // This is the distance in pixels between each line of text.
+		short fontSize = 0;
+		std::wstring fontName;
+		unsigned short lineHeight = 0;
 		unsigned short imageWidth = 0;
 		unsigned short imageHeight = 0;
-		unsigned short pagesCount = 0; // The number of texture pages included in the font.
-		std::vector<std::wstring>
-			pageNames{}; // the name of a texture file. There is one for each page in the font.
+		unsigned short pagesCount = 0;
+		std::vector<std::wstring> pageNames;
 	};
 
-public:
 	bool LoadFromFile(const std::filesystem::path& filename) noexcept;
-	bool LoadDefinition(const std::wstring& font_definition, std::vector<Texture> page_textures) noexcept;
 	const information& GetInformation() const noexcept;
-	character          GetCharacter(wchar_t character_id) const noexcept;
-	unsigned short     GetLineHeight() const noexcept;
+	character GetCharacter(wchar_t character_id) const noexcept;
 	const Texture& GetTexture(int page_index) const noexcept;
-	bool               HasCharacter(wchar_t character_id) const noexcept;
+	bool HasCharacter(wchar_t character_id) const noexcept;
 
 private:
 	bool CanParseFile(const std::filesystem::path& filename) noexcept;
 	bool CanParseStream(std::wistream& stream) noexcept;
 
 private:
-	information                            details{};
-	std::unordered_map<wchar_t, character> characters{};
-	std::vector<Texture>                   pageTextures{};
+	information                            details;
+	std::unordered_map<wchar_t, character> characters;
+	std::vector<Texture>                   pageTextures;
 };
