@@ -146,3 +146,22 @@ Mesh MESH::create_triangle(vec2<float> pos, vec2<float> p1, vec2<float> p2, vec2
 	triangle.AddColor(color);
 	return triangle;
 }
+
+Mesh MESH::create_sprite_box()
+{
+	Mesh spriteBox;
+
+	spriteBox.SetShapePattern(ShapePattern::TriangleFan);
+
+	constexpr float unitSideLength = 1.0f / 2.0f;
+
+	spriteBox.AddPoint({ -unitSideLength, -unitSideLength });
+	spriteBox.AddPoint({ -unitSideLength,  unitSideLength });
+	spriteBox.AddPoint({  unitSideLength,  unitSideLength });
+	spriteBox.AddPoint({  unitSideLength, -unitSideLength });
+	spriteBox.AddTextureCoordinate({ 0.f, 0.f });
+	spriteBox.AddTextureCoordinate({ 0.f, 1.f });
+	spriteBox.AddTextureCoordinate({ 1.f, 1.f });
+	spriteBox.AddTextureCoordinate({ 1.f, 0.f });
+	return spriteBox;
+}

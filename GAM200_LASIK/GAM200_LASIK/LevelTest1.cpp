@@ -266,11 +266,13 @@ void LevelTest1::Update(float dt)
 	Draw::StartDrawing();
 
 	const mat3<float> backgroundNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
-	Draw::draw({ backgroundShader, backgroundVertices, backgroundNDC,  backgroundTexture });
+	Material backgroundMaterial;
+	backgroundMaterial.CreateSprite(backgroundShader, backgroundTexture, backgroundNDC);
+	Draw::draw(backgroundMaterial);
 
 	const mat3<float> uiNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * ui.transform.GetModelToWorld();
 	ui.material.ndc = uiNDC;
-	Draw::draw({ ui.material });
+	Draw::draw(ui.material);
 
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());

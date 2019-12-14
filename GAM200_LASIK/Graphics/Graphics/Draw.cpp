@@ -13,7 +13,7 @@
 
 void Draw::StartDrawing()
 {
-	glClearColor(0.2f, 0.3f, 0.4f, 1.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -52,6 +52,11 @@ void Draw::DrawText(const Shader& shader, const mat3<float>& ndc, const Text& te
 	{
 		const Vertices& textVertices = *vertices_texture.first;
 		const Texture*  textTexture  = vertices_texture.second;
-		draw({ shader, textVertices, ndc, *textTexture });
+		Material textMaterial;
+		textMaterial.CreateText(shader, { 1.0f }, ndc);
+		shader.SendUniformVariable("textColor", { 1.0f });
+		textMaterial.SetVertices(textVertices);
+		textMaterial.SetTexture(*textTexture);
+		draw(textMaterial);
 	}
 }

@@ -197,6 +197,7 @@
     <ClCompile Include="Graphics\CameraView.cpp" />
     <ClCompile Include="Graphics\Color.cpp" />
     <ClCompile Include="Graphics\Image.cpp" />
+    <ClCompile Include="Graphics\Material.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\OpenGLWindowGLFW.cpp" />
     <ClCompile Include="Graphics\PlatformWindowGLFW.cpp" />

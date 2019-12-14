@@ -1,11 +1,12 @@
 #pragma once
+#include <vector>
 #include "System.h"
 #include "LevelSystem.h"
 #include "OpenGLWindow.hpp"
-#include <vector>
 #include "EventHandler.hpp"
 
 enum GameLevels {
+	LOGO,
 	MAINMENU,
 	LVTest1,
 	LVTest2

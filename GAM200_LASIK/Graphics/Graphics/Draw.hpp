@@ -13,14 +13,7 @@
 #include "Vertices.h"
 #include "Texture.hpp"
 #include "Text.hpp"
-
-struct Material
-{
-	Shader shader;
-	Vertices vertices;
-	mat3<float> ndc;
-	Texture texture;
-};
+#include "Material.hpp"
 
 class Draw
 {
