@@ -12,6 +12,8 @@
 #include "MainMenu.h"
 #include "StateManager.h"
 #include "Engine.h"
+#include "Sound.hpp"
+//#include "VerticesDescriptionLayout.hpp"
 
 MainMenu::MainMenu(OpenGLWindow* window)
 {
@@ -53,6 +55,7 @@ void MainMenu::Initialize()
 
 	startButton.material.ndc = worldToNDC * startButton.transform.GetModelToWorld();
 	exitButton.material.ndc = worldToNDC * exitButton.transform.GetModelToWorld();
+	SOUNDMANAGER->LoadFile("beep.wav");
 }
 
 void MainMenu::Update(float /*dt*/)
@@ -79,6 +82,7 @@ void MainMenu::HandleKeyPress(KeyboardButton button)
 	if (button == KeyboardButton::Arrow_Down) {
 		--selectedMenu;
 		if (selectedMenu == -1) {
+			SOUNDMANAGER->PlaySound(0, 0);
 			selectedArrow.transform.SetTranslation({ -100.0f, -100.0f });
 			selectedMenu = 1;
 		}
@@ -86,6 +90,7 @@ void MainMenu::HandleKeyPress(KeyboardButton button)
 	else if (button == KeyboardButton::Arrow_Up) {
 		++selectedMenu;
 		if (selectedMenu == 2) {
+			SOUNDMANAGER->PlaySound(0, 0);
 			exitButton.transform.SetTranslation({ -100.0f, -300.0f });
 			selectedMenu = 0;
 		}
@@ -98,7 +103,7 @@ void MainMenu::HandleKeyPress(KeyboardButton button)
 		}
 		else if (selectedMenu == 1)
 		{
-			Shutdown();
+			gameEngine->gamestate = GameState::EXIT;
 		}
 	}
 }

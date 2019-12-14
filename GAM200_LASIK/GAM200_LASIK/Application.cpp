@@ -49,7 +49,8 @@ void Application::Update(float /*dt*/)
 void Application::ShutDown()
 {
 	isRunning = false;
-	gameEngine->Shutdown();
+	gameEngine->gamestate = GameState::EXIT;
+	window.CleanUpWindow();
 }
 
 void Application::HandleKeyPress(KeyboardButton button)

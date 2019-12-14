@@ -106,7 +106,6 @@ private:
 	CoolDown coolTime;
 
 	UI::SelectSpawn selectMenu;
-	SoundManager soundManager;
 	//float cameraSpeed{ 80.0f };
 	float depth = 1.0f;
 	float zoom = 1.0f;

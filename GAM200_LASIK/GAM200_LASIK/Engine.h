@@ -23,9 +23,9 @@ public:
 	void AddSystem(System* system);
 	void DestroyAllsystems();
 
+	GameState gamestate;
 private:
 	std::vector<System*> systems;
-	GameState gamestate;
 	Clock clock;
 	float deltaTime = 0;
 };

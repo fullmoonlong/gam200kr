@@ -111,6 +111,7 @@ void Object::Update(float dt) noexcept
 			this->GetComponent<ObjectAttackComponent>()->time += dt;
 			if (this->GetComponent<ObjectAttackComponent>()->time > 0.6f)
 			{
+				SOUNDMANAGER->PlaySound(0, 4);
 				vec2<float> a = { transform.GetTranslation().x + 48.f, transform.GetTranslation().y };
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
@@ -126,7 +127,7 @@ void Object::Update(float dt) noexcept
 			this->GetComponent<ObjectAttackComponent>()->time += dt;
 			if (this->GetComponent<ObjectAttackComponent>()->time > 0.7f)
 			{
-				SOUNDMANAGER->PlaySound(0, 2);
+				SOUNDMANAGER->PlaySound(0, 3);
 				vec2<float> a = transform.GetTranslation();
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
@@ -142,7 +143,7 @@ void Object::Update(float dt) noexcept
 			this->GetComponent<ObjectAttackComponent>()->time += dt;
 			if (this->GetComponent<ObjectAttackComponent>()->time > 2.4f)
 			{
-				SOUNDMANAGER->PlaySound(0, 1);
+				SOUNDMANAGER->PlaySound(0, 2);
 				vec2<float> a = transform.GetTranslation();
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
@@ -158,6 +159,7 @@ void Object::Update(float dt) noexcept
 			this->GetComponent<ObjectAttackComponent>()->time += dt;
 			if (this->GetComponent<ObjectAttackComponent>()->time > 0.6f)
 			{
+				SOUNDMANAGER->PlaySound(0, 4);
 				vec2<float> a = { transform.GetTranslation().x - 48.f, transform.GetTranslation().y };
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
@@ -173,6 +175,7 @@ void Object::Update(float dt) noexcept
 			this->GetComponent<ObjectAttackComponent>()->time += dt;
 			if (this->GetComponent<ObjectAttackComponent>()->time > 3.0f)
 			{
+				SOUNDMANAGER->PlaySound(0, 2);
 				vec2<float> a = { transform.GetTranslation().x, transform.GetTranslation().y };
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
@@ -188,6 +191,7 @@ void Object::Update(float dt) noexcept
 			this->GetComponent<ObjectAttackComponent>()->time += dt;
 			if (this->GetComponent<ObjectAttackComponent>()->time > 1.5f)
 			{
+				SOUNDMANAGER->PlaySound(0, 4);
 				vec2<float> a = { transform.GetTranslation().x - 256.f, transform.GetTranslation().y - 128 };
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 

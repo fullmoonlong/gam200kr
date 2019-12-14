@@ -7,14 +7,15 @@
 #include "Application.h"
 #include "ObjectFactory.h"
 #include "StateManager.h"
+#include "Sound.hpp"
 
 
 Engine* gameEngine = nullptr;
 
 Engine::Engine()
 {
-	gamestate = GameState::PLAY;
 	gameEngine = this;
+	gamestate = GameState::PLAY;
 }
 
 Engine::~Engine()
@@ -31,6 +32,7 @@ void Engine::Initialize()
 
 	Application* app = dynamic_cast<Application*>(systems[0]);
 	AddSystem(new StateManager(app->GetWindow(), app->GetDeltaTime()));
+	AddSystem(new SoundManager());
 	for (auto sys : systems)
 	{
 		sys->Initialize();
@@ -53,7 +55,6 @@ void Engine::Update()
 
 void Engine::Shutdown()
 {
-	gamestate = GameState::EXIT; 
 	DestroyAllsystems();
 }
 

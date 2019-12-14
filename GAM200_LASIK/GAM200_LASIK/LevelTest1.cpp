@@ -187,6 +187,7 @@ void LevelTest1::Initialize()
 		swordAttack->material.shader = shader;
 		swordAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		swordAttack->SetDamage(knight->GetKnightDamage());
+		swordAttack->animation.Initialize({ 1,1, 1.f }, swordAttack->material.shader);
 
 		knight->GetComponent<ObjectAttackComponent>()->attack = swordAttack;
 		//sword attack
@@ -198,6 +199,7 @@ void LevelTest1::Initialize()
 		enemyAttack->SetState(State::WALK);
 		enemyAttack->material.shader = shader;
 		enemyAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		enemyAttack->animation.Initialize({ 1,1, 1.f }, enemyAttack->material.shader);
 		
 		enemyAttack->SetDamage(skeleton->GetSkeletionDamage());
 		skeleton->GetComponent<ObjectAttackComponent>()->attack = enemyAttack;
@@ -240,6 +242,7 @@ void LevelTest1::Initialize()
 		arrow.material.shader = fontShader;
 		arrow.material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		arrow.material.texture.LoadTextureFrom(PATH::arrow);
+		arrow.animation.Initialize({ 1,1, 1.f }, arrow.material.shader);
 
 		arrow.SetState(State::WALK);
 		arrow.SetDamage(archer->GetArcherDamage());
@@ -249,11 +252,11 @@ void LevelTest1::Initialize()
 	}
 
 	//test sound and make object
-	SOUNDMANAGER->Initialize();
 	SOUNDMANAGER->LoadFile("awesomeness(bgm).wav");
 	SOUNDMANAGER->LoadFile("Fire impact 1.wav");
 	SOUNDMANAGER->LoadFile("shoot.ogg");
-	SOUNDMANAGER->PlaySound(1, 0);
+	SOUNDMANAGER->LoadFile("hit.ogg");
+	SOUNDMANAGER->PlaySound(1, 1);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
 	selectMenu.SelectMenu();
