@@ -54,6 +54,8 @@ private:
 	std::vector<Object*> objectsToBeDeleted;
 
 	ObjectID lastObjectID = 0;
+	int PlayerAmount = 0;
+	int EnemyAmount = 0;
 };
 
 extern ObjectFactory* OBJECTFACTORY;

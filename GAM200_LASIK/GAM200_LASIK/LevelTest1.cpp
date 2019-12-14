@@ -77,7 +77,7 @@ void LevelTest1::Initialize()
 		tower->SetHealth(300);
 		tower->SetDamage(0);
 		tower->Initialize("tower.txt");
-		tower->material.shader = fontShader;
+		tower->material.shader = shader;
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadTextureFrom(PATH::tower);
 		tower->animation.Initialize({ 1,1, 1.f }, tower->material.shader);
@@ -90,10 +90,11 @@ void LevelTest1::Initialize()
 		lair->SetHealth(300);
 		lair->SetDamage(0);
 		lair->Initialize("lair.txt");
-		lair->material.shader = fontShader;
+		lair->material.shader = shader;
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadTextureFrom(PATH::lair);
 		lair->AddComponent<LairComponent>();
+		lair->animation.Initialize({ 1, 1,	10.0f }, shader);
 		OBJECTFACTORY->CopyObject(lair);
 		//lair
 
@@ -226,7 +227,7 @@ void LevelTest1::Initialize()
 
 		//arrow
 		arrow.Initialize("arrow.txt");
-		arrow.material.shader = fontShader;
+		arrow.material.shader = shader;
 		arrow.material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		arrow.material.texture.LoadTextureFrom(PATH::arrow);
 		arrow.animation.Initialize({ 1,1, 1.f }, arrow.material.shader);
@@ -243,7 +244,7 @@ void LevelTest1::Initialize()
 	SOUNDMANAGER->LoadFile("Fire impact 1.wav");
 	SOUNDMANAGER->LoadFile("shoot.ogg");
 	SOUNDMANAGER->LoadFile("hit.ogg");
-	SOUNDMANAGER->PlaySound(1, 1);
+	SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
 	selectMenu.SelectMenu();

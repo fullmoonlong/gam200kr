@@ -41,6 +41,7 @@ void ObjectFactory::Update(float /*dt*/)
 				if (*it == object)
 				{
 					PlayerUnits.erase(it);
+					PlayerAmount--;
 					break;
 				}
 			}
@@ -52,6 +53,7 @@ void ObjectFactory::Update(float /*dt*/)
 				if (*it == object)
 				{
 					EnemyUnits.erase(it);
+					EnemyAmount--;
 					break;
 				}
 			}
@@ -95,7 +97,8 @@ Object* ObjectFactory::CreateEmptyObject()
 void ObjectFactory::DestroyAllObjects()
 {
 	lastObjectID = 0;
-
+	PlayerAmount = 0;
+	EnemyAmount = 0;
 	for (auto object : objectIDMap)
 	{
 		delete object.second;
@@ -134,10 +137,12 @@ void ObjectFactory::CopyObject(Object* object)
 	if (newObject->GetType() == UnitType::Player)
 	{
 		PlayerUnits.push_back(newObject);
+		PlayerAmount++;
 	}
 	else if (newObject->GetType() == UnitType::Enemy)
 	{
 		EnemyUnits.push_back(newObject);
+		EnemyAmount++;
 	}
 }
 
@@ -216,7 +221,7 @@ void ObjectFactory::CheckAttackState()
 
 	for (auto enemy : EnemyUnits)
 	{
-		if ((playerTotalNotWhileAttack == PlayerUnits.size()) && enemy->GetAttackState() == true)
+		if ((playerTotalNotWhileAttack == PlayerAmount) && enemy->GetAttackState() == true)
 		{
 			if (enemy == nullptr)
 			{
@@ -229,7 +234,7 @@ void ObjectFactory::CheckAttackState()
 	}
 	for (auto player : PlayerUnits)
 	{
-		if ((enemyTotalNotWhileAttack == EnemyUnits.size()) && player->GetAttackState() == true)
+		if ((enemyTotalNotWhileAttack == EnemyAmount) && player->GetAttackState() == true)
 		{
 			if (player == nullptr)
 			{
