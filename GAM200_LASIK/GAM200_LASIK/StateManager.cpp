@@ -15,11 +15,10 @@
 
 StateManager* STATEMANAGER = nullptr;
 
-StateManager::StateManager(OpenGLWindow* window, float* dt)
+StateManager::StateManager(OpenGLWindow* window)
 {
 	STATEMANAGER = this;
 	windowPoint = window;
-	deltaTime = dt;
 	std::cout << "StateManager Add Sucessful" << std::endl;
 }
 

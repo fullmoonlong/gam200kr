@@ -17,14 +17,13 @@
 enum GameLevels {
 	LOGO,
 	MAINMENU,
-	LVTest1,
-	LVTest2
+	LVTest1
 };
 
 class StateManager : public System, public SimpleEventHandler
 {
 public:
-	StateManager(OpenGLWindow* window, float* dt);
+	StateManager(OpenGLWindow* window);
 	~StateManager();
 	void Initialize() override;
 	void Update(float dt) override;
@@ -36,6 +35,5 @@ public:
 	std::vector<LevelSystem*> levels;
 
 	OpenGLWindow* windowPoint;
-	float* deltaTime;
 };
 extern StateManager* STATEMANAGER;

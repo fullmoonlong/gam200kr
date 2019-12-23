@@ -8,6 +8,7 @@
  **************************************************************************************/
 
 #pragma once
+#include <string>
 #include "System.h"
 #include "OpenGLWindow.hpp"
 #include "EventHandler.hpp"
@@ -31,14 +32,15 @@ public:
 	void HandleWindowClose() override;
 
 	OpenGLWindow* GetWindow() { return &window; }
-	float* GetDeltaTime() { return &deltaTime; }
 
 	bool isRunning = false;
 
 private:
-	int frameCount = 0;
-	float deltaTime = 0;
-
 	OpenGLWindow window;
 	Clock clock;
+
+	const std::string& windowTitle{ "Keyboard Warriors" };
+	std::string windowTitleWithFrameCount;
+private:
+	int frameCount = 0;
 };

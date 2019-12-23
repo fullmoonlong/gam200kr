@@ -28,7 +28,7 @@ Application::Application()
 
 void Application::Initialize()
 {
-	window.CanCreateWindow(1280, 720, this, "Lasik");
+	window.CanCreateWindow(1280, 720, this, "Keyboard Warriors");
 }
 
 void Application::Update(float /*dt*/)
@@ -40,42 +40,39 @@ void Application::Update(float /*dt*/)
 	if (clock.timePassed >= 1.0f)
 	{
 		++time;
+		windowTitleWithFrameCount = windowTitle + " (fps: " + std::to_string(frameCount) + ")";
+		window.SetWindowTitle(windowTitleWithFrameCount.c_str());
 		clock.timePassed -= 1.0f;
 		frameCount = 0;
 	}
 	window.SwapBuffers();
 	window.PollEvents();
-	deltaTime = clock.GetTimeFromLastUpdate();
 }
 
 void Application::ShutDown()
 {
 	isRunning = false;
 	gameEngine->gamestate = GameState::EXIT;
-	//window.CleanUpWindow();
 }
 
 void Application::HandleKeyPress(KeyboardButton button)
 {
-	{
-		switch (button)
-		{
-		case KeyboardButton::F:
-			break;
-		case KeyboardButton::V:
-			if (window.IsVSyncOn() == false)
-			{
-				window.ToggleVSync(true);
-				break;
-			}
-			window.ToggleVSync(false);
-			break;
-		case KeyboardButton::Escape:
-			this->ShutDown();
-			break;
-		default:
+	switch (button) {
+	case KeyboardButton::F:
+		break;
+	case KeyboardButton::V:
+		if (window.IsVSyncOn() == false) {
+			window.ToggleVSync(true);
 			break;
 		}
+		else
+		window.ToggleVSync(false);
+		break;
+	case KeyboardButton::Escape:
+		this->ShutDown();
+		break;
+	default:
+		break;
 	}
 	STATEMANAGER->GetCurrentLevel()->HandleKeyPress(button);
 }

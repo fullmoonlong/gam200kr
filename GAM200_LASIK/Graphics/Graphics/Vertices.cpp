@@ -52,7 +52,7 @@ void Vertices::InitializeWithMeshAndLayout(const Mesh& mesh, const VerticesDescr
 
 void Vertices::UpdateVeticesFromMesh(const Mesh& mesh)
 {
-	if (mesh.GetPointsCount() > bufferVertexCapacity)
+	if (static_cast<int>(mesh.GetPointsCount()) > bufferVertexCapacity)
 	{
 		DeleteVerticesOnGPU();
 		InitializeWithMeshAndLayout(mesh, layout);

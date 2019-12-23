@@ -33,7 +33,8 @@ LevelTest1::~LevelTest1()
 void LevelTest1::Initialize()
 {
 	std::cout << "Load LevelTest1 Sucessful" << std::endl;
-	isWin = false;
+	isPlayerWin = false;
+	isEnemyWin = false;
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);	//shaders for animation
 	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 
@@ -60,12 +61,21 @@ void LevelTest1::Initialize()
 	winpic->material.texture.LoadTextureFrom(PATH::winpic);
 	winpic->material.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * winpic->transform.GetModelToWorld();
 
+	//lose
+	losepic = new Object();
+	losepic->transform.SetTranslation({ 0.f, 0.f });
+	losepic->transform.SetScale({ 640, 360 });
+	losepic->material.shader = fontShader;
+	losepic->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+	losepic->material.texture.LoadTextureFrom(PATH::losepic);
+	losepic->material.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * losepic->transform.GetModelToWorld();
 
 	//background
 	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	backgroundMesh.SetShapePattern(ShapePattern::TriangleFan);
 	backgroundVertices.InitializeWithMeshAndLayout(rectangle, layout);
 	backgroundTexture.LoadTextureFrom(PATH::background);
+	backgroundMaterial.CreateSprite(backgroundShader, backgroundTexture, backgroundNDC);
 	background.transform.SetScale({ 1280, 720 });
 	//background
 
@@ -93,6 +103,8 @@ void LevelTest1::Initialize()
 		lair->material.shader = shader;
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadTextureFrom(PATH::lair);
+		lair->animation.Initialize({ 1,1, 1.f }, lair->material.shader);
+		OBJECTFACTORY->CopyObject(tower);
 		lair->AddComponent<LairComponent>();
 		lair->animation.Initialize({ 1, 1,	10.0f }, shader);
 		OBJECTFACTORY->CopyObject(lair);
@@ -190,12 +202,9 @@ void LevelTest1::Initialize()
 		enemyAttack->material.shader = shader;
 		enemyAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		enemyAttack->animation.Initialize({ 1,1, 1.f }, enemyAttack->material.shader);
-		
+
 		enemyAttack->SetDamage(skeleton->GetSkeletionDamage());
 		skeleton->GetComponent<ObjectAttackComponent>()->attack = enemyAttack;
-		
-		enemyAttack->SetDamage(golem->GetGolemDamage());
-		golem->GetComponent<ObjectAttackComponent>()->attack = enemyAttack;
 		//sword attack
 
 
@@ -226,23 +235,25 @@ void LevelTest1::Initialize()
 		//fireball
 
 		//arrow
-		arrow.Initialize("arrow.txt");
-		arrow.material.shader = shader;
-		arrow.material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		arrow.material.texture.LoadTextureFrom(PATH::arrow);
-		arrow.animation.Initialize({ 1,1, 1.f }, arrow.material.shader);
+		arrow = new Object();
+		arrow->Initialize("arrow.txt");
+		arrow->material.shader = fontShader;
+		arrow->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		arrow->material.texture.LoadTextureFrom(PATH::arrow);
+		arrow->animation.Initialize({ 1,1, 1.f }, arrow->material.shader);
 
-		arrow.SetState(State::WALK);
-		arrow.SetDamage(archer->GetArcherDamage());
+		arrow->SetState(State::WALK);
+		arrow->SetDamage(archer->GetArcherDamage());
 
-		archer->GetComponent<ObjectAttackComponent>()->attack = &arrow;
+		archer->GetComponent<ObjectAttackComponent>()->attack = arrow;
 		//arrow
 	}
 
 	//test sound and make object
-	SOUNDMANAGER->LoadFile("awesomeness(bgm).wav");
-	SOUNDMANAGER->LoadFile("Fire impact 1.wav");
-	SOUNDMANAGER->LoadFile("shoot.ogg");
+	SOUNDMANAGER->Initialize();
+	SOUNDMANAGER->LoadFile("backgroundmusic.wav");
+	SOUNDMANAGER->LoadFile("Fireball.wav");
+	SOUNDMANAGER->LoadFile("archershoot.ogg");
 	SOUNDMANAGER->LoadFile("hit.ogg");
 	SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
@@ -250,6 +261,11 @@ void LevelTest1::Initialize()
 	selectMenu.SelectMenu();
 	coolTime.Initialize(camera, view);
 	windowPoint->SwapBuffers();
+
+	debugTextTransform.SetTranslation({ -80.0f, 160.0f });
+
+	debugText.SetFont(bitmapFont);
+	debugText.SetString(L"debug mode");
 }
 
 void LevelTest1::Update(float dt)
@@ -264,9 +280,8 @@ void LevelTest1::Update(float dt)
 	//Draw
 	Draw::StartDrawing();
 
-	const mat3<float> backgroundNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
-	Material backgroundMaterial;
-	backgroundMaterial.CreateSprite(backgroundShader, backgroundTexture, backgroundNDC);
+	backgroundNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
+	backgroundMaterial.ndc = backgroundNDC;
 	Draw::draw(backgroundMaterial);
 
 	const mat3<float> uiNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * ui.transform.GetModelToWorld();
@@ -308,31 +323,47 @@ void LevelTest1::Update(float dt)
 				obj.second->GetComponent<LairComponent>()->SpawnEnemy(skeleton, dt);
 				if (obj.second->GetHealth() <= 0)
 				{
-					isWin = true;
+					isPlayerWin = true;
+					OBJECTFACTORY->Destroy(obj.second);
 				}
-					
 			}
-			Win(obj.second);
+			else if (obj.second->GetName() == "Tower")
+			{
+				if (obj.second->GetHealth() <= 0)
+				{
+					isEnemyWin = true;
+					OBJECTFACTORY->Destroy(obj.second);
+				}
+			}
 		}
 	}
+	Win();
+	Lose();
 	//dynamic test
 	selectMenu.SelectUpdate(camera, view);
+	if (isDebugModeisOn == true)
+	{
+		const mat3<float> debugTextNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * debugTextTransform.GetModelToWorld();
+		Draw::DrawText(fontShader, debugTextNDC, debugText);
+	}
 	Draw::FinishDrawing();
 }
 
-void LevelTest1::Win(Object* obj)
+void LevelTest1::Win()
 {
-	if (isWin)
+	if (isPlayerWin == true)
 	{
 		Draw::draw(winpic->material);
-		if (obj->GetType() == UnitType::Player)
-		{
-			OBJECTFACTORY->Destroy(obj);
-		}
-		if (obj->GetType() == UnitType::Enemy)
-		{
-			OBJECTFACTORY->Destroy(obj);
-		}
+		OBJECTFACTORY->DestroyAllObjects();
+	}
+}
+
+void LevelTest1::Lose()
+{
+	if (isEnemyWin == true)
+	{
+		Draw::draw(losepic->material);
+		OBJECTFACTORY->DestroyAllObjects();
 	}
 }
 
@@ -351,10 +382,6 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 			input.TakeAsInput('a');
 			printf("a");
 			break;
-		}
-		else
-		{
-			OBJECTFACTORY->CopyObject(lich);
 		}
 		break;
 	case KeyboardButton::B:
@@ -379,10 +406,6 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 			input.TakeAsInput('d');
 			printf("d");
 			break;
-		}
-		else
-		{
-			OBJECTFACTORY->CopyObject(skeleton);
 		}
 		break;
 	case KeyboardButton::E:
@@ -571,25 +594,133 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 		isEnter = false;
 		printf("typing end\n");
 
-		if (input.MatchStringWithInput() == 1)
+		if (isEnemyWin == false)
 		{
-			OBJECTFACTORY->CopyObject(knight);
-			coolTime.SetKnightCoolDown();
-		}
-		else if (input.MatchStringWithInput() == 2)
-		{
-			OBJECTFACTORY->CopyObject(archer);
-			coolTime.SetArcherCoolDown();
-		}
-		else if (input.MatchStringWithInput() == 3)
-		{
-			OBJECTFACTORY->CopyObject(magician);
-			coolTime.SetMagicianCoolDown();
+			if (input.MatchStringWithInput() == 1)
+			{
+				OBJECTFACTORY->CopyObject(knight);
+				coolTime.SetKnightCoolDown();
+			}
+			else if (input.MatchStringWithInput() == 2)
+			{
+				OBJECTFACTORY->CopyObject(archer);
+				coolTime.SetArcherCoolDown();
+			}
+			else if (input.MatchStringWithInput() == 3)
+			{
+				OBJECTFACTORY->CopyObject(magician);
+				coolTime.SetMagicianCoolDown();
+			}
 		}
 		input.SetString(L"");
 		break;
 	case KeyboardButton::Backspace:
 		input.Erasing();
+		break;
+	case KeyboardButton::Num1:
+		if (isEnter == false && isDebugModeisOn == true)
+		{
+			int random = rand() % 3;
+
+			if (isEnemyWin == false)
+			{
+				if (random == 0)
+				{
+					OBJECTFACTORY->CopyObject(knight);
+					coolTime.SetKnightCoolDown();
+				}
+				else if (random == 1)
+				{
+					OBJECTFACTORY->CopyObject(archer);
+					coolTime.SetArcherCoolDown();
+				}
+				else if (random == 2)
+				{
+					OBJECTFACTORY->CopyObject(magician);
+					coolTime.SetMagicianCoolDown();
+				}
+			}
+			break;
+		}
+		break;
+	case KeyboardButton::Num2:
+		if (isEnter == false && isDebugModeisOn == true)
+		{
+			int random = rand() % 2;
+
+			if (random == 0)
+			{
+				OBJECTFACTORY->CopyObject(skeleton);
+				coolTime.SetKnightCoolDown();
+			}
+			else if (random == 1)
+			{
+				OBJECTFACTORY->CopyObject(lich);
+				coolTime.SetArcherCoolDown();
+			}
+			break;
+		}
+		break;
+	case KeyboardButton::Num3:
+		if (isEnter == false && isDebugModeisOn == true)
+		{
+			for (auto obj : OBJECTFACTORY->GetPlayerObjecteList())
+			{
+				if (obj->GetName() != "Tower")
+				{
+					obj->SetHealth(0);
+				}
+			}
+		}
+		break;
+	case KeyboardButton::Num4:
+		if (isEnter == false && isDebugModeisOn == true)
+		{
+			for (auto obj : OBJECTFACTORY->GetEnemyObjecteList())
+			{
+				if (obj->GetName() != "Lair")
+				{
+					obj->SetHealth(0);
+				}
+			}
+		}
+		break;
+	case KeyboardButton::Num5:
+		if (isEnter == false && isDebugModeisOn == true)
+		{
+			for (auto obj : OBJECTFACTORY->GetPlayerObjecteList())
+			{
+				if (obj->GetName() != "Tower")
+				{
+					obj->SetInvincibilityState(true);
+				}
+			}
+		}
+		break;
+	case KeyboardButton::Num6:
+		if (isEnter == false && isDebugModeisOn == true)
+		{
+			for (auto obj : OBJECTFACTORY->GetPlayerObjecteList())
+			{
+				if (obj->GetName() != "Tower")
+				{
+					obj->SetInvincibilityState(false);
+				}
+			}
+		}
+		break;
+	case KeyboardButton::Tilde:
+		if (isEnter == false)
+		{
+			if (isDebugModeisOn == false)
+			{
+				isDebugModeisOn = true;
+			}
+			else
+			{
+				isDebugModeisOn = false;
+			}
+		}
 		break;
 	default:
 		break;
@@ -655,8 +786,7 @@ void LevelTest1::HandleScrollEvent(float scroll_amount)
 	zoom = view.GetZoom() + (scroll_amount * 0.05f);
 	zoom = std::clamp(zoom, 0.5f, 2.0f);
 	background.transform.SetScale({ windowPoint->GetWindowWidth() * (1.f / zoom),
-		windowPoint->GetWindowHeight() * (1.f / zoom) });/*
-	ui.transform.SetTranslation()*/
+		windowPoint->GetWindowHeight() * (1.f / zoom) });
 	view.SetZoom(zoom);
 }
 

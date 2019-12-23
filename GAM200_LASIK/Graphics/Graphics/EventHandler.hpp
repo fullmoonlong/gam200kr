@@ -14,7 +14,9 @@ enum class KeyboardButton
 	A, B, C, D, E, F, G, H, I, J, K, L, M, N, O,
 	P, Q, R, S, T, U, V, W, X, Y, Z,
 	Arrow_Left, Arrow_Right, Arrow_Up, Arrow_Down,
-	Page_Down, Page_Up, Enter, Escape, Backspace
+	Page_Down, Page_Up, Enter, Escape, Backspace,
+	Num1, Num2, Num3, Num4, Num5, Num6,
+	Tilde
 };
 
 enum class MouseButton

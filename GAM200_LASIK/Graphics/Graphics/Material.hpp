@@ -21,14 +21,6 @@ struct Material {
 		Animation,
 		Text
 	};
-	// This function is for making none moving object.
-	void SetMaterials(const MaterialType& material_type, const Shader& new_shader,
-		const Mesh& new_mesh, const std::string& texture_path, const mat3<float>& fixed_ndc);
-	// This function is for moving object. Use SetNDC function in the update, and then call draw function.
-	void SetMaterials(const MaterialType& material_type, const Shader& new_shader, 
-		const Mesh& new_mesh, const std::string& texture_path);
-	void SetMaterials(const Shader& new_shader, const Vertices& new_vertices,
-		const Texture& new_texture, const mat3<float>& new_ndc);
 	void CreateShape(const Shader& new_shader, const Mesh& new_mesh, 
 		const mat3<float>& new_ndc);
 	void CreateSprite(const Shader& new_shader, const Texture& new_texture, 

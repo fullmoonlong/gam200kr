@@ -1,11 +1,11 @@
 /**************************************************************************************
- *	File Name        : ObjectFactory.cpp
- *	Project Name     : Keyboard Warriors
- *	Primary Author   : Doyeong Yi
- *	Secondary Author :
- *	Copyright Information :
- *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
- **************************************************************************************/
+*	File Name        : ObjectFactory.cpp
+*	Project Name     : Keyboard Warriors
+*	Primary Author   : Doyeong Yi
+*	Secondary Author :
+*	Copyright Information :
+*    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+**************************************************************************************/
 
 #include "Sound.hpp"
 #include "ObjectFactory.h"
@@ -154,12 +154,19 @@ void ObjectFactory::CheckCollision()
 		{
 			if (object.second->isCollideWith(*object1.second) && object.second->GetType() == UnitType::ProjectilesPlayer && object1.second->GetType() == UnitType::Enemy)
 			{
-				object1.second->SetHealth(object1.second->GetHealth() - object.second->GetDamage());
+				if (object1.second->GetInvincibilityState() == false)
+				{
+					object1.second->SetHealth(object1.second->GetHealth() - object.second->GetDamage());
+
+				}					
 				OBJECTFACTORY->Destroy(object.second);
 			}
 			if (object.second->isCollideWith(*object1.second) && object.second->GetType() == UnitType::ProjectilesEnemy && object1.second->GetType() == UnitType::Player)
 			{
-				object1.second->SetHealth(object1.second->GetHealth() - object.second->GetDamage());
+				if (object1.second->GetInvincibilityState() == false)
+				{
+					object1.second->SetHealth(object1.second->GetHealth() - object.second->GetDamage());
+				}
 				OBJECTFACTORY->Destroy(object.second);
 			}
 		}
@@ -221,7 +228,7 @@ void ObjectFactory::CheckAttackState()
 
 	for (auto enemy : EnemyUnits)
 	{
-		if ((playerTotalNotWhileAttack == PlayerAmount) && enemy->GetAttackState() == true)
+		if ((playerTotalNotWhileAttack == static_cast<int>(PlayerUnits.size())) && enemy->GetAttackState() == true)
 		{
 			if (enemy == nullptr)
 			{
@@ -234,7 +241,7 @@ void ObjectFactory::CheckAttackState()
 	}
 	for (auto player : PlayerUnits)
 	{
-		if ((enemyTotalNotWhileAttack == EnemyAmount) && player->GetAttackState() == true)
+		if ((enemyTotalNotWhileAttack == static_cast<int>(EnemyUnits.size())) && player->GetAttackState() == true)
 		{
 			if (player == nullptr)
 			{

@@ -64,6 +64,15 @@ void SelectSpawn::SelectMenu()
 	bitmapfont.LoadFromFile(PATH::bitmapfont_fnt);
 	m_text.SetFont(bitmapfont);
 	m_text.SetString(L"you can spawn units if you type unit name");
+
+	unitFontTransform.SetTranslation(unitFontPosition);
+	unitFontTransform.SetScale(unitFontSize);
+
+	bitmapfont.LoadFromFile(PATH::bitmapfont_fnt);
+	unitFont.SetFont(bitmapfont);
+	unitFont.SetString(L"archer     knight    magician");
+
+
 }
 
 void SelectSpawn::SelectUpdate(Camera& camera_, CameraView& view_) {
@@ -79,6 +88,9 @@ void SelectSpawn::SelectUpdate(Camera& camera_, CameraView& view_) {
 
 	const mat3<float> ndc5 = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * fontTransform.GetModelToWorld();
 	Draw::DrawText(shader, ndc5, m_text);
+
+	const mat3<float> ndc6 = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * unitFontTransform.GetModelToWorld();
+	Draw::DrawText(shader, ndc6, unitFont);
 
 }
 

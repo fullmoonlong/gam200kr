@@ -34,7 +34,7 @@ void Engine::Initialize()
 	AddSystem(new ObjectFactory());
 
 	Application* app = dynamic_cast<Application*>(systems[0]);
-	AddSystem(new StateManager(app->GetWindow(), app->GetDeltaTime()));
+	AddSystem(new StateManager(app->GetWindow()));
 	AddSystem(new SoundManager());
 	for (auto sys : systems)
 	{

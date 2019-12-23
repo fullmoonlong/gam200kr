@@ -47,16 +47,18 @@ public:
 	//bool MouseCollide(vec2<float>& mouse_position, Transform transform_/*, int width, int height*/);
 
 private:
-	Text m_text;
+	Text m_text, unitFont;
 	BitmapFont bitmapfont;
 	vec2<float> selectSize = { 2500.0f, 400.0f };
 	vec2<float> archerSize = { 128.0f, 128.0f };
-	vec2<float> fontSize = { 2.0f };
+	vec2<float> fontSize = { 1.5f };
+	vec2<float> unitFontSize = { 1.0f };
 
 	vec2<float> archerPosition = { -220.0f, -250.0f };
 	vec2<float> knightPosition = { 20.0f, -250.0f };
 	vec2<float> magicianPosition = { 250.0f, -270.0f };
-	vec2<float> fontPosition = { -600.0f, -600.0f };
+	vec2<float> fontPosition = { -540.0f, 280.0f };
+	vec2<float> unitFontPosition = { -250.0f, -350.0f };
 
 
 	const Color4f color{ 0.0f, 0.0f, 1.0f, 1.0f };
@@ -64,8 +66,8 @@ private:
 	VerticesDescription texturelayout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	
 	Shader		shader;
-	Material	selectMaterial, archerMaterial, knightMaterial, magicianMaterial, fontMaterial;
-	Transform	selectTransform, archerTransform, knightTransform, magicianTransform, fontTransform;
+	Material	selectMaterial, archerMaterial, knightMaterial, magicianMaterial;
+	Transform	selectTransform, archerTransform, knightTransform, magicianTransform, fontTransform, unitFontTransform;
 	Mesh		selectMesh, archerMesh, knightMesh, magicianMesh, fontMesh;
 
 };

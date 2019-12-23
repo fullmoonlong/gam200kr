@@ -1,11 +1,11 @@
 /**************************************************************************************
- *	File Name        : Object.h
- *	Project Name     : Keyboard Warriors
- *	Primary Author   : Doyeong Yi
- *	Secondary Author : Jookyung Lee
- *	Copyright Information :
- *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
- **************************************************************************************/
+*	File Name        : Object.h
+*	Project Name     : Keyboard Warriors
+*	Primary Author   : Doyeong Yi
+*	Secondary Author : Jookyung Lee
+*	Copyright Information :
+*    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+**************************************************************************************/
 
 #pragma once
 #include <string>
@@ -42,7 +42,7 @@ class Object
 {
 public:
 	friend class ObjectFactory;
-	
+
 	Object();
 	Object(const Object& rhs);
 	~Object() = default;
@@ -83,6 +83,9 @@ public:
 	int GetDamage() { return damage; }
 	void SetDamage(int damage_) { damage = damage_; };
 
+	bool GetInvincibilityState() { return invincibilityState; }
+	void SetInvincibilityState(bool invincibilitystate) { invincibilityState = invincibilitystate; };
+
 	void ChangeUnitAnimation();
 
 	Transform transform;
@@ -92,7 +95,7 @@ public:
 	// Collision
 	vec2<float> min;
 	vec2<float> max;
-	
+
 	int health = 0;
 	int damage = 0;
 	UI::HealthBar healthBar;
@@ -152,6 +155,7 @@ private:
 	State state;
 	bool attackState = false;
 	bool spriteChange = false;
+	bool invincibilityState = false;
 
 	float baseTime = 0.f;
 	std::vector <Component*>componetList;

@@ -1,11 +1,11 @@
 /**************************************************************************************
- *	File Name        : PlatformWindowGLFW.cpp
- *	Project Name     : Keyboard Warriors
- *	Primary Author   : JeongHak Kim
- *	Secondary Author : 
- *	Copyright Information :
- *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
- **************************************************************************************/
+*	File Name        : PlatformWindowGLFW.cpp
+*	Project Name     : Keyboard Warriors
+*	Primary Author   : JeongHak Kim
+*	Secondary Author : 
+*	Copyright Information :
+*    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+**************************************************************************************/
 
 #include <iostream>
 #include "GL/glew.h"
@@ -141,6 +141,27 @@ void key_callback(GLFWwindow* /*window*/, int key, int /*scancode*/, int action,
 			break;
 		case GLFW_KEY_ESCAPE:
 			eventHandler->HandleKeyPress(KeyboardButton::Escape);
+			break;
+		case GLFW_KEY_1:
+			eventHandler->HandleKeyPress(KeyboardButton::Num1);
+			break;
+		case GLFW_KEY_2:
+			eventHandler->HandleKeyPress(KeyboardButton::Num2);
+			break;
+		case GLFW_KEY_3:
+			eventHandler->HandleKeyPress(KeyboardButton::Num3);
+			break;
+		case GLFW_KEY_4:
+			eventHandler->HandleKeyPress(KeyboardButton::Num4);
+			break;
+		case GLFW_KEY_5:
+			eventHandler->HandleKeyPress(KeyboardButton::Num5);
+			break;
+		case GLFW_KEY_6:
+			eventHandler->HandleKeyPress(KeyboardButton::Num6);
+			break;
+		case GLFW_KEY_GRAVE_ACCENT:
+			eventHandler->HandleKeyPress(KeyboardButton::Tilde);
 			break;
 		default:
 			break;

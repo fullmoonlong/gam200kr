@@ -38,7 +38,8 @@ public:
 	void Initialize() override;
 	void Update(float dt) override;
 	void Shutdown() override;
-	void Win(Object*);
+	void Win();
+	void Lose();
 	void HandleKeyPress(KeyboardButton button) override final;
 	void HandleKeyRelease(KeyboardButton button) override final;
 	void HandleMouseEvent(MouseButton button) override final;
@@ -49,7 +50,8 @@ public:
 
 private:
 	bool isEnter = false;
-	bool isWin;
+	bool isPlayerWin;
+	bool isEnemyWin;
 
 	float time;
 
@@ -65,7 +67,7 @@ private:
 	Mesh backgroundMesh;
 	Vertices backgroundVertices;
 	Texture backgroundTexture;
-	//Material backgroundMaterial;
+	Material backgroundMaterial;
 	Object ui;
 
 	Shader fontShader;
@@ -77,6 +79,7 @@ private:
 	Shader shapeShader;
 	Object object;
 	Object object2;
+
 	//Units
 	Knight* knight;
 	Magician* magician;
@@ -89,7 +92,7 @@ private:
 	//projectiles
 	Object* swordAttack;
 	Object* enemyAttack;
-	Object arrow;
+	Object* arrow;
 	Object* fireball;
 	Object* fireballEnemy;
 	//projectiles
@@ -98,19 +101,27 @@ private:
 	Object* tower;
 	Object* lair;
 	//tower
+
 	Clock clock;
 
 	Object* winpic;
+	Object* losepic;
 
 	Camera camera;
 	CameraView view;
 	CoolDown coolTime;
 
 	UI::SelectSpawn selectMenu;
-	//float cameraSpeed{ 80.0f };
-	float depth = 1.0f;
+
+	Text debugText;
+	Transform debugTextTransform;
+
 	float zoom = 1.0f;
 	float cameraAngle = 0.0f;
+
 	vec2<float> pressDirection{ 0.f, 0.f };
 	vec2<float> mousePosition{ 0.f, 0.f };
+	mat3<float> backgroundNDC;
+
+	bool isDebugModeisOn = false;
 };
