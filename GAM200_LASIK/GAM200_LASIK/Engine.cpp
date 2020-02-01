@@ -11,6 +11,7 @@
 #include "Application.h"
 #include "ObjectFactory.h"
 #include "StateManager.h"
+#include "GameManager.h"
 #include "Sound.hpp"
 
 
@@ -31,11 +32,12 @@ Engine::~Engine()
 void Engine::Initialize()
 {
 	AddSystem(new Application());
-	AddSystem(new ObjectFactory());
-
 	Application* app = dynamic_cast<Application*>(systems[0]);
+
+	AddSystem(new ObjectFactory());
 	AddSystem(new StateManager(app->GetWindow()));
 	AddSystem(new SoundManager());
+	AddSystem(new GameManager());
 	for (auto sys : systems)
 	{
 		sys->Initialize();

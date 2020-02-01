@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include "Object.h"
+#include "GameManager.h"
 #include "ObjectFactory.h"
 #include "ComponentTest.h"
 #include "ObjectMaterial.h"
@@ -116,6 +117,31 @@ void Object::Update(float dt) noexcept
 	
 	if (this->GetComponent<UnitState>()->GetHealth() <= 0 && (this->GetComponent<UnitState>()->GetType() == UnitType::Player || this->GetComponent<UnitState>()->GetType() == UnitType::Enemy))
 	{
+		auto objID = OBJECTFACTORY->GetObjecteList().find(this->objectID);
+		if (this->GetComponent<UnitState>()->GetType() == UnitType::Player)
+		{
+			for (std::vector<Object*>::iterator it = GAMEMANAGER->PlayerUnits.begin(); it != GAMEMANAGER->PlayerUnits.end(); it++)
+			{
+				if (*it == this)
+				{
+					GAMEMANAGER->PlayerUnits.erase(it);
+					GAMEMANAGER->PlayerAmount--;
+					break;
+				}
+			}
+		}
+		else if (this->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
+		{
+			for (std::vector<Object*>::iterator it = GAMEMANAGER->EnemyUnits.begin(); it != GAMEMANAGER->EnemyUnits.end(); it++)
+			{
+				if (*it == this)
+				{
+					GAMEMANAGER->EnemyUnits.erase(it);
+					GAMEMANAGER->EnemyAmount--;
+					break;
+				}
+			}
+		}
 		OBJECTFACTORY->Destroy(this);
 	}
 
@@ -130,7 +156,7 @@ void Object::Update(float dt) noexcept
 				vec2<float> a = { transform.GetTranslation().x + 48.f, transform.GetTranslation().y };
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
 				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}
@@ -146,7 +172,7 @@ void Object::Update(float dt) noexcept
 				vec2<float> a = transform.GetTranslation();
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
 				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}
@@ -162,7 +188,7 @@ void Object::Update(float dt) noexcept
 				vec2<float> a = transform.GetTranslation();
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
 				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}
@@ -178,7 +204,7 @@ void Object::Update(float dt) noexcept
 				vec2<float> a = { transform.GetTranslation().x - 48.f, transform.GetTranslation().y };
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
 				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}
@@ -194,7 +220,7 @@ void Object::Update(float dt) noexcept
 				vec2<float> a = { transform.GetTranslation().x, transform.GetTranslation().y };
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
 				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}
@@ -210,7 +236,7 @@ void Object::Update(float dt) noexcept
 				vec2<float> a = { transform.GetTranslation().x - 256.f, transform.GetTranslation().y - 128 };
 				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
+				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
 				this->GetComponent<ObjectAttackComponent>()->time = 0;
 			}
 		}

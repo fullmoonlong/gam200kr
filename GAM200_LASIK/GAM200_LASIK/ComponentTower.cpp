@@ -7,9 +7,10 @@
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
 
+#include <iostream>
+#include "GameManager.h"
 #include "ComponentTower.h"
 #include "ObjectFactory.h"
-#include <iostream>
 
 LairComponent::~LairComponent()
 {
@@ -25,7 +26,7 @@ void LairComponent::SpawnEnemy(Object* obj, float dt)
 
 	if (time > 6.0f)
 	{
-		OBJECTFACTORY->CopyObject(obj);
+		GAMEMANAGER->SpawnUnit(obj);
 		time = 0.f;
 	}
 }

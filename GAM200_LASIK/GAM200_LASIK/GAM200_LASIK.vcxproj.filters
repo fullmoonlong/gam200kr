@@ -56,6 +56,9 @@
     <ClCompile Include="StateManager.cpp">
       <Filter>System\StateManager</Filter>
     </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>System\GameManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">
@@ -130,6 +133,9 @@
     <ClInclude Include="UnitStateComponent.hpp">
       <Filter>Component\Units</Filter>
     </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>System\GameManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">
@@ -185,6 +191,9 @@
     </Filter>
     <Filter Include="Component\Units">
       <UniqueIdentifier>{1572fa00-5719-4e02-b15a-f6391795c81b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\GameManager">
+      <UniqueIdentifier>{c01ec26c-3c07-484e-856b-bb3ccdde89d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

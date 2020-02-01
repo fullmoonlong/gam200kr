@@ -10,6 +10,7 @@
 #include <iostream>
 #include "Image.hpp"
 #include "LevelTest1.h"
+#include "GameManager.h"
 #include "Application.h"
 #include "ObjectFactory.h"
 #include "ComponentTest.h"
@@ -92,7 +93,7 @@ void LevelTest1::Initialize()
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadTextureFrom(PATH::tower);
 		tower->animation.Initialize({ 1,1, 1.f }, tower->material.shader);
-		OBJECTFACTORY->CopyObject(tower);
+		GAMEMANAGER->SpawnUnit(tower);
 		//tower
 
 		//lair
@@ -106,10 +107,9 @@ void LevelTest1::Initialize()
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadTextureFrom(PATH::lair);
 		lair->animation.Initialize({ 1,1, 1.f }, lair->material.shader);
-		OBJECTFACTORY->CopyObject(tower);
 		lair->AddComponent<LairComponent>();
 		lair->animation.Initialize({ 1, 1,	10.0f }, shader);
-		OBJECTFACTORY->CopyObject(lair);
+		GAMEMANAGER->SpawnUnit(lair);
 		//lair
 
 		skeleton = new Skeleton();
@@ -337,6 +337,7 @@ void LevelTest1::Update(float dt)
 				if (obj.second->GetComponent<UnitState>()->GetHealth() <= 0)
 				{
 					isPlayerWin = true;
+					GAMEMANAGER->isGameEnd = true;
 					OBJECTFACTORY->Destroy(obj.second);
 				}
 			}
@@ -345,6 +346,7 @@ void LevelTest1::Update(float dt)
 				if (obj.second->GetComponent<UnitState>()->GetHealth() <= 0)
 				{
 					isEnemyWin = true;
+					GAMEMANAGER->isGameEnd = true;
 					OBJECTFACTORY->Destroy(obj.second);
 				}
 			}
@@ -611,17 +613,17 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 		{
 			if (input.MatchStringWithInput() == 1)
 			{
-				OBJECTFACTORY->CopyObject(knight);
+				GAMEMANAGER->SpawnUnit(knight);
 				coolTime.SetKnightCoolDown();
 			}
 			else if (input.MatchStringWithInput() == 2)
 			{
-				OBJECTFACTORY->CopyObject(archer);
+				GAMEMANAGER->SpawnUnit(archer);
 				coolTime.SetArcherCoolDown();
 			}
 			else if (input.MatchStringWithInput() == 3)
 			{
-				OBJECTFACTORY->CopyObject(magician);
+				GAMEMANAGER->SpawnUnit(magician);
 				coolTime.SetMagicianCoolDown();
 			}
 		}
@@ -639,17 +641,17 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 			{
 				if (random == 0)
 				{
-					OBJECTFACTORY->CopyObject(knight);
+					GAMEMANAGER->SpawnUnit(knight);
 					coolTime.SetKnightCoolDown();
 				}
 				else if (random == 1)
 				{
-					OBJECTFACTORY->CopyObject(archer);
+					GAMEMANAGER->SpawnUnit(archer);
 					coolTime.SetArcherCoolDown();
 				}
 				else if (random == 2)
 				{
-					OBJECTFACTORY->CopyObject(magician);
+					GAMEMANAGER->SpawnUnit(magician);
 					coolTime.SetMagicianCoolDown();
 				}
 			}
@@ -663,12 +665,12 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 
 			if (random == 0)
 			{
-				OBJECTFACTORY->CopyObject(skeleton);
+				GAMEMANAGER->SpawnUnit(skeleton);
 				coolTime.SetKnightCoolDown();
 			}
 			else if (random == 1)
 			{
-				OBJECTFACTORY->CopyObject(lich);
+				GAMEMANAGER->SpawnUnit(lich);
 				coolTime.SetArcherCoolDown();
 			}
 			break;
@@ -677,7 +679,7 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::Num3:
 		if (isEnter == false && isDebugModeisOn == true)
 		{
-			for (auto obj : OBJECTFACTORY->GetPlayerObjecteList())
+			for (auto obj : GAMEMANAGER->PlayerUnits)
 			{
 				if (obj->GetName() != "Tower")
 				{
@@ -689,7 +691,7 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::Num4:
 		if (isEnter == false && isDebugModeisOn == true)
 		{
-			for (auto obj : OBJECTFACTORY->GetEnemyObjecteList())
+			for (auto obj : GAMEMANAGER->EnemyUnits)
 			{
 				if (obj->GetName() != "Lair")
 				{
@@ -701,7 +703,7 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::Num5:
 		if (isEnter == false && isDebugModeisOn == true)
 		{
-			for (auto obj : OBJECTFACTORY->GetPlayerObjecteList())
+			for (auto obj : GAMEMANAGER->PlayerUnits)
 			{
 				if (obj->GetName() != "Tower")
 				{
@@ -713,7 +715,7 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::Num6:
 		if (isEnter == false && isDebugModeisOn == true)
 		{
-			for (auto obj : OBJECTFACTORY->GetPlayerObjecteList())
+			for (auto obj : GAMEMANAGER->PlayerUnits)
 			{
 				if (obj->GetName() != "Tower")
 				{

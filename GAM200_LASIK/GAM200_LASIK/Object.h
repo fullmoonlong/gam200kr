@@ -36,6 +36,7 @@ public:
 	void Update(float dt) noexcept;
 	Object* Clone() const;
 
+	void SetObjectID(ObjectID objectID_) { objectID = objectID_; }
 	ObjectID GetObjectID(){	return objectID;}
 
 	std::string GetName() const{return objectName;}

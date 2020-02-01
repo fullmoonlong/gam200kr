@@ -200,6 +200,7 @@
     <ClCompile Include="EnemyUnits.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FileLoadAndSave.cpp" />
+    <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GetInput.cpp" />
     <ClCompile Include="LevelTest1.cpp" />
     <ClCompile Include="Logo.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="EnemyUnits.hpp" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FileLoadAndSave.hpp" />
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="GetInput.hpp" />
     <ClInclude Include="LevelSystem.h" />
     <ClInclude Include="LevelTest1.h" />

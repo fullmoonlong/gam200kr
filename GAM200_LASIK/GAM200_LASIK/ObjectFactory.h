@@ -36,26 +36,11 @@ public:
 	Object* FindObjectwithID(ObjectID id);
 
 	std::map<ObjectID, Object*> GetObjecteList() { return objectIDMap; };
-	std::vector<Object*> GetPlayerObjecteList() { return PlayerUnits; };
-	std::vector<Object*> GetEnemyObjecteList() { return EnemyUnits; };
-
-	void CopyObject(Object* object);
-
-	void CheckCollision();
-	void CheckAttackState();
-	void DamageTest(int time);
-
-private:
-	std::map<ObjectID, Object*> objectIDMap;
-
-	std::vector<Object*> PlayerUnits;
-	std::vector<Object*> EnemyUnits;
-
-	std::vector<Object*> objectsToBeDeleted;
-
 	ObjectID lastObjectID = 0;
-	int PlayerAmount = 0;
-	int EnemyAmount = 0;
+
+	std::map<ObjectID, Object*> objectIDMap;
+private:
+	std::vector<Object*> objectsToBeDeleted;
 };
 
 extern ObjectFactory* OBJECTFACTORY;
