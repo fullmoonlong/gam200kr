@@ -20,21 +20,6 @@
 #include "PATH.hpp"
 #include "Component.h"
 #include "ComponentType.h"
-#include"UI.hpp"
-
-enum UnitType {
-	Player,
-	Enemy,
-	ProjectilesPlayer,
-	ProjectilesEnemy
-};
-
-enum State {
-	WALK,
-	ATTACK,
-	IDLE
-};
-
 
 typedef unsigned int ObjectID;
 
@@ -52,9 +37,6 @@ public:
 	Object* Clone() const;
 
 	ObjectID GetObjectID(){	return objectID;}
-	void SetObjectID(ObjectID objID){ objectID = objID;}
-
-	int GetObjectCopyID() { return objectCopyId; }
 
 	std::string GetName() const{return objectName;}
 	void SetName(const std::string& name){objectName = name;}
@@ -62,46 +44,11 @@ public:
 	float GetXposition() { return position.x; };
 	float GetYposition() { return position.y; };
 
-	UnitType GetType() { return unitType; }
-	void SetType(UnitType unittype) { unitType = unittype; };
-
-	State GetState() { return state; }
-	void SetState(State state_) { state = state_; };
-
-	vec2<float> GetAttackRange() const { return attackRange; }
-	void SetAttackRange(vec2<float> attackrange) { attackRange = attackrange; }
-
-	bool GetAttackState() { return attackState; }
-	void SetAttackState(bool attackstate) { attackState = attackstate; };
-
-	bool GetSpriteChangeState() { return spriteChange; }
-	void SetSpriteChangeState(bool spritestate) { spriteChange = spritestate; };
-
-	int GetHealth() { return health; }
-	void SetHealth(int health_) { health = health_; };
-
-	int GetDamage() { return damage; }
-	void SetDamage(int damage_) { damage = damage_; };
-
-	bool GetInvincibilityState() { return invincibilityState; }
-	void SetInvincibilityState(bool invincibilitystate) { invincibilityState = invincibilitystate; };
-
 	void ChangeUnitAnimation();
 
 	Transform transform;
 	Material material;
 	Animation animation;
-
-	// Collision
-	vec2<float> min;
-	vec2<float> max;
-
-	int health = 0;
-	int damage = 0;
-	UI::HealthBar healthBar;
-
-	vec2<float> attackRange = {0, 0};
-	vec2<float> speed;
 
 	bool isCollideWith(Object& object) noexcept;
 	bool isObjectInAttackRange(Object& object) noexcept;
@@ -117,7 +64,6 @@ public:
 				return true;
 		}
 		return false;
-
 	}
 
 	template<typename ComponentType>
@@ -145,18 +91,14 @@ public:
 
 private:
 	ObjectID objectID;
-	int objectCopyId = 0;
 	std::string objectName = "";
 
 	vec2<float> position;
 	vec2<float> size;
 
-	UnitType unitType;
-	State state;
-	bool attackState = false;
-	bool spriteChange = false;
-	bool invincibilityState = false;
+	vec2<float> min;
+	vec2<float> max;
+	vec2<float> speed;
 
-	float baseTime = 0.f;
 	std::vector <Component*>componetList;
 };

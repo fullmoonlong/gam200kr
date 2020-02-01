@@ -28,7 +28,7 @@ StateManager::~StateManager()
 
 void StateManager::Initialize()
 {
-	currentLevel = GameLevels::LOGO;
+	currentLevel = GameLevels::LVTest1;
 	levels.push_back(new Logo(windowPoint));
 	levels.push_back(new MainMenu(windowPoint));
 	levels.push_back(new LevelTest1(windowPoint));

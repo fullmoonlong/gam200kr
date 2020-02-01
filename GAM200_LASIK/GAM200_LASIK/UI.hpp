@@ -30,8 +30,8 @@ public:
 private:
 
 	float totalSizeX = 56.f;
-	float fullHP = 0;
-	float currentHP = 0;
+	float fullHP = 0.f;
+	float currentHP = 0.f;
 	vec2<float> size = { totalSizeX, 8.f };
 
 	const Color4f color{ 0.8f, 0.0f, 0.0f, 1.0f };

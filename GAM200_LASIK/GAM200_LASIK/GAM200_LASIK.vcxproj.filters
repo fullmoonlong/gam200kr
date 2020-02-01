@@ -127,6 +127,9 @@
     <ClInclude Include="StateManager.h">
       <Filter>System\StateManager</Filter>
     </ClInclude>
+    <ClInclude Include="UnitStateComponent.hpp">
+      <Filter>Component\Units</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">

@@ -18,6 +18,8 @@
 #include "Vertices.h"
 #include "VerticesDescription.h"
 #include "Draw.hpp"
+#include "Camera.hpp"
+#include "CameraView.hpp"
 
 class MainMenu : public LevelSystem {
 public:

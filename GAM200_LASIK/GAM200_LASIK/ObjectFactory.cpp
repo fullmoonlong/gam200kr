@@ -7,11 +7,12 @@
 *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
 **************************************************************************************/
 
-#include "Sound.hpp"
-#include "ObjectFactory.h"
 #include "Object.h"
 #include <iostream>
 #include <stdlib.h>
+#include "Sound.hpp"
+#include "ObjectFactory.h"
+#include "UnitStateComponent.hpp"
 
 extern ObjectFactory* OBJECTFACTORY = nullptr;
 
@@ -34,7 +35,7 @@ void ObjectFactory::Update(float /*dt*/)
 			continue;
 		}
 		auto objID = objectIDMap.find(object->objectID);
-		if (object->GetType() == UnitType::Player)
+		if (object->GetComponent<UnitState>()->GetType() == UnitType::Player)
 		{
 			for (std::vector<Object*>::iterator it = PlayerUnits.begin(); it != PlayerUnits.end(); it++)
 			{
@@ -46,7 +47,7 @@ void ObjectFactory::Update(float /*dt*/)
 				}
 			}
 		}
-		else if (object->GetType() == UnitType::Enemy)
+		else if (object->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
 		{
 			for (std::vector<Object*>::iterator it = EnemyUnits.begin(); it != EnemyUnits.end(); it++)
 			{
@@ -133,13 +134,13 @@ void ObjectFactory::CopyObject(Object* object)
 	newObject->objectID = lastObjectID;
 	objectIDMap.emplace(lastObjectID, newObject);
 	lastObjectID++;
-	newObject->SetSpriteChangeState(true);
-	if (newObject->GetType() == UnitType::Player)
+	newObject->GetComponent<UnitState>()->SetSpriteChangeState(true);
+	if (newObject->GetComponent<UnitState>()->GetType() == UnitType::Player)
 	{
 		PlayerUnits.push_back(newObject);
 		PlayerAmount++;
 	}
-	else if (newObject->GetType() == UnitType::Enemy)
+	else if (newObject->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
 	{
 		EnemyUnits.push_back(newObject);
 		EnemyAmount++;
@@ -152,20 +153,20 @@ void ObjectFactory::CheckCollision()
 	{
 		for (auto object1 : objectIDMap)
 		{
-			if (object.second->isCollideWith(*object1.second) && object.second->GetType() == UnitType::ProjectilesPlayer && object1.second->GetType() == UnitType::Enemy)
+			if (object.second->isCollideWith(*object1.second) && object.second->GetComponent<UnitState>()->GetType() == UnitType::ProjectilesPlayer && object1.second->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
 			{
-				if (object1.second->GetInvincibilityState() == false)
+				if (object1.second->GetComponent<UnitState>()->GetInvincibilityState() == false)
 				{
-					object1.second->SetHealth(object1.second->GetHealth() - object.second->GetDamage());
+					object1.second->GetComponent<UnitState>()->SetHealth(object1.second->GetComponent<UnitState>()->GetHealth() - object.second->GetComponent<UnitState>()->GetDamage());
 
 				}					
 				OBJECTFACTORY->Destroy(object.second);
 			}
-			if (object.second->isCollideWith(*object1.second) && object.second->GetType() == UnitType::ProjectilesEnemy && object1.second->GetType() == UnitType::Player)
+			if (object.second->isCollideWith(*object1.second) && object.second->GetComponent<UnitState>()->GetType() == UnitType::ProjectilesEnemy && object1.second->GetComponent<UnitState>()->GetType() == UnitType::Player)
 			{
-				if (object1.second->GetInvincibilityState() == false)
+				if (object1.second->GetComponent<UnitState>()->GetInvincibilityState() == false)
 				{
-					object1.second->SetHealth(object1.second->GetHealth() - object.second->GetDamage());
+					object1.second->GetComponent<UnitState>()->SetHealth(object1.second->GetComponent<UnitState>()->GetHealth() - object.second->GetComponent<UnitState>()->GetDamage());
 				}
 				OBJECTFACTORY->Destroy(object.second);
 			}
@@ -179,25 +180,25 @@ void ObjectFactory::CheckCollision()
 		{
 			if (player->isObjectInAttackRange(*enemy))
 			{
-				player->SetState(State::ATTACK);
+				player->GetComponent<UnitState>()->SetState(State::ATTACK);
 				pl = true;
-				if (player->GetAttackState() == false)
+				if (player->GetComponent<UnitState>()->GetAttackState() == false)
 				{
-					player->SetAttackState(true);
-					enemy->SetAttackState(true);
-					player->SetSpriteChangeState(true);
+					player->GetComponent<UnitState>()->SetAttackState(true);
+					enemy->GetComponent<UnitState>()->SetAttackState(true);
+					player->GetComponent<UnitState>()->SetSpriteChangeState(true);
 				}
 			}
 
 			if (enemy->isObjectInAttackRange(*player))
 			{
-				enemy->SetState(State::ATTACK);
+				enemy->GetComponent<UnitState>()->SetState(State::ATTACK);
 				en = true;
-				if (enemy->GetAttackState() == false)
+				if (enemy->GetComponent<UnitState>()->GetAttackState() == false)
 				{
-					player->SetAttackState(true);
-					enemy->SetAttackState(true);
-					enemy->SetSpriteChangeState(true);
+					player->GetComponent<UnitState>()->SetAttackState(true);
+					enemy->GetComponent<UnitState>()->SetAttackState(true);
+					enemy->GetComponent<UnitState>()->SetSpriteChangeState(true);
 				}
 			}
 		}
@@ -216,11 +217,11 @@ void ObjectFactory::CheckAttackState()
 		{
 			continue;
 		}
-		if (obj.second->GetAttackState() == false && obj.second->GetType() == UnitType::Player)
+		if (obj.second->GetComponent<UnitState>()->GetAttackState() == false && obj.second->GetComponent<UnitState>()->GetType() == UnitType::Player)
 		{
 			playerTotalNotWhileAttack++;
 		}
-		else if (obj.second->GetAttackState() == false && obj.second->GetType() == UnitType::Enemy)
+		else if (obj.second->GetComponent<UnitState>()->GetAttackState() == false && obj.second->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
 		{
 			enemyTotalNotWhileAttack++;
 		}
@@ -228,28 +229,28 @@ void ObjectFactory::CheckAttackState()
 
 	for (auto enemy : EnemyUnits)
 	{
-		if ((playerTotalNotWhileAttack == static_cast<int>(PlayerUnits.size())) && enemy->GetAttackState() == true)
+		if ((playerTotalNotWhileAttack == static_cast<int>(PlayerUnits.size())) && enemy->GetComponent<UnitState>()->GetAttackState() == true)
 		{
 			if (enemy == nullptr)
 			{
 				continue;
 			}
-			enemy->SetSpriteChangeState(true);
-			enemy->SetAttackState(false);
-			enemy->SetState(State::WALK);
+			enemy->GetComponent<UnitState>()->SetSpriteChangeState(true);
+			enemy->GetComponent<UnitState>()->SetAttackState(false);
+			enemy->GetComponent<UnitState>()->SetState(State::WALK);
 		}
 	}
 	for (auto player : PlayerUnits)
 	{
-		if ((enemyTotalNotWhileAttack == static_cast<int>(EnemyUnits.size())) && player->GetAttackState() == true)
+		if ((enemyTotalNotWhileAttack == static_cast<int>(EnemyUnits.size())) && player->GetComponent<UnitState>()->GetAttackState() == true)
 		{
 			if (player == nullptr)
 			{
 				continue;
 			}
-			player->SetSpriteChangeState(true);
-			player->SetAttackState(false);
-			player->SetState(State::WALK);
+			player->GetComponent<UnitState>()->SetSpriteChangeState(true);
+			player->GetComponent<UnitState>()->SetAttackState(false);
+			player->GetComponent<UnitState>()->SetState(State::WALK);
 		}
 	}
 }
@@ -264,13 +265,13 @@ void ObjectFactory::DamageTest(int time)
 			{
 				if (object != object1)
 				{
-					if (object.second->GetType() != object1.second->GetType())
+					if (object.second->GetComponent<UnitState>()->GetType() != object1.second->GetComponent<UnitState>()->GetType())
 					{
 						if (object.second->isObjectInAttackRange(*object1.second))
 						{
-							if (object.second->GetState() == State::ATTACK)
+							if (object.second->GetComponent<UnitState>()->GetState() == State::ATTACK)
 							{
-								object1.second->SetHealth(object1.second->GetHealth() - object.second->GetDamage());
+								object1.second->GetComponent<UnitState>()->SetHealth(object1.second->GetComponent<UnitState>()->GetHealth() - object.second->GetComponent<UnitState>()->GetDamage());
 							}
 						}
 					}

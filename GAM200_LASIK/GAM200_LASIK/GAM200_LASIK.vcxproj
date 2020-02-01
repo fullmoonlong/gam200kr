@@ -231,6 +231,7 @@
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="UI.hpp" />
     <ClInclude Include="Units.hpp" />
+    <ClInclude Include="UnitStateComponent.hpp" />
     <ClInclude Include="Util\Clock.hpp" />
     <ClInclude Include="ComponentTest.h" />
     <ClInclude Include="ComponentType.h" />
