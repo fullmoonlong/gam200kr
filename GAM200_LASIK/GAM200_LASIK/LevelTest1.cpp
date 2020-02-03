@@ -83,12 +83,8 @@ void LevelTest1::Initialize()
 	// unit initialize
 	{
 		//tower
-		tower = new Object();
-		tower->AddComponent<BaseUnitState>();
-		tower->GetComponent<BaseUnitState>()->SetState(State::IDLE);
-		tower->GetComponent<BaseUnitState>()->SetHealth(300);
-		tower->GetComponent<BaseUnitState>()->SetDamage(0);
-		tower->Initialize("tower.txt");
+		tower = new Tower();
+		tower->UnitInitialize("tower.txt");
 		tower->material.shader = shader;
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadTextureFrom(PATH::tower);
@@ -97,52 +93,32 @@ void LevelTest1::Initialize()
 		//tower
 
 		//lair
-		lair = new Object();
-		lair->AddComponent<BaseUnitState>();
-		lair->GetComponent<BaseUnitState>()->SetState(State::IDLE);
-		lair->GetComponent<BaseUnitState>()->SetHealth(300);
-		lair->GetComponent<BaseUnitState>()->SetDamage(0);
-		lair->Initialize("lair.txt");
+		lair = new Lair();
+		lair->UnitInitialize("lair.txt");
 		lair->material.shader = shader;
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadTextureFrom(PATH::lair);
 		lair->animation.Initialize({ 1,1, 1.f }, lair->material.shader);
-		lair->AddComponent<LairComponent>();
 		lair->animation.Initialize({ 1, 1,	10.0f }, shader);
 		GAMEMANAGER->SpawnUnit(lair);
 		//lair
 
 		skeleton = new Skeleton();
-		skeleton->AddComponent<BaseUnitState>();
-		skeleton->GetComponent<BaseUnitState>()->SetState(State::WALK);
-		skeleton->GetComponent<BaseUnitState>()->SetHealth(skeleton->GetSkeletionHealth());
-		skeleton->GetComponent<BaseUnitState>()->SetDamage(skeleton->GetSkeletionDamage());
-		skeleton->GetComponent<BaseUnitState>()->SetAttackRange({ 1.0f, 0.0f });
-		skeleton->Initialize("skeleton.txt");
+		skeleton->UnitInitialize("skeleton.txt");
 		skeleton->material.shader = shader;
 		skeleton->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		skeleton->material.texture.LoadTextureFrom(PATH::skeleton_move);
 		skeleton->animation.Initialize({ 4, 1,	10.0f }, shader);
 
 		golem = new Golem();
-		golem->AddComponent<BaseUnitState>();
-		golem->GetComponent<BaseUnitState>()->SetState(State::WALK);
-		golem->GetComponent<BaseUnitState>()->SetHealth(golem->GetGolemHealth());
-		golem->GetComponent<BaseUnitState>()->SetDamage(golem->GetGolemHealth());
-		golem->GetComponent<BaseUnitState>()->SetAttackRange({ 1.0f, 0.0f });
-		golem->Initialize("golem.txt");
+		golem->UnitInitialize("golem.txt");
 		golem->material.shader = shader;
 		golem->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		golem->material.texture.LoadTextureFrom(PATH::golem_move);
 		golem->animation.Initialize({ 4, 1,	10.0f }, shader);
 
 		lich = new Lich();
-		lich->AddComponent<BaseUnitState>();
-		lich->GetComponent<BaseUnitState>()->SetState(State::WALK);
-		lich->GetComponent<BaseUnitState>()->SetHealth(lich->GetLichHealth());
-		lich->GetComponent<BaseUnitState>()->SetDamage(lich->GetLichDamage());
-		lich->GetComponent<BaseUnitState>()->SetAttackRange(lich->GetLichAttackRange());
-		lich->Initialize("lich.txt");
+		lich->UnitInitialize("lich.txt");
 		lich->material.shader = shader;
 		lich->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lich->material.texture.LoadTextureFrom(PATH::lich_move);
@@ -150,11 +126,7 @@ void LevelTest1::Initialize()
 
 		//knight
 		knight = new Knight();
-		knight->AddComponent<BaseUnitState>();
-		knight->GetComponent<BaseUnitState>()->SetState(State::WALK);
-		knight->GetComponent<BaseUnitState>()->SetHealth(knight->GetKnightHealth());
-		knight->GetComponent<BaseUnitState>()->SetDamage(knight->GetKnightDamage());
-		knight->Initialize("knight.txt");
+		knight->UnitInitialize("knight.txt");
 		knight->material.shader = shader;
 		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		knight->material.texture.LoadTextureFrom(PATH::knight_move);
@@ -163,12 +135,7 @@ void LevelTest1::Initialize()
 
 		//archer
 		archer = new Archer();
-		archer->AddComponent<BaseUnitState>();
-		archer->GetComponent<BaseUnitState>()->SetState(State::WALK);
-		archer->GetComponent<BaseUnitState>()->SetHealth(archer->GetArcherHealth());
-		archer->GetComponent<BaseUnitState>()->SetDamage(archer->GetArcherDamage());
-		archer->GetComponent<BaseUnitState>()->SetAttackRange(archer->GetArcherAttackRange());
-		archer->Initialize("archer.txt");
+		archer->UnitInitialize("archer.txt");
 		archer->material.shader = shader;
 		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		archer->material.texture.LoadTextureFrom(PATH::archer_move);
@@ -177,12 +144,7 @@ void LevelTest1::Initialize()
 
 		//magician
 		magician = new Magician();
-		magician->AddComponent<BaseUnitState>();
-		magician->GetComponent<BaseUnitState>()->SetState(State::WALK);
-		magician->GetComponent<BaseUnitState>()->SetHealth(magician->GetMagicianHealth());
-		magician->GetComponent<BaseUnitState>()->SetDamage(magician->GetMagicianDamage());
-		magician->GetComponent<BaseUnitState>()->SetAttackRange(magician->GetMagicianAttackRange());
-		magician->Initialize("wizard.txt");
+		magician->UnitInitialize("wizard.txt");
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadTextureFrom(PATH::magician_move);

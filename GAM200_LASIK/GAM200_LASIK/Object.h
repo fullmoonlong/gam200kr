@@ -44,6 +44,12 @@ public:
 
 	float GetXposition() { return position.x; };
 	float GetYposition() { return position.y; };
+	void SetXposition(float position_) { position.x = position_; };
+	void SetYposition(float position_) { position.y = position_; };
+	void SetPosition(vec2<float> position_) { position = position_; }
+
+	vec2<float> GetSize() { return size; }
+	void SetSize(vec2<float> size_) { size = size_; }
 
 	void ChangeUnitAnimation();
 
@@ -90,6 +96,10 @@ public:
 		return nullptr;
 	}
 
+	vec2<float> min;
+	vec2<float> max;
+	vec2<float> speed;
+
 private:
 	ObjectID objectID;
 	std::string objectName = "";
@@ -97,9 +107,6 @@ private:
 	vec2<float> position;
 	vec2<float> size;
 
-	vec2<float> min;
-	vec2<float> max;
-	vec2<float> speed;
 
 	std::vector <Component*>componetList;
 };

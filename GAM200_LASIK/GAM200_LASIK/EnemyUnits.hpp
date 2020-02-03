@@ -2,16 +2,20 @@
  *	File Name        : EnemyUnits.hpp
  *	Project Name     : Keyboard Warriors
  *	Primary Author   : Wonju Cho
- *	Secondary Author :
+ *	Secondary Author : Doyeong Yi
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
 
+#pragma once
 #include"Object.h"
-#include<vec2.hpp>
+#include <vec2.hpp>
+#include "UnitStateComponent.hpp"
 
-class Skeleton :public Object {
+class Skeleton : public Object {
 public:
+	void UnitInitialize(const char* name);
+
 	int GetSkeletionHealth() { return SkeletionHealth; }
 	int GetSkeletionDamage() { return SkeletionDamage; }
 private:
@@ -21,8 +25,10 @@ private:
 
 };
 
-class Lich :public Object {
+class Lich : public Object {
 public:
+	void UnitInitialize(const char* name);
+
 	int GetLichHealth() { return LichHealth; }
 	int GetLichDamage() { return LichDamage; }
 	vec2<float> GetLichAttackRange() { return LichAttackRange; }
@@ -35,8 +41,10 @@ private:
 
 };
 
-class Golem :public Object {
+class Golem : public Object {
 public:
+	void UnitInitialize(const char* name);
+	
 	int GetGolemHealth() { return GolemHealth; }
 	int GetGolemDamage() { return GolemDamage; }
 
@@ -45,10 +53,4 @@ private:
 	int         GolemHealth = 350;
 	int         GolemDamage = 40;
 
-};
-
-class EnemyUnits : public Skeleton
-{
-public:
-	void Initialize();
 };

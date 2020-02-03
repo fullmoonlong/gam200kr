@@ -59,6 +59,7 @@
     <ClCompile Include="GameManager.cpp">
       <Filter>System\GameManager</Filter>
     </ClCompile>
+    <ClCompile Include="Tower.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">
@@ -135,6 +136,12 @@
     </ClInclude>
     <ClInclude Include="GameManager.h">
       <Filter>System\GameManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseInitialize.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Tower.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -14,6 +14,7 @@
 
 #include "Object.h"
 #include "Util/Clock.hpp"
+#include "Tower.h"
 #include "Units.hpp"
 #include "EnemyUnits.hpp"
 #include "GetInput.hpp"
@@ -98,8 +99,8 @@ private:
 	//projectiles
 
 	//tower
-	Object* tower;
-	Object* lair;
+	Tower* tower;
+	Lair* lair;
 	//tower
 
 	Clock clock;

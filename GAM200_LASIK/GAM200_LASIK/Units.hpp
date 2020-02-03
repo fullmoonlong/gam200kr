@@ -2,18 +2,20 @@
  *	File Name        : Units.hpp
  *	Project Name     : Keyboard Warriors
  *	Primary Author   : Wonju Cho
- *	Secondary Author :
+ *	Secondary Author : Doyeong Yi
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
 
 #pragma once
-#include"Object.h"
-#include<vec2.hpp>
+#include "Object.h"
+#include <vec2.hpp>
+#include "UnitStateComponent.hpp"
 
 class Knight : public Object {
 public:	
-	
+	void UnitInitialize(const char* name);
+
 	int GetKnightHealth() { return knightHealth; }
 	int GetKnightDamage() { return knightDamage; }
 
@@ -26,6 +28,8 @@ private:
 
 class Archer : public Object {
 public:
+	void UnitInitialize(const char* name);
+
 	int GetArcherHealth() { return  archerHealth; }
 	int GetArcherDamage() { return archerDamage; }
 	vec2<float>	 GetArcherAttackRange() { return archerAttackRange; }
@@ -42,27 +46,14 @@ private:
 
 class Magician : public Object {
 public:
+	void UnitInitialize(const char* name);
 	
 	int GetMagicianHealth() { return  magicianHealth; }
 	int GetMagicianDamage() { return magicianDamage; }
 	vec2<float>	GetMagicianAttackRange() { return magicianAttackRange; }
-
-	//void SetMagicianHealth() { magicianHealth = 100; }
-	//void SetMagicianDamage() { magicianDamage = 30; }
-	//bool MagicianCollideWith(Object& object);
 private:
 	int         magicianHealth		= 100;
 	int         magicianDamage		=  50;
 	vec2<float>	magicianAttackRange = { 196, 0};
 	vec2<float> magicianSpeed;
-};
-
-class Units : public Knight , public Archer , public Magician
-{
-public:
-	void Initialize();
-	
-private:
-	vec2<float> min;
-	vec2<float> max;
 };

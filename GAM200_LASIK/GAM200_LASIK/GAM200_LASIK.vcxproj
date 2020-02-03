@@ -211,11 +211,13 @@
     <ClCompile Include="ObjectMaterial.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="Tower.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Units.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BaseInitialize.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTower.h" />
     <ClInclude Include="CoolDown.hpp" />
@@ -231,6 +233,7 @@
     <ClInclude Include="ObjectMaterial.h" />
     <ClInclude Include="Sound.hpp" />
     <ClInclude Include="StateManager.h" />
+    <ClInclude Include="Tower.h" />
     <ClInclude Include="UI.hpp" />
     <ClInclude Include="Units.hpp" />
     <ClInclude Include="UnitStateComponent.hpp" />
