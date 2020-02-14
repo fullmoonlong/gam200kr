@@ -225,7 +225,6 @@ void LevelTest1::Initialize()
 	}
 
 	//test sound and make object
-	SOUNDMANAGER->Initialize();
 	SOUNDMANAGER->LoadFile("backgroundmusic.wav");
 	SOUNDMANAGER->LoadFile("Fireball.wav");
 	SOUNDMANAGER->LoadFile("archershoot.ogg");

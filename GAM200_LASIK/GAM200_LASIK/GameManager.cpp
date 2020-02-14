@@ -32,7 +32,7 @@ void GameManager::Update(float /*dt*/)
 	if (isGameEnd == false)
 	{
 		CheckCollision();
-		CheckAttackState();
+		//CheckAttackState();
 	}
 }
 
@@ -61,85 +61,79 @@ void GameManager::CheckCollision()
 			}
 		}
 	}
+
 	for (auto player : PlayerUnits)
 	{
-		bool pl = false;
-		bool en = false;
-		for (auto enemy : EnemyUnits)
+		if (player->GetComponent<UnitState>()->GetAttackState() == false)
 		{
-			if (player->isObjectInAttackRange(*enemy))
+			for (auto enemy : EnemyUnits)
 			{
-				player->GetComponent<UnitState>()->SetState(State::ATTACK);
-				pl = true;
-				if (player->GetComponent<UnitState>()->GetAttackState() == false)
+				if (player->isObjectInAttackRange(*enemy))
 				{
+					player->GetComponent<UnitState>()->SetState(State::ATTACK);
 					player->GetComponent<UnitState>()->SetAttackState(true);
-					enemy->GetComponent<UnitState>()->SetAttackState(true);
+					//enemy->GetComponent<UnitState>()->SetAttackState(true);
 					player->GetComponent<UnitState>()->SetSpriteChangeState(true);
+					break;
 				}
 			}
+		}
 
-			if (enemy->isObjectInAttackRange(*player))
+		else if (player->GetComponent<UnitState>()->GetAttackState() == true)
+		{
+			bool n = false;
+			for (auto enemy : EnemyUnits)
 			{
-				enemy->GetComponent<UnitState>()->SetState(State::ATTACK);
-				en = true;
-				if (enemy->GetComponent<UnitState>()->GetAttackState() == false)
+				if (player->isObjectInAttackRange(*enemy))
 				{
-					player->GetComponent<UnitState>()->SetAttackState(true);
-					enemy->GetComponent<UnitState>()->SetAttackState(true);
-					enemy->GetComponent<UnitState>()->SetSpriteChangeState(true);
+					n = true;
+					break;
 				}
 			}
-		}
-	}
-}
+			if (n == false)
+			{
+				player->GetComponent<UnitState>()->SetSpriteChangeState(true);
+				player->GetComponent<UnitState>()->SetAttackState(false);
+				player->GetComponent<UnitState>()->SetState(State::WALK);
+			}
 
-void GameManager::CheckAttackState()
-{
-	int playerTotalNotWhileAttack = 0;
-	int enemyTotalNotWhileAttack = 0;
-
-
-	for (auto obj : OBJECTFACTORY->GetObjecteList())
-	{
-		if (obj.second == nullptr)
-		{
-			continue;
-		}
-		if (obj.second->GetComponent<UnitState>()->GetAttackState() == false && obj.second->GetComponent<UnitState>()->GetType() == UnitType::Player)
-		{
-			playerTotalNotWhileAttack++;
-		}
-		else if (obj.second->GetComponent<UnitState>()->GetAttackState() == false && obj.second->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
-		{
-			enemyTotalNotWhileAttack++;
 		}
 	}
 
 	for (auto enemy : EnemyUnits)
 	{
-		if ((playerTotalNotWhileAttack == static_cast<int>(PlayerUnits.size())) && enemy->GetComponent<UnitState>()->GetAttackState() == true)
+		if (enemy->GetComponent<UnitState>()->GetAttackState() == false)
 		{
-			if (enemy == nullptr)
+			for (auto player : PlayerUnits)
 			{
-				continue;
+				if (enemy->isObjectInAttackRange(*player))
+				{
+					enemy->GetComponent<UnitState>()->SetState(State::ATTACK);
+					enemy->GetComponent<UnitState>()->SetAttackState(true);
+					//enemy->GetComponent<UnitState>()->SetAttackState(true);
+					enemy->GetComponent<UnitState>()->SetSpriteChangeState(true);
+					break;
+				}
 			}
-			enemy->GetComponent<UnitState>()->SetSpriteChangeState(true);
-			enemy->GetComponent<UnitState>()->SetAttackState(false);
-			enemy->GetComponent<UnitState>()->SetState(State::WALK);
 		}
-	}
-	for (auto player : PlayerUnits)
-	{
-		if ((enemyTotalNotWhileAttack == static_cast<int>(EnemyUnits.size())) && player->GetComponent<UnitState>()->GetAttackState() == true)
+
+		else if (enemy->GetComponent<UnitState>()->GetAttackState() == true)
 		{
-			if (player == nullptr)
+			bool n = false;
+			for (auto player : PlayerUnits)
 			{
-				continue;
+				if (enemy->isObjectInAttackRange(*player))
+				{
+					n = true;
+					break;
+				}
 			}
-			player->GetComponent<UnitState>()->SetSpriteChangeState(true);
-			player->GetComponent<UnitState>()->SetAttackState(false);
-			player->GetComponent<UnitState>()->SetState(State::WALK);
+			if (n == false)
+			{
+				enemy->GetComponent<UnitState>()->SetSpriteChangeState(true);
+				enemy->GetComponent<UnitState>()->SetAttackState(false);
+				enemy->GetComponent<UnitState>()->SetState(State::WALK);
+			}
 		}
 	}
 }

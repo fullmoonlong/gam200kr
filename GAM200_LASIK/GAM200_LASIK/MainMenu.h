@@ -45,4 +45,6 @@ private:
 	Object startButton;
 	Object exitButton;
 	Object selectedArrow;
+
+	float s = 1.0f;
 };

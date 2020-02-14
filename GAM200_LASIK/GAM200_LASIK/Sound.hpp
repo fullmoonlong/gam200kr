@@ -13,12 +13,13 @@
 
 #include <string>
 #include <vector>
+#include <array>
 #include <iostream>
 #include <assert.h>
 
 #include "System.h"
-#include "fmod.hpp"
 #include "fmod.h"
+#include "fmod.hpp"
 
 class SoundManager : public System {
 public:
@@ -28,32 +29,30 @@ public:
 	void Initialize() override;
 	void Update(float dt) override;
 	void Shutdown();
-	void ErrorCheck(FMOD_RESULT result);
+	void ErrorCheck(FMOD_RESULT result_);
 
 	void LoadFile(std::string filename);
-	void PlaySound(bool loop, unsigned int ID);
+	void PlaySound(bool loop, int ID);
+	void DeleteAllSounds();
 
-	//need to modify
 	void SoundOnOff();
-	void Stop(unsigned int ID);
+	void StopSound(unsigned int ID);
 	void Resume(unsigned int ID);
-	void AllStop();
+	void AllSoundStop();
 	void AllResume();
 	void SetSystemSoundVolume(float volume);
-	//need to modify
 
-	std::vector<float> Volume;
 private:
 	std::vector<FMOD::Sound*> Sounds;
-	std::vector<FMOD::Channel*>Channels;
-	FMOD::System *system;
-	FMOD_RESULT result_;
+	std::vector<FMOD::Channel*> Channels;
 
-	unsigned int soundID = 0;
-	bool added = false;
+	FMOD::System *system;
+	FMOD_RESULT result;
+
+	float systemVolume = 1.f;
+	int soundID = 0;
 	unsigned int version;
 	bool soundState = true;
-	bool loopState;
 };
 
 extern SoundManager* SOUNDMANAGER;

@@ -9,12 +9,12 @@
 
 #include "Sound.hpp"
 
-
 extern SoundManager* SOUNDMANAGER = nullptr;
 SoundManager::SoundManager()
 {
 	std::cout << "SoundManager Add Successful" << std::endl;
 	SOUNDMANAGER = this;
+	Initialize();
 }
 
 SoundManager::~SoundManager()
@@ -25,47 +25,50 @@ SoundManager::~SoundManager()
 
 void SoundManager::Initialize()
 {
-	result_ = FMOD::System_Create(&system);
-	ErrorCheck(result_);
+	result = FMOD::System_Create(&system);
+	ErrorCheck(result);
 
-	result_ = system->init(36, FMOD_INIT_NORMAL, 0);
-	ErrorCheck(result_);
+	result = system->init(36, FMOD_INIT_NORMAL, 0);
+	ErrorCheck(result);
 }
 
 void SoundManager::Update(float /*dt*/)
 {
 	if (soundState == true)
 	{
-		result_ = system->update();
+		result = system->update();
 	}
 }
 
 void SoundManager::Shutdown()
 {
+	DeleteAllSounds();
 }
 
-void SoundManager::ErrorCheck(FMOD_RESULT /*result*/)
+void SoundManager::ErrorCheck(FMOD_RESULT result_)
 {
+	if (result_ != FMOD_OK)
+	{
+		exit(-1);
+	}
 }
 
 void SoundManager::LoadFile(std::string filename)
 {
 	std::string path = "../assets/" + filename;
 
-	FMOD::Sound* sound = 0;
-	FMOD::Channel* channel = 0;
+	FMOD::Sound* sound = NULL;
+	FMOD::Channel* channel = NULL;
 
 	Sounds.push_back(sound);
 	Channels.push_back(channel);
-	FMOD_RESULT volume_ = Channels[soundID]->setVolume(1.f);
-	Volume.push_back((float)volume_);
 
-	result_ = system->createSound(path.c_str(), FMOD_2D, 0, &Sounds[soundID]);
+	system->createSound(path.c_str(), FMOD_2D, NULL, &Sounds[soundID]);
 	soundID++;
-	ErrorCheck(result_);
+	ErrorCheck(result);
 }
 
-void SoundManager::PlaySound(bool loop, unsigned int ID)
+void SoundManager::PlaySound(bool loop, int ID)
 {
 	if (soundState == true)
 	{
@@ -77,13 +80,36 @@ void SoundManager::PlaySound(bool loop, unsigned int ID)
 		{
 			Sounds[ID]->setMode(FMOD_LOOP_NORMAL);
 		}
-		result_ = system->playSound(Sounds[ID], NULL, false, &Channels[ID]);
-
-		bool isPlaying = false;
+		Channels[ID]->setVolume(systemVolume);
+		result = system->playSound(Sounds[ID], NULL, false, &Channels[ID]);
+		
+		bool isPlaying;
 		Channels[ID]->isPlaying(&isPlaying);
 
-		ErrorCheck(result_);
+		ErrorCheck(result);
 	}
+}
+
+void SoundManager::DeleteAllSounds()
+{
+	for (auto iSound : Sounds)
+	{
+		result = iSound->release();
+
+		ErrorCheck(result);
+	}
+	if (Sounds.size() > 0)
+	{
+		Sounds.erase(Sounds.begin(), Sounds.end());
+	}
+	if (Channels.size() > 0)
+	{
+		Channels.erase(Channels.begin(), Channels.end());
+	}
+	Sounds.clear();
+	Channels.clear();
+
+	soundID = 0;
 }
 
 void SoundManager::SoundOnOff()
@@ -96,15 +122,15 @@ void SoundManager::SoundOnOff()
 	{
 		soundState = true;
 	}
-	ErrorCheck(result_);
+	ErrorCheck(result);
 }
 
-void SoundManager::Stop(unsigned int ID)
+void SoundManager::StopSound(unsigned int ID)
 {
 	if (soundState == true)
 	{
 		Channels[ID]->setPaused(true);
-		ErrorCheck(result_);
+		ErrorCheck(result);
 	}
 }
 
@@ -113,33 +139,40 @@ void SoundManager::Resume(unsigned int ID)
 	if (soundState == true)
 	{
 		Channels[ID]->setPaused(false);
-		ErrorCheck(result_);
+		ErrorCheck(result);
 	}
 }
 
-void SoundManager::AllStop()
+void SoundManager::AllSoundStop()
 {
-	for (auto ch : Channels)
+	if (soundState == true)
 	{
-		ch->setPaused(true);
-		ErrorCheck(result_);
+		for (auto ch : Channels)
+		{
+			ch->setPaused(true);
+			ErrorCheck(result);
+		}
 	}
 }
 
 void SoundManager::AllResume()
 {
-	for (auto ch : Channels)
+	if (soundState == true)
 	{
-		ch->setPaused(false);
-		ErrorCheck(result_);
+		for (auto ch : Channels)
+		{
+			ch->setPaused(false);
+			ErrorCheck(result);
+		}
 	}
 }
 
 void SoundManager::SetSystemSoundVolume(float volume)
 {
+	systemVolume = volume;
 	for (auto ch : Channels)
 	{
-		ch->setVolume(volume);
-		ErrorCheck(result_);
+		ch->setVolume(systemVolume);
+		ErrorCheck(result);
 	}
 }
