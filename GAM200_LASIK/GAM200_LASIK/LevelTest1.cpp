@@ -162,7 +162,12 @@ void LevelTest1::Initialize()
 		swordAttack->GetComponent<BaseUnitState>()->SetDamage(knight->GetKnightDamage());
 		swordAttack->animation.Initialize({ 1,1, 1.f }, swordAttack->material.shader);
 
-		knight->GetComponent<ObjectAttackComponent>()->attack = swordAttack;
+		knight->GetComponent<BaseObjectAttackComponent>()->unit = knight;
+		knight->GetComponent<BaseObjectAttackComponent>()->projectile = swordAttack;
+		knight->GetComponent<BaseObjectAttackComponent>()->delayTime = 0.6f;
+		knight->GetComponent<BaseObjectAttackComponent>()->soundID = 3;
+		knight->GetComponent<BaseObjectAttackComponent>()->startPosition.x = 48.0f;
+		knight->GetComponent<BaseObjectAttackComponent>()->startPosition.y = 0.f;
 		//sword attack
 
 		//sword attack
@@ -176,7 +181,12 @@ void LevelTest1::Initialize()
 		enemyAttack->animation.Initialize({ 1,1, 1.f }, enemyAttack->material.shader);
 
 		enemyAttack->GetComponent<BaseUnitState>()->SetDamage(skeleton->GetSkeletionDamage());
-		skeleton->GetComponent<ObjectAttackComponent>()->attack = enemyAttack;
+		skeleton->GetComponent<BaseObjectAttackComponent>()->unit = skeleton;
+		skeleton->GetComponent<BaseObjectAttackComponent>()->projectile = enemyAttack;
+		skeleton->GetComponent<BaseObjectAttackComponent>()->delayTime = 0.6f;
+		skeleton->GetComponent<BaseObjectAttackComponent>()->soundID = 3;
+		skeleton->GetComponent<BaseObjectAttackComponent>()->startPosition.x = -48.0f;
+		skeleton->GetComponent<BaseObjectAttackComponent>()->startPosition.y = 0.f;
 		//sword attack
 
 
@@ -191,7 +201,10 @@ void LevelTest1::Initialize()
 		fireball->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		fireball->GetComponent<BaseUnitState>()->SetDamage(magician->GetMagicianDamage());
 
-		magician->GetComponent<ObjectAttackComponent>()->attack = fireball;
+		magician->GetComponent<BaseObjectAttackComponent>()->unit = magician;
+		magician->GetComponent<BaseObjectAttackComponent>()->projectile = fireball;
+		magician->GetComponent<BaseObjectAttackComponent>()->delayTime = 2.4f;
+		magician->GetComponent<BaseObjectAttackComponent>()->soundID = 1;
 		//fireball
 
 		//fireball
@@ -205,7 +218,10 @@ void LevelTest1::Initialize()
 		fireballEnemy->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		fireballEnemy->GetComponent<BaseUnitState>()->SetDamage(lich->GetLichDamage());
 
-		lich->GetComponent<ObjectAttackComponent>()->attack = fireballEnemy;
+		lich->GetComponent<BaseObjectAttackComponent>()->unit = lich;
+		lich->GetComponent<BaseObjectAttackComponent>()->projectile = fireballEnemy;
+		lich->GetComponent<BaseObjectAttackComponent>()->delayTime = 3.0f;
+		lich->GetComponent<BaseObjectAttackComponent>()->soundID = 1;
 		//fireball
 
 		//arrow
@@ -220,7 +236,10 @@ void LevelTest1::Initialize()
 		arrow->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		arrow->GetComponent<BaseUnitState>()->SetDamage(archer->GetArcherDamage());
 
-		archer->GetComponent<ObjectAttackComponent>()->attack = arrow;
+		archer->GetComponent<BaseObjectAttackComponent>()->unit = archer;
+		archer->GetComponent<BaseObjectAttackComponent>()->projectile = arrow;
+		archer->GetComponent<BaseObjectAttackComponent>()->delayTime = 0.7f;
+		archer->GetComponent<BaseObjectAttackComponent>()->soundID = 2;
 		//arrow
 	}
 

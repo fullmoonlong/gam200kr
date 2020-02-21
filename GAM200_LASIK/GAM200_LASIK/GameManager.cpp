@@ -9,6 +9,7 @@
 #include <iostream>
 #include "GameManager.h"
 #include "ObjectFactory.h"
+#include "ComponentTest.h"
 #include "UnitStateComponent.hpp"
 
 GameManager* GAMEMANAGER = nullptr;
@@ -27,10 +28,24 @@ void GameManager::Initialize()
 {
 }
 
-void GameManager::Update(float /*dt*/)
+void GameManager::Update(float dt)
 {
 	if (isGameEnd == false)
 	{
+		for (auto player : PlayerUnits)
+		{
+			if (player->GetName() != "Tower")
+			{
+				player->GetComponent<ObjectAttackComponent>()->Update(dt);
+			}
+		}
+		for (auto enemy : EnemyUnits)
+		{
+			if (enemy->GetName() != "Lair")
+			{
+				enemy->GetComponent<ObjectAttackComponent>()->Update(dt);
+			}
+		}
 		CheckCollision();
 		//CheckAttackState();
 	}

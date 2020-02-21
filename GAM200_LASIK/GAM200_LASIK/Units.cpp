@@ -65,7 +65,7 @@ void Knight::UnitInitialize(const char* name)
 
 	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
 
-	this->AddComponent<ObjectAttackComponent>();
+	this->AddComponent<BaseObjectAttackComponent>();
 }
 
 void Archer::UnitInitialize(const char* name)
@@ -122,7 +122,7 @@ void Archer::UnitInitialize(const char* name)
 
 	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
 
-	this->AddComponent<ObjectAttackComponent>();
+	this->AddComponent<BaseObjectAttackComponent>();
 }
 
 void Magician::UnitInitialize(const char* name)
@@ -179,5 +179,5 @@ void Magician::UnitInitialize(const char* name)
 
 	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
 
-	this->AddComponent<ObjectAttackComponent>();
+	this->AddComponent<BaseObjectAttackComponent>();
 }

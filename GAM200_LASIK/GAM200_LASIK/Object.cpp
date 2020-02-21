@@ -40,6 +40,20 @@ Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.mater
 	GetComponent<UnitState>()->healthBar.mesh = GetComponent<BaseUnitState>()->healthBar.mesh;
 	GetComponent<UnitState>()->healthBar.transform = GetComponent<BaseUnitState>()->healthBar.transform;
 	this->GetComponent<UnitState>()->healthBar.Initialize(transform.GetTranslation(), this->GetComponent<UnitState>()->GetHealth());
+
+	if (GetName() != "Lair" && GetName() != "Tower")
+	{
+		if (GetComponent<UnitState>()->GetType() != UnitType::ProjectilesPlayer && GetComponent<UnitState>()->GetType() != UnitType::ProjectilesEnemy)
+		{
+			AddComponent<ObjectAttackComponent>();
+			GetComponent<ObjectAttackComponent>()->SetUnit(this);
+			GetComponent<ObjectAttackComponent>()->projectile = GetComponent<BaseObjectAttackComponent>()->projectile;
+			GetComponent<ObjectAttackComponent>()->delayTime = GetComponent<BaseObjectAttackComponent>()->delayTime;
+			GetComponent<ObjectAttackComponent>()->soundID = GetComponent<BaseObjectAttackComponent>()->soundID;
+			GetComponent<ObjectAttackComponent>()->startPosition.x = GetComponent<BaseObjectAttackComponent>()->startPosition.x;
+			GetComponent<ObjectAttackComponent>()->startPosition.y = GetComponent<BaseObjectAttackComponent>()->startPosition.y;
+		}
+	}
 }
 
 void Object::Initialize(const char* name) noexcept
@@ -145,102 +159,102 @@ void Object::Update(float dt) noexcept
 		OBJECTFACTORY->Destroy(this);
 	}
 
-	if (this->GetName() == "Knight")
-	{
-		if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 0.6f)
-			{
-				SOUNDMANAGER->PlaySound(0, 3);
-				vec2<float> a = { transform.GetTranslation().x + 48.f, transform.GetTranslation().y };
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
+	//if (this->GetName() == "Knight")
+	//{
+	//	if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
+	//	{
+	//		this->GetComponent<ObjectAttackComponent>()->time += dt;
+	//		if (this->GetComponent<ObjectAttackComponent>()->time > 0.6f)
+	//		{
+	//			SOUNDMANAGER->PlaySound(0, 3);
+	//			vec2<float> a = { transform.GetTranslation().x + 48.f, transform.GetTranslation().y };
+	//			this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
-	else if (this->GetName() == "Archer")
-	{
-		if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 0.7f)
-			{
-				SOUNDMANAGER->PlaySound(0, 2);
-				vec2<float> a = transform.GetTranslation();
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
+	//			GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
+	//			this->GetComponent<ObjectAttackComponent>()->time = 0;
+	//		}
+	//	}
+	//}
+	//else if (this->GetName() == "Archer")
+	//{
+	//	if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
+	//	{
+	//		this->GetComponent<ObjectAttackComponent>()->time += dt;
+	//		if (this->GetComponent<ObjectAttackComponent>()->time > 0.7f)
+	//		{
+	//			SOUNDMANAGER->PlaySound(0, 2);
+	//			vec2<float> a = transform.GetTranslation();
+	//			this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
-	else if (this->GetName() == "Magician")
-	{
-		if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 2.4f)
-			{
-				SOUNDMANAGER->PlaySound(0, 1);
-				vec2<float> a = transform.GetTranslation();
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
+	//			GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
+	//			this->GetComponent<ObjectAttackComponent>()->time = 0;
+	//		}
+	//	}
+	//}
+	//else if (this->GetName() == "Magician")
+	//{
+	//	if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
+	//	{
+	//		this->GetComponent<ObjectAttackComponent>()->time += dt;
+	//		if (this->GetComponent<ObjectAttackComponent>()->time > 2.4f)
+	//		{
+	//			SOUNDMANAGER->PlaySound(0, 1);
+	//			vec2<float> a = transform.GetTranslation();
+	//			this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
-	else if (this->GetName() == "Skeleton")
-	{
-		if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 0.6f)
-			{
-				SOUNDMANAGER->PlaySound(0, 3);
-				vec2<float> a = { transform.GetTranslation().x - 48.f, transform.GetTranslation().y };
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
+	//			GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
+	//			this->GetComponent<ObjectAttackComponent>()->time = 0;
+	//		}
+	//	}
+	//}
+	//else if (this->GetName() == "Skeleton")
+	//{
+	//	if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
+	//	{
+	//		this->GetComponent<ObjectAttackComponent>()->time += dt;
+	//		if (this->GetComponent<ObjectAttackComponent>()->time > 0.6f)
+	//		{
+	//			SOUNDMANAGER->PlaySound(0, 3);
+	//			vec2<float> a = { transform.GetTranslation().x - 48.f, transform.GetTranslation().y };
+	//			this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
-	else if (this->GetName() == "Lich")
-	{
-		if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 3.0f)
-			{
-				SOUNDMANAGER->PlaySound(0, 1);
-				vec2<float> a = { transform.GetTranslation().x, transform.GetTranslation().y };
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
+	//			GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
+	//			this->GetComponent<ObjectAttackComponent>()->time = 0;
+	//		}
+	//	}
+	//}
+	//else if (this->GetName() == "Lich")
+	//{
+	//	if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
+	//	{
+	//		this->GetComponent<ObjectAttackComponent>()->time += dt;
+	//		if (this->GetComponent<ObjectAttackComponent>()->time > 3.0f)
+	//		{
+	//			SOUNDMANAGER->PlaySound(0, 1);
+	//			vec2<float> a = { transform.GetTranslation().x, transform.GetTranslation().y };
+	//			this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
-	else if (this->GetName() == "Golem")
-	{
-		if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 1.5f)
-			{
-				SOUNDMANAGER->PlaySound(0, 3);
-				vec2<float> a = { transform.GetTranslation().x - 256.f, transform.GetTranslation().y - 128 };
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
+	//			GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
+	//			this->GetComponent<ObjectAttackComponent>()->time = 0;
+	//		}
+	//	}
+	//}
+	//else if (this->GetName() == "Golem")
+	//{
+	//	if (this->GetComponent<UnitState>()->GetState() == State::ATTACK)
+	//	{
+	//		this->GetComponent<ObjectAttackComponent>()->time += dt;
+	//		if (this->GetComponent<ObjectAttackComponent>()->time > 1.5f)
+	//		{
+	//			SOUNDMANAGER->PlaySound(0, 3);
+	//			vec2<float> a = { transform.GetTranslation().x - 256.f, transform.GetTranslation().y - 128 };
+	//			this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
 
-				GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
+	//			GAMEMANAGER->SpawnUnit(GetComponent<ObjectAttackComponent>()->attack);
+	//			this->GetComponent<ObjectAttackComponent>()->time = 0;
+	//		}
+	//	}
+	//}
 }
 
 Object* Object::Clone() const

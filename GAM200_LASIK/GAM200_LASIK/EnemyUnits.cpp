@@ -66,7 +66,7 @@ void Skeleton::UnitInitialize(const char* name)
 
 	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
 
-	this->AddComponent<ObjectAttackComponent>();
+	this->AddComponent<BaseObjectAttackComponent>();
 }
 
 void Lich::UnitInitialize(const char* name)
@@ -123,7 +123,7 @@ void Lich::UnitInitialize(const char* name)
 
 	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
 
-	this->AddComponent<ObjectAttackComponent>();
+	this->AddComponent<BaseObjectAttackComponent>();
 }
 
 void Golem::UnitInitialize(const char* name)
@@ -180,5 +180,5 @@ void Golem::UnitInitialize(const char* name)
 
 	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
 
-	this->AddComponent<ObjectAttackComponent>();
+	this->AddComponent<BaseObjectAttackComponent>();
 }

@@ -12,14 +12,41 @@
 #include "ComponentType.h"
 #include "Object.h"
 #include "Sound.hpp"
+#include "vec2.hpp"
+
+class BaseObjectAttackComponent : public Component
+{
+public:
+	BaseObjectAttackComponent() : Component(ComponentType::ATTACKCOM) {};
+	~BaseObjectAttackComponent() override {};
+	virtual void Initialize() override {};
+
+	Object* unit;
+	Object* projectile;
+
+	float time = 0;
+	float delayTime = 0;
+	int soundID;
+
+	vec2<float> startPosition{ 0, 0 };
+};
 
 class ObjectAttackComponent : public Component
 {
 public:
 	ObjectAttackComponent() : Component(ComponentType::ATTACKCOM) {};
-	~ObjectAttackComponent() override;
+	~ObjectAttackComponent() override {};
 	virtual void Initialize() override;
+	void Update(float dt);
+	
+	void SetUnit(Object* object_) { unit = object_; }
 
-	Object* attack;
+	Object* unit;
+	Object* projectile;
+
 	float time = 0;
+	float delayTime = 0;
+	int soundID;
+
+	vec2<float> startPosition{ 0, 0 };
 };
