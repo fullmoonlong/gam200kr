@@ -232,6 +232,7 @@
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ObjectMaterial.h" />
     <ClInclude Include="Sound.hpp" />
+    <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="UI.hpp" />
@@ -248,6 +249,9 @@
     <ProjectReference Include="..\Graphics\Graphics.vcxproj">
       <Project>{28e010a9-b76a-46a5-ac19-ccbf2efddc10}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="NewFile.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

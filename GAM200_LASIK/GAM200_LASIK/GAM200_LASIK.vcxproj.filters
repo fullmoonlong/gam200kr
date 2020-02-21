@@ -143,6 +143,7 @@
     <ClInclude Include="Tower.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">
@@ -202,5 +203,8 @@
     <Filter Include="System\GameManager">
       <UniqueIdentifier>{c01ec26c-3c07-484e-856b-bb3ccdde89d0}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="NewFile.txt" />
   </ItemGroup>
 </Project>

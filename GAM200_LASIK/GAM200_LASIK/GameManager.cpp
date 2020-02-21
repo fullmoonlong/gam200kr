@@ -36,6 +36,7 @@ void GameManager::Update(float dt)
 		{
 			if (player->GetName() != "Tower")
 			{
+				UnitUpdate(player);
 				player->GetComponent<ObjectAttackComponent>()->Update(dt);
 			}
 		}
@@ -43,6 +44,7 @@ void GameManager::Update(float dt)
 		{
 			if (enemy->GetName() != "Lair")
 			{
+				UnitUpdate(enemy);
 				enemy->GetComponent<ObjectAttackComponent>()->Update(dt);
 			}
 		}
@@ -53,9 +55,9 @@ void GameManager::Update(float dt)
 
 void GameManager::CheckCollision()
 {
-	for (auto object : OBJECTFACTORY->GetObjecteList())
+	for (auto object : OBJECTFACTORY->GetObjectList())
 	{
-		for (auto object1 : OBJECTFACTORY->GetObjecteList())
+		for (auto object1 : OBJECTFACTORY->GetObjectList())
 		{
 			if (object.second->isCollideWith(*object1.second) && object.second->GetComponent<UnitState>()->GetType() == UnitType::ProjectilesPlayer && object1.second->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
 			{
@@ -170,5 +172,43 @@ void GameManager::SpawnUnit(Object* object)
 	{
 		EnemyUnits.push_back(newObject);
 		EnemyAmount++;
+	}
+}
+
+
+void GameManager::UnitUpdate(Object* object)
+{
+	object->GetComponent<UnitState>()->healthBar.Update(object->transform.GetTranslation(), object->GetComponent<UnitState>()->GetHealth());
+
+	const UnitType unitType = object->GetComponent<UnitState>()->GetType();
+	if (object->GetComponent<UnitState>()->GetHealth() <= 0 && (unitType == UnitType::Player || unitType == UnitType::Enemy))
+	{
+		auto objID = OBJECTFACTORY->GetObjectList().find(object->GetObjectID());
+		
+		if (object->GetComponent<UnitState>()->GetType() == UnitType::Player)
+		{
+			for (std::vector<Object*>::iterator it = GAMEMANAGER->PlayerUnits.begin(); it != GAMEMANAGER->PlayerUnits.end(); ++it)
+			{
+				if (*it == object)
+				{
+					GAMEMANAGER->PlayerUnits.erase(it);
+					GAMEMANAGER->PlayerAmount--;
+					break;
+				}
+			}
+		}
+		else if (object->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
+		{
+			for (std::vector<Object*>::iterator it = GAMEMANAGER->EnemyUnits.begin(); it != GAMEMANAGER->EnemyUnits.end(); ++it)
+			{
+				if (*it == object)
+				{
+					GAMEMANAGER->EnemyUnits.erase(it);
+					GAMEMANAGER->EnemyAmount--;
+					break;
+				}
+			}
+		}
+		OBJECTFACTORY->Destroy(object);
 	}
 }

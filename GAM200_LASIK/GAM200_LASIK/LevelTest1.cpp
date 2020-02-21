@@ -288,7 +288,7 @@ void LevelTest1::Update(float dt)
 	coolTime.CoolDownUpdate(dt);
 
 	//dynamic test
-	for (const auto& obj : OBJECTFACTORY->GetObjecteList())
+	for (const auto& obj : OBJECTFACTORY->GetObjectList())
 	{
 		if (obj.second != nullptr)
 		{

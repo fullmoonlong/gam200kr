@@ -35,7 +35,7 @@ public:
 	Object* FindObjectwithName(const std::string& name);
 	Object* FindObjectwithID(ObjectID id);
 
-	std::map<ObjectID, Object*> GetObjecteList() { return objectIDMap; };
+	std::map<ObjectID, Object*> GetObjectList() { return objectIDMap; };
 	ObjectID lastObjectID = 0;
 
 	std::map<ObjectID, Object*> objectIDMap;
