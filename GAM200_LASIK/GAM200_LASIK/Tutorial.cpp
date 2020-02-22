@@ -1,76 +1,72 @@
 /**************************************************************************************
- *	File Name        : LevelTest1.cpp
+ *	File Name        : Tutorial.cpp
  *	Project Name     : Keyboard Warriors
- *	Primary Author   : Jookyung Lee
- *	Secondary Author : Wonju Cho
+ *	Primary Author   : Wonju Cho
+ *	Secondary Author :
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
-
-#include <iostream>
-#include "Image.hpp"
-#include "LevelTest1.h"
-#include "GameManager.h"
+#include "Tutorial.h"
 #include "Application.h"
 #include "ObjectFactory.h"
+#include "VerticesDescription.h"
+#include "Image.hpp"
 #include "ComponentTest.h"
 #include "ComponentTower.h"
 #include "ObjectMaterial.h"
-#include "VerticesDescription.h"
+#include "StateManager.h"
 #include "UnitStateComponent.hpp"
+#include "GameManager.h"
 
-
-LevelTest1::LevelTest1(OpenGLWindow* window)
+Tutorial::Tutorial(OpenGLWindow* window)
 {
 	windowPoint = window;
-	std::cout << "Add LevelTest1 Sucessful" << std::endl;
 }
 
-LevelTest1::~LevelTest1()
+Tutorial::~Tutorial()
 {
-	std::cout << "Close LevelTest1 Sucessful" << std::endl;
 }
 
-void LevelTest1::Initialize()
+void Tutorial::Initialize()
 {
-	std::cout << "Load LevelTest1 Sucessful" << std::endl;
 	isPlayerWin = false;
 	isEnemyWin = false;
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);	//shaders for animation
 	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
+	text.SetFont(bitmapFont);
 
 	const Color4f color{ 1.0f, 1.0f, 1.0f, 1.0f };
 	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	const Mesh& rectangle = MESH::create_rectangle({ 0.0f }, { 1.0f }, color);
 
-	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
-	text.SetFont(bitmapFont);
+	towerMesh = rectangle;
+	lairMesh = rectangle;
 
-	textTransform.SetTranslation({ -300.0f, 0.0f });
+	towerMaterial.shader = fontShader;
+	towerMaterial.vertices.InitializeWithMeshAndLayout(towerMesh, layout);
+	towerMaterial.texture.LoadTextureFrom(PATH::towerExplain);
+	towerTextTransform.SetTranslation(towerPosition);
+	towerTextTransform.SetScale(towerExplainSize);
 
-	//camera
-	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
-	view.SetZoom(zoom);
-	cameraToNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera();
-	//camera
+	lairMaterial.shader = fontShader;
+	lairMaterial.vertices.InitializeWithMeshAndLayout(lairMesh, layout);
+	lairMaterial.texture.LoadTextureFrom(PATH::lairExplain);
+	lairTextTransform.SetTranslation(lairPosition);
+	lairTextTransform.SetScale(lairExplainSize);
 
 	//win
-	winpic = new Object();
-	winpic->transform.SetTranslation({ 0.f, 0.f });
-	winpic->transform.SetScale({ 640, 360 });
-	winpic->material.shader = fontShader;
-	winpic->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	winpic->material.texture.LoadTextureFrom(PATH::winpic);
-	winpic->material.ndc = cameraToNDC * winpic->transform.GetModelToWorld();
+	tutorialWin = new Object();
+	tutorialWin->transform.SetTranslation({ 0.f, 0.f });
+	tutorialWin->transform.SetScale({ 1,1 });
+	tutorialWin->material.shader = fontShader;
+	tutorialWin->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+	tutorialWin->material.texture.LoadTextureFrom(PATH::tutorialWinpic);
+	tutorialWin->material.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * tutorialWin->transform.GetModelToWorld();
 
-	//lose
-	losepic = new Object();
-	losepic->transform.SetTranslation({ 0.f, 0.f });
-	losepic->transform.SetScale({ 640, 360 });
-	losepic->material.shader = fontShader;
-	losepic->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-	losepic->material.texture.LoadTextureFrom(PATH::losepic);
-	losepic->material.ndc = cameraToNDC * losepic->transform.GetModelToWorld();
+
+	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
+	view.SetZoom(zoom);
 
 	//background
 	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
@@ -78,10 +74,8 @@ void LevelTest1::Initialize()
 	backgroundVertices.InitializeWithMeshAndLayout(rectangle, layout);
 	backgroundTexture.LoadTextureFrom(PATH::background);
 	backgroundMaterial.CreateSprite(backgroundShader, backgroundTexture, backgroundNDC);
-	background.transform.SetScale({ 1280, 720 });
-	//background
+	background.transform.SetScale({ 1680, 1050 });
 
-	// unit initialize
 	{
 		//tower
 		tower = new Tower();
@@ -100,30 +94,17 @@ void LevelTest1::Initialize()
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadTextureFrom(PATH::lair);
 		lair->animation.Initialize({ 1,1, 1.f }, lair->material.shader);
+		lair->AddComponent<LairComponent>();
 		lair->animation.Initialize({ 1, 1,	10.0f }, shader);
 		GAMEMANAGER->SpawnUnit(lair);
 		//lair
-
+		
 		skeleton = new Skeleton();
 		skeleton->UnitInitialize("skeleton.txt");
 		skeleton->material.shader = shader;
 		skeleton->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		skeleton->material.texture.LoadTextureFrom(PATH::skeleton_move);
 		skeleton->animation.Initialize({ 4, 1,	10.0f }, shader);
-
-		golem = new Golem();
-		golem->UnitInitialize("golem.txt");
-		golem->material.shader = shader;
-		golem->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		golem->material.texture.LoadTextureFrom(PATH::golem_move);
-		golem->animation.Initialize({ 4, 1,	10.0f }, shader);
-
-		lich = new Lich();
-		lich->UnitInitialize("lich.txt");
-		lich->material.shader = shader;
-		lich->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		lich->material.texture.LoadTextureFrom(PATH::lich_move);
-		lich->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//knight
 		knight = new Knight();
@@ -180,7 +161,7 @@ void LevelTest1::Initialize()
 		enemyAttack->material.shader = shader;
 		enemyAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		enemyAttack->animation.Initialize({ 1,1, 1.f }, enemyAttack->material.shader);
-
+		
 		enemyAttack->GetComponent<BaseUnitState>()->SetDamage(skeleton->GetSkeletionDamage());
 		skeleton->GetComponent<BaseObjectAttackComponent>()->unit = skeleton;
 		skeleton->GetComponent<BaseObjectAttackComponent>()->projectile = enemyAttack;
@@ -208,23 +189,6 @@ void LevelTest1::Initialize()
 		magician->GetComponent<BaseObjectAttackComponent>()->soundID = 1;
 		//fireball
 
-		//fireball
-		fireballEnemy = new Object();
-		fireballEnemy->AddComponent<BaseUnitState>();
-		fireballEnemy->Initialize("fireballEnemy.txt");
-		fireballEnemy->material.shader = shader;
-		fireballEnemy->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		fireballEnemy->material.texture.LoadTextureFrom(PATH::fireball);
-		fireballEnemy->animation.Initialize({ 3, 1, 5.0f }, shader);
-		fireballEnemy->GetComponent<BaseUnitState>()->SetState(State::WALK);
-		fireballEnemy->GetComponent<BaseUnitState>()->SetDamage(lich->GetLichDamage());
-
-		lich->GetComponent<BaseObjectAttackComponent>()->unit = lich;
-		lich->GetComponent<BaseObjectAttackComponent>()->projectile = fireballEnemy;
-		lich->GetComponent<BaseObjectAttackComponent>()->delayTime = 3.0f;
-		lich->GetComponent<BaseObjectAttackComponent>()->soundID = 1;
-		//fireball
-
 		//arrow
 		arrow = new Object();
 		arrow->AddComponent<BaseUnitState>();
@@ -236,21 +200,21 @@ void LevelTest1::Initialize()
 
 		arrow->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		arrow->GetComponent<BaseUnitState>()->SetDamage(archer->GetArcherDamage());
-
+		
 		archer->GetComponent<BaseObjectAttackComponent>()->unit = archer;
 		archer->GetComponent<BaseObjectAttackComponent>()->projectile = arrow;
 		archer->GetComponent<BaseObjectAttackComponent>()->delayTime = 0.7f;
 		archer->GetComponent<BaseObjectAttackComponent>()->soundID = 2;
 		//arrow
 	}
-
-	//test sound and make object
+	SOUNDMANAGER->Initialize();
 	SOUNDMANAGER->LoadFile("backgroundmusic.wav");
 	SOUNDMANAGER->LoadFile("Fireball.wav");
 	SOUNDMANAGER->LoadFile("archershoot.ogg");
 	SOUNDMANAGER->LoadFile("hit.ogg");
-	//SOUNDMANAGER->PlaySound(1, 0);
+	SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
+
 	//test sound and make object
 	selectMenu.SelectMenu();
 	coolTime.Initialize(camera, view);
@@ -260,32 +224,35 @@ void LevelTest1::Initialize()
 
 	debugText.SetFont(bitmapFont);
 	debugText.SetString(L"debug mode");
-
-	GAMEMANAGER->pg.SetNDC(cameraToNDC);	// particle generator ndc setting
 }
 
-void LevelTest1::Update(float dt)
+void Tutorial::Update(float dt)
 {
 	OBJECTFACTORY->Update(dt);
 	//Transform
 	camera.Rotate(cameraAngle);
 	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
 	view.SetZoom(zoom);
-	cameraToNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera();
 	//Transform
 
 	//Draw
 	Draw::StartDrawing();
 
-	backgroundNDC = cameraToNDC * background.transform.GetModelToWorld();
+	backgroundNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
 	backgroundMaterial.ndc = backgroundNDC;
 	Draw::draw(backgroundMaterial);
 
-	const mat3<float> uiNDC = cameraToNDC * ui.transform.GetModelToWorld();
+	const mat3<float> uiNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * ui.transform.GetModelToWorld();
 	ui.material.ndc = uiNDC;
 	Draw::draw(ui.material);
 
-	const mat3<float> textNDC = cameraToNDC * textTransform.GetModelToWorld();
+	towerMaterial.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * towerTextTransform.GetModelToWorld();
+	Draw::draw(towerMaterial);
+
+	lairMaterial.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * lairTextTransform.GetModelToWorld();
+	Draw::draw(lairMaterial);
+
+	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());
 	Draw::DrawText(fontShader, textNDC, text);
 
@@ -301,7 +268,7 @@ void LevelTest1::Update(float dt)
 			something->Update(dt);
 			something->ChangeUnitAnimation();
 
-			const mat3<float> ndc = cameraToNDC * obj.second->transform.GetModelToWorld();
+			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
 			obj.second->GetComponent<MaterialComponent>()->material.ndc = ndc;
 			Draw::draw(obj.second->GetComponent<MaterialComponent>()->material);
 
@@ -336,43 +303,33 @@ void LevelTest1::Update(float dt)
 			}
 		}
 	}
-	Win();
-	Lose();
-	//dynamic test
+	TutorialEnd();
+
 	selectMenu.SelectUpdate(camera, view);
 	if (isDebugModeisOn == true)
 	{
-		const mat3<float> debugTextNDC = cameraToNDC * debugTextTransform.GetModelToWorld();
+		const mat3<float> debugTextNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * debugTextTransform.GetModelToWorld();
 		Draw::DrawText(fontShader, debugTextNDC, debugText);
 	}
-	GAMEMANAGER->pg.UpdateParticles(dt);
 	Draw::FinishDrawing();
 }
 
-void LevelTest1::Win()
-{
-	if (isPlayerWin == true)
-	{
-		Draw::draw(winpic->material);
-		OBJECTFACTORY->DestroyAllObjects();
-	}
-}
-
-void LevelTest1::Lose()
-{
-	if (isEnemyWin == true)
-	{
-		Draw::draw(losepic->material);
-		OBJECTFACTORY->DestroyAllObjects();
-	}
-}
-
-void LevelTest1::Shutdown()
+void Tutorial::Shutdown()
 {
 	OBJECTFACTORY->DestroyAllObjects();
 }
 
-void LevelTest1::HandleKeyPress(KeyboardButton button)
+void Tutorial::TutorialEnd()
+{
+	if (isPlayerWin == true)
+	{
+		Draw::draw(tutorialWin->material);
+		OBJECTFACTORY->DestroyAllObjects();
+		win = true;
+	}
+}
+
+void Tutorial::HandleKeyPress(KeyboardButton button)
 {
 	switch (button)
 	{
@@ -585,6 +542,10 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 		}
 		break;
 	case KeyboardButton::Enter:
+		if (win == true)
+		{
+			STATEMANAGER->SetCurrentLevel(GameLevels::LEVELSELECT);
+		}
 		if (isEnter == false)
 		{
 			isEnter = true;
@@ -613,11 +574,12 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 			}
 		}
 		input.SetString(L"");
+
 		break;
 	case KeyboardButton::Backspace:
 		input.Erasing();
 		break;
-	case KeyboardButton::Num1:
+		case KeyboardButton::Num1:
 		if (isEnter == false && isDebugModeisOn == true)
 		{
 			int random = rand() % 3;
@@ -646,17 +608,12 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::Num2:
 		if (isEnter == false && isDebugModeisOn == true)
 		{
-			int random = rand() % 2;
+			int random = rand() % 1;
 
 			if (random == 0)
 			{
 				GAMEMANAGER->SpawnUnit(skeleton);
 				coolTime.SetKnightCoolDown();
-			}
-			else if (random == 1)
-			{
-				GAMEMANAGER->SpawnUnit(lich);
-				coolTime.SetArcherCoolDown();
 			}
 			break;
 		}
@@ -727,7 +684,7 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 	}
 }
 
-void LevelTest1::HandleKeyRelease(KeyboardButton button)
+void Tutorial::HandleKeyRelease(KeyboardButton button)
 {
 	switch (button)
 	{
@@ -751,9 +708,10 @@ void LevelTest1::HandleKeyRelease(KeyboardButton button)
 		break;
 	default:;
 	}
+
 }
 
-void LevelTest1::HandleMouseEvent(MouseButton button)
+void Tutorial::HandleMouseEvent(MouseButton button)
 {
 	switch (button)
 	{
@@ -771,26 +729,29 @@ void LevelTest1::HandleMouseEvent(MouseButton button)
 		object.isMouseCollide = false;
 		break;
 	}
+
 }
 
-void LevelTest1::HandleResizeEvent(const int& new_width, const int& new_height)
+void Tutorial::HandleResizeEvent(const int& new_width, const int& new_height)
 {
 	view.SetViewSize(new_width, new_height);
 	view.SetZoom(zoom);
 	background.transform.SetScale({ windowPoint->GetWindowWidth() * (1.f / zoom),
 		windowPoint->GetWindowHeight() * (1.f / zoom) });
+
 }
 
-void LevelTest1::HandleScrollEvent(float scroll_amount)
+void Tutorial::HandleScrollEvent(float scroll_amount)
 {
 	zoom = view.GetZoom() + (scroll_amount * 0.05f);
 	zoom = std::clamp(zoom, 0.5f, 2.0f);
 	background.transform.SetScale({ windowPoint->GetWindowWidth() * (1.f / zoom),
 		windowPoint->GetWindowHeight() * (1.f / zoom) });
 	view.SetZoom(zoom);
+
 }
 
-void LevelTest1::HandleMousePositionEvent(float xpos, float ypos)
+void Tutorial::HandleMousePositionEvent(float xpos, float ypos)
 {
 	mousePosition = { xpos, ypos };
 }

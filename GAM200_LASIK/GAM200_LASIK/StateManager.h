@@ -17,6 +17,8 @@
 enum GameLevels {
 	LOGO,
 	MAINMENU,
+	LEVELSELECT,
+	TUTORIAL,
 	LVTest1
 };
 

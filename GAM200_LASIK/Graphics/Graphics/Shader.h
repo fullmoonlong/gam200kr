@@ -10,6 +10,9 @@
 #pragma once
 #include <filesystem>
 #include "mat3.hpp"
+#include "vec2.hpp"
+
+class Color4f;
 
 class [[nodiscard]] Shader
 {
@@ -25,6 +28,8 @@ public:
 	void SendUniformVariable(const char* variable_name, const int& variable) const noexcept;
 	void SendUniformVariable(const char* variable_name, const float& variable) const noexcept;
 	void SendUniformVariable(const char* variable_name, const mat3<float>& matrix) const noexcept;
+	void SendUniformVariable(const char* variable_name, const vec2<float>& vector) const noexcept;
+	void SendUniformVariable(const char* variable_name, const Color4f& color) const noexcept;
 
 	bool LoadShapeShader() noexcept;
 	bool LoadTextureShader() noexcept;

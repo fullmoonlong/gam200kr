@@ -7,8 +7,8 @@
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
 
-#include "ComponentTest.h"
 #include <iostream>
+#include "ComponentTest.h"
 #include "PATH.hpp"
 #include "ObjectFactory.h"
 #include "UnitStateComponent.hpp"
@@ -28,5 +28,4 @@ void ObjectAttackComponent::Update(float dt)
 			time = 0;
 		}
 	}
-
 }

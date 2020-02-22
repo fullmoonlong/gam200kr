@@ -78,6 +78,21 @@ void CoolDown::CoolDownUpdate(float dt) {
 	}
 }
 
+bool CoolDown::GetKnightCoolDown()
+{
+	return isKnightCoolDown;
+}
+
+bool CoolDown::GetArcherCoolDown()
+{
+	return isArcherCoolDown;
+}
+
+bool CoolDown::GetMagicianCoolDown()
+{
+	return isMagicianCoolDown;
+}
+
 void CoolDown::SetKnightCoolDown()
 {
 	isKnightCoolDown = true;

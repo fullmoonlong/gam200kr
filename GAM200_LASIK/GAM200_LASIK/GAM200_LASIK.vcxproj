@@ -202,6 +202,7 @@
     <ClCompile Include="FileLoadAndSave.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GetInput.cpp" />
+    <ClCompile Include="LevelSelect.cpp" />
     <ClCompile Include="LevelTest1.cpp" />
     <ClCompile Include="Logo.cpp" />
     <ClCompile Include="main.cpp" />
@@ -212,8 +213,10 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Tower.cpp" />
+    <ClCompile Include="Tutorial.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Units.cpp" />
+    <ClCompile Include="Upgrade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -226,6 +229,7 @@
     <ClInclude Include="FileLoadAndSave.hpp" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GetInput.hpp" />
+    <ClInclude Include="LevelSelect.h" />
     <ClInclude Include="LevelSystem.h" />
     <ClInclude Include="LevelTest1.h" />
     <ClInclude Include="Logo.h" />
@@ -235,9 +239,11 @@
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="Tower.h" />
+    <ClInclude Include="Tutorial.h" />
     <ClInclude Include="UI.hpp" />
     <ClInclude Include="Units.hpp" />
     <ClInclude Include="UnitStateComponent.hpp" />
+    <ClInclude Include="Upgrade.hpp" />
     <ClInclude Include="Util\Clock.hpp" />
     <ClInclude Include="ComponentTest.h" />
     <ClInclude Include="ComponentType.h" />
@@ -249,9 +255,6 @@
     <ProjectReference Include="..\Graphics\Graphics.vcxproj">
       <Project>{28e010a9-b76a-46a5-ac19-ccbf2efddc10}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="NewFile.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

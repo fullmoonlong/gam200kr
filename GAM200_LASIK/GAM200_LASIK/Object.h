@@ -65,7 +65,7 @@ public:
 	template <typename ComponentType>
 	bool HasComponent()
 	{
-		for (auto list : componetList)
+		for (auto list : componentList)
 		{
 			if (typeid(*list).name() == typeid(ComponentType).name())
 				return true;
@@ -82,13 +82,13 @@ public:
 		}
 		ComponentType* componentType = new ComponentType();
 		dynamic_cast<Component*>(componentType)->SetOwner(this);
-		this->componetList.push_back(componentType);
+		this->componentList.push_back(componentType);
 	}
 
 	template<typename ComponentType>
 	ComponentType* GetComponent()
 	{
-		for (auto list : componetList)
+		for (auto list : componentList)
 		{
 			if (typeid(*list).name() == typeid(ComponentType).name())
 				return dynamic_cast<ComponentType*>(list);
@@ -108,5 +108,5 @@ private:
 	vec2<float> size;
 
 
-	std::vector <Component*>componetList;
+	std::vector <Component*>componentList;
 };

@@ -60,6 +60,9 @@
       <Filter>System\GameManager</Filter>
     </ClCompile>
     <ClCompile Include="Tower.cpp" />
+    <ClCompile Include="Tutorial.cpp" />
+    <ClCompile Include="LevelSelect.cpp" />
+    <ClCompile Include="Upgrade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">
@@ -144,6 +147,9 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="Tutorial.h" />
+    <ClInclude Include="LevelSelect.h" />
+    <ClInclude Include="Upgrade.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">
@@ -203,8 +209,5 @@
     <Filter Include="System\GameManager">
       <UniqueIdentifier>{c01ec26c-3c07-484e-856b-bb3ccdde89d0}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="NewFile.txt" />
   </ItemGroup>
 </Project>

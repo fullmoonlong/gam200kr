@@ -6,6 +6,7 @@
  *	Copyright Information :
  *    "All content 2019~2020 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
+
 #include <iostream>
 #include "GameManager.h"
 #include "ObjectFactory.h"
@@ -26,6 +27,8 @@ GameManager::~GameManager()
 
 void GameManager::Initialize()
 {
+	const vec2<float> velocity{ ((rand() % 100) - 50) / 50.0f, ((rand() % 100) - 50) / 50.0f };
+	pg.CreateParticles(30, { 0.f }, velocity, 1.0f);
 }
 
 void GameManager::Update(float dt)
@@ -64,7 +67,9 @@ void GameManager::CheckCollision()
 				if (object1.second->GetComponent<UnitState>()->GetInvincibilityState() == false)
 				{
 					object1.second->GetComponent<UnitState>()->SetHealth(object1.second->GetComponent<UnitState>()->GetHealth() - object.second->GetComponent<UnitState>()->GetDamage());
-
+				}
+				if (object.second->GetName() == "Fireball") {
+					pg.DrawParticles();
 				}
 				OBJECTFACTORY->Destroy(object.second);
 			}
@@ -113,7 +118,6 @@ void GameManager::CheckCollision()
 				player->GetComponent<UnitState>()->SetAttackState(false);
 				player->GetComponent<UnitState>()->SetState(State::WALK);
 			}
-
 		}
 	}
 
@@ -163,18 +167,15 @@ void GameManager::SpawnUnit(Object* object)
 	OBJECTFACTORY->objectIDMap.emplace(OBJECTFACTORY->GetLastObjectID(), newObject);
 	OBJECTFACTORY->lastObjectID++;
 	newObject->GetComponent<UnitState>()->SetSpriteChangeState(true);
-	if (newObject->GetComponent<UnitState>()->GetType() == UnitType::Player)
-	{
+	if (newObject->GetComponent<UnitState>()->GetType() == UnitType::Player) {
 		PlayerUnits.push_back(newObject);
 		PlayerAmount++;
 	}
-	else if (newObject->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
-	{
+	else if (newObject->GetComponent<UnitState>()->GetType() == UnitType::Enemy) {
 		EnemyUnits.push_back(newObject);
 		EnemyAmount++;
 	}
 }
-
 
 void GameManager::UnitUpdate(Object* object)
 {

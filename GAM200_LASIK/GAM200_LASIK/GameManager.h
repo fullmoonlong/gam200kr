@@ -11,6 +11,7 @@
 #include <vector>
 #include "System.h"
 #include "Object.h"
+#include "ParticleGenerator.hpp"
 
 class GameManager : public System
 {
@@ -31,6 +32,8 @@ public:
 	std::vector<Object*> PlayerUnits;
 	std::vector<Object*> EnemyUnits;
 
-	bool isGameEnd = false;		// 이거 isRunning 으로 바꾸는게 더 좋지않나?
+	bool isGameEnd = false;
+//private:
+	ParticleGenerator pg;
 };
 extern GameManager* GAMEMANAGER;

@@ -43,5 +43,13 @@ int GetInput::MatchStringWithInput()
 		// spawn magician
 		return 3;
 	}
+	else if (string == tutorial)
+	{
+		return 4;
+	}
+	else if (string == level1)
+	{
+		return 5;
+	}
 	return 0;
 }

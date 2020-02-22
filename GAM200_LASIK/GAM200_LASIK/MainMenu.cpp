@@ -99,7 +99,7 @@ void MainMenu::HandleKeyPress(KeyboardButton button)
 	{
 		if (selectedMenu == 0)
 		{
-			STATEMANAGER->SetCurrentLevel(GameLevels::LVTest1);
+			STATEMANAGER->SetCurrentLevel(GameLevels::LEVELSELECT);
 		}
 		else if (selectedMenu == 1)
 		{

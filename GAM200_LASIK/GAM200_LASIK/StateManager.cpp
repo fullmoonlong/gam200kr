@@ -11,6 +11,8 @@
 #include "StateManager.h"
 #include "Logo.h"
 #include "MainMenu.h"
+#include "LevelSelect.h"
+#include "Tutorial.h"
 #include "LevelTest1.h"
 
 StateManager* STATEMANAGER = nullptr;
@@ -31,6 +33,8 @@ void StateManager::Initialize()
 	currentLevel = GameLevels::LVTest1;
 	levels.push_back(new Logo(windowPoint));
 	levels.push_back(new MainMenu(windowPoint));
+	levels.push_back(new LevelSelect(windowPoint));
+	levels.push_back(new Tutorial(windowPoint));
 	levels.push_back(new LevelTest1(windowPoint));
 	levels.at(currentLevel)->Initialize();
 }

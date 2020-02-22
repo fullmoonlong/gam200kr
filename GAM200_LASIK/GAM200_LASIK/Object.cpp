@@ -21,7 +21,7 @@ Object::Object()
 	: objectID(0), position(0) {}
 
 Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.material), animation(rhs.animation)
-, min(rhs.min), max(rhs.max), speed(rhs.speed),objectName(rhs.objectName), position(rhs.position), size(rhs.size), componetList(rhs.componetList)
+, min(rhs.min), max(rhs.max), speed(rhs.speed),objectName(rhs.objectName), position(rhs.position), size(rhs.size), componentList(rhs.componentList)
 {
 	AddComponent<MaterialComponent>();
 	GetComponent<MaterialComponent>()->material.shader = material.shader;

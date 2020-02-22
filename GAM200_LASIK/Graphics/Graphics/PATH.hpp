@@ -62,4 +62,9 @@ namespace PATH
 	const std::filesystem::path bitmapfont_png = "../assets/bitmapfont_0.png";
 
 	const std::filesystem::path background = "../assets/background.png";
+
+	const std::filesystem::path lairExplain = "../assets/lairExplain.png";
+	const std::filesystem::path towerExplain = "../assets/towerExplain.png";
+	const std::filesystem::path tutorialWinpic = "../assets/tutorialWinpic.png";
+	const std::filesystem::path levelSelect = "../assets/levelSelect.png";
 }

@@ -180,6 +180,8 @@
     <ClInclude Include="Graphics\Material.hpp" />
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\OpenGLWindow.hpp" />
+    <ClInclude Include="Graphics\Particle.hpp" />
+    <ClInclude Include="Graphics\ParticleGenerator.hpp" />
     <ClInclude Include="Graphics\PATH.hpp" />
     <ClInclude Include="Graphics\PlatformWindowGLFW.hpp" />
     <ClInclude Include="Graphics\Screenshot.hpp" />
@@ -206,6 +208,7 @@
     <ClCompile Include="Graphics\Material.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\OpenGLWindowGLFW.cpp" />
+    <ClCompile Include="Graphics\ParticleGenerator.cpp" />
     <ClCompile Include="Graphics\PlatformWindowGLFW.cpp" />
     <ClCompile Include="Graphics\Screenshot.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />

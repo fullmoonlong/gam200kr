@@ -1,8 +1,8 @@
 /**************************************************************************************
- *	File Name        : LevelTest1.h
+ *	File Name        : Tutorial.h
  *	Project Name     : Keyboard Warriors
- *	Primary Author   : Jookyung Lee
- *	Secondary Author : Wonju Cho
+ *	Primary Author   : Wonju Cho
+ *	Secondary Author :
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
@@ -31,85 +31,56 @@
 #include "Sound.hpp"
 #include "CoolDown.hpp"
 
-class LevelTest1 : public LevelSystem
-{
+class Tutorial : public LevelSystem {
 public:
-	LevelTest1(OpenGLWindow* window);
-	~LevelTest1();
+	Tutorial(OpenGLWindow* window);
+	~Tutorial();
 	void Initialize() override;
 	void Update(float dt) override;
 	void Shutdown() override;
-	void Win();
-	void Lose();
+	void TutorialEnd();
 	void HandleKeyPress(KeyboardButton button) override final;
 	void HandleKeyRelease(KeyboardButton button) override final;
 	void HandleMouseEvent(MouseButton button) override final;
 	void HandleResizeEvent(const int& new_width, const int& new_height) override;
 	void HandleScrollEvent(float scroll_amount) override;
 	void HandleMousePositionEvent(float xpos, float ypos) override final;
-	/*void HandleWindowClose() override final;*/
 
-private:
-	mat3<float> cameraToNDC;
-	
 private:
 	bool isEnter = false;
 	bool isPlayerWin;
 	bool isEnemyWin;
-
-	float time;
-
-	GetInput input;
+	Shader shader;
 
 	OpenGLWindow* windowPoint;
 
-	Draw draw;
-	Object* objectTest1;
+	GetInput input;
 
-	Object background;
-	Shader backgroundShader;
-	Mesh backgroundMesh;
-	Vertices backgroundVertices;
-	Texture backgroundTexture;
-	Material backgroundMaterial;
+	float time;
+	Object object;
+
+	Material towerMaterial, lairMaterial;
+	Mesh	 towerMesh, lairMesh;
+
+	Object background; Shader backgroundShader; Mesh backgroundMesh; Vertices backgroundVertices; Texture backgroundTexture; 	Material backgroundMaterial;
 	Object ui;
+	Tower* tower;
+	Lair* lair;
 
 	Shader fontShader;
 	BitmapFont bitmapFont;
 	Text text;
-	Transform textTransform;
+	Transform textTransform, lairTextTransform, towerTextTransform;
 
-	Shader shader;
-	Shader shapeShader;
-	Object object;
-	Object object2;
-
-	//Units
 	Knight* knight;
 	Magician* magician;
 	Archer* archer;
 	Skeleton* skeleton;
-	Lich* lich;
-	Golem* golem;
-	//Units
 
-	//projectiles
 	Object* swordAttack;
 	Object* enemyAttack;
 	Object* arrow;
 	Object* fireball;
-	Object* fireballEnemy;
-	//projectiles
-
-	//tower
-	Tower* tower;
-	Lair* lair;
-	//tower
-
-	Clock clock;
-
-	Object* winpic;
-	Object* losepic;
 
 	Camera camera;
 	CameraView view;
@@ -120,6 +91,9 @@ private:
 	Text debugText;
 	Transform debugTextTransform;
 
+	Object* tutorialWin;
+	bool win = false;
+
 	float zoom = 1.0f;
 	float cameraAngle = 0.0f;
 
@@ -127,5 +101,13 @@ private:
 	vec2<float> mousePosition{ 0.f, 0.f };
 	mat3<float> backgroundNDC;
 
+	vec2<float> lairExplainSize = { 600.f, 128.0f };
+	vec2<float> towerExplainSize = { 700.f, 128.0f };
+
+	vec2<float> towerPosition = { -500.0f , 80.f };
+	vec2<float> lairPosition = { 500.f, 50.f };
+
+
 	bool isDebugModeisOn = false;
+
 };

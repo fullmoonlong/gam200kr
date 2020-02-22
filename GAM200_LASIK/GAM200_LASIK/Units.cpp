@@ -6,6 +6,7 @@
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
+
 #include <vec2.hpp>
 #include "Units.hpp"
 #include "ComponentTest.h"
