@@ -8,8 +8,8 @@
  **************************************************************************************/
 
 #pragma once
-#include "Object.h"
 #include <vec2.hpp>
+#include "Object.h"
 #include "UnitStateComponent.hpp"
 
 class Knight : public Object {

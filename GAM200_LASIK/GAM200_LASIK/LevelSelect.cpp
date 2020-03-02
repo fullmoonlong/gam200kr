@@ -54,16 +54,16 @@ void LevelSelect::Update(float dt)
 	view.SetZoom(zoom);
 
 	//Draw
-	Draw::StartDrawing();
+	Drawing::StartDrawing();
 
 	spriteMaterial.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * spriteTransform.GetModelToWorld();
-	Draw::draw(spriteMaterial);
+	Drawing::Draw(spriteMaterial);
 
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());
-	Draw::DrawText(spriteShader, textNDC, text);
+	Drawing::DrawText(spriteShader, textNDC, text);
 
-	Draw::FinishDrawing();
+	Drawing::FinishDrawing();
 }
 
 void LevelSelect::Shutdown()

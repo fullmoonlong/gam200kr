@@ -1,7 +1,4 @@
-0
-0
-32
-16
-300
-ProjectilesPlayer
-Fireball
+Position: 0 0
+Size: 32 16
+Speed: 300 0
+Camp: PlayerProjectile

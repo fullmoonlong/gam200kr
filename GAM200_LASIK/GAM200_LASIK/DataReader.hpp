@@ -12,78 +12,69 @@
 #include <string>
 #include <sstream>
 #include <vec2.hpp>
-#include "Object.hpp"
+#include "Object.h"
 #include "UnitStateComponent.hpp"
 
 class DataReader {
 public:
-	static bool OpenAndReadData(const std::string& file_name, Object* object) {
+	static bool ReadData(const std::string& file_name, Object* object) {
 		const std::string file = "../data/" + file_name;
 		std::ifstream ifstream;
 		ifstream.open(file.c_str(), std::ios::in);
 		if (!ifstream.is_open()) {
 			return false;
 		}
-	
+
+		object->SetName(file_name.substr(0, file_name.size() - 4));		// 4 means .txt
+		
 		std::string line, read;
 		while (!ifstream.eof()) {
 			std::stringstream lineStream;
 			std::getline(ifstream, line);
 			lineStream << line;
 			lineStream >> read;
-			if (read == "Name:") {
-				lineStream >> read;
-				object->SetName(read);
-			}
-			else if (read == "Position:") {
+			if (read == "Position:") {
 				vec2<float> position;
-				//lineStream >> read;
-				//position.x = stoi(read);
-				//lineStream >> read;
-				//position.y = stoi(read);
 				lineStream >> position.x;
 				lineStream >> position.y;
 				object->SetPosition(position);
 			}
 			else if (read == "Size:") {
 				vec2<float> size;
-				//lineStream >> read;
-				//size.x = stoi(read);
-				//lineStream >> read;
-				//size.y = stoi(read);
 				lineStream >> size.x;
 				lineStream >> size.y;
 				object->SetSize(size);
 			}
 			else if (read == "Speed:") {
 				vec2<float> speed;
-				//lineStream >> read;
-				//speed.x = stoi(read);
-				//lineStream >> read;
-				//speed.y = stoi(read);
 				lineStream >> speed.x;
 				lineStream >> speed.y;
-				object->SetSpeed(speed);
+				//object->SetSpeed(speed);
 			}
 			else if (read == "Health:") {
 				lineStream >> read;
 				object->GetComponent<BaseUnitState>()->healthBar.Initialize(object->transform.GetTranslation(), stoi(read));
 			}
+			//else if (read == "Damage:") {
+			//	lineStream >> read;
+			//	object->GetComponent<BaseUnitState>()->SetDamage(stoi(read));
+			//}
 			else if (read == "Camp:") {
 				lineStream >> read;
 				if (read == "PlayerUnit") {
 					object->GetComponent<BaseUnitState>()->SetType(Player);
 				}
 				else if (read == "EnemyUnit") {
-					object->GetComponent<BaseUnitState>()->SetType(Player);
+					object->GetComponent<BaseUnitState>()->SetType(Enemy);
 				}
 				else if (read == "PlayerProjectile") {
-					object->GetComponent<BaseUnitState>()->SetType(Player);
+					object->GetComponent<BaseUnitState>()->SetType(ProjectilesPlayer);
 				}
 				else if (read == "EnemyProjectile") {
-					object->GetComponent<BaseUnitState>()->SetType(Player);
+					object->GetComponent<BaseUnitState>()->SetType(ProjectilesEnemy);
 				}
 			}
 		}
-	return true;
+		return true;
+	}
 };

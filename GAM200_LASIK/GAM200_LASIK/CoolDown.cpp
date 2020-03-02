@@ -51,7 +51,7 @@ void CoolDown::Initialize(const Camera& camera_, const CameraView& view_) {
 void CoolDown::CoolDownUpdate(float dt) {
 	if (isKnightCoolDown) {
 		knightAnimation.Animate(dt);
-		Draw::draw(knightCoolMaterial);
+		Drawing::Draw(knightCoolMaterial);
 		knightCoolDown -= dt;
 		if (knightCoolDown <= 0.0f) {
 			knightCoolDown = knightCoolTime;
@@ -60,7 +60,7 @@ void CoolDown::CoolDownUpdate(float dt) {
 	}
 	if (isArcherCoolDown) {
 		archerAnimation.Animate(dt);
-		Draw::draw(archerCoolMaterial);
+		Drawing::Draw(archerCoolMaterial);
 		archerCoolDown -= dt;
 		if (archerCoolDown <= 0.0f) {
 			archerCoolDown = archerCoolTime;
@@ -69,7 +69,7 @@ void CoolDown::CoolDownUpdate(float dt) {
 	}
 	if (isMagicianCoolDown) {
 		magicianAnimation.Animate(dt);
-		Draw::draw(magicianCoolMaterial);
+		Drawing::Draw(magicianCoolMaterial);
 		magicianCoolDown -= dt;
 		if (magicianCoolDown <= 0.0f) {
 			magicianCoolDown = magicianCoolTime;

@@ -79,7 +79,7 @@ void Tutorial::Initialize()
 	{
 		//tower
 		tower = new Tower();
-		tower->UnitInitialize("tower.txt");
+		tower->UnitInitialize("Tower.txt");
 		tower->material.shader = shader;
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadTextureFrom(PATH::tower);
@@ -89,7 +89,7 @@ void Tutorial::Initialize()
 
 		//lair
 		lair = new Lair();
-		lair->UnitInitialize("lair.txt");
+		lair->UnitInitialize("Lair.txt");
 		lair->material.shader = shader;
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadTextureFrom(PATH::lair);
@@ -100,7 +100,7 @@ void Tutorial::Initialize()
 		//lair
 		
 		skeleton = new Skeleton();
-		skeleton->UnitInitialize("skeleton.txt");
+		skeleton->UnitInitialize("Skeleton.txt");
 		skeleton->material.shader = shader;
 		skeleton->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		skeleton->material.texture.LoadTextureFrom(PATH::skeleton_move);
@@ -108,7 +108,7 @@ void Tutorial::Initialize()
 
 		//knight
 		knight = new Knight();
-		knight->UnitInitialize("knight.txt");
+		knight->UnitInitialize("Knight.txt");
 		knight->material.shader = shader;
 		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		knight->material.texture.LoadTextureFrom(PATH::knight_move);
@@ -117,7 +117,7 @@ void Tutorial::Initialize()
 
 		//archer
 		archer = new Archer();
-		archer->UnitInitialize("archer.txt");
+		archer->UnitInitialize("Archer.txt");
 		archer->material.shader = shader;
 		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		archer->material.texture.LoadTextureFrom(PATH::archer_move);
@@ -126,7 +126,7 @@ void Tutorial::Initialize()
 
 		//magician
 		magician = new Magician();
-		magician->UnitInitialize("wizard.txt");
+		magician->UnitInitialize("Wizard.txt");
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadTextureFrom(PATH::magician_move);
@@ -137,7 +137,7 @@ void Tutorial::Initialize()
 		swordAttack = new Object();
 		swordAttack->AddComponent<BaseUnitState>();
 		swordAttack->GetComponent<BaseUnitState>()->SetHealth(0);
-		swordAttack->Initialize("swordAttack.txt");
+		swordAttack->Initialize("SwordAttack.txt");
 		swordAttack->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		swordAttack->material.shader = shader;
 		swordAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -156,7 +156,7 @@ void Tutorial::Initialize()
 		enemyAttack = new Object();
 		enemyAttack->AddComponent<BaseUnitState>();
 		enemyAttack->GetComponent<BaseUnitState>()->SetHealth(0);
-		enemyAttack->Initialize("enemyAttack.txt");
+		enemyAttack->Initialize("EnemyAttack.txt");
 		enemyAttack->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		enemyAttack->material.shader = shader;
 		enemyAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -175,7 +175,7 @@ void Tutorial::Initialize()
 		//fireball
 		fireball = new Object();
 		fireball->AddComponent<BaseUnitState>();
-		fireball->Initialize("fireball.txt");
+		fireball->Initialize("Fireball.txt");
 		fireball->material.shader = shader;
 		fireball->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		fireball->material.texture.LoadTextureFrom(PATH::fireball);
@@ -192,7 +192,7 @@ void Tutorial::Initialize()
 		//arrow
 		arrow = new Object();
 		arrow->AddComponent<BaseUnitState>();
-		arrow->Initialize("arrow.txt");
+		arrow->Initialize("Arrow.txt");
 		arrow->material.shader = fontShader;
 		arrow->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		arrow->material.texture.LoadTextureFrom(PATH::arrow);
@@ -236,25 +236,25 @@ void Tutorial::Update(float dt)
 	//Transform
 
 	//Draw
-	Draw::StartDrawing();
+	Drawing::StartDrawing();
 
 	backgroundNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
 	backgroundMaterial.ndc = backgroundNDC;
-	Draw::draw(backgroundMaterial);
+	Drawing::Draw(backgroundMaterial);
 
 	const mat3<float> uiNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * ui.transform.GetModelToWorld();
 	ui.material.ndc = uiNDC;
-	Draw::draw(ui.material);
+	Drawing::Draw(ui.material);
 
 	towerMaterial.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * towerTextTransform.GetModelToWorld();
-	Draw::draw(towerMaterial);
+	Drawing::Draw(towerMaterial);
 
 	lairMaterial.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * lairTextTransform.GetModelToWorld();
-	Draw::draw(lairMaterial);
+	Drawing::Draw(lairMaterial);
 
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());
-	Draw::DrawText(fontShader, textNDC, text);
+	Drawing::DrawText(fontShader, textNDC, text);
 
 	coolTime.CoolDownUpdate(dt);
 
@@ -270,7 +270,7 @@ void Tutorial::Update(float dt)
 
 			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
 			obj.second->GetComponent<MaterialComponent>()->material.ndc = ndc;
-			Draw::draw(obj.second->GetComponent<MaterialComponent>()->material);
+			Drawing::Draw(obj.second->GetComponent<MaterialComponent>()->material);
 
 			//hpbar
 			if (obj.second->GetComponent<UnitState>()->GetType() == UnitType::Player || obj.second->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
@@ -278,7 +278,7 @@ void Tutorial::Update(float dt)
 				obj.second->GetComponent<UnitState>()->healthBar.material.shader = fontShader; //texture shader
 				const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->GetComponent<UnitState>()->healthBar.transform.GetModelToWorld();
 				obj.second->GetComponent<UnitState>()->healthBar.material.ndc = ndcHP;
-				Draw::draw(obj.second->GetComponent<UnitState>()->healthBar.material);
+				Drawing::Draw(obj.second->GetComponent<UnitState>()->healthBar.material);
 			}
 			//hpbar
 
@@ -309,9 +309,9 @@ void Tutorial::Update(float dt)
 	if (isDebugModeisOn == true)
 	{
 		const mat3<float> debugTextNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * debugTextTransform.GetModelToWorld();
-		Draw::DrawText(fontShader, debugTextNDC, debugText);
+		Drawing::DrawText(fontShader, debugTextNDC, debugText);
 	}
-	Draw::FinishDrawing();
+	Drawing::FinishDrawing();
 }
 
 void Tutorial::Shutdown()
@@ -323,7 +323,7 @@ void Tutorial::TutorialEnd()
 {
 	if (isPlayerWin == true)
 	{
-		Draw::draw(tutorialWin->material);
+		Drawing::Draw(tutorialWin->material);
 		OBJECTFACTORY->DestroyAllObjects();
 		win = true;
 	}

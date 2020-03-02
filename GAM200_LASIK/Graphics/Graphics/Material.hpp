@@ -11,6 +11,7 @@
 #include "Shader.h"
 #include "Vertices.h"
 #include "Texture.hpp"
+#include "Transform.hpp"
 #include "Animation.hpp"
 #include "Color4f.hpp"
 
@@ -21,12 +22,15 @@ struct Material {
 		Animation,
 		Text
 	};
+	void CreateShape(const Shader& new_shader, const Mesh& new_mesh,
+		const vec2<float>& size, const vec2<float>& position);
 	void CreateShape(const Shader& new_shader, const Mesh& new_mesh, 
 		const mat3<float>& new_ndc);
 	void CreateSprite(const Shader& new_shader, const Texture& new_texture, 
 		const mat3<float>& new_ndc);
 	void CreateSprite(const Shader& new_shader, const std::filesystem::path& new_texture_path, 
 		const mat3<float>& new_ndc);
+	void CreateSprite(const Shader& new_shader, const std::string& file_name, const vec2<float>& size, const vec2<float>& position);
 	void CreateAnimation(const Shader& new_shader, const Texture& new_sprite_sheet, 
 		const Animation& new_animation, const mat3<float>& new_ndc);
 	void CreateAnimation(const Shader& new_shader, const std::filesystem::path& new_sprite_sheet_path, 
@@ -41,8 +45,9 @@ struct Material {
 	MaterialType materialType;
 	Shader shader;
 	Vertices vertices;
-	mat3<float> ndc;
 	Texture texture;
+	Transform transform;
 	Animation animation;
 	Color4f textColor;
+	mat3<float> ndc;
 };

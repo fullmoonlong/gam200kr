@@ -1,7 +1,6 @@
-640
--100
-256
-256
--75
-Enemy
-Golem
+Position: 640 -100
+Size: 256 256
+Speed: -75 0
+Health: 350
+Damage: 40
+Camp: EnemyUnit

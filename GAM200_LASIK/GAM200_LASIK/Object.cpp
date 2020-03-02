@@ -15,7 +15,7 @@
 #include "ObjectMaterial.h"
 #include "FileLoadAndSave.hpp"
 #include "UnitStateComponent.hpp"
-
+#include "DataReader.hpp"
 
 Object::Object()
 	: objectID(0), position(0) {}
@@ -58,38 +58,40 @@ Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.mater
 
 void Object::Initialize(const char* name) noexcept
 {
-	File data;
+	//File data;
 
-	data.Open(name);
-	data.GetFloat(&position.x);
-	data.GetFloat(&position.y);
-	data.GetFloat(&size.x);
-	data.GetFloat(&size.y);
-	data.GetFloat(&speed.x);
+	//data.Open(name);
+	//data.GetFloat(&position.x);
+	//data.GetFloat(&position.y);
+	//data.GetFloat(&size.x);
+	//data.GetFloat(&size.y);
+	//data.GetFloat(&speed.x);
 
-	std::string unitdata;
-	data.GetString(&unitdata);
+	//std::string unitdata;
+	//data.GetString(&unitdata);
 
-	if (unitdata == "Player")
-	{
-		GetComponent<BaseUnitState>()->SetType(UnitType::Player);
-	}
-	else if (unitdata == "Enemy")
-	{
-		GetComponent<BaseUnitState>()->SetType(UnitType::Enemy);
-	}
-	else if (unitdata == "ProjectilesPlayer")
-	{
-		GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesPlayer);
-	}
-	else if (unitdata == "ProjectilesEnemy")
-	{
-		GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesEnemy);
-	}
+	//if (unitdata == "Player")
+	//{
+	//	GetComponent<BaseUnitState>()->SetType(UnitType::Player);
+	//}
+	//else if (unitdata == "Enemy")
+	//{
+	//	GetComponent<BaseUnitState>()->SetType(UnitType::Enemy);
+	//}
+	//else if (unitdata == "ProjectilesPlayer")
+	//{
+	//	GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesPlayer);
+	//}
+	//else if (unitdata == "ProjectilesEnemy")
+	//{
+	//	GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesEnemy);
+	//}
 
-	data.GetString(&unitdata);
-	SetName(unitdata);
+	//data.GetString(&unitdata);
+	//SetName(unitdata);
 
+	DataReader::ReadData(name, this);
+	
 	transform.SetTranslation(position);
 	const float half_width = size.x / 2;
 	const float half_height = size.y / 2;

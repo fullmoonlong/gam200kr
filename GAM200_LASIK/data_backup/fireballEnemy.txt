@@ -1,0 +1,7 @@
+0
+0
+32
+16
+-300
+ProjectilesEnemy
+Fireball

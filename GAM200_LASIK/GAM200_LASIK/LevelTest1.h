@@ -47,7 +47,7 @@ public:
 	void HandleResizeEvent(const int& new_width, const int& new_height) override;
 	void HandleScrollEvent(float scroll_amount) override;
 	void HandleMousePositionEvent(float xpos, float ypos) override final;
-	/*void HandleWindowClose() override final;*/
+	void HandleFocusEvent(bool focused) override;
 
 private:
 	mat3<float> cameraToNDC;
@@ -63,7 +63,7 @@ private:
 
 	OpenGLWindow* windowPoint;
 
-	Draw draw;
+	Drawing draw;
 	Object* objectTest1;
 
 	Object background;

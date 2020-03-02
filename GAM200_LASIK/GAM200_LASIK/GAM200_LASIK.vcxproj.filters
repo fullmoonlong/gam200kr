@@ -150,6 +150,7 @@
     <ClInclude Include="Tutorial.h" />
     <ClInclude Include="LevelSelect.h" />
     <ClInclude Include="Upgrade.hpp" />
+    <ClInclude Include="DataReader.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">

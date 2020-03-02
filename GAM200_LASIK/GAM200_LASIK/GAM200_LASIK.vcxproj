@@ -224,6 +224,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTower.h" />
     <ClInclude Include="CoolDown.hpp" />
+    <ClInclude Include="DataReader.hpp" />
     <ClInclude Include="EnemyUnits.hpp" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="FileLoadAndSave.hpp" />

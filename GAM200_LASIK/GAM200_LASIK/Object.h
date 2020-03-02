@@ -37,18 +37,18 @@ public:
 	Object* Clone() const;
 
 	void SetObjectID(ObjectID objectID_) { objectID = objectID_; }
-	ObjectID GetObjectID(){	return objectID;}
+	ObjectID GetObjectID() const { return objectID; }
 
-	std::string GetName() const{return objectName;}
-	void SetName(const std::string& name){objectName = name;}
+	std::string GetName() const { return objectName; }
+	void SetName(const std::string& name) { objectName = name; }
 
-	float GetXposition() { return position.x; };
-	float GetYposition() { return position.y; };
-	void SetXposition(float position_) { position.x = position_; };
-	void SetYposition(float position_) { position.y = position_; };
+	float GetXposition() const { return position.x; }
+	float GetYposition() const { return position.y; }
+	void SetXposition(float position_) { position.x = position_; }
+	void SetYposition(float position_) { position.y = position_; }
 	void SetPosition(vec2<float> position_) { position = position_; }
 
-	vec2<float> GetSize() { return size; }
+	vec2<float> GetSize() const { return size; }
 	void SetSize(vec2<float> size_) { size = size_; }
 
 	void ChangeUnitAnimation();
@@ -100,13 +100,13 @@ public:
 	vec2<float> max;
 	vec2<float> speed;
 
+protected:
+	vec2<float> position;
+	vec2<float> size;
+	
 private:
 	ObjectID objectID;
 	std::string objectName = "";
 
-	vec2<float> position;
-	vec2<float> size;
-
-
-	std::vector <Component*>componentList;
+	std::vector<Component*> componentList;
 };

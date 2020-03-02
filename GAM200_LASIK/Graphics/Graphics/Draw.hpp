@@ -1,5 +1,5 @@
 /**************************************************************************************
- *	File Name        : Draw.hpp
+ *	File Name        : Drawing.hpp
  *	Project Name     : Keyboard Warriors
  *	Primary Author   : JeongHak Kim
  *	Secondary Author : 
@@ -14,13 +14,13 @@
 #include "Text.hpp"
 #include "Material.hpp"
 
-class Draw
+class Drawing
 {
 public:
 	static void StartDrawing();
 	static void StartDrawing(const Color4f& background_color);
 	static void FinishDrawing();
-	static void draw(const Material& material);
+	static void Draw(const Material& material);
 	static void DrawShape(const Material& material);
 	static void DrawText(const Shader& shader, const mat3<float>& ndc, const Text& text);
 private:

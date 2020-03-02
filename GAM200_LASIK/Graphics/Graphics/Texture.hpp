@@ -19,11 +19,12 @@ public:
 	Texture() = default;
 	Texture(Image& image);
 
-	unsigned int GetTexturehandle() const noexcept { return textureHandle; }
-
 	bool LoadTextureFrom(const std::filesystem::path& image_path) noexcept;
 	bool LoadTextureFrom(const Image& image) noexcept;
+
+	unsigned int GetTexturehandle() const noexcept { return textureHandle; }
+	void BindTexture() const noexcept;
+	void UnBindTexture() const noexcept;
 private:
 	unsigned int textureHandle;
-	
 };
