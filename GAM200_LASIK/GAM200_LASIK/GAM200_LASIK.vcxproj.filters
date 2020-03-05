@@ -140,9 +140,6 @@
     <ClInclude Include="GameManager.h">
       <Filter>System\GameManager</Filter>
     </ClInclude>
-    <ClInclude Include="BaseInitialize.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Tower.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -151,6 +148,9 @@
     <ClInclude Include="LevelSelect.h" />
     <ClInclude Include="Upgrade.hpp" />
     <ClInclude Include="DataReader.hpp" />
+    <ClInclude Include="BaseInitialize.hpp">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">

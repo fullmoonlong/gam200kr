@@ -27,6 +27,7 @@ public:
 
 		object->SetName(file_name.substr(0, file_name.size() - 4));		// 4 means .txt
 		
+		vec2<float> position, size, speed;
 		std::string line, read;
 		while (!ifstream.eof()) {
 			std::stringstream lineStream;
@@ -34,21 +35,19 @@ public:
 			lineStream << line;
 			lineStream >> read;
 			if (read == "Position:") {
-				vec2<float> position;
 				lineStream >> position.x;
 				lineStream >> position.y;
 				object->SetPosition(position);
 			}
 			else if (read == "Size:") {
-				vec2<float> size;
 				lineStream >> size.x;
 				lineStream >> size.y;
 				object->SetSize(size);
 			}
 			else if (read == "Speed:") {
-				vec2<float> speed;
 				lineStream >> speed.x;
 				lineStream >> speed.y;
+				object->speed = speed;
 				//object->SetSpeed(speed);
 			}
 			else if (read == "Health:") {
@@ -75,6 +74,13 @@ public:
 				}
 			}
 		}
+
+		object->transform.SetTranslation(position);
+		const vec2<float> halfSize = size / 2.f;
+		object->min = position - halfSize;
+		object->max = position + halfSize;
+		object->transform.SetScale(size);
+
 		return true;
 	}
 };

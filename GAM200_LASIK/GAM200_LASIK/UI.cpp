@@ -72,7 +72,6 @@ void SelectSpawn::SelectMenu()
 	unitFont.SetFont(bitmapfont);
 	unitFont.SetString(L"archer     knight    magician");
 
-
 }
 
 void SelectSpawn::SelectUpdate(Camera& camera_, CameraView& view_) {

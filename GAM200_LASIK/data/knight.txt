@@ -1,6 +1,6 @@
-Position: 600 -200
+Position: -600 -200
 Size: 64 64
 Speed: 150 0
 Health: 200
 Damage: 15
-Camp: PlayerProjectile
+Camp: PlayerUnit

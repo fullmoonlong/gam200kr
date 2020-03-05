@@ -9,6 +9,7 @@
 #include <vec2.hpp>
 #include "EnemyUnits.hpp"
 #include "ComponentTest.h"
+#include "DataReader.hpp"
 #include "FileLoadAndSave.hpp"
 #include "UnitStateComponent.hpp"
 
@@ -20,53 +21,55 @@ void Skeleton::UnitInitialize(const char* name)
 	this->GetComponent<BaseUnitState>()->SetDamage(this->GetSkeletionDamage());
 	this->GetComponent<BaseUnitState>()->SetAttackRange({ 1.0f, 0.0f });
 
-	File data;
-	vec2<float> firstPosition;
-	vec2<float> firstSize;
+	//File data;
+	//vec2<float> firstPosition;
+	//vec2<float> firstSize;
 
-	data.Open(name);
-	data.GetFloat(&firstPosition.x);
-	data.GetFloat(&firstPosition.y);
-	data.GetFloat(&firstSize.x);
-	data.GetFloat(&firstSize.y);
-	data.GetFloat(&this->speed.x);
+	//data.Open(name);
+	//data.GetFloat(&firstPosition.x);
+	//data.GetFloat(&firstPosition.y);
+	//data.GetFloat(&firstSize.x);
+	//data.GetFloat(&firstSize.y);
+	//data.GetFloat(&this->speed.x);
 
-	std::string unitdata;
-	data.GetString(&unitdata);
+	//std::string unitdata;
+	//data.GetString(&unitdata);
 
-	if (unitdata == "Player")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::Player);
-	}
-	else if (unitdata == "Enemy")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::Enemy);
-	}
-	else if (unitdata == "ProjectilesPlayer")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesPlayer);
-	}
-	else if (unitdata == "ProjectilesEnemy")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesEnemy);
-	}
+	//if (unitdata == "Player")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::Player);
+	//}
+	//else if (unitdata == "Enemy")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::Enemy);
+	//}
+	//else if (unitdata == "ProjectilesPlayer")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesPlayer);
+	//}
+	//else if (unitdata == "ProjectilesEnemy")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesEnemy);
+	//}
 
-	data.GetString(&unitdata);
-	this->SetName(unitdata);
+	//data.GetString(&unitdata);
+	//this->SetName(unitdata);
 
-	this->SetPosition(firstPosition);
-	this->SetSize(firstSize);
+	//this->SetPosition(firstPosition);
+	//this->SetSize(firstSize);
 
-	this->transform.SetTranslation(firstPosition);
-	float half_width = firstSize.x / 2;
-	float half_height = firstSize.y / 2;
-	this->min = { this->GetXposition() - half_width, this->GetYposition() - half_height };
-	this->max = { this->GetXposition() + half_width, this->GetYposition() + half_height };
-	this->transform.SetScale({ firstSize.x, firstSize.y });
+	//this->transform.SetTranslation(firstPosition);
+	//float half_width = firstSize.x / 2;
+	//float half_height = firstSize.y / 2;
+	//this->min = { this->GetXposition() - half_width, this->GetYposition() - half_height };
+	//this->max = { this->GetXposition() + half_width, this->GetYposition() + half_height };
+	//this->transform.SetScale({ firstSize.x, firstSize.y });
 
-	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
+	DataReader::ReadData(name, this);
+	
+	GetComponent<BaseUnitState>()->healthBar.Initialize(transform.GetTranslation(), GetComponent<BaseUnitState>()->GetHealth());
 
-	this->AddComponent<BaseObjectAttackComponent>();
+	AddComponent<BaseObjectAttackComponent>();
 }
 
 void Lich::UnitInitialize(const char* name)
@@ -77,53 +80,55 @@ void Lich::UnitInitialize(const char* name)
 	this->GetComponent<BaseUnitState>()->SetDamage(this->GetLichDamage());
 	this->GetComponent<BaseUnitState>()->SetAttackRange(this->GetLichAttackRange());
 
-	File data;
-	vec2<float> firstPosition;
-	vec2<float> firstSize;
+	//File data;
+	//vec2<float> firstPosition;
+	//vec2<float> firstSize;
 
-	data.Open(name);
-	data.GetFloat(&firstPosition.x);
-	data.GetFloat(&firstPosition.y);
-	data.GetFloat(&firstSize.x);
-	data.GetFloat(&firstSize.y);
-	data.GetFloat(&this->speed.x);
+	//data.Open(name);
+	//data.GetFloat(&firstPosition.x);
+	//data.GetFloat(&firstPosition.y);
+	//data.GetFloat(&firstSize.x);
+	//data.GetFloat(&firstSize.y);
+	//data.GetFloat(&this->speed.x);
 
-	std::string unitdata;
-	data.GetString(&unitdata);
+	//std::string unitdata;
+	//data.GetString(&unitdata);
 
-	if (unitdata == "Player")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::Player);
-	}
-	else if (unitdata == "Enemy")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::Enemy);
-	}
-	else if (unitdata == "ProjectilesPlayer")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesPlayer);
-	}
-	else if (unitdata == "ProjectilesEnemy")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesEnemy);
-	}
+	//if (unitdata == "Player")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::Player);
+	//}
+	//else if (unitdata == "Enemy")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::Enemy);
+	//}
+	//else if (unitdata == "ProjectilesPlayer")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesPlayer);
+	//}
+	//else if (unitdata == "ProjectilesEnemy")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesEnemy);
+	//}
 
-	data.GetString(&unitdata);
-	this->SetName(unitdata);
+	//data.GetString(&unitdata);
+	//this->SetName(unitdata);
 
-	this->SetPosition(firstPosition);
-	this->SetSize(firstSize);
+	//this->SetPosition(firstPosition);
+	//this->SetSize(firstSize);
 
-	this->transform.SetTranslation(firstPosition);
-	float half_width = firstSize.x / 2;
-	float half_height = firstSize.y / 2;
-	this->min = { this->GetXposition() - half_width, this->GetYposition() - half_height };
-	this->max = { this->GetXposition() + half_width, this->GetYposition() + half_height };
-	this->transform.SetScale({ firstSize.x, firstSize.y });
+	//this->transform.SetTranslation(firstPosition);
+	//float half_width = firstSize.x / 2;
+	//float half_height = firstSize.y / 2;
+	//this->min = { this->GetXposition() - half_width, this->GetYposition() - half_height };
+	//this->max = { this->GetXposition() + half_width, this->GetYposition() + half_height };
+	//this->transform.SetScale({ firstSize.x, firstSize.y });
 
-	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
+	DataReader::ReadData(name, this);
+	
+	GetComponent<BaseUnitState>()->healthBar.Initialize(transform.GetTranslation(), GetComponent<BaseUnitState>()->GetHealth());
 
-	this->AddComponent<BaseObjectAttackComponent>();
+	AddComponent<BaseObjectAttackComponent>();
 }
 
 void Golem::UnitInitialize(const char* name)
@@ -134,51 +139,53 @@ void Golem::UnitInitialize(const char* name)
 	this->GetComponent<BaseUnitState>()->SetDamage(this->GetGolemHealth());
 	this->GetComponent<BaseUnitState>()->SetAttackRange({ 1.0f, 0.0f });
 
-	File data;
-	vec2<float> firstPosition;
-	vec2<float> firstSize;
+	//File data;
+	//vec2<float> firstPosition;
+	//vec2<float> firstSize;
 
-	data.Open(name);
-	data.GetFloat(&firstPosition.x);
-	data.GetFloat(&firstPosition.y);
-	data.GetFloat(&firstSize.x);
-	data.GetFloat(&firstSize.y);
-	data.GetFloat(&this->speed.x);
+	//data.Open(name);
+	//data.GetFloat(&firstPosition.x);
+	//data.GetFloat(&firstPosition.y);
+	//data.GetFloat(&firstSize.x);
+	//data.GetFloat(&firstSize.y);
+	//data.GetFloat(&this->speed.x);
 
-	std::string unitdata;
-	data.GetString(&unitdata);
+	//std::string unitdata;
+	//data.GetString(&unitdata);
 
-	if (unitdata == "Player")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::Player);
-	}
-	else if (unitdata == "Enemy")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::Enemy);
-	}
-	else if (unitdata == "ProjectilesPlayer")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesPlayer);
-	}
-	else if (unitdata == "ProjectilesEnemy")
-	{
-		this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesEnemy);
-	}
+	//if (unitdata == "Player")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::Player);
+	//}
+	//else if (unitdata == "Enemy")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::Enemy);
+	//}
+	//else if (unitdata == "ProjectilesPlayer")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesPlayer);
+	//}
+	//else if (unitdata == "ProjectilesEnemy")
+	//{
+	//	this->GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesEnemy);
+	//}
 
-	data.GetString(&unitdata);
-	this->SetName(unitdata);
+	//data.GetString(&unitdata);
+	//this->SetName(unitdata);
 
-	this->SetPosition(firstPosition);
-	this->SetSize(firstSize);
+	//this->SetPosition(firstPosition);
+	//this->SetSize(firstSize);
 
-	this->transform.SetTranslation(firstPosition);
-	float half_width = firstSize.x / 2;
-	float half_height = firstSize.y / 2;
-	this->min = { this->GetXposition() - half_width, this->GetYposition() - half_height };
-	this->max = { this->GetXposition() + half_width, this->GetYposition() + half_height };
-	this->transform.SetScale({ firstSize.x, firstSize.y });
+	//this->transform.SetTranslation(firstPosition);
+	//float half_width = firstSize.x / 2;
+	//float half_height = firstSize.y / 2;
+	//this->min = { this->GetXposition() - half_width, this->GetYposition() - half_height };
+	//this->max = { this->GetXposition() + half_width, this->GetYposition() + half_height };
+	//this->transform.SetScale({ firstSize.x, firstSize.y });
 
-	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
+	DataReader::ReadData(name, this);
+	
+	GetComponent<BaseUnitState>()->healthBar.Initialize(transform.GetTranslation(), GetComponent<BaseUnitState>()->GetHealth());
 
-	this->AddComponent<BaseObjectAttackComponent>();
+	AddComponent<BaseObjectAttackComponent>();
 }

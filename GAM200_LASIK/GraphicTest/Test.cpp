@@ -21,11 +21,11 @@ void Test::Initialize()
 
 void Test::Update()
 {
-	Draw::StartDrawing();
+	Drawing::StartDrawing();
 
-	Draw::draw(material);
+	Drawing::Draw(material);
 
-	Draw::FinishDrawing();
+	Drawing::FinishDrawing();
 
 	window.PollEvents();
 	window.SwapBuffers();

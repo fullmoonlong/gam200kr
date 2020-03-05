@@ -44,6 +44,7 @@ public:
 
 	float GetXposition() const { return position.x; }
 	float GetYposition() const { return position.y; }
+	vec2<float> GetPosition() const { return position; }
 	void SetXposition(float position_) { position.x = position_; }
 	void SetYposition(float position_) { position.y = position_; }
 	void SetPosition(vec2<float> position_) { position = position_; }
