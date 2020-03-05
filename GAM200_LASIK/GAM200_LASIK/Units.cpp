@@ -2,7 +2,7 @@
  *	File Name        : Units.cpp
  *	Project Name     : Keyboard Warriors
  *	Primary Author   : Doyeong Yi
- *	Secondary Author :
+ *	Secondary Author : JeongHak Kim
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/

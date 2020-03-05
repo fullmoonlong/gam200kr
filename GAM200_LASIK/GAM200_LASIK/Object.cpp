@@ -92,16 +92,16 @@ void Object::Initialize(const char* name) noexcept
 
 	DataReader::ReadData(name, this);
 	
-	transform.SetTranslation(position);
-	const float half_width = size.x / 2;
-	const float half_height = size.y / 2;
-	min = { position.x - half_width, position.y - half_height };
-	max = { position.x + half_width, position.y + half_height };
-	transform.SetScale({ size.x, size.y });
+	//transform.SetTranslation(position);
+	//const float half_width = size.x / 2;
+	//const float half_height = size.y / 2;
+	//min = { position.x - half_width, position.y - half_height };
+	//max = { position.x + half_width, position.y + half_height };
+	//transform.SetScale({ size.x, size.y });
 
 	GetComponent<BaseUnitState>()->healthBar.Initialize(transform.GetTranslation(), GetComponent<BaseUnitState>()->GetHealth());
 
-	AddComponent<ObjectAttackComponent>();
+	AddComponent<BaseObjectAttackComponent>();
 }
 
 void Object::Update(float dt) noexcept
