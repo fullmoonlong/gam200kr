@@ -28,9 +28,10 @@ public:
 	void ChangeAnimation(SpriteSheet new_sprite_sheet);
 	void ChangeAnimation(int new_column, int new_row);
 	void ChangeAnimation(int new_column, int new_row, float new_animation_speed);
+
 private:
-	Shader shader;
-	SpriteSheet spriteSheet;
 	int frameIndex = 0;
 	float baseTime = 0.0f;
+	Shader shader;
+	SpriteSheet spriteSheet;
 };

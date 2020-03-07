@@ -7,11 +7,14 @@
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
 #include "Tower.h"
+#include "Graphic.h"
 #include "ComponentTower.h"
 #include "FileLoadAndSave.hpp"
 
 void Tower::UnitInitialize(const char* name)
 {
+	material.shader = GRAPHIC->shader;
+	material.vertices.InitializeWithMeshAndLayout(GRAPHIC->mesh, GRAPHIC->layout);
 	this->AddComponent<BaseUnitState>();
 	this->GetComponent<BaseUnitState>()->SetState(State::WALK);
 	this->GetComponent<BaseUnitState>()->SetHealth(towerHealth);
@@ -66,6 +69,8 @@ void Tower::UnitInitialize(const char* name)
 
 void Lair::UnitInitialize(const char* name)
 {
+	material.shader = GRAPHIC->shader;
+	material.vertices.InitializeWithMeshAndLayout(GRAPHIC->mesh, GRAPHIC->layout);
 	this->AddComponent<BaseUnitState>();
 	this->GetComponent<BaseUnitState>()->SetState(State::WALK);
 	this->GetComponent<BaseUnitState>()->SetHealth(lairHealth);

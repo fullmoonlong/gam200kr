@@ -14,7 +14,7 @@
 #include "PATH.hpp"
 #include "VerticesDescription.h"
 #include "Image.hpp"
-#include "ComponentTest.h"
+#include "ComponentAttack.h"
 #include "ComponentTower.h"
 #include "GetInput.hpp"
 #include "Screenshot.hpp"

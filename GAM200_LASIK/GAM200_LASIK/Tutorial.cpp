@@ -11,8 +11,9 @@
 #include "ObjectFactory.h"
 #include "VerticesDescription.h"
 #include "Image.hpp"
-#include "ComponentTest.h"
+#include "ComponentAttack.h"
 #include "ComponentTower.h"
+#include "ComponentSprite.h"
 #include "ObjectMaterial.h"
 #include "StateManager.h"
 #include "UnitStateComponent.hpp"
@@ -263,10 +264,8 @@ void Tutorial::Update(float dt)
 	{
 		if (obj.second != nullptr)
 		{
-			const auto something = obj.second;
-			something->animation.Animate(dt);
-			something->Update(dt);
-			something->ChangeUnitAnimation();
+			obj.second->animation.Animate(dt);
+			obj.second->Update(dt);
 
 			const mat3<float> ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->transform.GetModelToWorld();
 			obj.second->GetComponent<MaterialComponent>()->material.ndc = ndc;

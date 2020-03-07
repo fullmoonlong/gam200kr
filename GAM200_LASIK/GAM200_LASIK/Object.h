@@ -30,7 +30,7 @@ public:
 
 	Object();
 	Object(const Object& rhs);
-	~Object() = default;
+	~Object() {};
 
 	void Initialize(const char* name) noexcept;
 	void Update(float dt) noexcept;
@@ -56,6 +56,7 @@ public:
 	Transform transform;
 	Material material;
 	Animation animation;
+	Mesh mesh;
 
 	bool isCollideWith(Object& object) noexcept;
 	bool isObjectInAttackRange(Object& object) noexcept;

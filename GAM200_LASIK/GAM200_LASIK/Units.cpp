@@ -8,13 +8,24 @@
  **************************************************************************************/
 
 #include <vec2.hpp>
+#include "Graphic.h"
 #include "Units.hpp"
-#include "ComponentTest.h"
+#include "ComponentAttack.h"
+#include "ComponentSprite.h"
+#include "ObjectMaterial.h"
 #include "FileLoadAndSave.hpp"
 #include "UnitStateComponent.hpp"
 
+Knight::~Knight()
+{
+	GRAPHIC->DeleteMaterial(&GetComponent<MaterialComponent>()->material);
+	GRAPHIC->DeleteMaterial(&GetComponent<UnitState>()->healthBar.material);
+}
+
 void Knight::UnitInitialize(const char* name)
 {
+	material.shader = GRAPHIC->shader;
+	material.vertices.InitializeWithMeshAndLayout(GRAPHIC->mesh, GRAPHIC->layout);
 	this->AddComponent<BaseUnitState>();
 	this->GetComponent<BaseUnitState>()->SetState(State::WALK);
 	this->GetComponent<BaseUnitState>()->SetHealth(this->GetKnightHealth());
@@ -67,10 +78,26 @@ void Knight::UnitInitialize(const char* name)
 	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
 
 	this->AddComponent<BaseObjectAttackComponent>();
+
+	this->AddComponent<SpriteComponent>();
+	this->GetComponent<SpriteComponent>()->moveSpritePath = PATH::knight_move;
+	this->GetComponent<SpriteComponent>()->attackSpritePath = PATH::knight_attack;
+	this->GetComponent<SpriteComponent>()->moveSpriteColumnRow.x = 8;
+	this->GetComponent<SpriteComponent>()->moveSpriteColumnRow.y = 1;
+	this->GetComponent<SpriteComponent>()->attackSpriteColumnRow.x = 8;
+	this->GetComponent<SpriteComponent>()->attackSpriteColumnRow.y = 1;
+}
+
+Archer::~Archer()
+{
+	GRAPHIC->DeleteMaterial(&GetComponent<MaterialComponent>()->material);
+	GRAPHIC->DeleteMaterial(&GetComponent<UnitState>()->healthBar.material);
 }
 
 void Archer::UnitInitialize(const char* name)
 {
+	material.shader = GRAPHIC->shader;
+	material.vertices.InitializeWithMeshAndLayout(GRAPHIC->mesh, GRAPHIC->layout);
 	this->AddComponent<BaseUnitState>();
 	this->GetComponent<BaseUnitState>()->SetState(State::WALK);
 	this->GetComponent<BaseUnitState>()->SetHealth(this->GetArcherHealth());
@@ -124,10 +151,26 @@ void Archer::UnitInitialize(const char* name)
 	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
 
 	this->AddComponent<BaseObjectAttackComponent>();
+
+	this->AddComponent<SpriteComponent>();
+	this->GetComponent<SpriteComponent>()->moveSpritePath = PATH::archer_move;
+	this->GetComponent<SpriteComponent>()->attackSpritePath = PATH::archer_attack;
+	this->GetComponent<SpriteComponent>()->moveSpriteColumnRow.x = 8;
+	this->GetComponent<SpriteComponent>()->moveSpriteColumnRow.y = 1;
+	this->GetComponent<SpriteComponent>()->attackSpriteColumnRow.x = 8;
+	this->GetComponent<SpriteComponent>()->attackSpriteColumnRow.y = 1;
+}
+
+Magician::~Magician()
+{
+	GRAPHIC->DeleteMaterial(&GetComponent<MaterialComponent>()->material);
+	GRAPHIC->DeleteMaterial(&GetComponent<UnitState>()->healthBar.material);
 }
 
 void Magician::UnitInitialize(const char* name)
 {
+	material.shader = GRAPHIC->shader;
+	material.vertices.InitializeWithMeshAndLayout(GRAPHIC->mesh, GRAPHIC->layout);
 	this->AddComponent<BaseUnitState>();
 	this->GetComponent<BaseUnitState>()->SetState(State::WALK);
 	this->GetComponent<BaseUnitState>()->SetHealth(this->GetMagicianHealth());
@@ -181,4 +224,12 @@ void Magician::UnitInitialize(const char* name)
 	this->GetComponent<BaseUnitState>()->healthBar.Initialize(this->transform.GetTranslation(), this->GetComponent<BaseUnitState>()->GetHealth());
 
 	this->AddComponent<BaseObjectAttackComponent>();
+
+	this->AddComponent<SpriteComponent>();
+	this->GetComponent<SpriteComponent>()->moveSpritePath = PATH::magician_move;
+	this->GetComponent<SpriteComponent>()->attackSpritePath = PATH::magician_attack;
+	this->GetComponent<SpriteComponent>()->moveSpriteColumnRow.x = 8;
+	this->GetComponent<SpriteComponent>()->moveSpriteColumnRow.y = 1;
+	this->GetComponent<SpriteComponent>()->attackSpriteColumnRow.x = 5;
+	this->GetComponent<SpriteComponent>()->attackSpriteColumnRow.y = 1;
 }

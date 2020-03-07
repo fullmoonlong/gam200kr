@@ -13,6 +13,7 @@
 #include "StateManager.h"
 #include "GameManager.h"
 #include "Sound.hpp"
+#include "Graphic.h"
 
 
 Engine* gameEngine = nullptr;
@@ -33,11 +34,11 @@ void Engine::Initialize()
 {
 	AddSystem(new Application());
 	Application* app = dynamic_cast<Application*>(systems[0]);
-
-	AddSystem(new ObjectFactory());
-	AddSystem(new StateManager(app->GetWindow()));
+	AddSystem(new Graphic(app->GetWindow()));
 	AddSystem(new SoundManager());
+	AddSystem(new ObjectFactory());
 	AddSystem(new GameManager());
+	AddSystem(new StateManager(app->GetWindow()));
 	for (auto sys : systems)
 	{
 		sys->Initialize();

@@ -14,9 +14,6 @@
     <ClCompile Include="GetInput.cpp">
       <Filter>TextInput</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentTest.cpp">
-      <Filter>Component\Units</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentTower.cpp">
       <Filter>Component\Tower</Filter>
     </ClCompile>
@@ -63,6 +60,15 @@
     <ClCompile Include="Tutorial.cpp" />
     <ClCompile Include="LevelSelect.cpp" />
     <ClCompile Include="Upgrade.cpp" />
+    <ClCompile Include="ComponentAttack.cpp">
+      <Filter>Component\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentSprite.cpp">
+      <Filter>Component\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphic.cpp">
+      <Filter>System\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">
@@ -88,9 +94,6 @@
     </ClInclude>
     <ClInclude Include="GetInput.hpp">
       <Filter>TextInput</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentTest.h">
-      <Filter>Component\Units</Filter>
     </ClInclude>
     <ClInclude Include="ComponentTower.h">
       <Filter>Component\Tower</Filter>
@@ -146,10 +149,18 @@
     <ClInclude Include="Tower.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="Tutorial.h" />
     <ClInclude Include="LevelSelect.h" />
     <ClInclude Include="Upgrade.hpp" />
+    <ClInclude Include="ComponentAttack.h">
+      <Filter>Component\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentSprite.h">
+      <Filter>Component\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphic.h">
+      <Filter>System\Graphic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">
@@ -208,6 +219,9 @@
     </Filter>
     <Filter Include="System\GameManager">
       <UniqueIdentifier>{c01ec26c-3c07-484e-856b-bb3ccdde89d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System\Graphic">
+      <UniqueIdentifier>{0928460e-b3e0-45e0-9620-7cb6c0134dc3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -14,6 +14,8 @@
 
 class Knight : public Object {
 public:	
+	Knight() {};
+	~Knight();
 	void UnitInitialize(const char* name);
 
 	int GetKnightHealth() { return knightHealth; }
@@ -42,6 +44,9 @@ private:
 
 class Archer : public Object {
 public:
+	Archer() {};
+	~Archer();
+
 	void UnitInitialize(const char* name);
 
 	int GetArcherHealth() { return  archerHealth; }
@@ -69,7 +74,10 @@ private:
 };
 
 class Magician : public Object {
-public:	
+public:
+	Magician() {};
+	~Magician();
+
 	void UnitInitialize(const char* name);
 
 	int GetMagicianHealth() { return  magicianHealth; }

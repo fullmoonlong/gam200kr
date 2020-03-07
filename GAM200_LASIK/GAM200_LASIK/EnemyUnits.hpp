@@ -14,6 +14,9 @@
 
 class Skeleton : public Object {
 public:
+	Skeleton() {};
+	~Skeleton();
+
 	void UnitInitialize(const char* name);
 
 	int GetSkeletionHealth() { return SkeletionHealth; }
@@ -27,6 +30,8 @@ private:
 
 class Lich : public Object {
 public:
+	Lich() {};
+	~Lich();
 	void UnitInitialize(const char* name);
 
 	int GetLichHealth() { return LichHealth; }

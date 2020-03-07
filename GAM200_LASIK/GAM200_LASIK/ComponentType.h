@@ -13,6 +13,7 @@ typedef enum {
 	LAIR,
 	MATERIAL,
 	UNITSTATE,
-	BASEUNITSTATE
+	BASEUNITSTATE,
+	SPRITE
 	//Add here component type
 }ComponentType;

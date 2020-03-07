@@ -8,10 +8,13 @@
  **************************************************************************************/
 
 #include <iostream>
+#include "Graphic.h"
 #include "GameManager.h"
 #include "ObjectFactory.h"
-#include "ComponentTest.h"
+#include "ComponentAttack.h"
+#include "ComponentSprite.h"
 #include "UnitStateComponent.hpp"
+#include "ObjectMaterial.h"
 
 GameManager* GAMEMANAGER = nullptr;
 
@@ -19,6 +22,7 @@ GameManager::GameManager()
 {
 	GAMEMANAGER = this;
 	std::cout << "GameManager Add Sucessful" << std::endl;
+	//Initialize();
 }
 
 GameManager::~GameManager()
@@ -37,22 +41,23 @@ void GameManager::Update(float dt)
 	{
 		for (auto player : PlayerUnits)
 		{
-			if (player->GetName() != "Tower")
+			if (player->GetName() != "Tower" && player != nullptr)
 			{
 				UnitUpdate(player);
 				player->GetComponent<ObjectAttackComponent>()->Update(dt);
+				player->GetComponent<SpriteComponent>()->ChangeAnimation();
 			}
 		}
 		for (auto enemy : EnemyUnits)
 		{
-			if (enemy->GetName() != "Lair")
+			if (enemy->GetName() != "Lair" && enemy != nullptr)
 			{
 				UnitUpdate(enemy);
 				enemy->GetComponent<ObjectAttackComponent>()->Update(dt);
+				enemy->GetComponent<SpriteComponent>()->ChangeAnimation();
 			}
 		}
 		CheckCollision();
-		//CheckAttackState();
 	}
 }
 
@@ -67,6 +72,7 @@ void GameManager::CheckCollision()
 				if (object1.second->GetComponent<UnitState>()->GetInvincibilityState() == false)
 				{
 					object1.second->GetComponent<UnitState>()->SetHealth(object1.second->GetComponent<UnitState>()->GetHealth() - object.second->GetComponent<UnitState>()->GetDamage());
+					GRAPHIC->DeleteMaterial(&object.second->GetComponent<MaterialComponent>()->material);
 				}
 				if (object.second->GetName() == "Fireball") {
 					pg.DrawParticles();
@@ -78,6 +84,7 @@ void GameManager::CheckCollision()
 				if (object1.second->GetComponent<UnitState>()->GetInvincibilityState() == false)
 				{
 					object1.second->GetComponent<UnitState>()->SetHealth(object1.second->GetComponent<UnitState>()->GetHealth() - object.second->GetComponent<UnitState>()->GetDamage());
+					GRAPHIC->DeleteMaterial(&object.second->GetComponent<MaterialComponent>()->material);
 				}
 				OBJECTFACTORY->Destroy(object.second);
 			}
@@ -94,7 +101,6 @@ void GameManager::CheckCollision()
 				{
 					player->GetComponent<UnitState>()->SetState(State::ATTACK);
 					player->GetComponent<UnitState>()->SetAttackState(true);
-					//enemy->GetComponent<UnitState>()->SetAttackState(true);
 					player->GetComponent<UnitState>()->SetSpriteChangeState(true);
 					break;
 				}
@@ -131,7 +137,6 @@ void GameManager::CheckCollision()
 				{
 					enemy->GetComponent<UnitState>()->SetState(State::ATTACK);
 					enemy->GetComponent<UnitState>()->SetAttackState(true);
-					//enemy->GetComponent<UnitState>()->SetAttackState(true);
 					enemy->GetComponent<UnitState>()->SetSpriteChangeState(true);
 					break;
 				}
@@ -166,6 +171,7 @@ void GameManager::SpawnUnit(Object* object)
 	newObject->SetObjectID(OBJECTFACTORY->GetLastObjectID());
 	OBJECTFACTORY->objectIDMap.emplace(OBJECTFACTORY->GetLastObjectID(), newObject);
 	OBJECTFACTORY->lastObjectID++;
+
 	newObject->GetComponent<UnitState>()->SetSpriteChangeState(true);
 	if (newObject->GetComponent<UnitState>()->GetType() == UnitType::Player) {
 		PlayerUnits.push_back(newObject);
@@ -192,8 +198,9 @@ void GameManager::UnitUpdate(Object* object)
 			{
 				if (*it == object)
 				{
+					GRAPHIC->DeleteMaterial(&object->GetComponent<MaterialComponent>()->material);
+					GRAPHIC->DeleteMaterial(&object->GetComponent<UnitState>()->healthBar.material);
 					GAMEMANAGER->PlayerUnits.erase(it);
-					GAMEMANAGER->PlayerAmount--;
 					break;
 				}
 			}
@@ -204,8 +211,9 @@ void GameManager::UnitUpdate(Object* object)
 			{
 				if (*it == object)
 				{
+					GRAPHIC->DeleteMaterial(&object->GetComponent<MaterialComponent>()->material);
+					GRAPHIC->DeleteMaterial(&object->GetComponent<UnitState>()->healthBar.material);
 					GAMEMANAGER->EnemyUnits.erase(it);
-					GAMEMANAGER->EnemyAmount--;
 					break;
 				}
 			}

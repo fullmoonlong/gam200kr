@@ -66,21 +66,21 @@ private:
 	Draw draw;
 	Object* objectTest1;
 
-	Object background;
-	Shader backgroundShader;
-	Mesh backgroundMesh;
-	Vertices backgroundVertices;
-	Texture backgroundTexture;
-	Material backgroundMaterial;
+	//Object background;
+	//Shader backgroundShader;
+	//Mesh backgroundMesh;
+	//Vertices backgroundVertices;
+	//Texture backgroundTexture;
+	//Material backgroundMaterial;
 	Object ui;
 
-	Shader fontShader;
+	//Shader fontShader;
 	BitmapFont bitmapFont;
 	Text text;
 	Transform textTransform;
 
-	Shader shader;
-	Shader shapeShader;
+	//Shader shader;
+	//Shader shapeShader;
 	Object object;
 	Object object2;
 
@@ -111,8 +111,8 @@ private:
 	Object* winpic;
 	Object* losepic;
 
-	Camera camera;
-	CameraView view;
+	//Camera camera;
+	//CameraView view;
 	CoolDown coolTime;
 
 	UI::SelectSpawn selectMenu;
