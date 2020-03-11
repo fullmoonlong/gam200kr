@@ -37,18 +37,16 @@ void GameManager::Update(float dt)
 	{
 		for (auto player : PlayerUnits)
 		{
-			if (player->GetName() != "Tower")
+			if (player != nullptr)
 			{
-				UnitUpdate(player);
-				player->GetComponent<ObjectAttackComponent>()->Update(dt);
+				UnitUpdate(player, dt);
 			}
 		}
 		for (auto enemy : EnemyUnits)
 		{
-			if (enemy->GetName() != "Lair")
+			if (enemy != nullptr)
 			{
-				UnitUpdate(enemy);
-				enemy->GetComponent<ObjectAttackComponent>()->Update(dt);
+				UnitUpdate(enemy, dt);
 			}
 		}
 		CheckCollision();
@@ -177,8 +175,12 @@ void GameManager::SpawnUnit(Object* object)
 	}
 }
 
-void GameManager::UnitUpdate(Object* object)
+void GameManager::UnitUpdate(Object* object, float dt)
 {
+	if (object->GetName() != "Tower" && object->GetName() != "Lair")
+	{
+		object->GetComponent<ObjectAttackComponent>()->Update(dt);
+	}
 	object->GetComponent<UnitState>()->healthBar.Update(object->transform.GetTranslation(), object->GetComponent<UnitState>()->GetHealth());
 
 	const UnitType unitType = object->GetComponent<UnitState>()->GetType();

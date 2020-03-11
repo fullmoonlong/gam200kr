@@ -174,13 +174,13 @@ void LevelTest1::Initialize()
 		enemyAttack = new Object();
 		enemyAttack->AddComponent<BaseUnitState>();
 		enemyAttack->GetComponent<BaseUnitState>()->SetHealth(0);
-		enemyAttack->Initialize("FnemyAttack.txt");
+		enemyAttack->Initialize("EnemyAttack.txt");
 		enemyAttack->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		enemyAttack->material.shader = shader;
 		enemyAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		enemyAttack->animation.Initialize({ 1,1, 1.f }, enemyAttack->material.shader);
-
 		enemyAttack->GetComponent<BaseUnitState>()->SetDamage(skeleton->GetSkeletionDamage());
+		enemyAttack->animation.Initialize({ 1,1, 1.f }, enemyAttack->material.shader);
+		
 		skeleton->GetComponent<BaseObjectAttackComponent>()->unit = skeleton;
 		skeleton->GetComponent<BaseObjectAttackComponent>()->projectile = enemyAttack;
 		skeleton->GetComponent<BaseObjectAttackComponent>()->delayTime = 0.6f;

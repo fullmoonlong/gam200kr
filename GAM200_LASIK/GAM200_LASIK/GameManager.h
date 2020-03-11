@@ -24,7 +24,7 @@ public:
 	void CheckCollision();
 	void CheckAttackState();
 	void SpawnUnit(Object* object);
-	void UnitUpdate(Object* object);
+	void UnitUpdate(Object* object, float dt);
 
 	int PlayerAmount = 0;
 	int EnemyAmount = 0;
