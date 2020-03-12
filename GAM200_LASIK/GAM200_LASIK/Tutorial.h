@@ -30,6 +30,7 @@
 #include "BitmapFont.hpp"
 #include "Sound.hpp"
 #include "CoolDown.hpp"
+#include "ChatBox.hpp"
 
 class Tutorial : public LevelSystem {
 public:
@@ -47,6 +48,8 @@ public:
 	void HandleMousePositionEvent(float xpos, float ypos) override final;
 
 private:
+	mat3<float> worldToNDC;
+
 	bool isEnter = false;
 	bool isPlayerWin;
 	bool isEnemyWin;
@@ -69,8 +72,8 @@ private:
 
 	Shader fontShader;
 	BitmapFont bitmapFont;
-	Text text;
-	Transform textTransform, lairTextTransform, towerTextTransform;
+	Text text, sucess;
+	Transform textTransform, lairTextTransform, towerTextTransform, sucessTransform;
 
 	Knight* knight;
 	Magician* magician;
@@ -87,13 +90,16 @@ private:
 	CoolDown coolTime;
 
 	UI::SelectSpawn selectMenu;
+	UI::MoneyBar moneyBar;
+
+	ChatBox cb;
 
 	Text debugText;
 	Transform debugTextTransform;
 
 	Object* tutorialWin;
 	bool win = false;
-
+	int check = 0;
 	float zoom = 1.0f;
 	float cameraAngle = 0.0f;
 
@@ -107,6 +113,7 @@ private:
 	vec2<float> towerPosition = { -500.0f , 80.f };
 	vec2<float> lairPosition = { 500.f, 50.f };
 
+	float sideScrollSpeed = 0.0f;
 
 	bool isDebugModeisOn = false;
 

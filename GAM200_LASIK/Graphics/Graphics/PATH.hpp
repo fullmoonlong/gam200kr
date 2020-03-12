@@ -67,4 +67,6 @@ namespace PATH
 	const std::filesystem::path towerExplain = "../assets/towerExplain.png";
 	const std::filesystem::path tutorialWinpic = "../assets/tutorialWinpic.png";
 	const std::filesystem::path levelSelect = "../assets/levelSelect.png";
+	const std::filesystem::path upgrade = "../assets/upgrade.png";
+
 }

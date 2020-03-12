@@ -177,7 +177,7 @@ void GameManager::SpawnUnit(Object* object)
 
 void GameManager::UnitUpdate(Object* object, float dt)
 {
-	if (object->GetName() != "Tower" && object->GetName() != "Lair")
+	if (object->GetName() != "tower" && object->GetName() != "lair")
 	{
 		object->GetComponent<ObjectAttackComponent>()->Update(dt);
 	}

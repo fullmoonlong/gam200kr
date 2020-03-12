@@ -6,7 +6,6 @@
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
-
 #include "Tutorial.h"
 #include "Application.h"
 #include "ObjectFactory.h"
@@ -18,13 +17,22 @@
 #include "StateManager.h"
 #include "UnitStateComponent.hpp"
 #include "GameManager.h"
+#include "CurrencySystem.hpp"
+#include "UpgradeSystem.hpp"
 
 Tutorial::Tutorial(OpenGLWindow* window)
 {
 	windowPoint = window;
+	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
+	view.SetZoom(zoom);
+	worldToNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera();
+	cb.Initialize(worldToNDC);
 }
 
-Tutorial::~Tutorial() {}
+Tutorial::~Tutorial()
+{
+	Shutdown();
+}
 
 void Tutorial::Initialize()
 {
@@ -57,11 +65,12 @@ void Tutorial::Initialize()
 	//win
 	tutorialWin = new Object();
 	tutorialWin->transform.SetTranslation({ 0.f, 0.f });
-	tutorialWin->transform.SetScale({ 1,1 });
+	tutorialWin->transform.SetScale({ 700, 300 });
 	tutorialWin->material.shader = fontShader;
 	tutorialWin->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 	tutorialWin->material.texture.LoadTextureFrom(PATH::tutorialWinpic);
 	tutorialWin->material.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * tutorialWin->transform.GetModelToWorld();
+
 
 	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
 	view.SetZoom(zoom);
@@ -77,7 +86,7 @@ void Tutorial::Initialize()
 	{
 		//tower
 		tower = new Tower();
-		tower->UnitInitialize("Tower.txt");
+		tower->UnitInitialize("tower.txt");
 		tower->material.shader = shader;
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadTextureFrom(PATH::tower);
@@ -87,7 +96,7 @@ void Tutorial::Initialize()
 
 		//lair
 		lair = new Lair();
-		lair->UnitInitialize("Lair.txt");
+		lair->UnitInitialize("lair.txt");
 		lair->material.shader = shader;
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadTextureFrom(PATH::lair);
@@ -96,9 +105,9 @@ void Tutorial::Initialize()
 		lair->animation.Initialize({ 1, 1,	10.0f }, shader);
 		GAMEMANAGER->SpawnUnit(lair);
 		//lair
-		
+
 		skeleton = new Skeleton();
-		skeleton->Initialize("Skeleton.txt");
+		skeleton->Initialize("skeleton.txt");
 		skeleton->material.shader = shader;
 		skeleton->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		skeleton->material.texture.LoadTextureFrom(PATH::skeleton_move);
@@ -106,7 +115,7 @@ void Tutorial::Initialize()
 
 		//knight
 		knight = new Knight();
-		knight->Initialize("Knight.txt");
+		knight->Initialize("knight.txt");
 		knight->material.shader = shader;
 		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		knight->material.texture.LoadTextureFrom(PATH::knight_move);
@@ -115,7 +124,7 @@ void Tutorial::Initialize()
 
 		//archer
 		archer = new Archer();
-		archer->Initialize("Archer.txt");
+		archer->Initialize("archer.txt");
 		archer->material.shader = shader;
 		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		archer->material.texture.LoadTextureFrom(PATH::archer_move);
@@ -124,7 +133,7 @@ void Tutorial::Initialize()
 
 		//magician
 		magician = new Magician();
-		magician->Initialize("Magician.txt");
+		magician->Initialize("wizard.txt");
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadTextureFrom(PATH::magician_move);
@@ -135,12 +144,12 @@ void Tutorial::Initialize()
 		swordAttack = new Object();
 		swordAttack->AddComponent<BaseUnitState>();
 		swordAttack->GetComponent<BaseUnitState>()->SetHealth(0);
-		swordAttack->Initialize("SwordAttack.txt");
+		swordAttack->Initialize("swordAttack.txt");
 		swordAttack->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		swordAttack->material.shader = shader;
 		swordAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		swordAttack->GetComponent<BaseUnitState>()->SetDamage(knight->GetComponent<BaseUnitState>()->GetDamage());
 		//swordAttack->GetComponent<BaseUnitState>()->SetDamage(knight->GetKnightDamage());
+		swordAttack->GetComponent<BaseUnitState>()->SetDamage(knight->GetComponent<BaseUnitState>()->GetDamage());
 		swordAttack->animation.Initialize({ 1,1, 1.f }, swordAttack->material.shader);
 
 		knight->GetComponent<BaseObjectAttackComponent>()->unit = knight;
@@ -155,13 +164,12 @@ void Tutorial::Initialize()
 		enemyAttack = new Object();
 		enemyAttack->AddComponent<BaseUnitState>();
 		enemyAttack->GetComponent<BaseUnitState>()->SetHealth(0);
-		enemyAttack->Initialize("EnemyAttack.txt");
+		enemyAttack->Initialize("enemyAttack.txt");
 		enemyAttack->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		enemyAttack->material.shader = shader;
 		enemyAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		enemyAttack->animation.Initialize({ 1,1, 1.f }, enemyAttack->material.shader);
-		
-		//enemyAttack->GetComponent<BaseUnitState>()->SetDamage(skeleton->GetSkeletionDamage());
+
 		enemyAttack->GetComponent<BaseUnitState>()->SetDamage(skeleton->GetComponent<BaseUnitState>()->GetDamage());
 		skeleton->GetComponent<BaseObjectAttackComponent>()->unit = skeleton;
 		skeleton->GetComponent<BaseObjectAttackComponent>()->projectile = enemyAttack;
@@ -175,14 +183,13 @@ void Tutorial::Initialize()
 		//fireball
 		fireball = new Object();
 		fireball->AddComponent<BaseUnitState>();
-		fireball->Initialize("Fireball.txt");
+		fireball->Initialize("fireball.txt");
 		fireball->material.shader = shader;
 		fireball->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		fireball->material.texture.LoadTextureFrom(PATH::fireball);
 		fireball->animation.Initialize({ 3, 1, 5.0f }, shader);
 		fireball->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		fireball->GetComponent<BaseUnitState>()->SetDamage(magician->GetComponent<BaseUnitState>()->GetDamage());
-		//fireball->GetComponent<BaseUnitState>()->SetDamage(magician->GetMagicianDamage());
 
 		magician->GetComponent<BaseObjectAttackComponent>()->unit = magician;
 		magician->GetComponent<BaseObjectAttackComponent>()->projectile = fireball;
@@ -193,7 +200,7 @@ void Tutorial::Initialize()
 		//arrow
 		arrow = new Object();
 		arrow->AddComponent<BaseUnitState>();
-		arrow->Initialize("Arrow.txt");
+		arrow->Initialize("arrow.txt");
 		arrow->material.shader = fontShader;
 		arrow->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		arrow->material.texture.LoadTextureFrom(PATH::arrow);
@@ -201,8 +208,7 @@ void Tutorial::Initialize()
 
 		arrow->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		arrow->GetComponent<BaseUnitState>()->SetDamage(archer->GetComponent<BaseUnitState>()->GetDamage());
-		//arrow->GetComponent<BaseUnitState>()->SetDamage(archer->GetArcherDamage());
-		
+
 		archer->GetComponent<BaseObjectAttackComponent>()->unit = archer;
 		archer->GetComponent<BaseObjectAttackComponent>()->projectile = arrow;
 		archer->GetComponent<BaseObjectAttackComponent>()->delayTime = 0.7f;
@@ -226,6 +232,13 @@ void Tutorial::Initialize()
 
 	debugText.SetFont(bitmapFont);
 	debugText.SetString(L"debug mode");
+
+	sucess.SetFont(bitmapFont);
+	sucess.SetString(L"sucess");
+	sucessTransform.SetTranslation({ 100.f, 100.f });
+	sucessTransform.SetScale(1.5f);
+
+	moneyBar.Initialize();
 }
 
 void Tutorial::Update(float dt)
@@ -237,7 +250,7 @@ void Tutorial::Update(float dt)
 	view.SetZoom(zoom);
 	//Transform
 
-	//draw
+	//Draw
 	Draw::StartDrawing();
 
 	backgroundNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * background.transform.GetModelToWorld();
@@ -284,7 +297,7 @@ void Tutorial::Update(float dt)
 			}
 			//hpbar
 
-			if (obj.second->GetName() == "Lair")
+			if (obj.second->GetName() == "lair")
 			{
 				obj.second->GetComponent<LairComponent>()->SpawnEnemy(skeleton, dt);
 				if (obj.second->GetComponent<UnitState>()->GetHealth() <= 0)
@@ -294,7 +307,7 @@ void Tutorial::Update(float dt)
 					OBJECTFACTORY->Destroy(obj.second);
 				}
 			}
-			else if (obj.second->GetName() == "Tower")
+			else if (obj.second->GetName() == "tower")
 			{
 				if (obj.second->GetComponent<UnitState>()->GetHealth() <= 0)
 				{
@@ -303,16 +316,30 @@ void Tutorial::Update(float dt)
 					OBJECTFACTORY->Destroy(obj.second);
 				}
 			}
+			else if (obj.second->GetName() == "skeleton")
+			{
+				if (obj.second->GetComponent<UnitState>()->GetHealth() <= 0)
+				{
+					cs->Increase(skeleton->GetMoney());
+				}
+			}
 		}
 	}
 	TutorialEnd();
 
+	moneyBar.Update(camera, view);
 	selectMenu.SelectUpdate(camera, view);
+
 	if (isDebugModeisOn == true)
 	{
 		const mat3<float> debugTextNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * debugTextTransform.GetModelToWorld();
 		Draw::DrawText(fontShader, debugTextNDC, debugText);
 	}
+
+	cb.DrawMessageBox();
+
+	camera.MoveRight(sideScrollSpeed);
+
 	Draw::FinishDrawing();
 }
 
@@ -544,6 +571,13 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 		}
 		break;
 	case KeyboardButton::Enter:
+		/*if (isEnter == true)
+		{
+
+			input.TakeAsInput('>');
+			printf(">");
+			break;
+		}*/
 		if (win == true)
 		{
 			STATEMANAGER->SetCurrentLevel(GameLevels::LEVELSELECT);
@@ -574,14 +608,38 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 				GAMEMANAGER->SpawnUnit(magician);
 				coolTime.SetMagicianCoolDown();
 			}
+			else if (input.MatchStringWithInput() == 20 && up->GetKnightUpgrade() == true)
+			{
+				cs->GetMoney();
+				//GAMEMANAGER->SpawnUnit(arthur);
+				//coolTime.SetKnightCoolDown();
+			}
+			else if (input.MatchStringWithInput() == 21 && up->GetArcherUpgrade() == true)
+			{
+				cs->GetMoney();
+				//GAMEMANAGER->SpawnUnit(archer);
+				//coolTime.SetKnightCoolDown();
+			}
+			else if (input.MatchStringWithInput() == 22 && up->GetMagicianUpgrade() == true)
+			{
+				cs->GetMoney();
+				//GAMEMANAGER->SpawnUnit(magiciain);
+				//coolTime.SetKnightCoolDown();
+			}
+			else if (input.MatchStringWithInput() == 23 && up->GetCavalryUpgrade() == true)
+			{
+				cs->GetMoney();
+				//GAMEMANAGER->SpawnUnit(cavalry);
+				//coolTime.SetKnightCoolDown();
+			}
 		}
+		cb.AddHistory(input.GetString());
 		input.SetString(L"");
-
 		break;
 	case KeyboardButton::Backspace:
 		input.Erasing();
 		break;
-		case KeyboardButton::Num1:
+	case KeyboardButton::Num1:
 		if (isEnter == false && isDebugModeisOn == true)
 		{
 			int random = rand() % 3;
@@ -625,7 +683,7 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 		{
 			for (auto obj : GAMEMANAGER->PlayerUnits)
 			{
-				if (obj->GetName() != "Tower")
+				if (obj->GetName() != "tower")
 				{
 					obj->GetComponent<UnitState>()->SetHealth(0);
 				}
@@ -637,7 +695,7 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 		{
 			for (auto obj : GAMEMANAGER->EnemyUnits)
 			{
-				if (obj->GetName() != "Lair")
+				if (obj->GetName() != "lair")
 				{
 					obj->GetComponent<UnitState>()->SetHealth(0);
 				}
@@ -649,7 +707,7 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 		{
 			for (auto obj : GAMEMANAGER->PlayerUnits)
 			{
-				if (obj->GetName() != "Tower")
+				if (obj->GetName() != "tower")
 				{
 					obj->GetComponent<UnitState>()->SetInvincibilityState(true);
 				}
@@ -661,7 +719,7 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 		{
 			for (auto obj : GAMEMANAGER->PlayerUnits)
 			{
-				if (obj->GetName() != "Tower")
+				if (obj->GetName() != "tower")
 				{
 					obj->GetComponent<UnitState>()->SetInvincibilityState(false);
 				}
@@ -680,6 +738,12 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 				isDebugModeisOn = false;
 			}
 		}
+		break;
+	case KeyboardButton::Arrow_Left:
+		sideScrollSpeed = -5.0f;
+		break;
+	case KeyboardButton::Arrow_Right:
+		sideScrollSpeed = 5.0f;
 		break;
 	default:
 		break;
@@ -707,6 +771,12 @@ void Tutorial::HandleKeyRelease(KeyboardButton button)
 		break;
 	case KeyboardButton::X:
 		cameraAngle = 0.0f;
+		break;
+	case KeyboardButton::Arrow_Left:
+		sideScrollSpeed = 0.0f;
+		break;
+	case KeyboardButton::Arrow_Right:
+		sideScrollSpeed = 0.0f;
 		break;
 	default:;
 	}

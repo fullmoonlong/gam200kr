@@ -8,6 +8,7 @@
  **************************************************************************************/
 #include "UI.hpp"
 #include "PATH.hpp"
+#include "CurrencySystem.hpp"
 
 void HealthBar::Initialize(vec2<float> position_, int health)
 {
@@ -96,4 +97,36 @@ void SelectSpawn::SelectUpdate(Camera& camera_, CameraView& view_) {
 void SelectSpawn::SetFont(const BitmapFont& font)
 {
 	m_text.SetFont(font);
+}
+
+void MoneyBar::Initialize()
+{
+	shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+
+	bitmapfont.LoadFromFile(PATH::bitmapfont_fnt);
+	m_text.SetFont(bitmapfont);
+	m_text.SetString(L"Money ");
+
+	moneyTransform.SetTranslation(moneyPosition);
+	moneyTransform.SetScale(fontSize);
+
+	numberTransform.SetTranslation(numberPosition);
+	numberTransform.SetScale(fontSize);
+
+	number.SetFont(bitmapfont);
+	moneyAmount = cs->GetMoney();
+	numberString = std::to_wstring(moneyAmount);
+	number.SetString(numberString);
+
+}
+
+void MoneyBar::Update(Camera& camera_, CameraView& view_)
+{
+	const mat3<float> moneyNDC = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * moneyTransform.GetModelToWorld();
+	Draw::DrawText(shader, moneyNDC, m_text);
+
+	numberString = std::to_wstring(cs->GetMoney());
+	number.SetString(numberString);
+	const mat3<float> numberNDC = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * numberTransform.GetModelToWorld();
+	Draw::DrawText(shader, numberNDC, number);
 }

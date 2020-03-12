@@ -19,7 +19,8 @@ enum GameLevels {
 	MAINMENU,
 	LEVELSELECT,
 	TUTORIAL,
-	LVTest1
+	LVTest1,
+	UPGRADE
 };
 
 class StateManager : public System, public SimpleEventHandler

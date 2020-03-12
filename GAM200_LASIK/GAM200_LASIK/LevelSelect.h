@@ -24,7 +24,6 @@
 #include "Draw.hpp"
 #include "BitmapFont.hpp"
 
-
 class LevelSelect : public LevelSystem {
 public:
 	LevelSelect(OpenGLWindow* window);
@@ -48,7 +47,6 @@ private:
 	Camera camera;
 	CameraView view;
 
-	Object    sprite;
 	Shader    spriteShader, fontShader;
 	Mesh	  spriteMesh;
 	Material  spriteMaterial;

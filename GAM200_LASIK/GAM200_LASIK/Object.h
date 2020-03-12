@@ -105,7 +105,7 @@ public:
 protected:
 	vec2<float> position;
 	vec2<float> size;
-	
+
 private:
 	ObjectID objectID;
 	std::string objectName = "";

@@ -21,7 +21,7 @@ Object::Object()
 	: objectID(0), position(0) {}
 
 Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.material), animation(rhs.animation)
-, min(rhs.min), max(rhs.max), speed(rhs.speed),objectName(rhs.objectName), position(rhs.position), size(rhs.size), componentList(rhs.componentList)
+, min(rhs.min), max(rhs.max), speed(rhs.speed), objectName(rhs.objectName), position(rhs.position), size(rhs.size), componentList(rhs.componentList)
 {
 	AddComponent<MaterialComponent>();
 	GetComponent<MaterialComponent>()->material.shader = material.shader;
@@ -41,7 +41,7 @@ Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.mater
 	GetComponent<UnitState>()->healthBar.transform = GetComponent<BaseUnitState>()->healthBar.transform;
 	GetComponent<UnitState>()->healthBar.Initialize(transform.GetTranslation(), GetComponent<UnitState>()->GetHealth());
 
-	if (GetName() != "Lair" && GetName() != "Tower")
+	if (GetName() != "lair" && GetName() != "tower")
 	{
 		if (GetComponent<UnitState>()->GetType() != UnitType::ProjectilesPlayer && GetComponent<UnitState>()->GetType() != UnitType::ProjectilesEnemy)
 		{
@@ -91,7 +91,7 @@ void Object::Initialize(const char* name) noexcept
 	//SetName(unitdata);
 
 	DataReader::ReadData(name, this);
-	
+
 	//transform.SetTranslation(position);
 	//const float half_width = size.x / 2;
 	//const float half_height = size.y / 2;

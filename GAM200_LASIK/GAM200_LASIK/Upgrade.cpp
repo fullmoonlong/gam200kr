@@ -1,4 +1,20 @@
+/**************************************************************************************
+ *	File Name        : Upgrade.cpp
+ *	Project Name     : Keyboard Warriors
+ *	Primary Author   : Wonju Cho
+ *	Secondary Author :
+ *	Copyright Information :
+ *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
+ **************************************************************************************/
 #include "Upgrade.hpp"
+#include "ObjectFactory.h"
+#include "CurrencySystem.hpp"
+#include "UpgradeSystem.hpp"
+#include "StateManager.h"
+
+Upgrade::Upgrade()
+{
+}
 
 Upgrade::Upgrade(OpenGLWindow* window)
 {
@@ -12,22 +28,84 @@ Upgrade::~Upgrade()
 
 void Upgrade::Initialize()
 {
-	
+	isUpgradeEnd = false;
+	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	bitmapfont.LoadFromFile(PATH::bitmapfont_fnt);
+
+	text.SetFont(bitmapfont);
+
+	moneyText.SetFont(bitmapfont);
+	moneyText.SetString(L"Money ");
+
+	numberText.SetFont(bitmapfont);
+	numberString = std::to_wstring(cs->GetMoney());
+	numberText.SetString(numberString);
+
+	moneyTransform.SetTranslation(moneyPosition);
+	moneyTransform.SetScale(fontSize);
+	numberTransform.SetTranslation(numberPosition);
+	numberTransform.SetScale(fontSize);
+
+	const Color4f color{ 1.0f, 1.0f, 1.0f, 1.0f };
+	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
+	const Mesh& rectangle = MESH::create_rectangle({ 0.0f }, { 1.0f }, color);
+
+	spriteShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	spriteMesh = rectangle;
+
+	spriteMaterial.shader = spriteShader;
+	spriteMaterial.vertices.InitializeWithMeshAndLayout(spriteMesh, layout);
+	spriteMaterial.texture.LoadTextureFrom(PATH::upgrade);
+	spriteTransform.SetTranslation(spritePosition);
+	spriteTransform.SetScale({ 1280,720 });
+
+	debugTextTransform.SetTranslation({ -80.0f, 160.0f });
+
+	debugText.SetFont(bitmapfont);
+	debugText.SetString(L"debug mode");
+
 }
 
-void Upgrade::Update(float /*dt*/)
+void Upgrade::Update(float dt)
 {
+	OBJECTFACTORY->Update(dt);
 
+	camera.Rotate(cameraAngle);
+	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
+	view.SetZoom(zoom);
+
+	Draw::StartDrawing();
+
+	spriteMaterial.ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * spriteTransform.GetModelToWorld();
+	Draw::draw(spriteMaterial);
+
+	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
+	text.SetString(input.GetString());
+	Draw::DrawText(fontShader, textNDC, text);
+
+	const mat3<float> moneyNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * moneyTransform.GetModelToWorld();
+	Draw::DrawText(fontShader, moneyNDC, moneyText);
+
+	numberString = std::to_wstring(cs->GetMoney());
+	numberText.SetString(numberString);
+	const mat3<float> numberNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * numberTransform.GetModelToWorld();
+	Draw::DrawText(fontShader, numberNDC, numberText);
+
+	if (isDebugModeisOn == true)
+	{
+		const mat3<float> debugTextNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * debugTextTransform.GetModelToWorld();
+		Draw::DrawText(fontShader, debugTextNDC, debugText);
+	}
+	Draw::FinishDrawing();
 }
 
 void Upgrade::Shutdown()
 {
-
+	OBJECTFACTORY->DestroyAllObjects();
 }
 
 void Upgrade::HandleKeyPress(KeyboardButton button)
 {
-	bool isEnter = false;
 	switch (button)
 	{
 	case KeyboardButton::A:
@@ -248,18 +326,58 @@ void Upgrade::HandleKeyPress(KeyboardButton button)
 		isEnter = false;
 		printf("typing end\n");
 
-		input.SetString(L"");
-		break;
-	case KeyboardButton::Num1:
-		if (isEnter == true)
+		if (isUpgradeEnd == false)
 		{
-			input.TakeAsInput(49);
-			printf("1");
-			break;
+			if (input.MatchStringWithInput() == 20 && cs->GetMoney() >= 3) //arthur
+			{
+				up->SetKnightUpgrade(true);
+				cs->Decrease(3);
+			}
+			else if (input.MatchStringWithInput() == 21 && cs->GetMoney() >= 5) //artemis
+			{
+				up->SetArcherUpgrade(true);
+				cs->Decrease(5);
+			}
+			else if (input.MatchStringWithInput() == 22 && cs->GetMoney() >= 7) //siegfried
+			{
+				up->SetMagicianUpgrade(true);
+				cs->Decrease(7);
+			}
+			else if (input.MatchStringWithInput() == 23 && cs->GetMoney() >= 4) //valkyrie
+			{
+				up->SetCavalryUpgrade(true);
+				cs->Decrease(4);
+			}
+			else if (input.MatchStringWithInput() == 7) //level select menu
+			{
+				STATEMANAGER->SetCurrentLevel(GameLevels::LEVELSELECT);
+				isUpgradeEnd = true;
+			}
 		}
+		input.SetString(L"");
 		break;
 	case KeyboardButton::Backspace:
 		input.Erasing();
+		break;
+	case KeyboardButton::Num1:
+		if (isEnter == false && isDebugModeisOn == true)
+		{
+			cs->Increase(10);
+			break;
+		}
+		break;
+	case KeyboardButton::Tilde:
+		if (isEnter == false)
+		{
+			if (isDebugModeisOn == false)
+			{
+				isDebugModeisOn = true;
+			}
+			else
+			{
+				isDebugModeisOn = false;
+			}
+		}
 		break;
 	default:
 		break;

@@ -36,7 +36,10 @@ public:
 //===Enemy=============================================
 
 class Skeleton : public Unit {
-	
+public:
+	int GetMoney() { return money; }
+private:
+	int money = 2;
 };
 
 class Lich : public Unit {

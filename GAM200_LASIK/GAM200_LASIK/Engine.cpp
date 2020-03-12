@@ -13,7 +13,8 @@
 #include "StateManager.h"
 #include "GameManager.h"
 #include "Sound.hpp"
-
+#include "CurrencySystem.hpp"
+#include "UpgradeSystem.hpp"
 
 Engine* gameEngine = nullptr;
 
@@ -35,9 +36,11 @@ void Engine::Initialize()
 	Application* app = dynamic_cast<Application*>(systems[0]);
 
 	AddSystem(new ObjectFactory());
-	AddSystem(new StateManager(app->GetWindow()));
 	AddSystem(new SoundManager());
 	AddSystem(new GameManager());
+	AddSystem(new CurrencySystem());
+	AddSystem(new UpgradeSystem());
+	AddSystem(new StateManager(app->GetWindow()));
 	for (auto sys : systems)
 	{
 		sys->Initialize();
@@ -69,7 +72,7 @@ void Engine::Run()
 	Update();
 }
 
-void Engine::AddSystem(System * system)
+void Engine::AddSystem(System* system)
 {
 	systems.push_back(system);
 }
