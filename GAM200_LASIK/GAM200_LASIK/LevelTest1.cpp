@@ -37,6 +37,7 @@ LevelTest1::~LevelTest1()
 
 void LevelTest1::Initialize()
 {
+	GAMEMANAGER->isGameEnd = false;
 	std::cout << "Load LevelTest1 Sucessful" << std::endl;
 	isPlayerWin = false;
 	isEnemyWin = false;
@@ -143,7 +144,7 @@ void LevelTest1::Initialize()
 
 		//magician
 		magician = new Magician();
-		magician->Initialize("wizard.txt");
+		magician->Initialize("Magician.txt");
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadTextureFrom(PATH::magician_move);
@@ -247,7 +248,7 @@ void LevelTest1::Initialize()
 	SOUNDMANAGER->LoadFile("Fireball.wav");
 	SOUNDMANAGER->LoadFile("archershoot.ogg");
 	SOUNDMANAGER->LoadFile("hit.ogg");
-	//SOUNDMANAGER->PlaySound(1, 0);
+	SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
 	selectMenu.SelectMenu();
@@ -366,6 +367,7 @@ void LevelTest1::Win()
 	{
 		Draw::draw(winpic->material);
 		OBJECTFACTORY->DestroyAllObjects();
+		GAMEMANAGER->isGameEnd = true;
 	}
 }
 
@@ -375,6 +377,7 @@ void LevelTest1::Lose()
 	{
 		Draw::draw(losepic->material);
 		OBJECTFACTORY->DestroyAllObjects();
+		GAMEMANAGER->isGameEnd = true;
 	}
 }
 

@@ -124,7 +124,7 @@ Object* Object::Clone() const
 
 void Object::ChangeUnitAnimation()
 {
-	if (GetName() == "Knight")
+	if (GetName() == "knight")
 	{
 		if (GetComponent<UnitState>()->GetState() == State::WALK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
@@ -140,7 +140,7 @@ void Object::ChangeUnitAnimation()
 		}
 
 	}
-	else if (GetName() == "Archer")
+	else if (GetName() == "archer")
 	{
 		if (GetComponent<UnitState>()->GetState() == State::WALK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
@@ -170,7 +170,7 @@ void Object::ChangeUnitAnimation()
 			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
 	}
-	else if (GetName() == "Skeleton")
+	else if (GetName() == "skeleton")
 	{
 		if (GetComponent<UnitState>()->GetState() == State::WALK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
@@ -186,7 +186,7 @@ void Object::ChangeUnitAnimation()
 		}
 
 	}
-	else if (GetName() == "Lich")
+	else if (GetName() == "lich")
 	{
 		if (GetComponent<UnitState>()->GetState() == State::WALK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{

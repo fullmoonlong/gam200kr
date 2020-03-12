@@ -133,7 +133,7 @@ void Tutorial::Initialize()
 
 		//magician
 		magician = new Magician();
-		magician->Initialize("wizard.txt");
+		magician->Initialize("Magician.txt");
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadTextureFrom(PATH::magician_move);
@@ -580,6 +580,11 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 		}*/
 		if (win == true)
 		{
+			SOUNDMANAGER->AllSoundStop();
+			SOUNDMANAGER->DeleteAllSounds();
+			OBJECTFACTORY->DestroyAllObjects();
+			GAMEMANAGER->PlayerUnits.clear();
+			GAMEMANAGER->EnemyUnits.clear();
 			STATEMANAGER->SetCurrentLevel(GameLevels::LEVELSELECT);
 		}
 		if (isEnter == false)
