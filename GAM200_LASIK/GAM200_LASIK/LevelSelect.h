@@ -40,7 +40,7 @@ private:
 	bool selectStatus;
 	OpenGLWindow* windowPoint;
 	GetInput input;
-	Drawing draw;
+	Draw draw;
 
 	Text text;
 	BitmapFont bitmapfont;

@@ -40,22 +40,22 @@ void Logo::Update(float dt)
 {
 	time += dt;
 
-	Drawing::StartDrawing({ 1.0f });
+	Draw::StartDrawing({ 1.0f });
 
 	if (time <= 3.0f) {
-		Drawing::Draw(digipenLogo);
+		Draw::draw(digipenLogo);
 	}
 	if (3.0f < time && time <= 6.0f) {
-		Drawing::Draw(fmodLogo);
+		Draw::draw(fmodLogo);
 	}
 	if (6.0f < time && time <= 9.0f) {
-		Drawing::Draw(teamLogo);
+		Draw::draw(teamLogo);
 	}
 	if (time > 9.0f) {
 		Shutdown();
 	}
 
-	Drawing::FinishDrawing();
+	Draw::FinishDrawing();
 }
 
 void Logo::Shutdown()

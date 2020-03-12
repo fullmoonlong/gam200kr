@@ -62,16 +62,16 @@ void MainMenu::Initialize()
 
 void MainMenu::Update(float /*dt*/)
 {
-	Drawing::StartDrawing();
+	Draw::StartDrawing();
 
 	selectedArrow.transform.SetTranslation({ -220.0f, -selectedMenu * 2 * 120.0f + 120.0f });
 	selectedArrow.material.ndc = worldToNDC * selectedArrow.transform.GetModelToWorld();
 
-	Drawing::Draw(startButton.material);
-	Drawing::Draw(exitButton.material);
-	Drawing::Draw(selectedArrow.material);
+	Draw::draw(startButton.material);
+	Draw::draw(exitButton.material);
+	Draw::draw(selectedArrow.material);
 
-	Drawing::FinishDrawing();
+	Draw::FinishDrawing();
 }
 
 void MainMenu::Shutdown()

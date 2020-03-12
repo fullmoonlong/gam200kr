@@ -8,6 +8,7 @@
 **************************************************************************************/
 
 #pragma once
+#include <iostream>
 #include <string>
 #include "vec2.hpp"
 #include "Image.hpp"
@@ -30,9 +31,9 @@ public:
 
 	Object();
 	Object(const Object& rhs);
-	~Object() = default;
+	virtual ~Object() { std::cout << "Object destory\n"; }
 
-	void Initialize(const char* name) noexcept;
+	virtual void Initialize(const char* name) noexcept;
 	void Update(float dt) noexcept;
 	Object* Clone() const;
 

@@ -63,7 +63,7 @@ private:
 
 	OpenGLWindow* windowPoint;
 
-	Drawing draw;
+	Draw draw;
 	Object* objectTest1;
 
 	Object background;

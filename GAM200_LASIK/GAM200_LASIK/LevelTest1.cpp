@@ -126,7 +126,7 @@ void LevelTest1::Initialize()
 
 		//knight
 		knight = new Knight();
-		knight->UnitInitialize("Knight.txt");
+		knight->Initialize("Knight.txt");
 		knight->material.shader = shader;
 		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		knight->material.texture.LoadTextureFrom(PATH::knight_move);
@@ -135,7 +135,7 @@ void LevelTest1::Initialize()
 
 		//archer
 		archer = new Archer();
-		archer->UnitInitialize("Archer.txt");
+		archer->Initialize("Archer.txt");
 		archer->material.shader = shader;
 		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		archer->material.texture.LoadTextureFrom(PATH::archer_move);
@@ -144,7 +144,7 @@ void LevelTest1::Initialize()
 
 		//magician
 		magician = new Magician();
-		magician->UnitInitialize("Wizard.txt");
+		magician->Initialize("Magician.txt");
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadTextureFrom(PATH::magician_move);
@@ -159,7 +159,8 @@ void LevelTest1::Initialize()
 		swordAttack->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		swordAttack->material.shader = shader;
 		swordAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		swordAttack->GetComponent<BaseUnitState>()->SetDamage(knight->GetKnightDamage());
+		swordAttack->GetComponent<BaseUnitState>()->SetDamage(knight->GetComponent<BaseUnitState>()->GetDamage());
+		//swordAttack->GetComponent<BaseUnitState>()->SetDamage(knight->GetKnightDamage());
 		swordAttack->animation.Initialize({ 1,1, 1.f }, swordAttack->material.shader);
 
 		knight->GetComponent<BaseObjectAttackComponent>()->unit = knight;
@@ -199,7 +200,8 @@ void LevelTest1::Initialize()
 		fireball->material.texture.LoadTextureFrom(PATH::fireball);
 		fireball->animation.Initialize({ 3, 1, 5.0f }, shader);
 		fireball->GetComponent<BaseUnitState>()->SetState(State::WALK);
-		fireball->GetComponent<BaseUnitState>()->SetDamage(magician->GetMagicianDamage());
+		fireball->GetComponent<BaseUnitState>()->SetDamage(magician->GetComponent<BaseUnitState>()->GetDamage());
+		//fireball->GetComponent<BaseUnitState>()->SetDamage(magician->GetMagicianDamage());
 
 		magician->GetComponent<BaseObjectAttackComponent>()->unit = magician;
 		magician->GetComponent<BaseObjectAttackComponent>()->projectile = fireball;
@@ -234,7 +236,8 @@ void LevelTest1::Initialize()
 		arrow->animation.Initialize({ 1,1, 1.f }, arrow->material.shader);
 
 		arrow->GetComponent<BaseUnitState>()->SetState(State::WALK);
-		arrow->GetComponent<BaseUnitState>()->SetDamage(archer->GetArcherDamage());
+		arrow->GetComponent<BaseUnitState>()->SetDamage(archer->GetComponent<BaseUnitState>()->GetDamage());
+		//arrow->GetComponent<BaseUnitState>()->SetDamage(archer->GetArcherDamage());
 
 		archer->GetComponent<BaseObjectAttackComponent>()->unit = archer;
 		archer->GetComponent<BaseObjectAttackComponent>()->projectile = arrow;
@@ -273,20 +276,20 @@ void LevelTest1::Update(float dt)
 	cameraToNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera();
 	//Transform
 
-	//Draw
-	Drawing::StartDrawing();
+	//draw
+	Draw::StartDrawing();
 
 	backgroundNDC = cameraToNDC * background.transform.GetModelToWorld();
 	backgroundMaterial.ndc = backgroundNDC;
-	Drawing::Draw(backgroundMaterial);
+	Draw::draw(backgroundMaterial);
 
 	const mat3<float> uiNDC = cameraToNDC * ui.transform.GetModelToWorld();
 	ui.material.ndc = uiNDC;
-	Drawing::Draw(ui.material);
+	Draw::draw(ui.material);
 
 	const mat3<float> textNDC = cameraToNDC * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());
-	Drawing::DrawText(fontShader, textNDC, text);
+	Draw::DrawText(fontShader, textNDC, text);
 
 	coolTime.CoolDownUpdate(dt);
 
@@ -302,7 +305,7 @@ void LevelTest1::Update(float dt)
 
 			const mat3<float> ndc = cameraToNDC * obj.second->transform.GetModelToWorld();
 			obj.second->GetComponent<MaterialComponent>()->material.ndc = ndc;
-			Drawing::Draw(obj.second->GetComponent<MaterialComponent>()->material);
+			Draw::draw(obj.second->GetComponent<MaterialComponent>()->material);
 
 			//hpbar
 			if (obj.second->GetComponent<UnitState>()->GetType() == UnitType::Player || obj.second->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
@@ -310,7 +313,7 @@ void LevelTest1::Update(float dt)
 				obj.second->GetComponent<UnitState>()->healthBar.material.shader = fontShader; //texture shader
 				const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->GetComponent<UnitState>()->healthBar.transform.GetModelToWorld();
 				obj.second->GetComponent<UnitState>()->healthBar.material.ndc = ndcHP;
-				Drawing::Draw(obj.second->GetComponent<UnitState>()->healthBar.material);
+				Draw::draw(obj.second->GetComponent<UnitState>()->healthBar.material);
 			}
 			//hpbar
 
@@ -342,17 +345,17 @@ void LevelTest1::Update(float dt)
 	if (isDebugModeisOn == true)
 	{
 		const mat3<float> debugTextNDC = cameraToNDC * debugTextTransform.GetModelToWorld();
-		Drawing::DrawText(fontShader, debugTextNDC, debugText);
+		Draw::DrawText(fontShader, debugTextNDC, debugText);
 	}
 	GAMEMANAGER->pg.UpdateParticles(dt);
-	Drawing::FinishDrawing();
+	Draw::FinishDrawing();
 }
 
 void LevelTest1::Win()
 {
 	if (isPlayerWin == true)
 	{
-		Drawing::Draw(winpic->material);
+		Draw::draw(winpic->material);
 		OBJECTFACTORY->DestroyAllObjects();
 	}
 }
@@ -361,7 +364,7 @@ void LevelTest1::Lose()
 {
 	if (isEnemyWin == true)
 	{
-		Drawing::Draw(losepic->material);
+		Draw::draw(losepic->material);
 		OBJECTFACTORY->DestroyAllObjects();
 	}
 }

@@ -17,11 +17,13 @@ Texture::Texture(Image& image)
 	LoadTextureFrom(image);
 }
 
+
 bool Texture::LoadTextureFrom(const std::filesystem::path& image_path) noexcept
 {
 	Image image;
 
-	if (!image.LoadFrom(image_path)) {
+	if (!image.LoadFrom(image_path))
+	{
 		return false;
 	}
 	return LoadTextureFrom(image);
@@ -29,13 +31,14 @@ bool Texture::LoadTextureFrom(const std::filesystem::path& image_path) noexcept
 
 bool Texture::LoadTextureFrom(const Image& image) noexcept
 {
-	if (GetTexturehandle() != 0) {
-		UnBindTexture();
+	if (GetTexturehandle() != 0)
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glDeleteTextures(1, &textureHandle);
 	}
 
 	glGenTextures(1, &textureHandle);
-	BindTexture();
+	glBindTexture(GL_TEXTURE_2D, textureHandle);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
@@ -43,14 +46,4 @@ bool Texture::LoadTextureFrom(const Image& image) noexcept
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image.GetWidth(), image.GetHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, image.GetPixelPointer());
 	
 	return true;
-}
-
-void Texture::BindTexture() const noexcept
-{
-	glBindTexture(GL_TEXTURE_2D, textureHandle);
-}
-
-void Texture::UnBindTexture() const noexcept
-{
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
