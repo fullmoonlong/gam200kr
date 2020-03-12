@@ -1,5 +1,5 @@
 /**************************************************************************************
- *	File Name        : Drawing.cpp
+ *	File Name        : Draw.cpp
  *	Project Name     : Keyboard Warriors
  *	Primary Author   : JeongHak Kim
  *	Secondary Author : 
@@ -10,63 +10,34 @@
 #include <GL/glew.h>
 #include "Draw.hpp"
 
-void Drawing::StartDrawing()
+void Draw::StartDrawing()
 {
 	glClearColor(1.0f, 1.0f, 1.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 /* Background will be cleared with parameter */
-void Drawing::StartDrawing(const Color4f& background_color)
+void Draw::StartDrawing(const Color4f& background_color)
 {
 	glClearColor(background_color.r, background_color.g, background_color.b, background_color.a);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void Drawing::FinishDrawing()
+void Draw::FinishDrawing()
 {
 	glFinish();
 }
 
-//void Drawing::Draw(const Material& material)
-//{
-//	glBindTexture(GL_TEXTURE_2D, material.texture.GetTexturehandle());
-//	Shader::UseShader(material.shader);
-//	material.shader.SendUniformVariable("ndc", material.ndc);
-//	Vertices::SelectVAO(material.vertices);
-//	glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
-//}
-
-void Drawing::Draw(const Material& material)
+void Draw::draw(const Material& material)
 {
-	switch (material.materialType) {
-	case Material::MaterialType::Shape:
-		Shader::UseShader(material.shader);
-		material.shader.SendUniformVariable("ndc", material.ndc);
-		Vertices::SelectVAO(material.vertices);
-		glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
-		break;
-	case Material::MaterialType::Animation:
-	case Material::MaterialType::Sprite:
-		glBindTexture(GL_TEXTURE_2D, material.texture.GetTexturehandle());
-		Shader::UseShader(material.shader);
-		material.shader.SendUniformVariable("ndc", material.ndc);
-		Vertices::SelectVAO(material.vertices);
-		glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
-		break;
-	//case Material::MaterialType::Text:
-	//	break;
-	default:
-		glBindTexture(GL_TEXTURE_2D, material.texture.GetTexturehandle());
-		Shader::UseShader(material.shader);
-		material.shader.SendUniformVariable("ndc", material.ndc);
-		Vertices::SelectVAO(material.vertices);
-		glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
-		break;
-	}
+	glBindTexture(GL_TEXTURE_2D, material.texture.GetTexturehandle());
+	Shader::UseShader(material.shader);
+	material.shader.SendUniformVariable("ndc", material.ndc);
+	Vertices::SelectVAO(material.vertices);
+	glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
 }
 
-void Drawing::DrawShape(const Material& material)
+void Draw::DrawShape(const Material& material)
 {
 	Shader::UseShader(material.shader);
 	material.shader.SendUniformVariable("ndc", material.ndc);
@@ -74,7 +45,7 @@ void Drawing::DrawShape(const Material& material)
 	glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
 }
 
-void Drawing::DrawText(const Shader& shader, const mat3<float>& ndc, const Text& text)
+void Draw::DrawText(const Shader& shader, const mat3<float>& ndc, const Text& text)
 {
 	for (const auto& vertices_texture : text.GetPairOfVerticesAndTextures())
 	{
@@ -85,6 +56,6 @@ void Drawing::DrawText(const Shader& shader, const mat3<float>& ndc, const Text&
 		shader.SendUniformVariable("textColor", { 1.0f });
 		textMaterial.SetVertices(textVertices);
 		textMaterial.SetTexture(*textTexture);
-		Draw(textMaterial);
+		draw(textMaterial);
 	}
 }

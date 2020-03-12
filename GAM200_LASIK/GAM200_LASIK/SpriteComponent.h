@@ -19,7 +19,7 @@ class BaseObjectAttackComponent : public Component
 public:
 	BaseObjectAttackComponent() : Component(ComponentType::ATTACKCOM) {};
 	~BaseObjectAttackComponent() override {};
-	virtual void Initialize() override {};
+	void Initialize() override {};
 
 	Object* unit;
 	Object* projectile;

@@ -3,5 +3,6 @@ Size: 64 64
 Speed: 150 0
 Health: 150
 Damage: 10
+Cost: 7
 AttackRange: 128
 Camp: PlayerUnit

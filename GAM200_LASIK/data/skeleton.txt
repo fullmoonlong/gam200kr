@@ -3,4 +3,5 @@ Size: 64 64
 Speed: -150 0
 Health: 100
 Damage: 10
+AttackRange: 1
 Camp: EnemyUnit

@@ -77,19 +77,19 @@ void SelectSpawn::SelectMenu()
 void SelectSpawn::SelectUpdate(Camera& camera_, CameraView& view_) {
 
 	archerMaterial.ndc = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * archerTransform.GetModelToWorld();
-	Drawing::Draw(archerMaterial);
+	Draw::draw(archerMaterial);
 
 	knightMaterial.ndc = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * knightTransform.GetModelToWorld();
-	Drawing::Draw(knightMaterial);
+	Draw::draw(knightMaterial);
 
 	magicianMaterial.ndc = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * magicianTransform.GetModelToWorld();
-	Drawing::Draw(magicianMaterial);
+	Draw::draw(magicianMaterial);
 
 	const mat3<float> ndc5 = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * fontTransform.GetModelToWorld();
-	Drawing::DrawText(shader, ndc5, m_text);
+	Draw::DrawText(shader, ndc5, m_text);
 
 	const mat3<float> ndc6 = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * unitFontTransform.GetModelToWorld();
-	Drawing::DrawText(shader, ndc6, unitFont);
+	Draw::DrawText(shader, ndc6, unitFont);
 
 }
 

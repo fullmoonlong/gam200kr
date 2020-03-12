@@ -27,7 +27,7 @@ public:
 
 		object->SetName(file_name.substr(0, file_name.size() - 4));		// 4 means .txt
 		
-		vec2<float> position, size, speed;
+		vec2<float> position, size, speed, attackRange;
 		std::string line, read;
 		while (!ifstream.eof()) {
 			std::stringstream lineStream;
@@ -52,12 +52,17 @@ public:
 			}
 			else if (read == "Health:") {
 				lineStream >> read;
+				object->GetComponent<BaseUnitState>()->SetHealth(stoi(read));
 				object->GetComponent<BaseUnitState>()->healthBar.Initialize(object->transform.GetTranslation(), stoi(read));
 			}
-			//else if (read == "Damage:") {
-			//	lineStream >> read;
-			//	object->GetComponent<BaseUnitState>()->SetDamage(stoi(read));
-			//}
+			else if (read == "Damage:") {
+				lineStream >> read;
+				object->GetComponent<BaseUnitState>()->SetDamage(stoi(read));
+			}
+			else if (read == "AttackRange:") {
+				lineStream >> attackRange.x;
+				object->GetComponent<BaseUnitState>()->SetAttackRange(attackRange);
+			}
 			else if (read == "Camp:") {
 				lineStream >> read;
 				if (read == "PlayerUnit") {

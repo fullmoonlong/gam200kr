@@ -3,4 +3,5 @@ Size: 256 256
 Speed: -75 0
 Health: 350
 Damage: 40
+AttackRange: 5
 Camp: EnemyUnit
