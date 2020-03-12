@@ -18,8 +18,6 @@
 
 Knight::~Knight()
 {
-	GRAPHIC->DeleteMaterial(&GetComponent<MaterialComponent>()->material);
-	GRAPHIC->DeleteMaterial(&GetComponent<UnitState>()->healthBar.material);
 }
 
 void Knight::UnitInitialize(const char* name)
@@ -90,8 +88,6 @@ void Knight::UnitInitialize(const char* name)
 
 Archer::~Archer()
 {
-	GRAPHIC->DeleteMaterial(&GetComponent<MaterialComponent>()->material);
-	GRAPHIC->DeleteMaterial(&GetComponent<UnitState>()->healthBar.material);
 }
 
 void Archer::UnitInitialize(const char* name)
@@ -163,8 +159,6 @@ void Archer::UnitInitialize(const char* name)
 
 Magician::~Magician()
 {
-	GRAPHIC->DeleteMaterial(&GetComponent<MaterialComponent>()->material);
-	GRAPHIC->DeleteMaterial(&GetComponent<UnitState>()->healthBar.material);
 }
 
 void Magician::UnitInitialize(const char* name)

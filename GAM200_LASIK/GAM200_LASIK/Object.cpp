@@ -55,7 +55,6 @@ Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.mater
 		GRAPHIC->AddMaterialAndTransform(&GetComponent<UnitState>()->healthBar.material, &GetComponent<UnitState>()->healthBar.transform);
 		if (GetName() != "Lair" && GetName() != "Tower")
 		{
-
 			GetComponent<SpriteComponent>()->SetUnit(this);
 
 			AddComponent<ObjectAttackComponent>();

@@ -24,13 +24,16 @@ public:
 	void CheckCollision();
 	void CheckAttackState();
 	void SpawnUnit(Object* object);
-	void UnitUpdate(Object* object);
+	void UnitUpdate(Object* object, float dt);
+	void DeleteUnits();
 
 	int PlayerAmount = 0;
 	int EnemyAmount = 0;
 
 	std::vector<Object*> PlayerUnits;
 	std::vector<Object*> EnemyUnits;
+
+	std::vector<Object*> toBeDeleteList;
 
 	bool isGameEnd = false;
 //private:

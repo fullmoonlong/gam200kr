@@ -41,23 +41,20 @@ void GameManager::Update(float dt)
 	{
 		for (auto player : PlayerUnits)
 		{
-			if (player->GetName() != "Tower" && player != nullptr)
+			if (player != nullptr)
 			{
-				UnitUpdate(player);
-				player->GetComponent<ObjectAttackComponent>()->Update(dt);
-				player->GetComponent<SpriteComponent>()->ChangeAnimation();
+				UnitUpdate(player, dt);
 			}
 		}
 		for (auto enemy : EnemyUnits)
 		{
-			if (enemy->GetName() != "Lair" && enemy != nullptr)
+			if (enemy != nullptr)
 			{
-				UnitUpdate(enemy);
-				enemy->GetComponent<ObjectAttackComponent>()->Update(dt);
-				enemy->GetComponent<SpriteComponent>()->ChangeAnimation();
+				UnitUpdate(enemy, dt);
 			}
 		}
-		CheckCollision();
+		CheckCollision(); 
+		DeleteUnits();
 	}
 }
 
@@ -174,50 +171,67 @@ void GameManager::SpawnUnit(Object* object)
 
 	newObject->GetComponent<UnitState>()->SetSpriteChangeState(true);
 	if (newObject->GetComponent<UnitState>()->GetType() == UnitType::Player) {
-		PlayerUnits.push_back(newObject);
+		PlayerUnits.emplace_back(newObject);
 		PlayerAmount++;
 	}
 	else if (newObject->GetComponent<UnitState>()->GetType() == UnitType::Enemy) {
-		EnemyUnits.push_back(newObject);
+		EnemyUnits.emplace_back(newObject);
 		EnemyAmount++;
 	}
 }
 
-void GameManager::UnitUpdate(Object* object)
+void GameManager::UnitUpdate(Object* object, float dt)
 {
-	object->GetComponent<UnitState>()->healthBar.Update(object->transform.GetTranslation(), object->GetComponent<UnitState>()->GetHealth());
-
-	const UnitType unitType = object->GetComponent<UnitState>()->GetType();
-	if (object->GetComponent<UnitState>()->GetHealth() <= 0 && (unitType == UnitType::Player || unitType == UnitType::Enemy))
+	if (object->GetName() != "Tower" && object->GetName() != "Lair")
 	{
-		auto objID = OBJECTFACTORY->GetObjectList().find(object->GetObjectID());
-		
-		if (object->GetComponent<UnitState>()->GetType() == UnitType::Player)
+		object->GetComponent<ObjectAttackComponent>()->Update(dt);
+		object->GetComponent<SpriteComponent>()->ChangeAnimation();
+	}
+	object->GetComponent<UnitState>()->healthBar.Update(object->transform.GetTranslation(), object->GetComponent<UnitState>()->GetHealth());
+	
+	const UnitType unitType = object->GetComponent<UnitState>()->GetType();
+	if (object->GetComponent<UnitState>()->GetHealth() <= 0)
+	{
+		toBeDeleteList.push_back(object);
+	}
+}
+
+void GameManager::DeleteUnits()
+{
+	//const UnitType unitType = object->GetComponent<UnitState>()->GetType();
+	for (int i = 0; i < toBeDeleteList.size(); i++)
+	{
+		if (toBeDeleteList[i] == nullptr)
+		{
+			continue;
+		}
+		if (toBeDeleteList[i]->GetComponent<UnitState>()->GetType() == UnitType::Player)
 		{
 			for (std::vector<Object*>::iterator it = GAMEMANAGER->PlayerUnits.begin(); it != GAMEMANAGER->PlayerUnits.end(); ++it)
 			{
-				if (*it == object)
+				if (*it == toBeDeleteList[i])
 				{
-					GRAPHIC->DeleteMaterial(&object->GetComponent<MaterialComponent>()->material);
-					GRAPHIC->DeleteMaterial(&object->GetComponent<UnitState>()->healthBar.material);
+					GRAPHIC->DeleteMaterial(&toBeDeleteList[i]->GetComponent<MaterialComponent>()->material);
+					GRAPHIC->DeleteMaterial(&toBeDeleteList[i]->GetComponent<UnitState>()->healthBar.material);
 					GAMEMANAGER->PlayerUnits.erase(it);
 					break;
 				}
 			}
 		}
-		else if (object->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
+		else if (toBeDeleteList[i]->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
 		{
 			for (std::vector<Object*>::iterator it = GAMEMANAGER->EnemyUnits.begin(); it != GAMEMANAGER->EnemyUnits.end(); ++it)
 			{
-				if (*it == object)
+				if (*it == toBeDeleteList[i])
 				{
-					GRAPHIC->DeleteMaterial(&object->GetComponent<MaterialComponent>()->material);
-					GRAPHIC->DeleteMaterial(&object->GetComponent<UnitState>()->healthBar.material);
+					GRAPHIC->DeleteMaterial(&toBeDeleteList[i]->GetComponent<MaterialComponent>()->material);
+					GRAPHIC->DeleteMaterial(&toBeDeleteList[i]->GetComponent<UnitState>()->healthBar.material);
 					GAMEMANAGER->EnemyUnits.erase(it);
 					break;
 				}
 			}
 		}
-		OBJECTFACTORY->Destroy(object);
+		OBJECTFACTORY->Destroy(toBeDeleteList[i]);
 	}
+	toBeDeleteList.resize(0);
 }

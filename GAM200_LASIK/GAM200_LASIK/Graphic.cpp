@@ -27,10 +27,10 @@ void Graphic::Initialize()
 	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	shapeShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	backgroundShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
-	
+
 	const Mesh mesh_ = MESH::create_rectangle({ 0.0f }, { 1.0f }, color);
 	mesh = mesh_;
-	
+
 	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
 	view.SetZoom(zoom);
 	cameraToNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera();
@@ -56,12 +56,15 @@ void Graphic::Update(float dt)
 	{
 		for (auto material : materials)
 		{
-			if (animations[material.first] != nullptr)
+			if (material.second != nullptr)
 			{
-				animations[material.first]->Animate(dt);
+				if (animations[material.first] != nullptr)
+				{
+					animations[material.first]->Animate(dt);
+				}
+				material.second->ndc = cameraToNDC * materialTransforms[material.first]->GetModelToWorld();;
+				Draw::draw(*material.second);
 			}
-			material.second->ndc = cameraToNDC * materialTransforms[material.first]->GetModelToWorld();;
-			Draw::draw(*material.second);
 		}
 	}
 
@@ -111,15 +114,15 @@ void Graphic::SetBackground(std::filesystem::path image, float width, float heig
 
 void Graphic::DeleteMaterial(Material* material)
 {
-	for (std::map<int, Material*>::iterator it = materials.begin(); it != materials.end(); ++it)
+	for (int i = 0; i < materials.size(); i++)
 	{
-		if (it->second == material)
+		if (materials[i] != nullptr && materials[i] == material)
 		{
-			materials.erase(it);
-			materialTransforms.erase(it->first);
-			if (animations[it->first] != nullptr)
+			materials.erase(i);
+			materialTransforms.erase(i);
+			if (animations[i] != nullptr)
 			{
-				animations.erase(it->first);
+				animations.erase(i);
 			}
 			break;
 		}
@@ -128,12 +131,12 @@ void Graphic::DeleteMaterial(Material* material)
 
 void Graphic::DeleteText(Text* text)
 {
-	for (std::map<int, Text*>::iterator it = texts.begin(); it != texts.end(); ++it)
+	for (int i = 0; i < texts.size(); i++)
 	{
-		if (it->second == text)
+		if (texts[i] == text)
 		{
-			texts.erase(it);
-			textTransforms.erase(it->first);
+			texts.erase(i);
+			textTransforms.erase(i);
 			break;
 		}
 	}

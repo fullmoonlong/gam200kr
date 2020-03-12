@@ -13,7 +13,7 @@
 
 void SpriteComponent::ChangeAnimation()
 {
-	if (unit->GetComponent<UnitState>()->GetType() == UnitType::Player || unit->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
+	if (unit != nullptr && (unit->GetComponent<UnitState>()->GetType() == UnitType::Player || UnitType::Enemy))
 	{
 		if (unit->GetComponent<UnitState>()->GetState() == State::WALK && unit->GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{

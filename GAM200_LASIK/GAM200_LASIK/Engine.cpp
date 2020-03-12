@@ -36,8 +36,8 @@ void Engine::Initialize()
 	Application* app = dynamic_cast<Application*>(systems[0]);
 	AddSystem(new Graphic(app->GetWindow()));
 	AddSystem(new SoundManager());
-	AddSystem(new ObjectFactory());
 	AddSystem(new GameManager());
+	AddSystem(new ObjectFactory());
 	AddSystem(new StateManager(app->GetWindow()));
 	for (auto sys : systems)
 	{

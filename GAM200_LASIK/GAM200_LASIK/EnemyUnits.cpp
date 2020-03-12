@@ -17,8 +17,6 @@
 
 Skeleton::~Skeleton()
 {
-	GRAPHIC->DeleteMaterial(&this->GetComponent<MaterialComponent>()->material);
-	GRAPHIC->DeleteMaterial(&this->GetComponent<UnitState>()->healthBar.material);
 }
 
 void Skeleton::UnitInitialize(const char* name)
@@ -90,8 +88,6 @@ void Skeleton::UnitInitialize(const char* name)
 
 Lich::~Lich()
 {
-	GRAPHIC->DeleteMaterial(&GetComponent<MaterialComponent>()->material);
-	GRAPHIC->DeleteMaterial(&GetComponent<UnitState>()->healthBar.material);
 }
 
 void Lich::UnitInitialize(const char* name)
