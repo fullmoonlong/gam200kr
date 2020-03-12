@@ -1,0 +1,8 @@
+Position: -600 -200
+Size: 64 64
+Speed: 200 0
+Health: 50
+Damage: 70
+Cost: 
+AttackRange: 1
+Camp: PlayerUnit

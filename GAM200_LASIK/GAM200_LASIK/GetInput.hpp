@@ -22,7 +22,9 @@ public:
 
 private:
 	std::wstring string;
-	std::wstring knight = L"knight";
-	std::wstring archer = L"archer";
+	std::wstring knight   = L"knight";
+	std::wstring archer   = L"archer";
 	std::wstring magician = L"magician";
+	std::wstring tutorial = L"tutorial";
+	std::wstring level1   = L"level1";
 };

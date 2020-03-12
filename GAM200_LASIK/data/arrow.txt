@@ -1,7 +1,4 @@
-0
-0
-32
-7
-500
-ProjectilesPlayer
-Arrow
+Position: 0 0
+Size: 32 7
+Speed: 500 0
+Camp: PlayerProjectile

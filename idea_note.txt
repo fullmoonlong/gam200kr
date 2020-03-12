@@ -1,0 +1,6 @@
+
+==== Data driven idea
+data 폴더안에 data/Level1/Enemy
+이런식으로 해서 적의 유닛이랑 base 체력 등등 설정
+
+.ini file

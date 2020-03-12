@@ -11,6 +11,7 @@
 #include <iostream>
 #include "MainMenu.h"
 #include "StateManager.h"
+#include "Sound.hpp"
 #include "Engine.h"
 
 MainMenu::MainMenu(OpenGLWindow* window)
@@ -52,6 +53,11 @@ void MainMenu::Initialize()
 
 	startButton.material.ndc = worldToNDC * startButton.transform.GetModelToWorld();
 	exitButton.material.ndc = worldToNDC * exitButton.transform.GetModelToWorld();
+
+
+	SOUNDMANAGER->LoadFile("backgroundmusic.wav");
+	SOUNDMANAGER->LoadFile("Fireball.wav");
+	SOUNDMANAGER->LoadFile("archershoot.ogg");
 }
 
 void MainMenu::Update(float /*dt*/)
@@ -93,11 +99,44 @@ void MainMenu::HandleKeyPress(KeyboardButton button)
 	{
 		if (selectedMenu == 0)
 		{
-			STATEMANAGER->SetCurrentLevel(GameLevels::LVTest1);
+			STATEMANAGER->SetCurrentLevel(GameLevels::LEVELSELECT);
 		}
 		else if (selectedMenu == 1)
 		{
 			gameEngine->gamestate = GameState::EXIT;
 		}
 	}
+	else if (button == KeyboardButton::Num1)
+	{
+		SOUNDMANAGER->PlaySound(1, 0);
+	}
+	else if (button == KeyboardButton::Num2)
+	{
+		s -= 0.1f;
+		s = std::clamp(s, 0.0f, 1.0f);
+		SOUNDMANAGER->SetSystemSoundVolume(s);
+	}
+	else if (button == KeyboardButton::Num3)
+	{
+		s += 0.1f;
+		s = std::clamp(s, 0.0f, 1.0f);
+		SOUNDMANAGER->SetSystemSoundVolume(s);
+	}
+	else if (button == KeyboardButton::Num4)
+	{
+		SOUNDMANAGER->AllSoundStop();
+	}
+	else if (button == KeyboardButton::Num5)
+	{
+		SOUNDMANAGER->AllResume();
+	}
+	else if (button == KeyboardButton::Num6)
+	{
+		SOUNDMANAGER->PlaySound(0, 1);
+	}
+	else if (button == KeyboardButton::Y)
+	{
+		SOUNDMANAGER->DeleteAllSounds();
+	}
+
 }

@@ -11,6 +11,8 @@
 typedef enum {
 	ATTACKCOM = 0,
 	LAIR,
-	MATERIAL
+	MATERIAL,
+	UNITSTATE,
+	BASEUNITSTATE
 	//Add here component type
 }ComponentType;

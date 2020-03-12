@@ -7,208 +7,113 @@
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
 
-#include "Object.h"
-#include "FileLoadAndSave.hpp"
-#include "ObjectFactory.h"
 #include <iostream>
+#include "Object.h"
+#include "GameManager.h"
+#include "ObjectFactory.h"
 #include "ComponentTest.h"
 #include "ObjectMaterial.h"
-
+#include "FileLoadAndSave.hpp"
+#include "UnitStateComponent.hpp"
+#include "DataReader.hpp"
 
 Object::Object()
 	: objectID(0), position(0) {}
 
 Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.material), animation(rhs.animation)
-, min(rhs.min), max(rhs.max), health(rhs.health), damage(rhs.damage), healthBar(rhs.healthBar), attackRange(rhs.attackRange)
-, speed(rhs.speed), objectName(rhs.objectName), position(rhs.position), size(rhs.size), unitType(rhs.unitType)
-, state(rhs.state), componetList(rhs.componetList)
+, min(rhs.min), max(rhs.max), speed(rhs.speed), objectName(rhs.objectName), position(rhs.position), size(rhs.size), componentList(rhs.componentList)
 {
 	AddComponent<MaterialComponent>();
 	GetComponent<MaterialComponent>()->material.shader = material.shader;
 	GetComponent<MaterialComponent>()->material.vertices = material.vertices;
+
+	AddComponent<UnitState>();
+	GetComponent<UnitState>()->SetType(GetComponent<BaseUnitState>()->GetType());
+	GetComponent<UnitState>()->SetState(GetComponent<BaseUnitState>()->GetState());
+	GetComponent<UnitState>()->SetAttackRange(GetComponent<BaseUnitState>()->GetAttackRange());
+	GetComponent<UnitState>()->SetAttackState(GetComponent<BaseUnitState>()->GetAttackState());
+	GetComponent<UnitState>()->SetSpriteChangeState(GetComponent<BaseUnitState>()->GetSpriteChangeState());
+	GetComponent<UnitState>()->SetHealth(GetComponent<BaseUnitState>()->GetHealth());
+	GetComponent<UnitState>()->SetDamage(GetComponent<BaseUnitState>()->GetDamage());
+	GetComponent<UnitState>()->SetInvincibilityState(GetComponent<BaseUnitState>()->GetInvincibilityState());
+	GetComponent<UnitState>()->healthBar.material = GetComponent<BaseUnitState>()->healthBar.material;
+	GetComponent<UnitState>()->healthBar.mesh = GetComponent<BaseUnitState>()->healthBar.mesh;
+	GetComponent<UnitState>()->healthBar.transform = GetComponent<BaseUnitState>()->healthBar.transform;
+	GetComponent<UnitState>()->healthBar.Initialize(transform.GetTranslation(), GetComponent<UnitState>()->GetHealth());
+
+	if (GetName() != "lair" && GetName() != "tower")
+	{
+		if (GetComponent<UnitState>()->GetType() != UnitType::ProjectilesPlayer && GetComponent<UnitState>()->GetType() != UnitType::ProjectilesEnemy)
+		{
+			AddComponent<ObjectAttackComponent>();
+			GetComponent<ObjectAttackComponent>()->SetUnit(this);
+			GetComponent<ObjectAttackComponent>()->projectile = GetComponent<BaseObjectAttackComponent>()->projectile;
+			GetComponent<ObjectAttackComponent>()->delayTime = GetComponent<BaseObjectAttackComponent>()->delayTime;
+			GetComponent<ObjectAttackComponent>()->soundID = GetComponent<BaseObjectAttackComponent>()->soundID;
+			GetComponent<ObjectAttackComponent>()->startPosition.x = GetComponent<BaseObjectAttackComponent>()->startPosition.x;
+			GetComponent<ObjectAttackComponent>()->startPosition.y = GetComponent<BaseObjectAttackComponent>()->startPosition.y;
+		}
+	}
 }
 
 void Object::Initialize(const char* name) noexcept
 {
-	File data;
+	//File data;
 
-	data.Open(name);
-	data.GetFloat(&position.x);
-	data.GetFloat(&position.y);
-	data.GetFloat(&size.x);
-	data.GetFloat(&size.y);
-	data.GetFloat(&speed.x);
+	//data.Open(name);
+	//data.GetFloat(&position.x);
+	//data.GetFloat(&position.y);
+	//data.GetFloat(&size.x);
+	//data.GetFloat(&size.y);
+	//data.GetFloat(&speed.x);
 
-	std::string unitdata;
-	data.GetString(&unitdata);
+	//std::string unitdata;
+	//data.GetString(&unitdata);
 
-	if (unitdata == "Player")
-	{
-		SetType(UnitType::Player);
-	}
-	else if (unitdata == "Enemy")
-	{
-		SetType(UnitType::Enemy);
-	}
-	else if (unitdata == "ProjectilesPlayer")
-	{
-		SetType(UnitType::ProjectilesPlayer);
-	}
-	else if (unitdata == "ProjectilesEnemy")
-	{
-		SetType(UnitType::ProjectilesEnemy);
-	}
+	//if (unitdata == "Player")
+	//{
+	//	GetComponent<BaseUnitState>()->SetType(UnitType::Player);
+	//}
+	//else if (unitdata == "Enemy")
+	//{
+	//	GetComponent<BaseUnitState>()->SetType(UnitType::Enemy);
+	//}
+	//else if (unitdata == "ProjectilesPlayer")
+	//{
+	//	GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesPlayer);
+	//}
+	//else if (unitdata == "ProjectilesEnemy")
+	//{
+	//	GetComponent<BaseUnitState>()->SetType(UnitType::ProjectilesEnemy);
+	//}
 
-	data.GetString(&unitdata);
-	SetName(unitdata);
+	//data.GetString(&unitdata);
+	//SetName(unitdata);
 
-	transform.SetTranslation(position);
-	float half_width = size.x / 2;
-	float half_height = size.y / 2;
-	min = { position.x - half_width, position.y - half_height };
-	max = { position.x + half_width, position.y + half_height };
-	transform.SetScale({ size.x, size.y });
+	DataReader::ReadData(name, this);
 
-	healthBar.Initialize(transform.GetTranslation(), GetHealth());
+	//transform.SetTranslation(position);
+	//const float half_width = size.x / 2;
+	//const float half_height = size.y / 2;
+	//min = { position.x - half_width, position.y - half_height };
+	//max = { position.x + half_width, position.y + half_height };
+	//transform.SetScale({ size.x, size.y });
 
-	AddComponent<ObjectAttackComponent>();
+	GetComponent<BaseUnitState>()->healthBar.Initialize(transform.GetTranslation(), GetComponent<BaseUnitState>()->GetHealth());
+
+	AddComponent<BaseObjectAttackComponent>();
 }
 
 void Object::Update(float dt) noexcept
 {
-	if (state == State::WALK)
-	{
-		float decision_x = speed.x * dt;
-		float decision_y = speed.y * dt;
-		float dx = transform.GetTranslation().x + decision_x;
-		float dy = transform.GetTranslation().y + decision_y;
-		transform.SetTranslation({ dx, dy });
-		position.x = dx;
-		position.y = dy;
-		float half_width = size.x / 2;
-		float half_height = size.y / 2;
-		min = { position.x - half_width, position.y - half_height };
-		max = { position.x + half_width, position.y + half_height };
-	}
-
-	else
-	{
-		position.x = transform.GetTranslation().x;
-		position.y = transform.GetTranslation().y;
-		float half_width = size.x / 2;
-		float half_height = size.y / 2;
-		min = { position.x - half_width, position.y - half_height };
-		max = { position.x + half_width, position.y + half_height };
-	}
-	healthBar.Update(transform.GetTranslation(), GetHealth());
-	if (health <= 0 && (unitType == UnitType::Player || unitType == UnitType::Enemy))
-	{
-		OBJECTFACTORY->Destroy(this);
-	}
-
-	if (this->GetName() == "Knight")
-	{
-		if (this->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 0.6f)
-			{
-				SOUNDMANAGER->PlaySound(0, 3);
-				vec2<float> a = { transform.GetTranslation().x + 48.f, transform.GetTranslation().y };
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
-
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
-	else if (this->GetName() == "Archer")
-	{
-		if (this->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 0.7f)
-			{
-				SOUNDMANAGER->PlaySound(0, 2);
-				vec2<float> a = transform.GetTranslation();
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
-
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
-	else if (this->GetName() == "Magician")
-	{
-		if (this->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 2.4f)
-			{
-				SOUNDMANAGER->PlaySound(0, 1);
-				vec2<float> a = transform.GetTranslation();
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
-
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
-	else if (this->GetName() == "Skeleton")
-	{
-		if (this->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 0.6f)
-			{
-				SOUNDMANAGER->PlaySound(0, 3);
-				vec2<float> a = { transform.GetTranslation().x - 48.f, transform.GetTranslation().y };
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
-
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
-	else if (this->GetName() == "Lich")
-	{
-		if (this->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 3.0f)
-			{
-				SOUNDMANAGER->PlaySound(0, 1);
-				vec2<float> a = { transform.GetTranslation().x, transform.GetTranslation().y };
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
-
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
-	else if (this->GetName() == "Golem")
-	{
-		if (this->GetState() == State::ATTACK)
-		{
-			this->GetComponent<ObjectAttackComponent>()->time += dt;
-			if (this->GetComponent<ObjectAttackComponent>()->time > 1.5f)
-			{
-				SOUNDMANAGER->PlaySound(0, 3);
-				vec2<float> a = { transform.GetTranslation().x - 256.f, transform.GetTranslation().y - 128 };
-				this->GetComponent<ObjectAttackComponent>()->attack->transform.SetTranslation(a);
-
-				OBJECTFACTORY->CopyObject(GetComponent<ObjectAttackComponent>()->attack);
-				this->GetComponent<ObjectAttackComponent>()->time = 0;
-			}
-		}
-	}
-	else if (this->GetName() == "swordAttack" || this->GetName() == "enemyAttack")
-	{
-		this->GetComponent<ObjectAttackComponent>()->time += dt;
-		if (this->GetComponent<ObjectAttackComponent>()->time > 0.4f)
-		{
-			OBJECTFACTORY->Destroy(this);
-		}
+	if (GetComponent<UnitState>()->GetState() == State::WALK) {
+		const vec2<float> changedPosition = transform.GetTranslation() + speed * dt;
+		transform.SetTranslation(changedPosition);
+		position = changedPosition;
+		const float halfWidth = size.x / 2.f;
+		const float halfHeight = size.y / 2.f;
+		min = { position.x - halfWidth, position.y - halfHeight };
+		max = { position.x + halfWidth, position.y + halfHeight };
 	}
 }
 
@@ -219,97 +124,97 @@ Object* Object::Clone() const
 
 void Object::ChangeUnitAnimation()
 {
-	if (GetName() == "Knight")
+	if (GetName() == "knight")
 	{
-		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
+		if (GetComponent<UnitState>()->GetState() == State::WALK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::knight_move);
-			this->animation.ChangeAnimation(8, 1);
-			this->SetSpriteChangeState(false);
+			animation.ChangeAnimation(8, 1);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
-		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
+		else if (GetComponent<UnitState>()->GetState() == State::ATTACK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::knight_attack);
-			this->animation.ChangeAnimation(8, 1);
-			this->SetSpriteChangeState(false);
+			animation.ChangeAnimation(8, 1);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
 
 	}
-	else if (GetName() == "Archer")
+	else if (GetName() == "archer")
 	{
-		if (GetState() == State::WALK && GetSpriteChangeState() == true)
+		if (GetComponent<UnitState>()->GetState() == State::WALK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::archer_move);
 			animation.ChangeAnimation(8, 1);
-			SetSpriteChangeState(false);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
-		else if (GetState() == State::ATTACK && GetSpriteChangeState() == true)
+		else if (GetComponent<UnitState>()->GetState() == State::ATTACK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::archer_attack);
 			animation.ChangeAnimation(8, 1);
-			SetSpriteChangeState(false);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
 	}
 	else if (GetName() == "Magician")
 	{
-		if (GetState() == State::WALK && GetSpriteChangeState() == true)
+		if (GetComponent<UnitState>()->GetState() == State::WALK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::magician_move);
 			animation.ChangeAnimation(8, 1);
-			SetSpriteChangeState(false);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
-		else if (GetState() == State::ATTACK && GetSpriteChangeState() == true)
+		else if (GetComponent<UnitState>()->GetState() == State::ATTACK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::magician_attack);
 			animation.ChangeAnimation(5, 1);
-			SetSpriteChangeState(false);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
 	}
-	else if (GetName() == "Skeleton")
+	else if (GetName() == "skeleton")
 	{
-		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
+		if (GetComponent<UnitState>()->GetState() == State::WALK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::skeleton_move);
-			this->animation.ChangeAnimation(4, 1);
-			this->SetSpriteChangeState(false);
+			animation.ChangeAnimation(4, 1);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
-		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
+		else if (GetComponent<UnitState>()->GetState() == State::ATTACK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::skeleton_attack);
-			this->animation.ChangeAnimation(7, 1);
-			this->SetSpriteChangeState(false);
+			animation.ChangeAnimation(7, 1);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
 
 	}
-	else if (GetName() == "Lich")
+	else if (GetName() == "lich")
 	{
-		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
+		if (GetComponent<UnitState>()->GetState() == State::WALK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::lich_move);
-			this->animation.ChangeAnimation(8, 1);
-			this->SetSpriteChangeState(false);
+			animation.ChangeAnimation(8, 1);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
-		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
+		else if (GetComponent<UnitState>()->GetState() == State::ATTACK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::lich_attack);
-			this->animation.ChangeAnimation(1, 1);
-			this->SetSpriteChangeState(false);
+			animation.ChangeAnimation(1, 1);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
 
 	}
 	else if (GetName() == "Golem")
 	{
-		if (this->GetState() == State::WALK && this->GetSpriteChangeState() == true)
+		if (GetComponent<UnitState>()->GetState() == State::WALK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::golem_move);
-			this->animation.ChangeAnimation(4, 1);
-			this->SetSpriteChangeState(false);
+			animation.ChangeAnimation(4, 1);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
-		else if (this->GetState() == State::ATTACK && this->GetSpriteChangeState() == true)
+		else if (GetComponent<UnitState>()->GetState() == State::ATTACK && GetComponent<UnitState>()->GetSpriteChangeState() == true)
 		{
 			GetComponent<MaterialComponent>()->material.texture.LoadTextureFrom(PATH::golem_attack);
-			this->animation.ChangeAnimation(18, 1);
-			this->SetSpriteChangeState(false);
+			animation.ChangeAnimation(18, 1);
+			GetComponent<UnitState>()->SetSpriteChangeState(false);
 		}
 
 	}
@@ -326,7 +231,7 @@ bool Object::isCollideWith(Object& object) noexcept
 
 bool Object::isObjectInAttackRange(Object& object) noexcept
 {
-	return !(max.x + attackRange.x < object.min.x || object.max.x < min.x - attackRange.x || max.y + attackRange.y < object.min.y || object.max.y < min.y - attackRange.y);
+	return !(max.x + GetComponent<UnitState>()->GetAttackRange().x < object.min.x || object.max.x < min.x - GetComponent<UnitState>()->GetAttackRange().x || max.y + GetComponent<UnitState>()->GetAttackRange().y < object.min.y || object.max.y < min.y - GetComponent<UnitState>()->GetAttackRange().y);
 }
 
 bool Object::isCollideWithMouse(vec2<float>& mouse_position, int width, int height) noexcept

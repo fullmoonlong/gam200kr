@@ -1,28 +1,33 @@
 /**************************************************************************************
  *	File Name        : LevelTest1.cpp
  *	Project Name     : Keyboard Warriors
- *	Primary Author   : Jookyung Lee
- *	Secondary Author : Wonju Cho
+ *	Primary Author   :
+ *	Secondary Author :
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
 
-#include "LevelTest1.h"
 #include <iostream>
-
+#include "Image.hpp"
+#include "LevelTest1.h"
+#include "GameManager.h"
 #include "Application.h"
 #include "ObjectFactory.h"
-#include "VerticesDescription.h"
-#include "Image.hpp"
 #include "ComponentTest.h"
 #include "ComponentTower.h"
 #include "ObjectMaterial.h"
-
+#include "VerticesDescription.h"
+#include "UnitStateComponent.hpp"
+#include "CurrencySystem.hpp"
 
 LevelTest1::LevelTest1(OpenGLWindow* window)
 {
 	windowPoint = window;
 	std::cout << "Add LevelTest1 Sucessful" << std::endl;
+	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
+	view.SetZoom(zoom);
+	worldToNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera();
+	cb.Initialize(worldToNDC);
 }
 
 LevelTest1::~LevelTest1()
@@ -32,6 +37,7 @@ LevelTest1::~LevelTest1()
 
 void LevelTest1::Initialize()
 {
+	GAMEMANAGER->isGameEnd = false;
 	std::cout << "Load LevelTest1 Sucessful" << std::endl;
 	isPlayerWin = false;
 	isEnemyWin = false;
@@ -46,11 +52,6 @@ void LevelTest1::Initialize()
 	text.SetFont(bitmapFont);
 
 	textTransform.SetTranslation({ -300.0f, 0.0f });
-
-	//camera
-	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
-	view.SetZoom(zoom);
-	//camera
 
 	//win
 	winpic = new Object();
@@ -82,39 +83,27 @@ void LevelTest1::Initialize()
 	// unit initialize
 	{
 		//tower
-		tower = new Object();
-		tower->SetState(State::IDLE);
-		tower->SetHealth(300);
-		tower->SetDamage(0);
-		tower->Initialize("tower.txt");
+		tower = new Tower();
+		tower->UnitInitialize("tower.txt");
 		tower->material.shader = shader;
 		tower->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		tower->material.texture.LoadTextureFrom(PATH::tower);
 		tower->animation.Initialize({ 1,1, 1.f }, tower->material.shader);
-		OBJECTFACTORY->CopyObject(tower);
+		GAMEMANAGER->SpawnUnit(tower);
 		//tower
 
 		//lair
-		lair = new Object();
-		lair->SetState(State::IDLE);
-		lair->SetHealth(300);
-		lair->SetDamage(0);
-		lair->Initialize("lair.txt");
+		lair = new Lair();
+		lair->UnitInitialize("lair.txt");
 		lair->material.shader = shader;
 		lair->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lair->material.texture.LoadTextureFrom(PATH::lair);
 		lair->animation.Initialize({ 1,1, 1.f }, lair->material.shader);
-		OBJECTFACTORY->CopyObject(tower);
-		lair->AddComponent<LairComponent>();
 		lair->animation.Initialize({ 1, 1,	10.0f }, shader);
-		OBJECTFACTORY->CopyObject(lair);
+		GAMEMANAGER->SpawnUnit(lair);
 		//lair
 
 		skeleton = new Skeleton();
-		skeleton->SetState(State::WALK);
-		skeleton->SetHealth(skeleton->GetSkeletionHealth());
-		skeleton->SetDamage(skeleton->GetSkeletionDamage());
-		skeleton->SetAttackRange({ 1.0f, 0.0f });
 		skeleton->Initialize("skeleton.txt");
 		skeleton->material.shader = shader;
 		skeleton->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -122,10 +111,6 @@ void LevelTest1::Initialize()
 		skeleton->animation.Initialize({ 4, 1,	10.0f }, shader);
 
 		golem = new Golem();
-		golem->SetState(State::WALK);
-		golem->SetHealth(golem->GetGolemHealth());
-		golem->SetDamage(golem->GetGolemHealth());
-		golem->SetAttackRange({ 1.0f, 0.0f });
 		golem->Initialize("golem.txt");
 		golem->material.shader = shader;
 		golem->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -133,10 +118,6 @@ void LevelTest1::Initialize()
 		golem->animation.Initialize({ 4, 1,	10.0f }, shader);
 
 		lich = new Lich();
-		lich->SetState(State::WALK);
-		lich->SetHealth(lich->GetLichHealth());
-		lich->SetDamage(lich->GetLichDamage());
-		lich->SetAttackRange(lich->GetLichAttackRange());
 		lich->Initialize("lich.txt");
 		lich->material.shader = shader;
 		lich->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -145,9 +126,6 @@ void LevelTest1::Initialize()
 
 		//knight
 		knight = new Knight();
-		knight->SetState(State::WALK);
-		knight->SetHealth(knight->GetKnightHealth());
-		knight->SetDamage(knight->GetKnightDamage());
 		knight->Initialize("knight.txt");
 		knight->material.shader = shader;
 		knight->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -157,10 +135,6 @@ void LevelTest1::Initialize()
 
 		//archer
 		archer = new Archer();
-		archer->SetState(State::WALK);
-		archer->SetHealth(archer->GetArcherHealth());
-		archer->SetDamage(archer->GetArcherDamage());
-		archer->SetAttackRange(archer->GetArcherAttackRange());
 		archer->Initialize("archer.txt");
 		archer->material.shader = shader;
 		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
@@ -170,11 +144,7 @@ void LevelTest1::Initialize()
 
 		//magician
 		magician = new Magician();
-		magician->SetState(State::WALK);
-		magician->SetHealth(magician->GetMagicianHealth());
-		magician->SetDamage(magician->GetMagicianDamage());
-		magician->SetAttackRange(magician->GetMagicianAttackRange());
-		magician->Initialize("wizard.txt");
+		magician->Initialize("Magician.txt");
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadTextureFrom(PATH::magician_move);
@@ -183,74 +153,97 @@ void LevelTest1::Initialize()
 
 		//sword attack
 		swordAttack = new Object();
-		swordAttack->SetHealth(0);
+		swordAttack->AddComponent<BaseUnitState>();
+		swordAttack->GetComponent<BaseUnitState>()->SetHealth(0);
 		swordAttack->Initialize("swordAttack.txt");
-		swordAttack->SetState(State::WALK);
+		swordAttack->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		swordAttack->material.shader = shader;
 		swordAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
-		swordAttack->SetDamage(knight->GetKnightDamage());
+		swordAttack->GetComponent<BaseUnitState>()->SetDamage(knight->GetComponent<BaseUnitState>()->GetDamage());
 		swordAttack->animation.Initialize({ 1,1, 1.f }, swordAttack->material.shader);
 
-		knight->GetComponent<ObjectAttackComponent>()->attack = swordAttack;
+		knight->GetComponent<BaseObjectAttackComponent>()->unit = knight;
+		knight->GetComponent<BaseObjectAttackComponent>()->projectile = swordAttack;
+		knight->GetComponent<BaseObjectAttackComponent>()->delayTime = 0.6f;
+		knight->GetComponent<BaseObjectAttackComponent>()->soundID = 3;
+		knight->GetComponent<BaseObjectAttackComponent>()->startPosition.x = 48.0f;
+		knight->GetComponent<BaseObjectAttackComponent>()->startPosition.y = 0.f;
 		//sword attack
 
 		//sword attack
 		enemyAttack = new Object();
-		enemyAttack->SetHealth(0);
+		enemyAttack->AddComponent<BaseUnitState>();
+		enemyAttack->GetComponent<BaseUnitState>()->SetHealth(0);
 		enemyAttack->Initialize("enemyAttack.txt");
-		enemyAttack->SetState(State::WALK);
+		enemyAttack->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		enemyAttack->material.shader = shader;
 		enemyAttack->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		enemyAttack->animation.Initialize({ 1,1, 1.f }, enemyAttack->material.shader);
 
-		enemyAttack->SetDamage(skeleton->GetSkeletionDamage());
-		skeleton->GetComponent<ObjectAttackComponent>()->attack = enemyAttack;
+		enemyAttack->GetComponent<BaseUnitState>()->SetDamage(skeleton->GetComponent<BaseUnitState>()->GetDamage());
+		skeleton->GetComponent<BaseObjectAttackComponent>()->unit = skeleton;
+		skeleton->GetComponent<BaseObjectAttackComponent>()->projectile = enemyAttack;
+		skeleton->GetComponent<BaseObjectAttackComponent>()->delayTime = 0.6f;
+		skeleton->GetComponent<BaseObjectAttackComponent>()->soundID = 3;
+		skeleton->GetComponent<BaseObjectAttackComponent>()->startPosition.x = -48.0f;
+		skeleton->GetComponent<BaseObjectAttackComponent>()->startPosition.y = 0.f;
 		//sword attack
 
 
 		//fireball
 		fireball = new Object();
+		fireball->AddComponent<BaseUnitState>();
 		fireball->Initialize("fireball.txt");
 		fireball->material.shader = shader;
 		fireball->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		fireball->material.texture.LoadTextureFrom(PATH::fireball);
 		fireball->animation.Initialize({ 3, 1, 5.0f }, shader);
-		fireball->SetState(State::WALK);
-		fireball->SetDamage(magician->GetMagicianDamage());
+		fireball->GetComponent<BaseUnitState>()->SetState(State::WALK);
+		fireball->GetComponent<BaseUnitState>()->SetDamage(magician->GetComponent<BaseUnitState>()->GetDamage());
 
-		magician->GetComponent<ObjectAttackComponent>()->attack = fireball;
+		magician->GetComponent<BaseObjectAttackComponent>()->unit = magician;
+		magician->GetComponent<BaseObjectAttackComponent>()->projectile = fireball;
+		magician->GetComponent<BaseObjectAttackComponent>()->delayTime = 2.4f;
+		magician->GetComponent<BaseObjectAttackComponent>()->soundID = 1;
 		//fireball
 
 		//fireball
 		fireballEnemy = new Object();
+		fireballEnemy->AddComponent<BaseUnitState>();
 		fireballEnemy->Initialize("fireballEnemy.txt");
 		fireballEnemy->material.shader = shader;
 		fireballEnemy->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		fireballEnemy->material.texture.LoadTextureFrom(PATH::fireball);
 		fireballEnemy->animation.Initialize({ 3, 1, 5.0f }, shader);
-		fireballEnemy->SetState(State::WALK);
-		fireballEnemy->SetDamage(lich->GetLichDamage());
+		fireballEnemy->GetComponent<BaseUnitState>()->SetState(State::WALK);
+		fireballEnemy->GetComponent<BaseUnitState>()->SetDamage(lich->GetComponent<BaseUnitState>()->GetDamage());
 
-		lich->GetComponent<ObjectAttackComponent>()->attack = fireballEnemy;
+		lich->GetComponent<BaseObjectAttackComponent>()->unit = lich;
+		lich->GetComponent<BaseObjectAttackComponent>()->projectile = fireballEnemy;
+		lich->GetComponent<BaseObjectAttackComponent>()->delayTime = 3.0f;
+		lich->GetComponent<BaseObjectAttackComponent>()->soundID = 1;
 		//fireball
 
 		//arrow
 		arrow = new Object();
+		arrow->AddComponent<BaseUnitState>();
 		arrow->Initialize("arrow.txt");
 		arrow->material.shader = fontShader;
 		arrow->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		arrow->material.texture.LoadTextureFrom(PATH::arrow);
 		arrow->animation.Initialize({ 1,1, 1.f }, arrow->material.shader);
 
-		arrow->SetState(State::WALK);
-		arrow->SetDamage(archer->GetArcherDamage());
+		arrow->GetComponent<BaseUnitState>()->SetState(State::WALK);
+		arrow->GetComponent<BaseUnitState>()->SetDamage(archer->GetComponent<BaseUnitState>()->GetDamage());
 
-		archer->GetComponent<ObjectAttackComponent>()->attack = arrow;
+		archer->GetComponent<BaseObjectAttackComponent>()->unit = archer;
+		archer->GetComponent<BaseObjectAttackComponent>()->projectile = arrow;
+		archer->GetComponent<BaseObjectAttackComponent>()->delayTime = 0.7f;
+		archer->GetComponent<BaseObjectAttackComponent>()->soundID = 2;
 		//arrow
 	}
 
 	//test sound and make object
-	SOUNDMANAGER->Initialize();
 	SOUNDMANAGER->LoadFile("backgroundmusic.wav");
 	SOUNDMANAGER->LoadFile("Fireball.wav");
 	SOUNDMANAGER->LoadFile("archershoot.ogg");
@@ -266,6 +259,9 @@ void LevelTest1::Initialize()
 
 	debugText.SetFont(bitmapFont);
 	debugText.SetString(L"debug mode");
+
+
+	//GAMEMANAGER->pg.SetNDC(cameraToNDC);	// particle generator ndc setting
 }
 
 void LevelTest1::Update(float dt)
@@ -275,6 +271,7 @@ void LevelTest1::Update(float dt)
 	camera.Rotate(cameraAngle);
 	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
 	view.SetZoom(zoom);
+	//cameraToNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera();
 	//Transform
 
 	//Draw
@@ -295,7 +292,7 @@ void LevelTest1::Update(float dt)
 	coolTime.CoolDownUpdate(dt);
 
 	//dynamic test
-	for (const auto& obj : OBJECTFACTORY->GetObjecteList())
+	for (const auto& obj : OBJECTFACTORY->GetObjectList())
 	{
 		if (obj.second != nullptr)
 		{
@@ -309,30 +306,39 @@ void LevelTest1::Update(float dt)
 			Draw::draw(obj.second->GetComponent<MaterialComponent>()->material);
 
 			//hpbar
-			if (obj.second->GetType() == UnitType::Player || obj.second->GetType() == UnitType::Enemy)
+			if (obj.second->GetComponent<UnitState>()->GetType() == UnitType::Player || obj.second->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
 			{
-				obj.second->healthBar.material.shader = fontShader; //texture shader
-				const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->healthBar.transform.GetModelToWorld();
-				obj.second->healthBar.material.ndc = ndcHP;
-				Draw::draw(obj.second->healthBar.material);
+				obj.second->GetComponent<UnitState>()->healthBar.material.shader = fontShader; //texture shader
+				const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->GetComponent<UnitState>()->healthBar.transform.GetModelToWorld();
+				obj.second->GetComponent<UnitState>()->healthBar.material.ndc = ndcHP;
+				Draw::draw(obj.second->GetComponent<UnitState>()->healthBar.material);
 			}
 			//hpbar
 
-			if (obj.second->GetName() == "Lair")
+			if (obj.second->GetName() == "lair")
 			{
 				obj.second->GetComponent<LairComponent>()->SpawnEnemy(skeleton, dt);
-				if (obj.second->GetHealth() <= 0)
+				if (obj.second->GetComponent<UnitState>()->GetHealth() <= 0)
 				{
 					isPlayerWin = true;
+					GAMEMANAGER->isGameEnd = true;
 					OBJECTFACTORY->Destroy(obj.second);
 				}
 			}
-			else if (obj.second->GetName() == "Tower")
+			else if (obj.second->GetName() == "tower")
 			{
-				if (obj.second->GetHealth() <= 0)
+				if (obj.second->GetComponent<UnitState>()->GetHealth() <= 0)
 				{
 					isEnemyWin = true;
+					GAMEMANAGER->isGameEnd = true;
 					OBJECTFACTORY->Destroy(obj.second);
+				}
+			}
+			else if (obj.second->GetName() == "skeleton")
+			{
+				if (obj.second->GetComponent<UnitState>()->GetHealth() <= 0)
+				{
+					cs->Increase(skeleton->GetMoney());
 				}
 			}
 		}
@@ -346,6 +352,12 @@ void LevelTest1::Update(float dt)
 		const mat3<float> debugTextNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * debugTextTransform.GetModelToWorld();
 		Draw::DrawText(fontShader, debugTextNDC, debugText);
 	}
+	GAMEMANAGER->pg.UpdateParticles(dt);
+	
+	cb.DrawMessageBox();
+
+	camera.MoveRight(sideScrollSpeed);
+	
 	Draw::FinishDrawing();
 }
 
@@ -355,6 +367,7 @@ void LevelTest1::Win()
 	{
 		Draw::draw(winpic->material);
 		OBJECTFACTORY->DestroyAllObjects();
+		GAMEMANAGER->isGameEnd = true;
 	}
 }
 
@@ -364,6 +377,7 @@ void LevelTest1::Lose()
 	{
 		Draw::draw(losepic->material);
 		OBJECTFACTORY->DestroyAllObjects();
+		GAMEMANAGER->isGameEnd = true;
 	}
 }
 
@@ -596,22 +610,23 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 
 		if (isEnemyWin == false)
 		{
-			if (input.MatchStringWithInput() == 1)
+			if (input.MatchStringWithInput() == 1 && coolTime.GetKnightCoolDown() == false)
 			{
-				OBJECTFACTORY->CopyObject(knight);
+				GAMEMANAGER->SpawnUnit(knight);
 				coolTime.SetKnightCoolDown();
 			}
-			else if (input.MatchStringWithInput() == 2)
+			else if (input.MatchStringWithInput() == 2 && coolTime.GetArcherCoolDown() == false)
 			{
-				OBJECTFACTORY->CopyObject(archer);
+				GAMEMANAGER->SpawnUnit(archer);
 				coolTime.SetArcherCoolDown();
 			}
-			else if (input.MatchStringWithInput() == 3)
+			else if (input.MatchStringWithInput() == 3 && coolTime.GetMagicianCoolDown() == false)
 			{
-				OBJECTFACTORY->CopyObject(magician);
+				GAMEMANAGER->SpawnUnit(magician);
 				coolTime.SetMagicianCoolDown();
 			}
 		}
+		cb.AddHistory(input.GetString());
 		input.SetString(L"");
 		break;
 	case KeyboardButton::Backspace:
@@ -626,17 +641,17 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 			{
 				if (random == 0)
 				{
-					OBJECTFACTORY->CopyObject(knight);
+					GAMEMANAGER->SpawnUnit(knight);
 					coolTime.SetKnightCoolDown();
 				}
 				else if (random == 1)
 				{
-					OBJECTFACTORY->CopyObject(archer);
+					GAMEMANAGER->SpawnUnit(archer);
 					coolTime.SetArcherCoolDown();
 				}
 				else if (random == 2)
 				{
-					OBJECTFACTORY->CopyObject(magician);
+					GAMEMANAGER->SpawnUnit(magician);
 					coolTime.SetMagicianCoolDown();
 				}
 			}
@@ -650,12 +665,12 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 
 			if (random == 0)
 			{
-				OBJECTFACTORY->CopyObject(skeleton);
+				GAMEMANAGER->SpawnUnit(skeleton);
 				coolTime.SetKnightCoolDown();
 			}
 			else if (random == 1)
 			{
-				OBJECTFACTORY->CopyObject(lich);
+				GAMEMANAGER->SpawnUnit(lich);
 				coolTime.SetArcherCoolDown();
 			}
 			break;
@@ -664,11 +679,11 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::Num3:
 		if (isEnter == false && isDebugModeisOn == true)
 		{
-			for (auto obj : OBJECTFACTORY->GetPlayerObjecteList())
+			for (auto obj : GAMEMANAGER->PlayerUnits)
 			{
-				if (obj->GetName() != "Tower")
+				if (obj->GetName() != "tower")
 				{
-					obj->SetHealth(0);
+					obj->GetComponent<UnitState>()->SetHealth(0);
 				}
 			}
 		}
@@ -676,11 +691,11 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::Num4:
 		if (isEnter == false && isDebugModeisOn == true)
 		{
-			for (auto obj : OBJECTFACTORY->GetEnemyObjecteList())
+			for (auto obj : GAMEMANAGER->EnemyUnits)
 			{
-				if (obj->GetName() != "Lair")
+				if (obj->GetName() != "lair")
 				{
-					obj->SetHealth(0);
+					obj->GetComponent<UnitState>()->SetHealth(0);
 				}
 			}
 		}
@@ -688,11 +703,11 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::Num5:
 		if (isEnter == false && isDebugModeisOn == true)
 		{
-			for (auto obj : OBJECTFACTORY->GetPlayerObjecteList())
+			for (auto obj : GAMEMANAGER->PlayerUnits)
 			{
-				if (obj->GetName() != "Tower")
+				if (obj->GetName() != "tower")
 				{
-					obj->SetInvincibilityState(true);
+					obj->GetComponent<UnitState>()->SetInvincibilityState(true);
 				}
 			}
 		}
@@ -700,11 +715,11 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 	case KeyboardButton::Num6:
 		if (isEnter == false && isDebugModeisOn == true)
 		{
-			for (auto obj : OBJECTFACTORY->GetPlayerObjecteList())
+			for (auto obj : GAMEMANAGER->PlayerUnits)
 			{
-				if (obj->GetName() != "Tower")
+				if (obj->GetName() != "tower")
 				{
-					obj->SetInvincibilityState(false);
+					obj->GetComponent<UnitState>()->SetInvincibilityState(false);
 				}
 			}
 		}
@@ -721,6 +736,12 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 				isDebugModeisOn = false;
 			}
 		}
+		break;
+	case KeyboardButton::Arrow_Left:
+		sideScrollSpeed = -5.0f;
+		break;
+	case KeyboardButton::Arrow_Right:
+		sideScrollSpeed = 5.0f;
 		break;
 	default:
 		break;
@@ -748,6 +769,12 @@ void LevelTest1::HandleKeyRelease(KeyboardButton button)
 		break;
 	case KeyboardButton::X:
 		cameraAngle = 0.0f;
+		break;
+	case KeyboardButton::Arrow_Left:
+		sideScrollSpeed = 0.0f;
+		break;
+	case KeyboardButton::Arrow_Right:
+		sideScrollSpeed = 0.0f;
 		break;
 	default:;
 	}

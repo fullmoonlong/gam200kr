@@ -27,6 +27,10 @@ public:
 	void SetKnightCoolDown();
 	void SetArcherCoolDown();
 	void SetMagicianCoolDown();
+
+	bool GetKnightCoolDown();
+	bool GetArcherCoolDown();
+	bool GetMagicianCoolDown();
 private:
 	const float knightCoolTime   = 2.f;
 	const float archerCoolTime   = 3.f;

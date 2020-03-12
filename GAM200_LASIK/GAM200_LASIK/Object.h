@@ -8,6 +8,7 @@
 **************************************************************************************/
 
 #pragma once
+#include <iostream>
 #include <string>
 #include "vec2.hpp"
 #include "Image.hpp"
@@ -20,21 +21,6 @@
 #include "PATH.hpp"
 #include "Component.h"
 #include "ComponentType.h"
-#include"UI.hpp"
-
-enum UnitType {
-	Player,
-	Enemy,
-	ProjectilesPlayer,
-	ProjectilesEnemy
-};
-
-enum State {
-	WALK,
-	ATTACK,
-	IDLE
-};
-
 
 typedef unsigned int ObjectID;
 
@@ -45,63 +31,33 @@ public:
 
 	Object();
 	Object(const Object& rhs);
-	~Object() = default;
+	virtual ~Object() { std::cout << "Object destory\n"; }
 
-	void Initialize(const char* name) noexcept;
+	virtual void Initialize(const char* name) noexcept;
 	void Update(float dt) noexcept;
 	Object* Clone() const;
 
-	ObjectID GetObjectID(){	return objectID;}
-	void SetObjectID(ObjectID objID){ objectID = objID;}
+	void SetObjectID(ObjectID objectID_) { objectID = objectID_; }
+	ObjectID GetObjectID() const { return objectID; }
 
-	int GetObjectCopyID() { return objectCopyId; }
+	std::string GetName() const { return objectName; }
+	void SetName(const std::string& name) { objectName = name; }
 
-	std::string GetName() const{return objectName;}
-	void SetName(const std::string& name){objectName = name;}
+	float GetXposition() const { return position.x; }
+	float GetYposition() const { return position.y; }
+	vec2<float> GetPosition() const { return position; }
+	void SetXposition(float position_) { position.x = position_; }
+	void SetYposition(float position_) { position.y = position_; }
+	void SetPosition(vec2<float> position_) { position = position_; }
 
-	float GetXposition() { return position.x; };
-	float GetYposition() { return position.y; };
-
-	UnitType GetType() { return unitType; }
-	void SetType(UnitType unittype) { unitType = unittype; };
-
-	State GetState() { return state; }
-	void SetState(State state_) { state = state_; };
-
-	vec2<float> GetAttackRange() const { return attackRange; }
-	void SetAttackRange(vec2<float> attackrange) { attackRange = attackrange; }
-
-	bool GetAttackState() { return attackState; }
-	void SetAttackState(bool attackstate) { attackState = attackstate; };
-
-	bool GetSpriteChangeState() { return spriteChange; }
-	void SetSpriteChangeState(bool spritestate) { spriteChange = spritestate; };
-
-	int GetHealth() { return health; }
-	void SetHealth(int health_) { health = health_; };
-
-	int GetDamage() { return damage; }
-	void SetDamage(int damage_) { damage = damage_; };
-
-	bool GetInvincibilityState() { return invincibilityState; }
-	void SetInvincibilityState(bool invincibilitystate) { invincibilityState = invincibilitystate; };
+	vec2<float> GetSize() const { return size; }
+	void SetSize(vec2<float> size_) { size = size_; }
 
 	void ChangeUnitAnimation();
 
 	Transform transform;
 	Material material;
 	Animation animation;
-
-	// Collision
-	vec2<float> min;
-	vec2<float> max;
-
-	int health = 0;
-	int damage = 0;
-	UI::HealthBar healthBar;
-
-	vec2<float> attackRange = {0, 0};
-	vec2<float> speed;
 
 	bool isCollideWith(Object& object) noexcept;
 	bool isObjectInAttackRange(Object& object) noexcept;
@@ -111,13 +67,12 @@ public:
 	template <typename ComponentType>
 	bool HasComponent()
 	{
-		for (auto list : componetList)
+		for (auto list : componentList)
 		{
 			if (typeid(*list).name() == typeid(ComponentType).name())
 				return true;
 		}
 		return false;
-
 	}
 
 	template<typename ComponentType>
@@ -129,13 +84,13 @@ public:
 		}
 		ComponentType* componentType = new ComponentType();
 		dynamic_cast<Component*>(componentType)->SetOwner(this);
-		this->componetList.push_back(componentType);
+		this->componentList.push_back(componentType);
 	}
 
 	template<typename ComponentType>
 	ComponentType* GetComponent()
 	{
-		for (auto list : componetList)
+		for (auto list : componentList)
 		{
 			if (typeid(*list).name() == typeid(ComponentType).name())
 				return dynamic_cast<ComponentType*>(list);
@@ -143,20 +98,17 @@ public:
 		return nullptr;
 	}
 
-private:
-	ObjectID objectID;
-	int objectCopyId = 0;
-	std::string objectName = "";
+	vec2<float> min;
+	vec2<float> max;
+	vec2<float> speed;
 
+protected:
 	vec2<float> position;
 	vec2<float> size;
 
-	UnitType unitType;
-	State state;
-	bool attackState = false;
-	bool spriteChange = false;
-	bool invincibilityState = false;
+private:
+	ObjectID objectID;
+	std::string objectName = "";
 
-	float baseTime = 0.f;
-	std::vector <Component*>componetList;
+	std::vector<Component*> componentList;
 };

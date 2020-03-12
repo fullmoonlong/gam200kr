@@ -12,8 +12,8 @@ void Test::Initialize()
 	textureShader.LoadTextureShader();
 
 	material.shader.LoadTextureShader();
-	material.vertices.InitializeWithMeshAndLayout(mesh, layout);
-	material.texture.LoadFromPath(PATH::knight_menu);
+	//material.vertices.InitializeWithMeshAndLayout(mesh, layout);
+	//material.texture.LoadFromPath(PATH::knight_menu);
 	transform.SetScale({ 100.0f });
 	const mat3<float>& ndc = view.GetCameraToNDCTransform() * camera.WorldToCamera() * transform.GetModelToWorld();
 	material.CreateSprite(textureShader, PATH::knight_menu, ndc);
@@ -21,11 +21,11 @@ void Test::Initialize()
 
 void Test::Update()
 {
-	Draw::StartDrawing();
+	Drawing::StartDrawing();
 
-	Draw::draw(material);
+	Drawing::Draw(material);
 
-	Draw::FinishDrawing();
+	Drawing::FinishDrawing();
 
 	window.PollEvents();
 	window.SwapBuffers();
@@ -33,7 +33,6 @@ void Test::Update()
 
 void Test::ShutDown()
 {
-	window.CleanUpWindow();
 }
 
 bool Test::IsRunning() const noexcept

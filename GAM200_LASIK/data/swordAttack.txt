@@ -1,7 +1,4 @@
-0
-0
-16
-32
-0
-ProjectilesPlayer
-swordAttack
+Position: 0 0
+Size: 16 32
+Speed: 0 0
+Camp: PlayerProjectile

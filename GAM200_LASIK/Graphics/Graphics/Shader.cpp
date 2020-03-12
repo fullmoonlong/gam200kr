@@ -12,6 +12,7 @@
 #include <fstream>
 #include "GL\glew.h"
 #include "Shader.h"
+#include "Color4f.hpp"
 
 std::string ReadSourceFrom(const std::filesystem::path& path)
 {
@@ -124,6 +125,18 @@ void Shader::SendUniformVariable(const char* variable_name, const float& variabl
 {
 	const int location = glGetUniformLocation(handleToShader, variable_name);
 	glUniform1f(location, variable);
+}
+
+void Shader::SendUniformVariable(const char* variable_name, const Color4f& color) const noexcept
+{
+	const int location = glGetUniformLocation(handleToShader, variable_name);
+	glUniform4f(location, color.r, color.g, color.b, color.a);
+}
+
+void Shader::SendUniformVariable(const char* variable_name, const vec2<float> & vector) const noexcept
+{
+	const int location = glGetUniformLocation(handleToShader, variable_name);
+	glUniform2f(location, vector.x, vector.y);
 }
 
 void Shader::SendUniformVariable(const char* variable_name, const mat3<float>& matrix) const noexcept

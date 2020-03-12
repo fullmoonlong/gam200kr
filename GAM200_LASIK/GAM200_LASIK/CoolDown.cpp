@@ -18,6 +18,10 @@ void CoolDown::Initialize(const Camera& camera_, const CameraView& view_) {
 	archerCoolMesh   = mesh;
 	magicianCoolMesh = mesh;
 
+	const mat3<float> worldToNDC = view_.GetCameraToNDCTransform() * camera_.WorldToCamera();
+	//knightAnimation.Initialize({2, 1, 1.0f}, animationShader);
+	//knightCoolMaterial.CreateAnimation(animationShader, PATH::twocountdown, knightAnimation, worldToNDC * knightCoolTransform.GetModelToWorld());
+	
 	knightCoolMaterial.shader   = animationShader;
 	archerCoolMaterial.shader   = animationShader;
 	magicianCoolMaterial.shader = animationShader;
@@ -41,8 +45,6 @@ void CoolDown::Initialize(const Camera& camera_, const CameraView& view_) {
 	archerAnimation.Initialize({ 3, 1, 1.0f }, animationShader);
 	magicianAnimation.Initialize({ 4, 1, 1.0f }, animationShader);
 
-
-	const mat3<float> worldToNDC = view_.GetCameraToNDCTransform() * camera_.WorldToCamera();
 	knightCoolMaterial.ndc   = worldToNDC * knightCoolTransform.GetModelToWorld();
 	archerCoolMaterial.ndc   = worldToNDC * archerCoolTransform.GetModelToWorld();
 	magicianCoolMaterial.ndc = worldToNDC * magicianCoolTransform.GetModelToWorld();
@@ -76,6 +78,21 @@ void CoolDown::CoolDownUpdate(float dt) {
 			isMagicianCoolDown = false;
 		}
 	}
+}
+
+bool CoolDown::GetKnightCoolDown()
+{
+	return isKnightCoolDown;
+}
+
+bool CoolDown::GetArcherCoolDown()
+{
+	return isArcherCoolDown;
+}
+
+bool CoolDown::GetMagicianCoolDown()
+{
+	return isMagicianCoolDown;
 }
 
 void CoolDown::SetKnightCoolDown()

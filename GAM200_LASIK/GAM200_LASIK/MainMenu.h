@@ -18,6 +18,8 @@
 #include "Vertices.h"
 #include "VerticesDescription.h"
 #include "Draw.hpp"
+#include "Camera.hpp"
+#include "CameraView.hpp"
 
 class MainMenu : public LevelSystem {
 public:
@@ -43,4 +45,6 @@ private:
 	Object startButton;
 	Object exitButton;
 	Object selectedArrow;
+
+	float s = 1.0f;
 };

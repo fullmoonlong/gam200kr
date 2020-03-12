@@ -1,7 +1,7 @@
-600
--200
-64
-64
--100
-Enemy
-Lich
+Position: 600 -200
+Size: 64 64
+Speed: -100 0
+Health: 50
+Damage: 50
+AttackRange: 166
+Camp: EnemyUnit

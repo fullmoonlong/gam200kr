@@ -8,9 +8,10 @@
  **************************************************************************************/
 
 #include "Engine.h"
-#include <Windows.h>
 
-int WINAPI wWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, PWSTR /*pCmdLine*/, int /*nCmdShow*/)
+//#include <Windows.h>
+//int WINAPI wWinMain(HINSTANCE /*hInstance*/, HINSTANCE /*hPrevInstance*/, PWSTR /*pCmdLine*/, int /*nCmdShow*/)
+int main()
 {
 	Engine* ENGINE = new Engine();
 	ENGINE->Run();

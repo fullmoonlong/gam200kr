@@ -30,8 +30,8 @@ public:
 private:
 
 	float totalSizeX = 56.f;
-	float fullHP = 0;
-	float currentHP = 0;
+	float fullHP = 0.f;
+	float currentHP = 0.f;
 	vec2<float> size = { totalSizeX, 8.f };
 
 	const Color4f color{ 0.8f, 0.0f, 0.0f, 1.0f };
@@ -72,5 +72,35 @@ private:
 
 };
 
-class UI :public SelectSpawn, public HealthBar {
+class ArthurSprite {
+public:
+
+private:
+
+};
+
+class MoneyBar {
+public:
+	void Initialize();
+	void Update(Camera& camera_, CameraView& view_);
+	void SetFont(const BitmapFont& font) { m_text.SetFont(font); }
+private:
+	int moneyAmount;
+	BitmapFont bitmapfont;
+	Text m_text, number;
+	Shader		shader;
+	Material	moneyMaterial, numberMaterial;
+	Transform	moneyTransform, numberTransform;
+
+	std::wstring numberString;
+
+	vec2<float> moneyPosition = { -350.0f, 150.0f };
+	vec2<float> numberPosition = { -200.0f, 150.0f };
+
+	vec2<float> fontSize = { 1.5f };
+
+};
+
+
+class UI :public SelectSpawn, public HealthBar, public MoneyBar {
 };

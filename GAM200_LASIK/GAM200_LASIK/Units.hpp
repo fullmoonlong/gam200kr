@@ -2,67 +2,50 @@
  *	File Name        : Units.hpp
  *	Project Name     : Keyboard Warriors
  *	Primary Author   : Wonju Cho
- *	Secondary Author :
+ *	Secondary Author : Doyeong Yi
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
 
 #pragma once
-#include"Object.h"
-#include<vec2.hpp>
+#include "Object.h"
 
-class Knight : public Object {
-public:	
-	
-	int GetKnightHealth() { return knightHealth; }
-	int GetKnightDamage() { return knightDamage; }
-
-private:
-	int         knightHealth = 200;
-	int         knightDamage =  15;
-	vec2<float> knightSpeed;
-
+class Unit : public Object {
+public:
+	void Initialize(const char* name) noexcept override;
+	//virtual ~Unit() { std::cout << "Unit destory\n"; }
 };
 
-class Archer : public Object {
-public:
-	int GetArcherHealth() { return  archerHealth; }
-	int GetArcherDamage() { return archerDamage; }
-	vec2<float>	 GetArcherAttackRange() { return archerAttackRange; }
+//===Ally==============================================
 
-	//void SetArcherHealth() { archerHealth = 150; }
-	//void SetArcherDamage() { archerDamage = 10; }
-	//bool ArcherCollideWith(Object& object);
-private:
-	int         archerHealth		= 150;
-	int         archerDamage		=  10;
-	vec2<float>	archerAttackRange = { 128, 0 };
-	vec2<float> archerSpeed;
+class Knight : public Unit {
+public:
+	//~Knight() { std::cout << "Knight destory\n"; }
 };
 
-class Magician : public Object {
+class Archer : public Unit {
 public:
-	
-	int GetMagicianHealth() { return  magicianHealth; }
-	int GetMagicianDamage() { return magicianDamage; }
-	vec2<float>	GetMagicianAttackRange() { return magicianAttackRange; }
-
-	//void SetMagicianHealth() { magicianHealth = 100; }
-	//void SetMagicianDamage() { magicianDamage = 30; }
-	//bool MagicianCollideWith(Object& object);
-private:
-	int         magicianHealth		= 100;
-	int         magicianDamage		=  50;
-	vec2<float>	magicianAttackRange = { 196, 0};
-	vec2<float> magicianSpeed;
+	//~Archer() { std::cout << "Archer destory\n"; }
 };
 
-class Units : public Knight , public Archer , public Magician
-{
+class Magician : public Unit {
 public:
-	void Initialize();
-	
+	//~Magician() { std::cout << "Magician destory\n"; }
+};
+
+//===Enemy=============================================
+
+class Skeleton : public Unit {
+public:
+	int GetMoney() { return money; }
 private:
-	vec2<float> min;
-	vec2<float> max;
+	int money = 2;
+};
+
+class Lich : public Unit {
+	
+};
+
+class Golem : public Unit {
+	
 };

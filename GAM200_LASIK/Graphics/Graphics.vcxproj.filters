@@ -111,6 +111,12 @@
     <ClInclude Include="Graphics\VerticesDescriptionLayout.hpp">
       <Filter>Graphics\Drawing</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\ParticleGenerator.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Particle.hpp">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Graphics\Camera.cpp">
@@ -166,6 +172,9 @@
     </ClCompile>
     <ClCompile Include="Graphics\Material.cpp">
       <Filter>Graphics\Drawing</Filter>
+    </ClCompile>
+    <ClCompile Include="Graphics\ParticleGenerator.cpp">
+      <Filter>Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

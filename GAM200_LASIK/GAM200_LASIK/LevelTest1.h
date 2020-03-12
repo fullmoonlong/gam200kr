@@ -1,8 +1,8 @@
 /**************************************************************************************
  *	File Name        : LevelTest1.h
  *	Project Name     : Keyboard Warriors
- *	Primary Author   : Jookyung Lee
- *	Secondary Author : Wonju Cho
+ *	Primary Author   :
+ *	Secondary Author :
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
@@ -14,6 +14,7 @@
 
 #include "Object.h"
 #include "Util/Clock.hpp"
+#include "Tower.h"
 #include "Units.hpp"
 #include "EnemyUnits.hpp"
 #include "GetInput.hpp"
@@ -29,6 +30,7 @@
 #include "BitmapFont.hpp"
 #include "Sound.hpp"
 #include "CoolDown.hpp"
+#include "ChatBox.hpp"
 
 class LevelTest1 : public LevelSystem
 {
@@ -47,6 +49,9 @@ public:
 	void HandleScrollEvent(float scroll_amount) override;
 	void HandleMousePositionEvent(float xpos, float ypos) override final;
 	/*void HandleWindowClose() override final;*/
+
+private:
+	mat3<float> worldToNDC;
 
 private:
 	bool isEnter = false;
@@ -98,8 +103,8 @@ private:
 	//projectiles
 
 	//tower
-	Object* tower;
-	Object* lair;
+	Tower* tower;
+	Lair* lair;
 	//tower
 
 	Clock clock;
@@ -113,6 +118,8 @@ private:
 
 	UI::SelectSpawn selectMenu;
 
+	ChatBox cb;
+
 	Text debugText;
 	Transform debugTextTransform;
 
@@ -122,6 +129,8 @@ private:
 	vec2<float> pressDirection{ 0.f, 0.f };
 	vec2<float> mousePosition{ 0.f, 0.f };
 	mat3<float> backgroundNDC;
+
+	float sideScrollSpeed = 0.0f;
 
 	bool isDebugModeisOn = false;
 };
