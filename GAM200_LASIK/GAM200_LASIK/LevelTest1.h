@@ -60,7 +60,7 @@ private:
 
 	float time;
 
-	GetInput input;
+	GetInput input, symbol;
 
 	OpenGLWindow* windowPoint;
 
@@ -77,7 +77,7 @@ private:
 
 	Shader fontShader;
 	BitmapFont bitmapFont;
-	Text text;
+	Text text, symbolText;
 	Transform textTransform;
 
 	Shader shader;
@@ -121,11 +121,12 @@ private:
 	ChatBox cb;
 
 	Text debugText;
-	Transform debugTextTransform;
+	Transform debugTextTransform, symbolTextTransform;
 
 	float zoom = 1.0f;
 	float cameraAngle = 0.0f;
-
+	
+	vec2<float> symbolPosition = { -20.0f, 0.0f };
 	vec2<float> pressDirection{ 0.f, 0.f };
 	vec2<float> mousePosition{ 0.f, 0.f };
 	mat3<float> backgroundNDC;

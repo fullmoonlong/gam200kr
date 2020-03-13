@@ -18,6 +18,7 @@
 #include "Text.hpp"
 #include "GetInput.hpp"
 #include "BitmapFont.hpp"
+
 class HealthBar {
 public:
 	void Initialize(vec2<float> position_, int health);

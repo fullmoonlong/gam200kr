@@ -51,7 +51,8 @@ void LevelTest1::Initialize()
 	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
 	text.SetFont(bitmapFont);
 
-	textTransform.SetTranslation({ -300.0f, 0.0f });
+	symbolText.SetFont(bitmapFont);
+	symbolTextTransform.SetTranslation(symbolPosition);
 
 	//win
 	winpic = new Object();
@@ -288,6 +289,11 @@ void LevelTest1::Update(float dt)
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());
 	Draw::DrawText(fontShader, textNDC, text);
+
+	const mat3<float> symbolNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * symbolTextTransform.GetModelToWorld();
+	symbolText.SetString(symbol.GetSymbolString());
+	Draw::DrawText(fontShader, symbolNDC, symbolText);
+
 
 	coolTime.CoolDownUpdate(dt);
 
@@ -602,10 +608,13 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 		if (isEnter == false)
 		{
 			isEnter = true;
+			symbol.TakeAsSymbol('>');
+			printf(">");
 			printf("typing start\n");
 			break;
 		}
 		isEnter = false;
+		symbol.Erasing();
 		printf("typing end\n");
 
 		if (isEnemyWin == false)

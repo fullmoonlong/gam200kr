@@ -28,23 +28,29 @@ Upgrade::~Upgrade()
 
 void Upgrade::Initialize()
 {
+
 	isUpgradeEnd = false;
 	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	bitmapfont.LoadFromFile(PATH::bitmapfont_fnt);
 
 	text.SetFont(bitmapfont);
+	symbolText.SetFont(bitmapfont);
 
 	moneyText.SetFont(bitmapfont);
-	moneyText.SetString(L"Money ");
-
+	moneyText.SetString(L"Gold ");
+	
 	numberText.SetFont(bitmapfont);
 	numberString = std::to_wstring(cs->GetMoney());
 	numberText.SetString(numberString);
-
+	
 	moneyTransform.SetTranslation(moneyPosition);
 	moneyTransform.SetScale(fontSize);
+	
 	numberTransform.SetTranslation(numberPosition);
 	numberTransform.SetScale(fontSize);
+
+	symbolTextTransform.SetTranslation(symbolPosition);
+	textTransform.SetTranslation(textPosition);
 
 	const Color4f color{ 1.0f, 1.0f, 1.0f, 1.0f };
 	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
@@ -60,6 +66,7 @@ void Upgrade::Initialize()
 	spriteTransform.SetScale({ 1280,720 });
 
 	debugTextTransform.SetTranslation({ -80.0f, 160.0f });
+
 
 	debugText.SetFont(bitmapfont);
 	debugText.SetString(L"debug mode");
@@ -83,9 +90,13 @@ void Upgrade::Update(float dt)
 	text.SetString(input.GetString());
 	Draw::DrawText(fontShader, textNDC, text);
 
+	const mat3<float> symbolNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * symbolTextTransform.GetModelToWorld();
+	symbolText.SetString(symbol.GetSymbolString());
+	Draw::DrawText(fontShader, symbolNDC, symbolText);
+
 	const mat3<float> moneyNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * moneyTransform.GetModelToWorld();
 	Draw::DrawText(fontShader, moneyNDC, moneyText);
-
+	
 	numberString = std::to_wstring(cs->GetMoney());
 	numberText.SetString(numberString);
 	const mat3<float> numberNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * numberTransform.GetModelToWorld();
@@ -320,10 +331,13 @@ void Upgrade::HandleKeyPress(KeyboardButton button)
 		if (isEnter == false)
 		{
 			isEnter = true;
+			symbol.TakeAsSymbol('>');
+			printf(">");
 			printf("typing start\n");
 			break;
 		}
 		isEnter = false;
+		symbol.Erasing();
 		printf("typing end\n");
 
 		if (isUpgradeEnd == false)

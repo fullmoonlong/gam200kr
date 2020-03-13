@@ -40,22 +40,24 @@ private:
 	bool isUpgradeEnd;
 	bool isEnter, isDebugModeisOn = false;
 
-	GetInput input;
+	GetInput input, symbol;
 	OpenGLWindow* windowPoint;
 
 	Camera camera;
 	CameraView view;
 
 	BitmapFont bitmapfont;
-	Text  text, debugText, moneyText, numberText;
+	Text  text, symbolText, debugText, moneyText, numberText, upgradeContent;
 
 	Shader    spriteShader, fontShader;
 	Mesh	  spriteMesh;
 	Material  spriteMaterial;
-	Transform spriteTransform, textTransform, debugTextTransform, moneyTransform, numberTransform;
+	Transform spriteTransform, textTransform, symbolTextTransform, debugTextTransform, moneyTransform, numberTransform, upgradeTransform;
 
-	vec2<float> moneyPosition = { 0.0f, 50.0f };
-	vec2<float> numberPosition = { 20.0f, 0.0f };
+	vec2<float> moneyPosition  = {    0.0f, -150.0f };
+	vec2<float> textPosition   = { -150.0f, -150.0f };
+	vec2<float> numberPosition = {  150.0f, -150.0f };
+	vec2<float> symbolPosition = { -170.0f, -150.0f };
 	vec2<float> spritePosition = { 0.0f, 0.0f };
 	vec2<float> fontSize = { 1.5f };
 

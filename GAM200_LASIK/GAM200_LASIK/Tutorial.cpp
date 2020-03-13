@@ -233,10 +233,8 @@ void Tutorial::Initialize()
 	debugText.SetFont(bitmapFont);
 	debugText.SetString(L"debug mode");
 
-	sucess.SetFont(bitmapFont);
-	sucess.SetString(L"sucess");
-	sucessTransform.SetTranslation({ 100.f, 100.f });
-	sucessTransform.SetScale(1.5f);
+	symbolText.SetFont(bitmapFont);
+	symbolTextTransform.SetTranslation(symbolPosition);
 
 	moneyBar.Initialize();
 }
@@ -270,6 +268,10 @@ void Tutorial::Update(float dt)
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());
 	Draw::DrawText(fontShader, textNDC, text);
+	
+	const mat3<float> symbolNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * symbolTextTransform.GetModelToWorld();
+	symbolText.SetString(symbol.GetSymbolString());
+	Draw::DrawText(fontShader, symbolNDC, symbolText);
 
 	coolTime.CoolDownUpdate(dt);
 
@@ -571,13 +573,6 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 		}
 		break;
 	case KeyboardButton::Enter:
-		/*if (isEnter == true)
-		{
-
-			input.TakeAsInput('>');
-			printf(">");
-			break;
-		}*/
 		if (win == true)
 		{
 			SOUNDMANAGER->AllSoundStop();
@@ -590,10 +585,13 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 		if (isEnter == false)
 		{
 			isEnter = true;
+			symbol.TakeAsSymbol(62);
+			printf(">");
 			printf("typing start\n");
 			break;
 		}
 		isEnter = false;
+		symbol.Erasing();
 		printf("typing end\n");
 
 		if (isEnemyWin == false)

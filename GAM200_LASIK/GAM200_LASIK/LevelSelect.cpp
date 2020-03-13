@@ -29,6 +29,9 @@ void LevelSelect::Initialize()
 	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	bitmapfont.LoadFromFile(PATH::bitmapfont_fnt);
 	text.SetFont(bitmapfont);
+	symbolText.SetFont(bitmapfont);
+
+	symbolTextTransform.SetTranslation(symbolPosition);
 
 	const Color4f color{ 1.0f, 1.0f, 1.0f, 1.0f };
 	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
@@ -62,6 +65,10 @@ void LevelSelect::Update(float dt)
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());
 	Draw::DrawText(spriteShader, textNDC, text);
+	
+	const mat3<float> symbolNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * symbolTextTransform.GetModelToWorld();
+	symbolText.SetString(symbol.GetSymbolString());
+	Draw::DrawText(fontShader, symbolNDC, symbolText);
 
 	Draw::FinishDrawing();
 }
@@ -287,10 +294,13 @@ void LevelSelect::HandleKeyPress(KeyboardButton button)
 		if (isEnter == false)
 		{
 			isEnter = true;
+			symbol.TakeAsSymbol('>');
+			printf(">");
 			printf("typing start\n");
 			break;
 		}
 		isEnter = false;
+		symbol.Erasing();
 		printf("typing end\n");
 		
 		if (selectStatus == false)

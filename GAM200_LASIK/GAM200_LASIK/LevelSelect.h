@@ -38,10 +38,10 @@ private:
 	bool isEnter = false;
 	bool selectStatus;
 	OpenGLWindow* windowPoint;
-	GetInput input;
+	GetInput input, symbol;
 	Draw draw;
 
-	Text text;
+	Text text, symbolText;
 	BitmapFont bitmapfont;
 
 	Camera camera;
@@ -50,9 +50,10 @@ private:
 	Shader    spriteShader, fontShader;
 	Mesh	  spriteMesh;
 	Material  spriteMaterial;
-	Transform spriteTransform, textTransform;
+	Transform spriteTransform, textTransform, symbolTextTransform;
 
 	vec2<float> spritePosition = { 0.0f, 0.0f };
+	vec2<float> symbolPosition = { -20.0f, 0.0f };
 	vec2<float> pressDirection{ 0.f, 0.f };
 	float zoom = 1.0f;
 	float cameraAngle = 0.0f;

@@ -105,7 +105,7 @@ void MoneyBar::Initialize()
 
 	bitmapfont.LoadFromFile(PATH::bitmapfont_fnt);
 	m_text.SetFont(bitmapfont);
-	m_text.SetString(L"Money ");
+	m_text.SetString(L"Gold ");
 
 	moneyTransform.SetTranslation(moneyPosition);
 	moneyTransform.SetScale(fontSize);

@@ -57,7 +57,7 @@ private:
 
 	OpenGLWindow* windowPoint;
 
-	GetInput input;
+	GetInput input, symbol;
 
 	float time;
 	Object object;
@@ -72,8 +72,8 @@ private:
 
 	Shader fontShader;
 	BitmapFont bitmapFont;
-	Text text, sucess;
-	Transform textTransform, lairTextTransform, towerTextTransform, sucessTransform;
+	Text text, symbolText;
+	Transform textTransform, lairTextTransform, towerTextTransform, symbolTextTransform;
 
 	Knight* knight;
 	Magician* magician;
@@ -112,6 +112,8 @@ private:
 
 	vec2<float> towerPosition = { -500.0f , 80.f };
 	vec2<float> lairPosition = { 500.f, 50.f };
+
+	vec2<float> symbolPosition = { -20.0f, 0.0f };
 
 	float sideScrollSpeed = 0.0f;
 
