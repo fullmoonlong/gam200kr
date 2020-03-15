@@ -9,6 +9,7 @@
 
 #include <GL/glew.h>
 #include "Draw.hpp"
+#include "../GAM200_LASIK/Object.h"
 
 void Draw::StartDrawing()
 {
@@ -28,18 +29,18 @@ void Draw::FinishDrawing()
 	glFinish();
 }
 
-void Draw::draw(const Material& material)
+void Draw::draw(Material& material)
 {
 	glBindTexture(GL_TEXTURE_2D, material.texture.GetTexturehandle());
-	Shader::UseShader(material.shader);
+	material.shader.Use();
 	material.shader.SendUniformVariable("ndc", material.ndc);
 	Vertices::SelectVAO(material.vertices);
 	glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
 }
 
-void Draw::DrawShape(const Material& material)
+void Draw::DrawShape(Material& material)
 {
-	Shader::UseShader(material.shader);
+	material.shader.Use();
 	material.shader.SendUniformVariable("ndc", material.ndc);
 	Vertices::SelectVAO(material.vertices);
 	glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
@@ -59,3 +60,33 @@ void Draw::DrawText(const Shader& shader, const mat3<float>& ndc, const Text& te
 		draw(textMaterial);
 	}
 }
+
+
+Renderer::Renderer() noexcept {
+	shapeShader.LoadShapeShader();
+	spriteShader.LoadTextureShader();
+	animationShader.LoadAnimationShader();
+	//textShader.LoadTextShader();
+}
+
+//void Renderer::Draw(Object* object) {
+//	Material* material = &object->material;
+//	object->texture.Bind();
+//	Shader::Use(material->shader);
+//	material->shader.SendUniformVariable("ndc", material->ndc);
+//	Vertices::SelectVAO(material->vertices);
+//	glDrawArrays(material->vertices.GetPattern(), 0, material->vertices.GetVerticesCount());
+//}
+
+//void Renderer::Draw(const mat3<float>& ndc, const Text& text) {
+//	for (const auto& vertices_texture : text.GetPairOfVerticesAndTextures()) {
+//		const Vertices& textVertices = *vertices_texture.first;
+//		const Texture*  textTexture  = vertices_texture.second;
+//		Material textMaterial;
+//		textMaterial.CreateText(textShader, { 1.0f }, ndc);
+//		textShader.SendUniformVariable("textColor", { 1.0f });
+//		textMaterial.SetVertices(textVertices);
+//		textMaterial.SetTexture(*textTexture);
+//		draw(textMaterial);
+//	}
+//}

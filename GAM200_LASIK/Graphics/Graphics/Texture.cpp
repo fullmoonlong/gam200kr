@@ -47,3 +47,11 @@ bool Texture::LoadTextureFrom(const Image& image) noexcept
 	
 	return true;
 }
+
+void Texture::Bind() noexcept {
+	glBindTexture(GL_TEXTURE_2D, textureHandle);
+}
+
+void Texture::UnBind() noexcept {
+	glBindTexture(GL_TEXTURE_2D, 0);
+}

@@ -18,6 +18,7 @@
 #include "Units.hpp"
 #include "EnemyUnits.hpp"
 #include "GetInput.hpp"
+#include "Typing.hpp"
 #include "UI.hpp"
 
 #include "Camera.hpp"
@@ -58,6 +59,7 @@ private:
 	OpenGLWindow* windowPoint;
 
 	GetInput input, symbol;
+	Typing type;
 
 	float time;
 	Object object;

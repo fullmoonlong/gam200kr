@@ -17,6 +17,7 @@
 #include "Tower.h"
 #include "Units.hpp"
 #include "EnemyUnits.hpp"
+#include "Typing.hpp"
 #include "GetInput.hpp"
 #include "UI.hpp"
 
@@ -60,7 +61,7 @@ private:
 
 	float time;
 
-	GetInput input, symbol;
+	Typing typing;
 
 	OpenGLWindow* windowPoint;
 
@@ -77,7 +78,7 @@ private:
 
 	Shader fontShader;
 	BitmapFont bitmapFont;
-	Text text, symbolText;
+	Text text;
 	Transform textTransform;
 
 	Shader shader;
@@ -118,7 +119,7 @@ private:
 
 	UI::SelectSpawn selectMenu;
 
-	ChatBox cb;
+	//ChatBox cb;
 
 	Text debugText;
 	Transform debugTextTransform, symbolTextTransform;

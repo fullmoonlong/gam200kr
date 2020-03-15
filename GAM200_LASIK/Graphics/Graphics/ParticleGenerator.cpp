@@ -48,7 +48,7 @@ void ParticleGenerator::UpdateParticles(float dt)
 void ParticleGenerator::DrawParticles()
 {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-	Shader::UseShader(shader);
+	shader.Use();
 	for (Particle particle : particles) {
 		if (particle.lifeTime > 0.0f) {
 			shader.SendUniformVariable("ndc", ndc);

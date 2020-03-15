@@ -100,18 +100,15 @@ bool Shader::LoadShaderFrom(const std::filesystem::path& vertex_source,
 	return true;
 }
 
-unsigned Shader::GetHandleToShader() const noexcept
-{
+unsigned Shader::GetHandleToShader() const noexcept {
 	return handleToShader;
 }
 
-void Shader::UseShader(const Shader& shader)
-{
-	glUseProgram(shader.GetHandleToShader());
+void Shader::Use() noexcept {
+	glUseProgram(handleToShader);
 }
 
-void Shader::UseNothing()
-{
+void Shader::UnUse() noexcept {
 	glUseProgram(0);
 }
 

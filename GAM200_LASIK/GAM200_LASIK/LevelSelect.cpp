@@ -6,6 +6,7 @@
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
+
 #include "LevelSelect.h"
 #include "Application.h"
 #include "ObjectFactory.h"
@@ -335,7 +336,6 @@ void LevelSelect::HandleKeyPress(KeyboardButton button)
 	default:
 		break;
 	}
-
 }
 
 void LevelSelect::HandleKeyRelease(KeyboardButton button)

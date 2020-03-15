@@ -20,9 +20,23 @@ public:
 	static void StartDrawing();
 	static void StartDrawing(const Color4f& background_color);
 	static void FinishDrawing();
-	static void draw(const Material& material);
-	static void DrawShape(const Material& material);
+	static void draw(Material& material);
+	static void DrawShape(Material& material);
 	static void DrawText(const Shader& shader, const mat3<float>& ndc, const Text& text);
+};
+
+class Object;
+class Renderer {
+public:
+	Renderer() noexcept;
+	
+	void Draw(Object* object);
+	void Draw(const mat3<float>& ndc, const Text& text);
 private:
+	Shader shapeShader;
+	Shader spriteShader;
+	Shader animationShader;
+	Shader textShader;
+	//Shader particleShader;
 };
 
