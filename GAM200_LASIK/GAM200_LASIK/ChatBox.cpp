@@ -14,14 +14,14 @@
 #include "Draw.hpp"
 #include "PATH.hpp"
 
-void ChatBox::Initialize(const mat3<float>& world_to_ndc) noexcept {
+void ChatBox::Initialize(mat3<float> world_to_ndc) noexcept {
 	worldToNDC = world_to_ndc;
 	chatBoxShader.LoadShapeShader();
 	textShader.LoadTextureShader();
 	chatBoxTransform.SetTranslation({ -430.0f, -250.0f });
 	chatBoxTransform.SetScale({ 330.0f, 170.0f });
 	textTransform.SetTranslation({ -430.0f, -250.0f });
-	chatBox.CreateShape(chatBoxShader, MESH::create_rectangle({ 0.0f }, { 1.0f }, chatBoxColor), world_to_ndc * chatBoxTransform.GetModelToWorld());
+	chatBox.CreateShape(chatBoxShader, MESH::create_rectangle({ 0.0f }, { 1.0f }, chatBoxColor), worldToNDC * chatBoxTransform.GetModelToWorld());
 	bitmapFont.LoadFromFile(PATH::bitmapfont_fnt);
 	text.SetFont(bitmapFont);
 }

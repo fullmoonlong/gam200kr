@@ -23,7 +23,7 @@ void Animation::Initialize(int column, int row, float animation_speed, const Sha
 
 void Animation::Animate(float dt)
 {
-	Shader::UseShader(shader);
+	shader.Use();
 	shader.SendUniformVariable("frameX", spriteSheet.frameX);
 	shader.SendUniformVariable("frameY", spriteSheet.frameY);
 	shader.SendUniformVariable("frameIndex", frameIndex);

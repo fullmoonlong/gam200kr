@@ -17,7 +17,7 @@
 
 class ChatBox {
 public:
-	void Initialize(const mat3<float> & world_to_ndc) noexcept;
+	void Initialize(mat3<float> world_to_ndc) noexcept;
 	void AddHistory(std::wstring message) noexcept;
 	void DrawMessageBox() noexcept;
 private:

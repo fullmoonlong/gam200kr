@@ -215,6 +215,7 @@
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Tower.cpp" />
     <ClCompile Include="Tutorial.cpp" />
+    <ClCompile Include="Typing.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Units.cpp" />
     <ClCompile Include="Upgrade.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="Tower.h" />
     <ClInclude Include="Tutorial.h" />
+    <ClInclude Include="Typing.hpp" />
     <ClInclude Include="UI.hpp" />
     <ClInclude Include="Units.hpp" />
     <ClInclude Include="UnitStateComponent.hpp" />

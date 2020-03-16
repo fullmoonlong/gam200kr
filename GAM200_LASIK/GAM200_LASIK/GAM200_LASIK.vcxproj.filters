@@ -72,6 +72,7 @@
     <ClCompile Include="ChatBox.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Typing.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">
@@ -172,8 +173,9 @@
     <ClInclude Include="ChatBox.hpp">
       <Filter>Object\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Typing.hpp" />
     <ClInclude Include="StateManager.h">
-      <Filter>System</Filter>
+      <Filter>System\StateManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

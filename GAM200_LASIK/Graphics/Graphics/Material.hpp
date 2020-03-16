@@ -11,6 +11,7 @@
 #include "Shader.h"
 #include "Vertices.h"
 #include "Texture.hpp"
+#include "Transform.hpp"
 #include "Animation.hpp"
 #include "Color4f.hpp"
 
@@ -21,6 +22,7 @@ struct Material {
 		Animation,
 		Text
 	};
+	
 	void CreateShape(const Shader& new_shader, const Mesh& new_mesh, 
 		const mat3<float>& new_ndc);
 	void CreateSprite(const Shader& new_shader, const Texture& new_texture, 
@@ -38,11 +40,17 @@ struct Material {
 	void SetTexture(const std::filesystem::path& new_texture_path) { texture.LoadTextureFrom(new_texture_path); }
 	void SetNDC(const mat3<float>& new_ndc) { ndc = new_ndc; }
 
+	mat3<float>* viewMatrix;
+	mat3<float>* cameraMatrix;
+	mat3<float> modelMatrix;
+	
+	mat3<float> ndc;
+	
 	MaterialType materialType;
 	Shader shader;
 	Vertices vertices;
-	mat3<float> ndc;
 	Texture texture;
+	Transform transform;
 	Animation animation;
 	Color4f textColor;
 };

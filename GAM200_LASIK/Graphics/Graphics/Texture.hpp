@@ -23,6 +23,9 @@ public:
 
 	bool LoadTextureFrom(const std::filesystem::path& image_path) noexcept;
 	bool LoadTextureFrom(const Image& image) noexcept;
+
+	void Bind() noexcept;
+	void UnBind() noexcept;
 private:
 	unsigned int textureHandle;
 	
