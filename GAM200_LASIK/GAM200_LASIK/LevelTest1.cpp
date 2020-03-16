@@ -249,7 +249,7 @@ void LevelTest1::Initialize()
 	SOUNDMANAGER->LoadFile("Fireball.wav");
 	SOUNDMANAGER->LoadFile("archershoot.ogg");
 	SOUNDMANAGER->LoadFile("hit.ogg");
-	SOUNDMANAGER->PlaySound(1, 0);
+	//SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
 	selectMenu.SelectMenu();
@@ -717,6 +717,10 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 				if (obj->GetName() != "tower")
 				{
 					obj->GetComponent<UnitState>()->SetInvincibilityState(true);
+
+					//CC Test
+					//obj->GetComponent<UnitState>()->SetDamageOverTime(20, 0.8f, 3);
+					//CC Test
 				}
 			}
 		}
@@ -729,6 +733,10 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 				if (obj->GetName() != "tower")
 				{
 					obj->GetComponent<UnitState>()->SetInvincibilityState(false);
+
+					//CC Test
+					//obj->GetComponent<UnitState>()->SetSlowDown({-100, 0}, 2.f);
+					//CC Test
 				}
 			}
 		}

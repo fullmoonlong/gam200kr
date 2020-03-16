@@ -72,6 +72,9 @@
     <ClCompile Include="ChatBox.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
+    <ClCompile Include="UnitStateComponent.cpp">
+      <Filter>Component\Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">

@@ -180,6 +180,7 @@ void GameManager::UnitUpdate(Object* object, float dt)
 	if (object->GetName() != "tower" && object->GetName() != "lair")
 	{
 		object->GetComponent<ObjectAttackComponent>()->Update(dt);
+		object->GetComponent<UnitState>()->UpdateState(dt);
 	}
 	object->GetComponent<UnitState>()->healthBar.Update(object->transform.GetTranslation(), object->GetComponent<UnitState>()->GetHealth());
 
