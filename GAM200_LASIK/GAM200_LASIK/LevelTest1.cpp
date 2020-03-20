@@ -415,8 +415,7 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 
 void LevelTest1::HandleKeyRelease(KeyboardButton button)
 {
-	switch (button)
-	{
+	switch (button) {
 	case KeyboardButton::W:
 		pressDirection.y = 0;
 		break;
