@@ -6,8 +6,8 @@
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
-#pragma once
 
+#pragma once
 #include "LevelSystem.h"
 #include "OpenGLWindow.hpp"
 #include "Object.h"
@@ -38,7 +38,7 @@ private:
 	std::wstring numberString;
 
 	bool isUpgradeEnd;
-	bool isEnter, isDebugModeisOn = false;
+	bool isEnter = false, isDebugModeisOn = false;
 
 	GetInput input, symbol;
 	OpenGLWindow* windowPoint;

@@ -73,6 +73,7 @@
       <Filter>Object\UI</Filter>
     </ClCompile>
     <ClCompile Include="Typing.cpp" />
+    <ClCompile Include="SideScrolling.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">
@@ -177,6 +178,7 @@
     <ClInclude Include="StateManager.h">
       <Filter>System\StateManager</Filter>
     </ClInclude>
+    <ClInclude Include="SideScrolling.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">
