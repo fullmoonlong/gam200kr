@@ -27,7 +27,6 @@ LevelTest1::LevelTest1(OpenGLWindow* window)
 	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
 	view.SetZoom(zoom);
 	worldToNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera();
-	//cb.Initialize(worldToNDC);
 	typing.cb.Initialize(worldToNDC);
 }
 
@@ -264,6 +263,7 @@ void LevelTest1::Initialize()
 
 
 	typing.SetUnitPtr(knight, archer, magician, skeleton, lich);
+	sidescroll.SetCameraPtr(&camera);
 	//GAMEMANAGER->pg.SetNDC(cameraToNDC);	// particle generator ndc setting
 }
 
@@ -362,7 +362,8 @@ void LevelTest1::Update(float dt)
 
 	typing.cb.DrawMessageBox();
 
-	camera.MoveRight(sideScrollSpeed);
+	//camera.MoveRight(sideScrollSpeed);
+	sidescroll.SideScroll();
 	
 	Draw::FinishDrawing();
 }
@@ -403,10 +404,8 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 		typing.Enter();
 		break;
 	case KeyboardButton::Arrow_Left:
-		sideScrollSpeed = -5.0f;
-		break;
 	case KeyboardButton::Arrow_Right:
-		sideScrollSpeed = 5.0f;
+		sidescroll.SideScrollPress(button);
 		break;
 	default:
 		typing.Type(button);
@@ -437,10 +436,8 @@ void LevelTest1::HandleKeyRelease(KeyboardButton button)
 		cameraAngle = 0.0f;
 		break;
 	case KeyboardButton::Arrow_Left:
-		sideScrollSpeed = 0.0f;
-		break;
 	case KeyboardButton::Arrow_Right:
-		sideScrollSpeed = 0.0f;
+		sidescroll.SideScrollRelease();
 		break;
 	default:;
 	}

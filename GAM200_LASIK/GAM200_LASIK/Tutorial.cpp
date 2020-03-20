@@ -237,6 +237,9 @@ void Tutorial::Initialize()
 	symbolTextTransform.SetTranslation(symbolPosition);
 
 	moneyBar.Initialize();
+
+	//type.symbol.SetFont(bitmapFont);
+	sidescroll.SetCameraPtr(&camera);
 }
 
 void Tutorial::Update(float dt)
@@ -340,7 +343,7 @@ void Tutorial::Update(float dt)
 
 	cb.DrawMessageBox();
 
-	camera.MoveRight(sideScrollSpeed);
+	sidescroll.SideScroll();
 
 	Draw::FinishDrawing();
 }
@@ -743,10 +746,8 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 		}
 		break;
 	case KeyboardButton::Arrow_Left:
-		sideScrollSpeed = -5.0f;
-		break;
 	case KeyboardButton::Arrow_Right:
-		sideScrollSpeed = 5.0f;
+		sidescroll.SideScrollPress(button);
 		break;
 	default:
 		break;
@@ -776,10 +777,8 @@ void Tutorial::HandleKeyRelease(KeyboardButton button)
 		cameraAngle = 0.0f;
 		break;
 	case KeyboardButton::Arrow_Left:
-		sideScrollSpeed = 0.0f;
-		break;
 	case KeyboardButton::Arrow_Right:
-		sideScrollSpeed = 0.0f;
+		sidescroll.SideScrollRelease();
 		break;
 	default:;
 	}

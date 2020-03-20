@@ -32,6 +32,7 @@
 #include "Sound.hpp"
 #include "CoolDown.hpp"
 #include "ChatBox.hpp"
+#include "SideScrolling.h"
 
 class Tutorial : public LevelSystem {
 public:
@@ -57,9 +58,12 @@ private:
 	Shader shader;
 
 	OpenGLWindow* windowPoint;
+	Camera camera;
+	CameraView view;
 
 	GetInput input, symbol;
-	Typing type;
+	//Typing type;
+	SideScrolling sidescroll;
 
 	float time;
 	Object object;
@@ -87,8 +91,6 @@ private:
 	Object* arrow;
 	Object* fireball;
 
-	Camera camera;
-	CameraView view;
 	CoolDown coolTime;
 
 	UI::SelectSpawn selectMenu;
