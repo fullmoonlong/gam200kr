@@ -32,7 +32,7 @@
 #include "Sound.hpp"
 #include "CoolDown.hpp"
 #include "ChatBox.hpp"
-#include "SideScrolling.h"
+#include "Cost.hpp"
 
 class LevelTest1 : public LevelSystem
 {
@@ -53,20 +53,18 @@ public:
 	/*void HandleWindowClose() override final;*/
 
 private:
-	Camera camera;
-	CameraView view;
-
 	mat3<float> worldToNDC;
+
 private:
 	bool isEnter = false;
 	bool isPlayerWin;
 	bool isEnemyWin;
 
 	float time;
+	float costAmount;
 
 	Typing typing;
-	SideScrolling sidescroll;
-	
+
 	OpenGLWindow* windowPoint;
 
 	Draw draw;
@@ -117,11 +115,13 @@ private:
 	Object* winpic;
 	Object* losepic;
 
+	Camera camera;
+	CameraView view;
 	CoolDown coolTime;
 
 	UI::SelectSpawn selectMenu;
 
-	ChatBox cb;
+	Cost cost;
 
 	Text debugText;
 	Transform debugTextTransform, symbolTextTransform;
@@ -133,6 +133,8 @@ private:
 	vec2<float> pressDirection{ 0.f, 0.f };
 	vec2<float> mousePosition{ 0.f, 0.f };
 	mat3<float> backgroundNDC;
+
+	float sideScrollSpeed = 0.0f;
 
 	bool isDebugModeisOn = false;
 };

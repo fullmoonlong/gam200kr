@@ -32,7 +32,7 @@
 #include "Sound.hpp"
 #include "CoolDown.hpp"
 #include "ChatBox.hpp"
-#include "SideScrolling.h"
+#include "Cost.hpp"
 
 class Tutorial : public LevelSystem {
 public:
@@ -55,17 +55,16 @@ private:
 	bool isEnter = false;
 	bool isPlayerWin;
 	bool isEnemyWin;
+	
 	Shader shader;
 
 	OpenGLWindow* windowPoint;
-	Camera camera;
-	CameraView view;
 
 	GetInput input, symbol;
-	//Typing type;
-	SideScrolling sidescroll;
+	Typing typing;
 
 	float time;
+
 	Object object;
 
 	Material towerMaterial, lairMaterial;
@@ -85,18 +84,24 @@ private:
 	Magician* magician;
 	Archer* archer;
 	Skeleton* skeleton;
+	Lich* lich;
+
 
 	Object* swordAttack;
 	Object* enemyAttack;
 	Object* arrow;
 	Object* fireball;
 
+	Camera camera;
+	CameraView view;
 	CoolDown coolTime;
 
 	UI::SelectSpawn selectMenu;
 	UI::MoneyBar moneyBar;
 
 	ChatBox cb;
+
+	Cost cost;
 
 	Text debugText;
 	Transform debugTextTransform;
