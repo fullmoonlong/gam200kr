@@ -32,6 +32,7 @@
 #include "Sound.hpp"
 #include "CoolDown.hpp"
 #include "ChatBox.hpp"
+#include "Cost.hpp"
 
 class LevelTest1 : public LevelSystem
 {
@@ -60,6 +61,7 @@ private:
 	bool isEnemyWin;
 
 	float time;
+	float costAmount;
 
 	Typing typing;
 
@@ -119,7 +121,7 @@ private:
 
 	UI::SelectSpawn selectMenu;
 
-	//ChatBox cb;
+	Cost cost;
 
 	Text debugText;
 	Transform debugTextTransform, symbolTextTransform;

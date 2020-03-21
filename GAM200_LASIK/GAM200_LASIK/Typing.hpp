@@ -9,6 +9,7 @@
 
 #pragma once
 #include "ChatBox.hpp"
+#include "Cost.hpp"
 
 class GameManager;
 class Text;
@@ -19,7 +20,7 @@ public:
 	Typing();
 	
 	void Type(KeyboardButton button);
-	void Enter();
+	void Enter(Cost& cost);
 	void EraseOneCharacter();
 	void ClearString() { string = L""; }
 
@@ -29,9 +30,10 @@ public:
 		Skeleton* skeleton_ptr, Lich* lich_ptr);
 public:
 	bool isTyping;
-	ChatBox cb;
+	ChatBox  cb;
 	Text symbol;
-	
+	//Cost cost;
+
 	bool isDebugMode;
 	void Debug(KeyboardButton button) noexcept;
 	void ToggleDebug() { isDebugMode = !isDebugMode; }
