@@ -212,7 +212,6 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectFactory.cpp" />
     <ClCompile Include="ObjectMaterial.cpp" />
-    <ClCompile Include="SideScrolling.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Tower.cpp" />
@@ -244,7 +243,6 @@
     <ClInclude Include="Logo.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ObjectMaterial.h" />
-    <ClInclude Include="SideScrolling.h" />
     <ClInclude Include="Sound.hpp" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="StateManager.h" />

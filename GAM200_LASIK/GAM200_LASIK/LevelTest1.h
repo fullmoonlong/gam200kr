@@ -54,10 +54,8 @@ public:
 	/*void HandleWindowClose() override final;*/
 
 private:
-	Camera camera;
-	CameraView view;
-
 	mat3<float> worldToNDC;
+
 private:
 	bool isEnter = false;
 	bool isPlayerWin;
@@ -67,8 +65,7 @@ private:
 	float costAmount;
 
 	Typing typing;
-	SideScrolling sidescroll;
-	
+
 	OpenGLWindow* windowPoint;
 
 	Draw draw;
@@ -119,6 +116,8 @@ private:
 	Object* winpic;
 	Object* losepic;
 
+	Camera camera;
+	CameraView view;
 	CoolDown coolTime;
 
 	UI::SelectSpawn selectMenu;
@@ -136,6 +135,8 @@ private:
 	vec2<float> pressDirection{ 0.f, 0.f };
 	vec2<float> mousePosition{ 0.f, 0.f };
 	mat3<float> backgroundNDC;
+
+	float sideScrollSpeed = 0.0f;
 
 	bool isDebugModeisOn = false;
 };
