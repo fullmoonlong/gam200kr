@@ -233,7 +233,7 @@ void Tutorial::Initialize()
 
 	//test sound and make object
 	selectMenu.SelectMenu();
-	coolTime.Initialize(camera, view);
+	//coolTime.Initialize(camera, view);
 	windowPoint->SwapBuffers();
 
 	debugTextTransform.SetTranslation({ -80.0f, 160.0f });
@@ -250,7 +250,7 @@ void Tutorial::Initialize()
 
 	cost.Initialize();
 
-	//type.symbol.SetFont(bitmapFont);
+	typing.symbol.SetFont(bitmapFont);
 	sidescroll.SetCameraPtr(&camera);
 }
 
@@ -287,7 +287,7 @@ void Tutorial::Update(float dt)
 	const mat3<float> symbolNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * symbolTextTransform.GetModelToWorld();
 	Draw::DrawText(fontShader, symbolNDC, typing.symbol);
 
-	coolTime.CoolDownUpdate(dt);
+	//coolTime.CoolDownUpdate(dt);
 
 	//dynamic test
 	for (const auto& obj : OBJECTFACTORY->GetObjectList())

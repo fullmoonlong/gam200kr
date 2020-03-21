@@ -370,10 +370,9 @@ void LevelTest1::Update(float dt)
 
 	//camera.MoveRight(sideScrollSpeed);
 	sidescroll.SideScroll();
+
 	cost.CostUpdate(camera, view, dt);
 
-	camera.MoveRight(sideScrollSpeed);
-	
 	Draw::FinishDrawing();
 }
 
