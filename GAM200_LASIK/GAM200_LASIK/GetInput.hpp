@@ -21,7 +21,6 @@ public:
 	void SetString(std::wstring initial) { string = initial; }
 	std::wstring GetString() { return string; }
 
-	//void SetSymbolString(std::wstring initial) { symbol = initial; }
 	std::wstring GetSymbolString() { return symbol; }
 
 private:

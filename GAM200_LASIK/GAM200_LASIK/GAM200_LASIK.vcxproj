@@ -198,6 +198,7 @@
     <ClCompile Include="ComponentTest.cpp" />
     <ClCompile Include="ComponentTower.cpp" />
     <ClCompile Include="CoolDown.cpp" />
+    <ClCompile Include="Cost.cpp" />
     <ClCompile Include="EnemyUnits.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FileLoadAndSave.cpp" />
@@ -229,6 +230,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="ComponentTower.h" />
     <ClInclude Include="CoolDown.hpp" />
+    <ClInclude Include="Cost.hpp" />
     <ClInclude Include="CurrencySystem.hpp" />
     <ClInclude Include="DataReader.hpp" />
     <ClInclude Include="EnemyUnits.hpp" />
