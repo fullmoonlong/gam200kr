@@ -197,11 +197,13 @@ void Typing::Debug(KeyboardButton button) noexcept {
 	case KeyboardButton::Num5:
 		for (auto obj : GAMEMANAGER->PlayerUnits) {
 			obj->GetComponent<UnitState>()->SetInvincibilityState(true);
+			//obj->GetComponent<UnitState>()->SetDamageOverTime(20, 0.5f, 3);
 		}
 		break;
 	case KeyboardButton::Num6:
 		for (auto obj : GAMEMANAGER->PlayerUnits) {
 			obj->GetComponent<UnitState>()->SetInvincibilityState(false);
+			//obj->GetComponent<UnitState>()->SetSlowDown({ 99.f, 0.f}, 1.f);
 		}
 	}
 }

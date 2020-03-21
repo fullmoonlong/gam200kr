@@ -31,7 +31,7 @@ StateManager::~StateManager()
 
 void StateManager::Initialize()
 {
-	currentLevel = UPGRADE;
+	currentLevel = LVTest1;
 	levels.push_back(new Logo(windowPoint));
 	levels.push_back(new MainMenu(windowPoint));
 	levels.push_back(new LevelSelect(windowPoint));
