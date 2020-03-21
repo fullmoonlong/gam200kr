@@ -29,6 +29,7 @@ Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.mater
 	GetComponent<MaterialComponent>()->material.vertices = material.vertices;
 
 	AddComponent<UnitState>();
+	GetComponent<UnitState>()->SetUnit(this);
 	GetComponent<UnitState>()->SetType(GetComponent<BaseUnitState>()->GetType());
 	GetComponent<UnitState>()->SetState(GetComponent<BaseUnitState>()->GetState());
 	GetComponent<UnitState>()->SetAttackRange(GetComponent<BaseUnitState>()->GetAttackRange());

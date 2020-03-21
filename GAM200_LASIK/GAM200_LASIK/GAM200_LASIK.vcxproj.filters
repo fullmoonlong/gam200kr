@@ -74,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="Typing.cpp" />
     <ClCompile Include="SideScrolling.cpp" />
+    <ClCompile Include="UnitStateComponent.cpp">
+      <Filter>Component\Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">

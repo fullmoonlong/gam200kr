@@ -219,6 +219,7 @@
     <ClCompile Include="Typing.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Units.cpp" />
+    <ClCompile Include="UnitStateComponent.cpp" />
     <ClCompile Include="Upgrade.cpp" />
   </ItemGroup>
   <ItemGroup>
