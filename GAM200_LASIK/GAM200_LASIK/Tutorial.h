@@ -60,6 +60,8 @@ private:
 	Shader shader;
 
 	OpenGLWindow* windowPoint;
+	Camera camera;
+	CameraView view;
 
 	GetInput input, symbol;
 	//Typing type;
@@ -95,8 +97,6 @@ private:
 	Object* arrow;
 	Object* fireball;
 
-	Camera camera;
-	CameraView view;
 	CoolDown coolTime;
 
 	UI::SelectSpawn selectMenu;

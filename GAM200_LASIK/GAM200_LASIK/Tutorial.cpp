@@ -354,7 +354,7 @@ void Tutorial::Update(float dt)
 
 	cb.DrawMessageBox();
 
-	typing.cb.DrawMessageBox();
+	sidescroll.SideScroll();
 
 	cost.CostUpdate(camera, view, dt);
 
@@ -387,10 +387,8 @@ void Tutorial::HandleKeyPress(KeyboardButton button)
 		typing.Enter(cost);
 		break;
 	case KeyboardButton::Arrow_Left:
-		sideScrollSpeed = -5.0f;
-		break;
 	case KeyboardButton::Arrow_Right:
-		sideScrollSpeed = 5.0f;
+		sidescroll.SideScrollPress(button);
 		break;
 	default:
 		typing.Type(button);
@@ -421,10 +419,8 @@ void Tutorial::HandleKeyRelease(KeyboardButton button)
 		cameraAngle = 0.0f;
 		break;
 	case KeyboardButton::Arrow_Left:
-		sideScrollSpeed = 0.0f;
-		break;
 	case KeyboardButton::Arrow_Right:
-		sideScrollSpeed = 0.0f;
+		sidescroll.SideScrollRelease();
 		break;
 	default:;
 	}
