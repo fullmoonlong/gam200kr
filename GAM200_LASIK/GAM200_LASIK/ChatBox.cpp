@@ -17,7 +17,7 @@
 void ChatBox::Initialize(mat3<float> world_to_ndc) noexcept {
 	worldToNDC = world_to_ndc;
 	chatBoxShader.LoadShapeShader();
-	textShader.LoadTextureShader();
+	textShader.LoadTextShader();
 	chatBoxTransform.SetTranslation({ -430.0f, -250.0f });
 	chatBoxTransform.SetScale({ 330.0f, 170.0f });
 	textTransform.SetTranslation({ -430.0f, -250.0f });

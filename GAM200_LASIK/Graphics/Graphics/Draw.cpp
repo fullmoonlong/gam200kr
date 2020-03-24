@@ -46,27 +46,25 @@ void Draw::DrawShape(Material& material)
 	glDrawArrays(material.vertices.GetPattern(), 0, material.vertices.GetVerticesCount());
 }
 
-void Draw::DrawText(const Shader& shader, const mat3<float>& ndc, const Text& text)
+void Draw::DrawText(const Shader& shader, const mat3<float>& ndc, const Text& text, const Color4f& text_color)
 {
-	for (const auto& vertices_texture : text.GetPairOfVerticesAndTextures())
-	{
+	for (const auto& vertices_texture : text.GetPairOfVerticesAndTextures()) {
 		const Vertices& textVertices = *vertices_texture.first;
 		const Texture*  textTexture  = vertices_texture.second;
 		Material textMaterial;
 		textMaterial.CreateText(shader, { 1.0f }, ndc);
-		shader.SendUniformVariable("textColor", { 1.0f });
+		shader.SendUniformVariable("uniformColor", text_color);
 		textMaterial.SetVertices(textVertices);
 		textMaterial.SetTexture(*textTexture);
 		draw(textMaterial);
 	}
 }
 
-
 Renderer::Renderer() noexcept {
 	shapeShader.LoadShapeShader();
 	spriteShader.LoadTextureShader();
 	animationShader.LoadAnimationShader();
-	//textShader.LoadTextShader();
+	textShader.LoadTextShader();
 }
 
 //void Renderer::Draw(Object* object) {

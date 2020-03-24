@@ -6,9 +6,8 @@
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
+
 #pragma once
-
-
 #include "Mesh.h"
 #include "Draw.hpp"
 #include "Transform.hpp"
@@ -66,7 +65,8 @@ private:
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::Color };
 	VerticesDescription texturelayout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	
-	Shader		shader;
+	Shader      textShader;
+	Shader		textureShader;
 	Material	selectMaterial, archerMaterial, knightMaterial, magicianMaterial;
 	Transform	selectTransform, archerTransform, knightTransform, magicianTransform, fontTransform, unitFontTransform;
 	Mesh		selectMesh, archerMesh, knightMesh, magicianMesh, fontMesh;
@@ -103,5 +103,5 @@ private:
 };
 
 
-class UI :public SelectSpawn, public HealthBar, public MoneyBar {
+class UI : public SelectSpawn, public HealthBar, public MoneyBar {
 };

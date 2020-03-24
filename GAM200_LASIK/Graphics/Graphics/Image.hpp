@@ -26,12 +26,12 @@ public:
 	int GetWidth() const noexcept;
 	int GetHeight() const noexcept;
 
-	ColorInChar* GetPixelPointer() noexcept;
-	const ColorInChar* GetPixelPointer() const noexcept;
+	ColorBit* GetPixelPointer() noexcept;
+	const ColorBit* GetPixelPointer() const noexcept;
 	int GetPixelsBufferBytesSize() const noexcept;
 
 	void FlipVertically() noexcept;
 private:
 	int width, height;
-	std::vector<ColorInChar> pixels{};
+	std::vector<ColorBit> pixels{};
 };

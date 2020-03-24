@@ -27,7 +27,7 @@ void LevelSelect::Initialize()
 {
 	selectStatus = false;
 
-	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	textShader.LoadTextShader();
 	bitmapfont.LoadFromFile(PATH::bitmapfont_fnt);
 	text.SetFont(bitmapfont);
 	symbolText.SetFont(bitmapfont);
@@ -38,7 +38,7 @@ void LevelSelect::Initialize()
 	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	const Mesh& rectangle = MESH::create_rectangle({ 0.0f }, { 1.0f }, color);
 	
-	spriteShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	spriteShader.LoadTextureShader();
 	spriteMesh = rectangle;
 
 	spriteMaterial.shader = spriteShader;
@@ -65,11 +65,11 @@ void LevelSelect::Update(float dt)
 
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());
-	Draw::DrawText(spriteShader, textNDC, text);
+	Draw::DrawText(textShader, textNDC, text);
 	
 	const mat3<float> symbolNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * symbolTextTransform.GetModelToWorld();
 	symbolText.SetString(symbol.GetSymbolString());
-	Draw::DrawText(fontShader, symbolNDC, symbolText);
+	Draw::DrawText(textShader, symbolNDC, symbolText);
 
 	Draw::FinishDrawing();
 }

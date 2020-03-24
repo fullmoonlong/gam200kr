@@ -149,18 +149,23 @@ void Shader::SendUniformVariable(const char* variable_name, const mat3<float>& m
 
 bool Shader::LoadShapeShader() noexcept
 {
-	return
-		LoadShaderFrom("../assets/shape.vert", "../assets/shape.frag");
+	return LoadShaderFrom("../assets/shape.vert", 
+		"../assets/shape.frag");
 }
 
 bool Shader::LoadTextureShader() noexcept
 {
-	return
-		LoadShaderFrom("../assets/texture.vert", "../assets/texture.frag");
+	return LoadShaderFrom("../assets/texture.vert", 
+			"../assets/texture.frag");
 }
 
 bool Shader::LoadAnimationShader() noexcept
 {
-	return
-		LoadShaderFrom("../assets/animation.vert", "../assets/animation.frag");
+	return LoadShaderFrom("../assets/animation.vert", 
+		"../assets/animation.frag");
+}
+
+bool Shader::LoadTextShader() noexcept {
+	return LoadShaderFrom("../assets/text.vert", 
+		"../assets/text.frag");
 }

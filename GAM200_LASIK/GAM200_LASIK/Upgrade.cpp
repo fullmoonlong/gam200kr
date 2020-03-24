@@ -28,9 +28,10 @@ Upgrade::~Upgrade()
 
 void Upgrade::Initialize()
 {
-
 	isUpgradeEnd = false;
-	fontShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+
+	spriteShader.LoadTextureShader();;
+	textShader.LoadTextShader();
 	bitmapfont.LoadFromFile(PATH::bitmapfont_fnt);
 
 	text.SetFont(bitmapfont);
@@ -56,7 +57,6 @@ void Upgrade::Initialize()
 	const VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 	const Mesh& rectangle = MESH::create_rectangle({ 0.0f }, { 1.0f }, color);
 
-	spriteShader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
 	spriteMesh = rectangle;
 
 	spriteMaterial.shader = spriteShader;
@@ -88,24 +88,23 @@ void Upgrade::Update(float dt)
 
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(input.GetString());
-	Draw::DrawText(fontShader, textNDC, text);
+	Draw::DrawText(textShader, textNDC, text);
 
 	const mat3<float> symbolNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * symbolTextTransform.GetModelToWorld();
 	symbolText.SetString(symbol.GetSymbolString());
-	Draw::DrawText(fontShader, symbolNDC, symbolText);
+	Draw::DrawText(textShader, symbolNDC, symbolText);
 
 	const mat3<float> moneyNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * moneyTransform.GetModelToWorld();
-	Draw::DrawText(fontShader, moneyNDC, moneyText);
+	Draw::DrawText(textShader, moneyNDC, moneyText);
 	
 	numberString = std::to_wstring(cs->GetMoney());
 	numberText.SetString(numberString);
 	const mat3<float> numberNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * numberTransform.GetModelToWorld();
-	Draw::DrawText(fontShader, numberNDC, numberText);
+	Draw::DrawText(textShader, numberNDC, numberText);
 
-	if (isDebugModeisOn == true)
-	{
+	if (isDebugModeisOn == true) {
 		const mat3<float> debugTextNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * debugTextTransform.GetModelToWorld();
-		Draw::DrawText(fontShader, debugTextNDC, debugText);
+		Draw::DrawText(textShader, debugTextNDC, debugText);
 	}
 	Draw::FinishDrawing();
 }

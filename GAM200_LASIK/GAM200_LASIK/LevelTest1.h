@@ -75,20 +75,20 @@ private:
 	Object* objectTest1;
 
 	Object background;
-	Shader backgroundShader;
+
+	Shader textShader;
+	Shader animationShader;
+	Shader textureShader;
+
 	Mesh backgroundMesh;
 	Vertices backgroundVertices;
 	Texture backgroundTexture;
 	Material backgroundMaterial;
 	Object ui;
 
-	Shader fontShader;
 	BitmapFont bitmapFont;
 	Text text;
 	Transform textTransform;
-
-	Shader shader;
-	Shader shapeShader;
 	Object object;
 	Object object2;
 

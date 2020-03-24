@@ -22,7 +22,7 @@ public:
 	static void FinishDrawing();
 	static void draw(Material& material);
 	static void DrawShape(Material& material);
-	static void DrawText(const Shader& shader, const mat3<float>& ndc, const Text& text);
+	static void DrawText(const Shader& shader, const mat3<float>& ndc, const Text& text, const Color4f& text_color = Color4f{ 0.0f,0.0f,0.0f,1.0f });
 };
 
 class Object;

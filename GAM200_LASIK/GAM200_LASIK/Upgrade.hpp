@@ -49,7 +49,7 @@ private:
 	BitmapFont bitmapfont;
 	Text  text, symbolText, debugText, moneyText, numberText, upgradeContent;
 
-	Shader    spriteShader, fontShader;
+	Shader    spriteShader, textShader;
 	Mesh	  spriteMesh;
 	Material  spriteMaterial;
 	Transform spriteTransform, textTransform, symbolTextTransform, debugTextTransform, moneyTransform, numberTransform, upgradeTransform;

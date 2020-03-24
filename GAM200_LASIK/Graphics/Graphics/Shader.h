@@ -16,7 +16,16 @@ class Color4f;
 
 class [[nodiscard]] Shader
 {
+private:
+
 public:
+	bool LoadShapeShader() noexcept;
+	bool LoadTextureShader() noexcept;
+	bool LoadAnimationShader() noexcept;
+	bool LoadTextShader() noexcept;
+	bool LoadShaderFrom(const std::filesystem::path& vertex_source,
+		const std::filesystem::path& fragment_source) noexcept;
+
 	Shader() noexcept = default;
 	Shader(const std::filesystem::path& vertex_source,
 		const std::filesystem::path& fragment_source) noexcept;
@@ -31,11 +40,6 @@ public:
 	void SendUniformVariable(const char* variable_name, const vec2<float>& vector) const noexcept;
 	void SendUniformVariable(const char* variable_name, const Color4f& color) const noexcept;
 
-	bool LoadShapeShader() noexcept;
-	bool LoadTextureShader() noexcept;
-	bool LoadAnimationShader() noexcept;
-	bool LoadShaderFrom(const std::filesystem::path& vertex_source,
-		const std::filesystem::path& fragment_source) noexcept;
 private:
 	unsigned int handleToShader = 0;
 };
