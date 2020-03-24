@@ -50,6 +50,7 @@ namespace PATH
 	const std::filesystem::path tower = "../assets/tower.png";
 	const std::filesystem::path lair = "../assets/lair.png";
 	const std::filesystem::path hpBar = "../assets/hpBar.png";
+	const std::filesystem::path gaugeBar = "../assets/gaugeBar.png";
 	const std::filesystem::path twocountdown = "../assets/twocountdown.png";
 	const std::filesystem::path threecountdown = "../assets/threecountdown.png";
 	const std::filesystem::path fourcountdown = "../assets/fourcountdown.png";

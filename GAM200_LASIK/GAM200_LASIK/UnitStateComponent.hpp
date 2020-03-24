@@ -11,7 +11,7 @@
 #include "Component.h"
 #include "ComponentType.h"
 #include "Object.h"
-#include"UI.hpp"
+#include "UI.hpp"
 
 enum UnitType {
 	Player,
@@ -64,6 +64,7 @@ public:
 	void SetInvincibilityState(bool invincibilitystate) { invincibilityState = invincibilitystate; };
 
 	UI::HealthBar healthBar;
+	SkillGaugeBar skillGaugeBar;
 	vec2<float> attackRange = { 0, 0 };
 
 private:
@@ -113,6 +114,7 @@ public:
 	int GetHealth() { return health; }
 	void SetHealth(int health_) { health = health_; };
 
+	//skill
 	int GetSkillGauge() { return skillGauge; }
 	void SetSkillGauge(int skill_gauge) { skillGauge = skill_gauge; };
 
@@ -124,6 +126,7 @@ public:
 
 	bool GetIsSkillStateOn() { return isSkillStateOn; }
 	void SetIsSkillStateOn(bool is_skill_state_on) { isSkillStateOn = is_skill_state_on; };
+	//skill
 
 	int GetDamage() { return damage; }
 	void SetDamage(int damage_) { damage = damage_; };
@@ -142,6 +145,7 @@ public:
 	//CC
 
 	UI::HealthBar healthBar;
+	SkillGaugeBar skillGaugeBar;
 	vec2<float> attackRange = { 0, 0 };
 
 private:
@@ -156,10 +160,12 @@ private:
 
 	int health = 0;
 
+	//skill
 	int skillGauge = 0;
 	int fullSkillGauge = 0;
 	bool isSkillHave = false;
 	bool isSkillStateOn = false;
+	//skill
 
 	int damage = 0;
 

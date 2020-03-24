@@ -44,7 +44,7 @@ public:
 	int skillFullTimes;
 	int skillTimes = 0;
 
-	SkillType stkilType;
+	SkillType skillType;
 	vec2<float> startPosition{ 0, 0 };
 };
 
@@ -76,7 +76,7 @@ public:
 	int skillFullTimes;
 	int skillTimes = 0;
 	
-	SkillType stkilType = NOTHING;
+	SkillType skillType = NOTHING;
 
 	vec2<float> startPosition{ 0, 0 };
 };

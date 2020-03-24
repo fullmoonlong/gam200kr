@@ -45,6 +45,7 @@ Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.mater
 	GetComponent<UnitState>()->healthBar.transform = GetComponent<BaseUnitState>()->healthBar.transform;
 	GetComponent<UnitState>()->healthBar.Initialize(transform.GetTranslation(), GetComponent<UnitState>()->GetHealth());
 
+
 	if (GetName() != "lair" && GetName() != "tower")
 	{
 		if (GetComponent<UnitState>()->GetType() != UnitType::ProjectilesPlayer && GetComponent<UnitState>()->GetType() != UnitType::ProjectilesEnemy)
@@ -58,13 +59,18 @@ Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.mater
 			GetComponent<ObjectAttackComponent>()->startPosition.y = GetComponent<BaseObjectAttackComponent>()->startPosition.y;
 			if (GetComponent<BaseUnitState>()->GetIsSkillHave() == true)
 			{
+				GetComponent<UnitState>()->skillGaugeBar.material = GetComponent<BaseUnitState>()->skillGaugeBar.material;
+				GetComponent<UnitState>()->skillGaugeBar.mesh = GetComponent<BaseUnitState>()->skillGaugeBar.mesh;
+				GetComponent<UnitState>()->skillGaugeBar.transform = GetComponent<BaseUnitState>()->skillGaugeBar.transform;
+				GetComponent<UnitState>()->skillGaugeBar.Initialize(transform.GetTranslation(), GetComponent<UnitState>()->GetFullSkillGauge());
+
 				GetComponent<ObjectAttackComponent>()->skillProjectile = GetComponent<BaseObjectAttackComponent>()->skillProjectile;
 				GetComponent<ObjectAttackComponent>()->skillDeltaTime = GetComponent<BaseObjectAttackComponent>()->skillDeltaTime;
 				GetComponent<ObjectAttackComponent>()->skillDelayTime = GetComponent<BaseObjectAttackComponent>()->skillDelayTime;
 				GetComponent<ObjectAttackComponent>()->skillSoundID = GetComponent<BaseObjectAttackComponent>()->skillSoundID;
 				GetComponent<ObjectAttackComponent>()->skillFullTimes = GetComponent<BaseObjectAttackComponent>()->skillFullTimes;
 				GetComponent<ObjectAttackComponent>()->skillTimes = GetComponent<BaseObjectAttackComponent>()->skillTimes;
-				GetComponent<ObjectAttackComponent>()->stkilType = GetComponent<BaseObjectAttackComponent>()->stkilType;
+				GetComponent<ObjectAttackComponent>()->skillType = GetComponent<BaseObjectAttackComponent>()->skillType;
 			}
 		}
 	}
@@ -75,6 +81,7 @@ void Object::Initialize(const char* name) noexcept
 	DataReader::ReadData(name, this);
 
 	GetComponent<BaseUnitState>()->healthBar.Initialize(transform.GetTranslation(), GetComponent<BaseUnitState>()->GetHealth());
+	GetComponent<BaseUnitState>()->skillGaugeBar.Initialize(transform.GetTranslation(), GetComponent<BaseUnitState>()->GetFullSkillGauge());
 
 	AddComponent<BaseObjectAttackComponent>();
 }

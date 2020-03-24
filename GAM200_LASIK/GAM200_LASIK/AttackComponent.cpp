@@ -22,10 +22,14 @@ void ObjectAttackComponent::Update(float dt)
 	if (unit->GetComponent<UnitState>()->GetIsSkillHave() == true && unit->GetComponent<UnitState>()->GetIsSkillStateOn() == false)
 	{
 		testgageDeltaTime += dt;
-		if (testgageDeltaTime > 1.f)
+		if (testgageDeltaTime > 0.3f)
 		{
-			unit->GetComponent<UnitState>()->SetSkillGauge((unit->GetComponent<UnitState>()->GetSkillGauge() + 10));
+			unit->GetComponent<UnitState>()->SetSkillGauge((unit->GetComponent<UnitState>()->GetSkillGauge() + 5));
 			testgageDeltaTime = 0.f;
+			if (unit->GetComponent<UnitState>()->GetSkillGauge() >= unit->GetComponent<UnitState>()->GetFullSkillGauge())
+			{
+				unit->GetComponent<UnitState>()->SetSkillGauge((unit->GetComponent<UnitState>()->GetFullSkillGauge()));
+			}
 		}
 	}
 
@@ -34,12 +38,11 @@ void ObjectAttackComponent::Update(float dt)
 		{
 			if (unit->GetComponent<UnitState>()->GetSkillGauge() >= unit->GetComponent<UnitState>()->GetFullSkillGauge())
 			{
-				unit->GetComponent<UnitState>()->SetSkillGauge((unit->GetComponent<UnitState>()->GetFullSkillGauge()));
-				if (skillTimes == SkillType::REPEAT)
+				if (skillType == SkillType::REPEAT)
 				{
 					RepeatShot(dt);
 				}
-				else if (skillTimes == SkillType::SPECIFIC)
+				else if (skillType == SkillType::SPECIFIC)
 				{
 					SpecificShot(dt);
 				}
@@ -47,7 +50,7 @@ void ObjectAttackComponent::Update(float dt)
 		}
 
 		time += dt;
-		if (time > delayTime&& unit->GetComponent<UnitState>()->GetIsSkillStateOn() == false) {
+		if (time > delayTime && unit->GetComponent<UnitState>()->GetIsSkillStateOn() == false) {
 			SOUNDMANAGER->PlaySound(0, soundID);
 			projectile->transform.SetTranslation({ unit->transform.GetTranslation().x + startPosition.x, unit->transform.GetTranslation().y + startPosition.y });
 			GAMEMANAGER->SpawnUnit(projectile);
@@ -59,22 +62,22 @@ void ObjectAttackComponent::Update(float dt)
 void ObjectAttackComponent::RepeatShot(float dt)
 {
 	unit->GetComponent<UnitState>()->SetIsSkillStateOn(true);
-	unit->GetComponent<UnitState>()->SetSkillGauge(0);
-	while (skillFullTimes == skillTimes) 
+	skillDeltaTime += dt;
+	if (skillDeltaTime > skillDelayTime)
 	{
-		skillDeltaTime += dt;
-		if (skillDeltaTime > skillDelayTime)
-		{
-			SOUNDMANAGER->PlaySound(0, skillSoundID);
-			skillProjectile->transform.SetTranslation({ unit->transform.GetTranslation().x + startPosition.x, unit->transform.GetTranslation().y + startPosition.y });
-			GAMEMANAGER->SpawnUnit(skillProjectile);
-			skillDeltaTime = 0.f;
-			skillTimes++;
-		}
+		SOUNDMANAGER->PlaySound(0, skillSoundID);
+		skillProjectile->transform.SetTranslation({ unit->transform.GetTranslation().x + startPosition.x, unit->transform.GetTranslation().y + startPosition.y });
+		GAMEMANAGER->SpawnUnit(skillProjectile);
+		skillDeltaTime = 0.f;
+		skillTimes++;
 	}
-	time = 0.f;
-	skillTimes = 0;
-	unit->GetComponent<UnitState>()->SetIsSkillStateOn(false);
+	if (skillFullTimes == skillTimes)
+	{
+		time = 0.f;
+		skillTimes = 0;
+		unit->GetComponent<UnitState>()->SetIsSkillStateOn(false);
+		unit->GetComponent<UnitState>()->SetSkillGauge(0);
+	}
 }
 
 void ObjectAttackComponent::SpecificShot(float dt)
@@ -98,7 +101,7 @@ void BaseObjectAttackComponent::SetSpecificShot(Object* skill_projectile, float 
 	if (skillTimes == SkillType::NOTHING)
 	{
 		unit->GetComponent<BaseUnitState>()->SetIsSkillHave(true);
-		skillTimes = SkillType::SPECIFIC;
+		skillType = SkillType::SPECIFIC;
 		skillProjectile = skill_projectile;
 		skillDelayTime = skill_delay_time;
 		skillSoundID = skill_soundID;
@@ -110,7 +113,7 @@ void BaseObjectAttackComponent::SetRepeatShot(Object* skill_projectile, float sk
 	if (skillTimes == SkillType::NOTHING)
 	{
 		unit->GetComponent<BaseUnitState>()->SetIsSkillHave(true);
-		skillTimes = SkillType::REPEAT;
+		skillType = SkillType::REPEAT;
 		skillProjectile = skill_projectile;
 		skillDelayTime = skill_delay_time;
 		skillFullTimes = skill_full_times;

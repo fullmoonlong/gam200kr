@@ -26,8 +26,8 @@ public:
 private:
 	float cost = 0;
 
-	vec2<float> textPosition = { -150.f, 0.f};
-	vec2<float> costTextPosition = { 30.f, 0.f};
+	vec2<float> textPosition = { 360.f, -300.f };
+	vec2<float> costTextPosition = { 540.f, -300.f };
 
 	vec2<float> fontSize = { 1.5f };
 

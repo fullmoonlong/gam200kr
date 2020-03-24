@@ -39,6 +39,26 @@ private:
 	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
 };
 
+class SkillGaugeBar {
+public:
+	void Initialize(vec2<float> position_, int full_skill_gauge);
+	void Update(vec2<float> position_, int skill_gauge);
+
+	Material material;
+	Transform transform;
+	Mesh mesh;
+
+private:
+
+	float totalSizeX = 56.f;
+	float fullGauge = 0.f;
+	float currentGauge = 0.f;
+	vec2<float> size = { totalSizeX, 3.f };
+
+	const Color4f color{ 0.8f, 0.0f, 0.0f, 1.0f };
+	VerticesDescription layout{ VerticesDescription::Type::Point, VerticesDescription::Type::TextureCoordinate };
+};
+
 class SelectSpawn {
 
 public:

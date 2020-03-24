@@ -1,4 +1,4 @@
 Position: 0 0
 Size: 64 32
-Speed: 100 0
+Speed: 200 0
 Camp: PlayerProjectile

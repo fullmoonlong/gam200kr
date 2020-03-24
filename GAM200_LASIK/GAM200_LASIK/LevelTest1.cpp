@@ -140,6 +140,7 @@ void LevelTest1::Initialize()
 		//archer
 		archer = new Archer();
 		archer->Initialize("archer.txt");
+		archer->GetComponent<BaseUnitState>()->SetFullSkillGauge(50);
 		archer->material.shader = shader;
 		archer->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		archer->material.texture.LoadTextureFrom(PATH::archer_move);
@@ -224,7 +225,9 @@ void LevelTest1::Initialize()
 		bigFireball->GetComponent<BaseUnitState>()->SetState(State::WALK);
 		bigFireball->GetComponent<BaseUnitState>()->SetDamage(10);
 
-		magician->GetComponent<BaseObjectAttackComponent>()->SetSpecificShot(bigFireball, 0.4f, 1);
+		//skill
+		magician->GetComponent<BaseObjectAttackComponent>()->SetSpecificShot(bigFireball, 0.7f, 1);
+		//skill
 		//iceball
 
 		//fireball
@@ -260,6 +263,10 @@ void LevelTest1::Initialize()
 		archer->GetComponent<BaseObjectAttackComponent>()->projectile = arrow;
 		archer->GetComponent<BaseObjectAttackComponent>()->delayTime = 0.7f;
 		archer->GetComponent<BaseObjectAttackComponent>()->soundID = 2;
+
+		//skill
+		archer->GetComponent<BaseObjectAttackComponent>()->SetRepeatShot(arrow, 0.25f, 3, 2);
+		//skill
 		//arrow
 	}
 
@@ -340,6 +347,13 @@ void LevelTest1::Update(float dt)
 				const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->GetComponent<UnitState>()->healthBar.transform.GetModelToWorld();
 				obj.second->GetComponent<UnitState>()->healthBar.material.ndc = ndcHP;
 				Draw::draw(obj.second->GetComponent<UnitState>()->healthBar.material);
+				if (obj.second->GetComponent<UnitState>()->GetIsSkillHave() == true)
+				{
+					obj.second->GetComponent<UnitState>()->skillGaugeBar.material.shader = fontShader; //texture shader
+					const mat3<float> ndcMP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->GetComponent<UnitState>()->skillGaugeBar.transform.GetModelToWorld();
+					obj.second->GetComponent<UnitState>()->skillGaugeBar.material.ndc = ndcMP;
+					Draw::draw(obj.second->GetComponent<UnitState>()->skillGaugeBar.material);
+				}
 			}
 			//hpbar
 

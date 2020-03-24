@@ -183,6 +183,9 @@ void GameManager::UnitUpdate(Object* object, float dt)
 		object->GetComponent<UnitState>()->UpdateState(dt);
 	}
 	object->GetComponent<UnitState>()->healthBar.Update(object->transform.GetTranslation(), object->GetComponent<UnitState>()->GetHealth());
+	if (object->GetComponent<UnitState>()->GetIsSkillHave() == true) {
+		object->GetComponent<UnitState>()->skillGaugeBar.Update(object->transform.GetTranslation(), object->GetComponent<UnitState>()->GetSkillGauge());
+	}
 
 	const UnitType unitType = object->GetComponent<UnitState>()->GetType();
 	if (object->GetComponent<UnitState>()->GetHealth() <= 0 && (unitType == UnitType::Player || unitType == UnitType::Enemy))

@@ -130,3 +130,25 @@ void MoneyBar::Update(Camera& camera_, CameraView& view_)
 	const mat3<float> numberNDC = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * numberTransform.GetModelToWorld();
 	Draw::DrawText(shader, numberNDC, number);
 }
+
+void SkillGaugeBar::Initialize(vec2<float> position_, int full_skill_gauge)
+{
+	mesh = MESH::create_rectangle({ 0.0f }, { 1.0f }, color);
+	material.vertices.InitializeWithMeshAndLayout(mesh, layout);
+	material.texture.LoadTextureFrom(PATH::gaugeBar);
+
+	vec2<float> hpBarPosition = { position_.x, position_.y + 35.f };
+	transform.SetTranslation(hpBarPosition);
+	transform.SetScale(size);
+
+	fullGauge = (float)full_skill_gauge;
+}
+
+void SkillGaugeBar::Update(vec2<float> position_, int skill_gauge)
+{
+	vec2<float> hpBarPosition = { position_.x, position_.y + 35.f };
+	transform.SetTranslation(hpBarPosition);
+	currentGauge = (float)skill_gauge / fullGauge;
+	size.x = totalSizeX * currentGauge;
+	transform.SetScale(size);
+}
