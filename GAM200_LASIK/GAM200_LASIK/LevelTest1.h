@@ -33,6 +33,7 @@
 #include "CoolDown.hpp"
 #include "ChatBox.hpp"
 #include "SideScrolling.h"
+#include "Cost.hpp"
 
 class LevelTest1 : public LevelSystem
 {
@@ -63,6 +64,7 @@ private:
 	bool isEnemyWin;
 
 	float time;
+	float costAmount;
 
 	Typing typing;
 	SideScrolling sidescroll;
@@ -122,6 +124,7 @@ private:
 	UI::SelectSpawn selectMenu;
 
 	ChatBox cb;
+	Cost cost;
 
 	Text debugText;
 	Transform debugTextTransform, symbolTextTransform;

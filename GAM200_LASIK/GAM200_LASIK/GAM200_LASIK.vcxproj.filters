@@ -74,6 +74,12 @@
     </ClCompile>
     <ClCompile Include="Typing.cpp" />
     <ClCompile Include="SideScrolling.cpp" />
+    <ClCompile Include="UnitStateComponent.cpp">
+      <Filter>Component\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Cost.cpp">
+      <Filter>Object\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">
@@ -179,6 +185,9 @@
       <Filter>System\StateManager</Filter>
     </ClInclude>
     <ClInclude Include="SideScrolling.h" />
+    <ClInclude Include="Cost.hpp">
+      <Filter>Object\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="System">

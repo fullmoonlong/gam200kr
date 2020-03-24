@@ -33,6 +33,7 @@
 #include "CoolDown.hpp"
 #include "ChatBox.hpp"
 #include "SideScrolling.h"
+#include "Cost.hpp"
 
 class Tutorial : public LevelSystem {
 public:
@@ -55,6 +56,7 @@ private:
 	bool isEnter = false;
 	bool isPlayerWin;
 	bool isEnemyWin;
+	
 	Shader shader;
 
 	OpenGLWindow* windowPoint;
@@ -64,8 +66,10 @@ private:
 	GetInput input, symbol;
 	//Typing type;
 	SideScrolling sidescroll;
+	Typing typing;
 
 	float time;
+
 	Object object;
 
 	Material towerMaterial, lairMaterial;
@@ -85,6 +89,8 @@ private:
 	Magician* magician;
 	Archer* archer;
 	Skeleton* skeleton;
+	Lich* lich;
+
 
 	Object* swordAttack;
 	Object* enemyAttack;
@@ -97,6 +103,8 @@ private:
 	UI::MoneyBar moneyBar;
 
 	ChatBox cb;
+
+	Cost cost;
 
 	Text debugText;
 	Transform debugTextTransform;

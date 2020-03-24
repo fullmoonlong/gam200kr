@@ -27,6 +27,7 @@ Tutorial::Tutorial(OpenGLWindow* window)
 	view.SetZoom(zoom);
 	worldToNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera();
 	cb.Initialize(worldToNDC);
+	typing.cb.Initialize(worldToNDC);
 }
 
 Tutorial::~Tutorial()
@@ -112,6 +113,13 @@ void Tutorial::Initialize()
 		skeleton->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		skeleton->material.texture.LoadTextureFrom(PATH::skeleton_move);
 		skeleton->animation.Initialize({ 4, 1,	10.0f }, shader);
+
+		lich = new Lich();
+		lich->Initialize("lich.txt");
+		lich->material.shader = shader;
+		lich->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		lich->material.texture.LoadTextureFrom(PATH::lich_move);
+		lich->animation.Initialize({ 8, 1, 10.0f }, shader);
 
 		//knight
 		knight = new Knight();
@@ -225,7 +233,7 @@ void Tutorial::Initialize()
 
 	//test sound and make object
 	selectMenu.SelectMenu();
-	coolTime.Initialize(camera, view);
+	//coolTime.Initialize(camera, view);
 	windowPoint->SwapBuffers();
 
 	debugTextTransform.SetTranslation({ -80.0f, 160.0f });
@@ -238,7 +246,11 @@ void Tutorial::Initialize()
 
 	moneyBar.Initialize();
 
-	//type.symbol.SetFont(bitmapFont);
+	typing.SetUnitPtr(knight, archer, magician, skeleton, lich);
+
+	cost.Initialize();
+
+	typing.symbol.SetFont(bitmapFont);
 	sidescroll.SetCameraPtr(&camera);
 }
 
@@ -269,14 +281,13 @@ void Tutorial::Update(float dt)
 	Draw::draw(lairMaterial);
 
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
-	text.SetString(input.GetString());
+	text.SetString(typing.GetString());
 	Draw::DrawText(fontShader, textNDC, text);
-	
-	const mat3<float> symbolNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * symbolTextTransform.GetModelToWorld();
-	symbolText.SetString(symbol.GetSymbolString());
-	Draw::DrawText(fontShader, symbolNDC, symbolText);
 
-	coolTime.CoolDownUpdate(dt);
+	const mat3<float> symbolNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * symbolTextTransform.GetModelToWorld();
+	Draw::DrawText(fontShader, symbolNDC, typing.symbol);
+
+	//coolTime.CoolDownUpdate(dt);
 
 	//dynamic test
 	for (const auto& obj : OBJECTFACTORY->GetObjectList())
@@ -345,6 +356,8 @@ void Tutorial::Update(float dt)
 
 	sidescroll.SideScroll();
 
+	cost.CostUpdate(camera, view, dt);
+
 	Draw::FinishDrawing();
 }
 
@@ -365,391 +378,20 @@ void Tutorial::TutorialEnd()
 
 void Tutorial::HandleKeyPress(KeyboardButton button)
 {
-	switch (button)
-	{
-	case KeyboardButton::A:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('a');
-			printf("a");
-			break;
-		}
-		break;
-	case KeyboardButton::B:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('b');
-			printf("b");
-			break;
-		}
-		break;
-	case KeyboardButton::C:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('c');
-			printf("c");
-			break;
-		}
-		break;
-	case KeyboardButton::D:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('d');
-			printf("d");
-			break;
-		}
-		break;
-	case KeyboardButton::E:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('e');
-			printf("e");
-			break;
-		}
-		break;
-	case KeyboardButton::F:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('f');
-			printf("f");
-			break;
-		}
-		break;
-	case KeyboardButton::G:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('g');
-			printf("g");
-			break;
-		}
-		break;
-	case KeyboardButton::H:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('h');
-			printf("h");
-			break;
-		}
-		break;
-	case KeyboardButton::I:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('i');
-			printf("i");
-			break;
-		}
-		break;
-	case KeyboardButton::J:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('j');
-			printf("j");
-			break;
-		}
-		break;
-	case KeyboardButton::K:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('k');
-			printf("k");
-			break;
-		}
-		break;
-	case KeyboardButton::L:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('l');
-			printf("l");
-			break;
-		}
-		break;
-	case KeyboardButton::M:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('m');
-			printf("m");
-			break;
-		}
-		break;
-	case KeyboardButton::N:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('n');
-			printf("n");
-			break;
-		}
-		break;
-	case KeyboardButton::O:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('o');
-			printf("o");
-			break;
-		}
-		break;
-	case KeyboardButton::P:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('p');
-			printf("p");
-			break;
-		}
-		break;
-	case KeyboardButton::Q:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('q');
-			printf("q");
-			break;
-		}
-		break;
-	case KeyboardButton::R:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('r');
-			printf("r");
-			break;
-		}
-		break;
-	case KeyboardButton::S:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('s');
-			printf("s");
-			break;
-		}
-		break;
-	case KeyboardButton::T:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('t');
-			printf("t");
-			break;
-		}
-		break;
-	case KeyboardButton::U:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('u');
-			printf("u");
-			break;
-		}
-		break;
-	case KeyboardButton::V:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('v');
-			printf("v");
-			break;
-		}
-		break;
-	case KeyboardButton::W:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('w');
-			printf("w");
-			break;
-		}
-		break;
-	case KeyboardButton::X:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('x');
-			printf("x");
-			break;
-		}
-		break;
-	case KeyboardButton::Y:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('y');
-			printf("y");
-			break;
-		}
-		break;
-	case KeyboardButton::Z:
-		if (isEnter == true)
-		{
-			input.TakeAsInput('z');
-			printf("z");
-			break;
-		}
-		break;
+	if (isPlayerWin == true || isEnemyWin == true) {
+		return;
+	}
+	const std::wstring type = typing.GetString();
+	switch (button) {
 	case KeyboardButton::Enter:
-		if (win == true)
-		{
-			SOUNDMANAGER->AllSoundStop();
-			SOUNDMANAGER->DeleteAllSounds();
-			OBJECTFACTORY->DestroyAllObjects();
-			GAMEMANAGER->PlayerUnits.clear();
-			GAMEMANAGER->EnemyUnits.clear();
-			STATEMANAGER->SetCurrentLevel(GameLevels::LEVELSELECT);
-		}
-		if (isEnter == false)
-		{
-			isEnter = true;
-			symbol.TakeAsSymbol(62);
-			printf(">");
-			printf("typing start\n");
-			break;
-		}
-		isEnter = false;
-		symbol.Erasing();
-		printf("typing end\n");
-
-		if (isEnemyWin == false)
-		{
-			if (input.MatchStringWithInput() == 1 && coolTime.GetKnightCoolDown() == false)
-			{
-				GAMEMANAGER->SpawnUnit(knight);
-				coolTime.SetKnightCoolDown();
-			}
-			else if (input.MatchStringWithInput() == 2 && coolTime.GetArcherCoolDown() == false)
-			{
-				GAMEMANAGER->SpawnUnit(archer);
-				coolTime.SetArcherCoolDown();
-			}
-			else if (input.MatchStringWithInput() == 3 && coolTime.GetMagicianCoolDown() == false)
-			{
-				GAMEMANAGER->SpawnUnit(magician);
-				coolTime.SetMagicianCoolDown();
-			}
-			else if (input.MatchStringWithInput() == 20 && up->GetKnightUpgrade() == true)
-			{
-				cs->GetMoney();
-				//GAMEMANAGER->SpawnUnit(arthur);
-				//coolTime.SetKnightCoolDown();
-			}
-			else if (input.MatchStringWithInput() == 21 && up->GetArcherUpgrade() == true)
-			{
-				cs->GetMoney();
-				//GAMEMANAGER->SpawnUnit(archer);
-				//coolTime.SetKnightCoolDown();
-			}
-			else if (input.MatchStringWithInput() == 22 && up->GetMagicianUpgrade() == true)
-			{
-				cs->GetMoney();
-				//GAMEMANAGER->SpawnUnit(magiciain);
-				//coolTime.SetKnightCoolDown();
-			}
-			else if (input.MatchStringWithInput() == 23 && up->GetCavalryUpgrade() == true)
-			{
-				cs->GetMoney();
-				//GAMEMANAGER->SpawnUnit(cavalry);
-				//coolTime.SetKnightCoolDown();
-			}
-		}
-		cb.AddHistory(input.GetString());
-		input.SetString(L"");
-		break;
-	case KeyboardButton::Backspace:
-		input.Erasing();
-		break;
-	case KeyboardButton::Num1:
-		if (isEnter == false && isDebugModeisOn == true)
-		{
-			int random = rand() % 3;
-
-			if (isEnemyWin == false)
-			{
-				if (random == 0)
-				{
-					GAMEMANAGER->SpawnUnit(knight);
-					coolTime.SetKnightCoolDown();
-				}
-				else if (random == 1)
-				{
-					GAMEMANAGER->SpawnUnit(archer);
-					coolTime.SetArcherCoolDown();
-				}
-				else if (random == 2)
-				{
-					GAMEMANAGER->SpawnUnit(magician);
-					coolTime.SetMagicianCoolDown();
-				}
-			}
-			break;
-		}
-		break;
-	case KeyboardButton::Num2:
-		if (isEnter == false && isDebugModeisOn == true)
-		{
-			int random = rand() % 1;
-
-			if (random == 0)
-			{
-				GAMEMANAGER->SpawnUnit(skeleton);
-				coolTime.SetKnightCoolDown();
-			}
-			break;
-		}
-		break;
-	case KeyboardButton::Num3:
-		if (isEnter == false && isDebugModeisOn == true)
-		{
-			for (auto obj : GAMEMANAGER->PlayerUnits)
-			{
-				if (obj->GetName() != "tower")
-				{
-					obj->GetComponent<UnitState>()->SetHealth(0);
-				}
-			}
-		}
-		break;
-	case KeyboardButton::Num4:
-		if (isEnter == false && isDebugModeisOn == true)
-		{
-			for (auto obj : GAMEMANAGER->EnemyUnits)
-			{
-				if (obj->GetName() != "lair")
-				{
-					obj->GetComponent<UnitState>()->SetHealth(0);
-				}
-			}
-		}
-		break;
-	case KeyboardButton::Num5:
-		if (isEnter == false && isDebugModeisOn == true)
-		{
-			for (auto obj : GAMEMANAGER->PlayerUnits)
-			{
-				if (obj->GetName() != "tower")
-				{
-					obj->GetComponent<UnitState>()->SetInvincibilityState(true);
-				}
-			}
-		}
-		break;
-	case KeyboardButton::Num6:
-		if (isEnter == false && isDebugModeisOn == true)
-		{
-			for (auto obj : GAMEMANAGER->PlayerUnits)
-			{
-				if (obj->GetName() != "tower")
-				{
-					obj->GetComponent<UnitState>()->SetInvincibilityState(false);
-				}
-			}
-		}
-		break;
-	case KeyboardButton::Tilde:
-		if (isEnter == false)
-		{
-			if (isDebugModeisOn == false)
-			{
-				isDebugModeisOn = true;
-			}
-			else
-			{
-				isDebugModeisOn = false;
-			}
-		}
+		typing.Enter(cost);
 		break;
 	case KeyboardButton::Arrow_Left:
 	case KeyboardButton::Arrow_Right:
 		sidescroll.SideScrollPress(button);
 		break;
 	default:
+		typing.Type(button);
 		break;
 	}
 }

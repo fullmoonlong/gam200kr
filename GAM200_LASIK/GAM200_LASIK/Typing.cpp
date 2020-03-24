@@ -111,7 +111,7 @@ void Typing::Type(KeyboardButton button) {
 	}
 }
 
-void Typing::Enter() {
+void Typing::Enter(Cost& cost) {
 	const std::wstring type = GetString();
 
 	if (!isTyping) {
@@ -123,14 +123,17 @@ void Typing::Enter() {
 	// change wstring -> string
 	// use map check the object name
 	// spawn the match
-	if (type == L"knight") {
+	if (type == L"knight" && cost.GetCost() >= 4) {
 		GAMEMANAGER->SpawnUnit(knightPtr);
+		cost.AddCost(-4);
 	}
-	else if (type == L"archer") {
+	else if (type == L"archer" && cost.GetCost() >= 6) {
 		GAMEMANAGER->SpawnUnit(archerPtr);
+		cost.AddCost(-6);
 	}
-	else if (type == L"magician") {
+	else if (type == L"magician" && cost.GetCost() >= 8) {
 		GAMEMANAGER->SpawnUnit(magicianPtr);
+		cost.AddCost(-8);
 	}
 	else if (type == L"debug") {
 		ToggleDebug();
@@ -197,11 +200,13 @@ void Typing::Debug(KeyboardButton button) noexcept {
 	case KeyboardButton::Num5:
 		for (auto obj : GAMEMANAGER->PlayerUnits) {
 			obj->GetComponent<UnitState>()->SetInvincibilityState(true);
+			//obj->GetComponent<UnitState>()->SetDamageOverTime(20, 0.5f, 3);
 		}
 		break;
 	case KeyboardButton::Num6:
 		for (auto obj : GAMEMANAGER->PlayerUnits) {
 			obj->GetComponent<UnitState>()->SetInvincibilityState(false);
+			//obj->GetComponent<UnitState>()->SetSlowDown({ 99.f, 0.f}, 1.f);
 		}
 	}
 }

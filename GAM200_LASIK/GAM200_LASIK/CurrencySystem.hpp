@@ -6,6 +6,7 @@
  *	Copyright Information :
  *    "All content 2019 DigiPen (USA) Corporation, all rights reserved."
  **************************************************************************************/
+
 #pragma once
 #include "System.h"
 
@@ -39,10 +40,16 @@ public:
 		}
 	}
 
+	void diamondIncrease(unsigned int amount) {
+		diamond += amount;
+	}
+
+	unsigned int GetDiamond() const { return diamond; }
 	unsigned int GetMoney() const { return money; }
 private:
 	unsigned int MAX_MONEY = 9999;		// Maybe data-driven and read the data when the program starts and initializes.
-	unsigned int money = 30;
+	unsigned int money = 0;
+	unsigned int diamond = 0;
 };
 
 extern CurrencySystem* cs;

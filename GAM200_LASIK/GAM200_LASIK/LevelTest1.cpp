@@ -39,6 +39,9 @@ void LevelTest1::Initialize()
 {
 	GAMEMANAGER->isGameEnd = false;
 	std::cout << "Load LevelTest1 Sucessful" << std::endl;
+	
+	costAmount = 0;
+
 	isPlayerWin = false;
 	isEnemyWin = false;
 	shader.LoadShaderFrom(PATH::animation_vert, PATH::animation_frag);	//shaders for animation
@@ -249,7 +252,7 @@ void LevelTest1::Initialize()
 	SOUNDMANAGER->LoadFile("Fireball.wav");
 	SOUNDMANAGER->LoadFile("archershoot.ogg");
 	SOUNDMANAGER->LoadFile("hit.ogg");
-	SOUNDMANAGER->PlaySound(1, 0);
+	//SOUNDMANAGER->PlaySound(1, 0);
 	SOUNDMANAGER->SetSystemSoundVolume(0.5f);
 	//test sound and make object
 	selectMenu.SelectMenu();
@@ -261,6 +264,7 @@ void LevelTest1::Initialize()
 	debugText.SetFont(bitmapFont);
 	debugText.SetString(L"debug mode");
 
+	cost.Initialize();
 
 	typing.SetUnitPtr(knight, archer, magician, skeleton, lich);
 	sidescroll.SetCameraPtr(&camera);
@@ -275,6 +279,8 @@ void LevelTest1::Update(float dt)
 	view.SetViewSize(windowPoint->GetWindowWidth(), windowPoint->GetWindowHeight());
 	view.SetZoom(zoom);
 	//Transform
+
+	costAmount += dt;
 
 	//Draw
 	Draw::StartDrawing();
@@ -364,7 +370,9 @@ void LevelTest1::Update(float dt)
 
 	//camera.MoveRight(sideScrollSpeed);
 	sidescroll.SideScroll();
-	
+
+	cost.CostUpdate(camera, view, dt);
+
 	Draw::FinishDrawing();
 }
 
@@ -401,7 +409,7 @@ void LevelTest1::HandleKeyPress(KeyboardButton button)
 	const std::wstring type = typing.GetString();
 	switch (button) {
 	case KeyboardButton::Enter:
-		typing.Enter();
+		typing.Enter(cost);
 		break;
 	case KeyboardButton::Arrow_Left:
 	case KeyboardButton::Arrow_Right:
