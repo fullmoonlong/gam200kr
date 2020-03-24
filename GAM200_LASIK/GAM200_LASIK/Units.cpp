@@ -8,7 +8,7 @@
  **************************************************************************************/
 
 #include "Units.hpp"
-#include "ComponentTest.h"
+#include "AttackComponent.h"
 #include "DataReader.hpp"
 #include "UnitStateComponent.hpp"
 

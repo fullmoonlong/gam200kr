@@ -14,9 +14,6 @@
     <ClCompile Include="GetInput.cpp">
       <Filter>TextInput</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentTest.cpp">
-      <Filter>Component\Units</Filter>
-    </ClCompile>
     <ClCompile Include="ComponentTower.cpp">
       <Filter>Component\Tower</Filter>
     </ClCompile>
@@ -80,6 +77,9 @@
     <ClCompile Include="Cost.cpp">
       <Filter>Object\UI</Filter>
     </ClCompile>
+    <ClCompile Include="AttackComponent.cpp">
+      <Filter>Component\Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Util\Clock.hpp">
@@ -105,9 +105,6 @@
     </ClInclude>
     <ClInclude Include="GetInput.hpp">
       <Filter>TextInput</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentTest.h">
-      <Filter>Component\Units</Filter>
     </ClInclude>
     <ClInclude Include="ComponentTower.h">
       <Filter>Component\Tower</Filter>
@@ -187,6 +184,9 @@
     <ClInclude Include="SideScrolling.h" />
     <ClInclude Include="Cost.hpp">
       <Filter>Object\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackComponent.h">
+      <Filter>Component\Units</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

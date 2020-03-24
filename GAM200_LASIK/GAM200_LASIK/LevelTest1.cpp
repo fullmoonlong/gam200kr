@@ -13,7 +13,7 @@
 #include "GameManager.h"
 #include "Application.h"
 #include "ObjectFactory.h"
-#include "ComponentTest.h"
+#include "AttackComponent.h"
 #include "ComponentTower.h"
 #include "ObjectMaterial.h"
 #include "VerticesDescription.h"
@@ -149,6 +149,7 @@ void LevelTest1::Initialize()
 		//magician
 		magician = new Magician();
 		magician->Initialize("Magician.txt");
+		magician->GetComponent<BaseUnitState>()->SetFullSkillGauge(30);
 		magician->material.shader = shader;
 		magician->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		magician->material.texture.LoadTextureFrom(PATH::magician_move);
@@ -210,6 +211,21 @@ void LevelTest1::Initialize()
 		magician->GetComponent<BaseObjectAttackComponent>()->delayTime = 2.4f;
 		magician->GetComponent<BaseObjectAttackComponent>()->soundID = 1;
 		//fireball
+
+		//iceball
+		bigFireball = new Object();
+		bigFireball->AddComponent<BaseUnitState>();
+		bigFireball->Initialize("bigFireball.txt");
+		bigFireball->SetName("bigFireball");
+		bigFireball->material.shader = shader;
+		bigFireball->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
+		bigFireball->material.texture.LoadTextureFrom(PATH::fireball);
+		bigFireball->animation.Initialize({ 3, 1, 5.0f }, shader);
+		bigFireball->GetComponent<BaseUnitState>()->SetState(State::WALK);
+		bigFireball->GetComponent<BaseUnitState>()->SetDamage(10);
+
+		magician->GetComponent<BaseObjectAttackComponent>()->SetSpecificShot(bigFireball, 0.4f, 1);
+		//iceball
 
 		//fireball
 		fireballEnemy = new Object();

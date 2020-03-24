@@ -51,6 +51,12 @@ public:
 	int GetHealth() { return health; }
 	void SetHealth(int health_) { health = health_; };
 
+	int GetFullSkillGauge() { return fullSkillGauge; }
+	void SetFullSkillGauge(int full_skill_gauge) { fullSkillGauge = full_skill_gauge; };
+
+	bool GetIsSkillHave() { return isSkillHave; }
+	void SetIsSkillHave(bool is_skill_have) { isSkillHave = is_skill_have; };
+
 	int GetDamage() { return damage; }
 	void SetDamage(int damage_) { damage = damage_; };
 
@@ -72,6 +78,8 @@ private:
 
 	int health = 0;
 	int damage = 0;
+	int fullSkillGauge = 0;
+	bool isSkillHave = false;
 
 
 	float baseTime = 0.f;
@@ -105,6 +113,18 @@ public:
 	int GetHealth() { return health; }
 	void SetHealth(int health_) { health = health_; };
 
+	int GetSkillGauge() { return skillGauge; }
+	void SetSkillGauge(int skill_gauge) { skillGauge = skill_gauge; };
+
+	int GetFullSkillGauge() { return fullSkillGauge; }
+	void SetFullSkillGauge(int full_skill_gauge) { fullSkillGauge = full_skill_gauge; };
+
+	bool GetIsSkillHave() { return isSkillHave; }
+	void SetIsSkillHave(bool is_skill_have) { isSkillHave = is_skill_have; };
+
+	bool GetIsSkillStateOn() { return isSkillStateOn; }
+	void SetIsSkillStateOn(bool is_skill_state_on) { isSkillStateOn = is_skill_state_on; };
+
 	int GetDamage() { return damage; }
 	void SetDamage(int damage_) { damage = damage_; };
 
@@ -135,6 +155,12 @@ private:
 	bool invincibilityState = false;
 
 	int health = 0;
+
+	int skillGauge = 0;
+	int fullSkillGauge = 0;
+	bool isSkillHave = false;
+	bool isSkillStateOn = false;
+
 	int damage = 0;
 
 	float baseTime = 0.f;

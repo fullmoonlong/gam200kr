@@ -10,7 +10,7 @@
 #include <iostream>
 #include "GameManager.h"
 #include "ObjectFactory.h"
-#include "ComponentTest.h"
+#include "AttackComponent.h"
 #include "UnitStateComponent.hpp"
 
 GameManager* GAMEMANAGER = nullptr;
@@ -66,8 +66,8 @@ void GameManager::CheckCollision()
 				{
 					object1.second->GetComponent<UnitState>()->SetHealth(object1.second->GetComponent<UnitState>()->GetHealth() - object.second->GetComponent<UnitState>()->GetDamage());
 				}
-				if (object.second->GetName() == "Fireball") {
-					pg.DrawParticles();
+				if (object.second->GetName() == "bigFireball") {
+					object1.second->GetComponent<UnitState>()->SetDamageOverTime(20, 0.5f, 3);
 				}
 				OBJECTFACTORY->Destroy(object.second);
 			}

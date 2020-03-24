@@ -106,6 +106,7 @@ private:
 	Object* enemyAttack;
 	Object* arrow;
 	Object* fireball;
+	Object* bigFireball;
 	Object* fireballEnemy;
 	//projectiles
 

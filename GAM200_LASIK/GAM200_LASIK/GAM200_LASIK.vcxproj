@@ -195,7 +195,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="ChatBox.cpp" />
-    <ClCompile Include="ComponentTest.cpp" />
+    <ClCompile Include="AttackComponent.cpp" />
     <ClCompile Include="ComponentTower.cpp" />
     <ClCompile Include="CoolDown.cpp" />
     <ClCompile Include="Cost.cpp" />
@@ -257,7 +257,7 @@
     <ClInclude Include="Upgrade.hpp" />
     <ClInclude Include="UpgradeSystem.hpp" />
     <ClInclude Include="Util\Clock.hpp" />
-    <ClInclude Include="ComponentTest.h" />
+    <ClInclude Include="AttackComponent.h" />
     <ClInclude Include="ComponentType.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectFactory.h" />

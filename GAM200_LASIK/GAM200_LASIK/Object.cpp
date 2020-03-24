@@ -11,7 +11,7 @@
 #include "Object.h"
 #include "GameManager.h"
 #include "ObjectFactory.h"
-#include "ComponentTest.h"
+#include "AttackComponent.h"
 #include "ObjectMaterial.h"
 #include "FileLoadAndSave.hpp"
 #include "UnitStateComponent.hpp"
@@ -38,6 +38,8 @@ Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.mater
 	GetComponent<UnitState>()->SetHealth(GetComponent<BaseUnitState>()->GetHealth());
 	GetComponent<UnitState>()->SetDamage(GetComponent<BaseUnitState>()->GetDamage());
 	GetComponent<UnitState>()->SetInvincibilityState(GetComponent<BaseUnitState>()->GetInvincibilityState());
+	GetComponent<UnitState>()->SetFullSkillGauge(GetComponent<BaseUnitState>()->GetFullSkillGauge());
+	GetComponent<UnitState>()->SetIsSkillHave(GetComponent<BaseUnitState>()->GetIsSkillHave());
 	GetComponent<UnitState>()->healthBar.material = GetComponent<BaseUnitState>()->healthBar.material;
 	GetComponent<UnitState>()->healthBar.mesh = GetComponent<BaseUnitState>()->healthBar.mesh;
 	GetComponent<UnitState>()->healthBar.transform = GetComponent<BaseUnitState>()->healthBar.transform;
@@ -54,6 +56,16 @@ Object::Object(const Object& rhs) : transform(rhs.transform), material(rhs.mater
 			GetComponent<ObjectAttackComponent>()->soundID = GetComponent<BaseObjectAttackComponent>()->soundID;
 			GetComponent<ObjectAttackComponent>()->startPosition.x = GetComponent<BaseObjectAttackComponent>()->startPosition.x;
 			GetComponent<ObjectAttackComponent>()->startPosition.y = GetComponent<BaseObjectAttackComponent>()->startPosition.y;
+			if (GetComponent<BaseUnitState>()->GetIsSkillHave() == true)
+			{
+				GetComponent<ObjectAttackComponent>()->skillProjectile = GetComponent<BaseObjectAttackComponent>()->skillProjectile;
+				GetComponent<ObjectAttackComponent>()->skillDeltaTime = GetComponent<BaseObjectAttackComponent>()->skillDeltaTime;
+				GetComponent<ObjectAttackComponent>()->skillDelayTime = GetComponent<BaseObjectAttackComponent>()->skillDelayTime;
+				GetComponent<ObjectAttackComponent>()->skillSoundID = GetComponent<BaseObjectAttackComponent>()->skillSoundID;
+				GetComponent<ObjectAttackComponent>()->skillFullTimes = GetComponent<BaseObjectAttackComponent>()->skillFullTimes;
+				GetComponent<ObjectAttackComponent>()->skillTimes = GetComponent<BaseObjectAttackComponent>()->skillTimes;
+				GetComponent<ObjectAttackComponent>()->stkilType = GetComponent<BaseObjectAttackComponent>()->stkilType;
+			}
 		}
 	}
 }

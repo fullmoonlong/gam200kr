@@ -11,7 +11,7 @@
 #include "ObjectFactory.h"
 #include "VerticesDescription.h"
 #include "Image.hpp"
-#include "ComponentTest.h"
+#include "AttackComponent.h"
 #include "ComponentTower.h"
 #include "ObjectMaterial.h"
 #include "StateManager.h"
