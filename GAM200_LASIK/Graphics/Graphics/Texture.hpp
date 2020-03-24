@@ -9,9 +9,7 @@
 
 #pragma once
 #include <filesystem>
-
-class Image;
-class Color;
+#include "Image.hpp"
 
 class [[nodiscard]] Texture
 {

@@ -56,8 +56,7 @@ private:
 	bool isEnter = false;
 	bool isPlayerWin;
 	bool isEnemyWin;
-	
-	Shader shader;
+	Shader animationShader;
 
 	OpenGLWindow* windowPoint;
 	Camera camera;
@@ -75,12 +74,17 @@ private:
 	Material towerMaterial, lairMaterial;
 	Mesh	 towerMesh, lairMesh;
 
-	Object background; Shader backgroundShader; Mesh backgroundMesh; Vertices backgroundVertices; Texture backgroundTexture; 	Material backgroundMaterial;
+	Object background;
+	Shader textureShader;
+	Mesh backgroundMesh;
+	Vertices backgroundVertices;
+	Texture backgroundTexture;
+	Material backgroundMaterial;
 	Object ui;
 	Tower* tower;
 	Lair* lair;
 
-	Shader fontShader;
+	Shader textShader;
 	BitmapFont bitmapFont;
 	Text text, symbolText;
 	Transform textTransform, lairTextTransform, towerTextTransform, symbolTextTransform;

@@ -34,26 +34,27 @@ void HealthBar::Update(vec2<float> position_, int health)
 
 void SelectSpawn::SelectMenu()
 {
-	shader.LoadShaderFrom(PATH::texture_vert, PATH::texture_frag);
+	textShader.LoadTextShader();
+	textureShader.LoadTextureShader();
 
 	const Mesh mesh = MESH::create_rectangle({ 0.0f }, { 1.0f }, color);
 	archerMesh = mesh;
 	knightMesh = mesh;
 	magicianMesh = mesh;
 
-	archerMaterial.shader = shader;
+	archerMaterial.shader = textureShader;
 	archerMaterial.vertices.InitializeWithMeshAndLayout(archerMesh, texturelayout);
 	archerMaterial.texture.LoadTextureFrom(PATH::archer_menu);
 	archerTransform.SetTranslation(archerPosition);
 	archerTransform.SetScale(archerSize);
 
-	knightMaterial.shader = shader;
+	knightMaterial.shader = textureShader;
 	knightMaterial.vertices.InitializeWithMeshAndLayout(knightMesh, texturelayout);
 	knightMaterial.texture.LoadTextureFrom(PATH::knight_menu);
 	knightTransform.SetTranslation(knightPosition);
 	knightTransform.SetScale(archerSize);
 
-	magicianMaterial.shader = shader;
+	magicianMaterial.shader = textureShader;
 	magicianMaterial.vertices.InitializeWithMeshAndLayout(magicianMesh, texturelayout);
 	magicianMaterial.texture.LoadTextureFrom(PATH::magician_menu);
 	magicianTransform.SetTranslation(magicianPosition);
@@ -76,7 +77,6 @@ void SelectSpawn::SelectMenu()
 }
 
 void SelectSpawn::SelectUpdate(Camera& camera_, CameraView& view_) {
-
 	archerMaterial.ndc = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * archerTransform.GetModelToWorld();
 	Draw::draw(archerMaterial);
 
@@ -87,11 +87,10 @@ void SelectSpawn::SelectUpdate(Camera& camera_, CameraView& view_) {
 	Draw::draw(magicianMaterial);
 
 	const mat3<float> ndc5 = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * fontTransform.GetModelToWorld();
-	Draw::DrawText(shader, ndc5, m_text);
+	Draw::DrawText(textShader, ndc5, m_text);
 
 	const mat3<float> ndc6 = view_.GetCameraToNDCTransform() * camera_.WorldToCamera() * unitFontTransform.GetModelToWorld();
-	Draw::DrawText(shader, ndc6, unitFont);
-
+	Draw::DrawText(textShader, ndc6, unitFont);
 }
 
 void SelectSpawn::SetFont(const BitmapFont& font)

@@ -8,7 +8,6 @@
  **************************************************************************************/
 
 #include "GL/glew.h"
-#include "Image.hpp"
 #include "Texture.hpp"
 #include "PATH.hpp"
 
@@ -16,7 +15,6 @@ Texture::Texture(Image& image)
 {
 	LoadTextureFrom(image);
 }
-
 
 bool Texture::LoadTextureFrom(const std::filesystem::path& image_path) noexcept
 {

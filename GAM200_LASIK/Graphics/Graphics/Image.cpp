@@ -38,7 +38,7 @@ bool Image::LoadFrom(const std::filesystem::path& source) noexcept
 	{
 		for (int i = 0; i < width * height; ++i)
 		{
-			ColorInChar color(image[i * 4], image[i * 4 + 1], image[i * 4 + 2], image[i * 4 + 3]);
+			ColorBit color(image[i * 4], image[i * 4 + 1], image[i * 4 + 2], image[i * 4 + 3]);
 			pixels.push_back(color);
 		}
 		return true;
@@ -65,19 +65,19 @@ int Image::GetHeight() const noexcept
 	return height;
 }
 
-ColorInChar* Image::GetPixelPointer() noexcept
+ColorBit* Image::GetPixelPointer() noexcept
 {
 	return &pixels.front();
 }
 
-const ColorInChar* Image::GetPixelPointer() const noexcept
+const ColorBit* Image::GetPixelPointer() const noexcept
 {
 	return &pixels.front();
 }
 
 int Image::GetPixelsBufferBytesSize() const noexcept
 {
-	return int(pixels.size() * sizeof(ColorInChar));
+	return int(pixels.size() * sizeof(ColorBit));
 }
 
 void Image::FlipVertically() noexcept
@@ -88,7 +88,7 @@ void Image::FlipVertically() noexcept
 		{
 			for (int x = 0; x < width; x++)
 			{
-				ColorInChar temp = pixels.at(y * width + x);
+				ColorBit temp = pixels.at(y * width + x);
 				pixels.at(y * width + x) = pixels.at((height - y) * width + x);
 				pixels.at((height - y) * width + x) = temp;
 			}
