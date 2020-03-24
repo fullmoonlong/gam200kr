@@ -304,10 +304,8 @@ void LevelTest1::Update(float dt)
 	coolTime.CoolDownUpdate(dt);
 
 	//dynamic test
-	for (const auto& obj : OBJECTFACTORY->GetObjectList())
-	{
-		if (obj.second != nullptr)
-		{
+	for (const auto& obj : OBJECTFACTORY->GetObjectList()) {
+		if (obj.second != nullptr) {
 			const auto something = obj.second;
 			something->animation.Animate(dt);
 			something->Update(dt);
@@ -320,7 +318,7 @@ void LevelTest1::Update(float dt)
 			//hpbar
 			if (obj.second->GetComponent<UnitState>()->GetType() == UnitType::Player || obj.second->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
 			{
-				obj.second->GetComponent<UnitState>()->healthBar.material.shader = textShader; //texture shader
+				obj.second->GetComponent<UnitState>()->healthBar.material.shader = textureShader; //texture shader
 				const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->GetComponent<UnitState>()->healthBar.transform.GetModelToWorld();
 				obj.second->GetComponent<UnitState>()->healthBar.material.ndc = ndcHP;
 				Draw::draw(obj.second->GetComponent<UnitState>()->healthBar.material);

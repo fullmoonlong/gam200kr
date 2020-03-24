@@ -116,10 +116,10 @@ void Tutorial::Initialize()
 
 		lich = new Lich();
 		lich->Initialize("lich.txt");
-		lich->material.shader = shader;
+		lich->material.shader = animationShader;
 		lich->material.vertices.InitializeWithMeshAndLayout(rectangle, layout);
 		lich->material.texture.LoadTextureFrom(PATH::lich_move);
-		lich->animation.Initialize({ 8, 1, 10.0f }, shader);
+		lich->animation.Initialize({ 8, 1, 10.0f }, animationShader);
 
 		//knight
 		knight = new Knight();
@@ -282,7 +282,7 @@ void Tutorial::Update(float dt)
 
 	const mat3<float> textNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * textTransform.GetModelToWorld();
 	text.SetString(typing.GetString());
-	Draw::DrawText(fontShader, textNDC, text);
+	Draw::DrawText(textShader, textNDC, text);
 
 	const mat3<float> symbolNDC = view.GetCameraToNDCTransform() * camera.WorldToCamera() * symbolTextTransform.GetModelToWorld();
 	Draw::DrawText(textShader, symbolNDC, symbolText);
@@ -306,7 +306,7 @@ void Tutorial::Update(float dt)
 			//hpbar
 			if (obj.second->GetComponent<UnitState>()->GetType() == UnitType::Player || obj.second->GetComponent<UnitState>()->GetType() == UnitType::Enemy)
 			{
-				obj.second->GetComponent<UnitState>()->healthBar.material.shader = textShader; //texture shader
+				obj.second->GetComponent<UnitState>()->healthBar.material.shader = textureShader; //texture shader
 				const mat3<float> ndcHP = view.GetCameraToNDCTransform() * camera.WorldToCamera() * obj.second->GetComponent<UnitState>()->healthBar.transform.GetModelToWorld();
 				obj.second->GetComponent<UnitState>()->healthBar.material.ndc = ndcHP;
 				Draw::draw(obj.second->GetComponent<UnitState>()->healthBar.material);
